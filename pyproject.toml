@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chess-ai-ttntnc"
+version = "0.1.0"
+description = "Multi-Level Chess AI Engine (8x8 FIDE) - Advanced AI Course Project"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chess>=1.10.0",
+    "PyYAML>=6.0.1",
+    "numpy>=1.26.0",
+    "torch>=2.2.0",
+    "zstandard>=0.22.0",
+    "requests>=2.31.0",
+    "pygame>=2.5.2",
+    "scipy>=1.12.0",
+    "pandas>=2.2.0",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+    "jupyter>=1.0.0",
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+chess-etl = "chess_ai.etl.pgn_etl:main"
+chess-train-sl = "chess_ai.training.train_supervised:main"
+chess-train-rl = "chess_ai.training.train_rl_krk:main"
+chess-selfplay = "chess_ai.training.selfplay:main"
+chess-arena = "chess_ai.arena.tournament:main"
+chess-ui = "chess_ai.ui.desktop_pygame:launch_desktop_app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["chess_ai*"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra -q"
+

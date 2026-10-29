@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Pytest & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Raw & Processed Datasets (nặng hàng GB -> không commit)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Checkpoints: chỉ bỏ qua các checkpoint trung gian; GIỮ LẠI best_model.pt và l6_krk_qtable.pkl để nộp bài
+checkpoints/latest.pt
+checkpoints/model_epoch_*.pt
+checkpoints/selfplay_iter_*.pt
+!checkpoints/.gitkeep
+!checkpoints/best_model.pt
+!checkpoints/l6_krk_qtable.pkl
+
+# Runtime debug logs (bỏ qua khi commit; kết quả thực nghiệm chính thức nằm ở results/ được commit)
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
