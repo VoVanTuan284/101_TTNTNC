@@ -1,0 +1,73 @@
+# Cấu hình mặc định toàn dự án (Single Source of Truth): đường dẫn, seeds, ETL, Arena & Logging
+
+project:
+  name: "Multi-Level Chess AI Engine (8x8 FIDE)"
+  code: "CHESS_AI_ADVANCED_2026"
+  instructor_approved: true     # Đề tài Cờ vua 8x8 FIDE và phạm vi 8 cấp độ đã được giảng viên phê duyệt
+
+paths:
+  data_raw: data/raw/
+  data_processed: data/processed/
+  checkpoints: checkpoints/
+  logs: logs/
+  round_robin_dir: results/round_robin/
+  round_robin_matches: results/round_robin/matches.jsonl
+  round_robin_pgn: results/round_robin/games.pgn
+  experiments_dir: chess_ai/experiments/
+  wac_epd: resources/benchmark_positions.epd
+  openings_epd: resources/openings_50.epd
+  figures_dir: results/figures/
+  notebooks_dir: notebooks/
+
+random_seed: 42
+agent_seeds: [42, 101, 2024, 777, 12, 99, 555, 1337, 888, 314]
+
+data_etl:
+  source_name: "Lichess Elite Database"
+  source_url: "https://database.nikonoel.fr/"
+  min_elo: 2100
+  allowed_speed_controls: ["blitz", "rapid", "classical"]
+  min_base_time_sec: 180        # Loại trừ Bullet (< 180s estimated time = base + 40 * increment)
+  min_plies: 30                 # Tối thiểu 15 nước đi trọn vẹn
+  early_draw_ply_cutoff: 60     # Loại bỏ ván hòa thỏa thuận sớm trước 60 plies (30 nước) không có bắt quân
+  skip_opening_plies: 12        # Bỏ qua 6 nước đầu tiên để tránh quá khớp khai cuộc sách vở
+  subsample_k_min: 3
+  subsample_k_max: 4
+  deduplicate_zobrist: true     # Khử trùng lặp thế cờ xuyên suốt các tập bằng khóa Zobrist 64-bit
+  drop_underpromotions: true    # Bỏ các mẫu phong cấp dưới hiếm gặp (< 0.5%) khi huấn luyện
+  target_games: 50000
+  target_samples: 1000000
+  split_ratios:
+    train: 0.80
+    val: 0.10
+    test: 0.10
+
+arena:
+  games_per_pair: 100           # 50 thế cờ khai cuộc cân bằng x 2 màu (50 Trắng + 50 Đen)
+  num_openings: 50              # Khử lợi thế đi trước và chống lặp ván ở các tác tử tất định
+  opening_plies: 8              # Độ sâu thế cờ khai cuộc chuẩn (6-8 plies)
+  max_plies: 400                # Giới hạn 200 nước đi (400 plies), quá giới hạn xử hòa
+  budget_modes:
+    - workload_control          # Chế độ mặc định minh bạch (Nodes / Simulations cố định)
+    - time_control              # Chế độ khống chế thời gian thực (Time per move)
+  time_limit_sec: 1.0
+  fast_time_limit_sec: 0.5
+  grace_period_ms: 100          # Khoảng dung sai kiểm soát thời gian hợp tác (Cooperative Timeout)
+  confidence_level: 0.95
+  bootstrap_resamples: 10000    # Số lần lấy mẫu lại Bootstrap theo cặp ván đối xứng (Paired-opening)
+
+logging:
+  console:
+    enabled: true
+    level: WARNING
+  file:
+    enabled: true
+    level: INFO
+    path: logs/chess.log
+    rotating: true
+    max_bytes: 10485760         # 10 MB
+    backup_count: 5
+  game_trace:
+    enabled: true
+    dir: results/round_robin/
+    formats: [jsonl, pgn]       # Ghi vết đầy đủ ván đấu để tái lập thực nghiệm 100%

@@ -1,0 +1,72 @@
+# Cấu hình Mạng Dual-Head ResNet (Policy + Value) & Biểu diễn Tensor 18 Kênh
+
+representation:
+  input_shape: [18, 8, 8]       # Chuẩn PyTorch CHW: 18 kênh x 8 hàng x 8 cột
+  canonical_flip: true          # Lật bàn cờ theo góc nhìn bên đi (sq ^ 56 khi Đen đi, bên đi luôn ở dưới)
+  channels_spec:
+    active_pieces: [0, 1, 2, 3, 4, 5]     # P, N, B, R, Q, K của bên tới lượt đi {0, 1}
+    opponent_pieces: [6, 7, 8, 9, 10, 11] # P, N, B, R, Q, K của đối thủ {0, 1}
+    castling_rights: [12, 13, 14, 15]     # 4 mặt phẳng nhị phân: Active_KS, Active_QS, Opp_KS, Opp_QS {0, 1}
+    en_passant: 16                        # Mặt phẳng nhị phân đánh dấu ô đích En-Passant hợp lệ {0, 1}
+    halfmove_clock: 17                    # Mặt phẳng chuẩn hóa min(halfmove_clock / 100.0, 1.0)
+  action_space: 4096            # Không gian hành động phẳng 64 x 64 (u_canon * 64 + v_canon)
+  default_promotion: "q"        # Mặc định giải mã phong Hậu; fallback sang nước hợp lệ đầu tiên nếu cần
+
+network:
+  num_res_blocks: 6
+  filters: 64
+  kernel_size: 3
+  padding: 1
+  batch_norm: true
+  activation: relu
+
+  policy_head:
+    conv_filters: 16            # Conv 1x1 (16 filters) -> BN -> ReLU -> Linear(1024 -> 4096)
+    kernel_size: 1
+    batch_norm: true
+    activation: relu
+    linear_out: 4096
+
+  value_head:
+    conv_filters: 1             # Conv 1x1 (1 filter) -> BN -> ReLU -> Linear(64 -> 64) -> ReLU -> Linear(64 -> 1) -> Tanh
+    kernel_size: 1
+    batch_norm: true
+    activation: relu
+    hidden_units: 64
+    linear_out: 1
+    output_activation: tanh
+
+training:
+  batch_size: 256
+  epochs: 20
+  optimizer: adamw              # Sử dụng AdamW với decoupled weight decay chuẩn
+  learning_rate: 0.001
+  weight_decay: 1.0e-4          # Đảm nhiệm điều chuẩn L2; KHÔNG cộng lặp L2 vào hàm loss
+  lr_scheduler:
+    type: cosine_annealing
+    eta_min: 1.0e-5
+  loss:
+    policy_weight: 1.0
+    value_weight: 1.0
+    l2_weight: 0.0              # Đặt bằng 0.0 vì đã dùng weight_decay của AdamW (tránh tính phạt L2 hai lần)
+
+checkpoint_schema:
+  required_keys:
+    - epoch
+    - global_step
+    - model_state_dict
+    - optimizer_state_dict
+    - scheduler_state_dict
+    - scaler_state_dict
+    - train_loss
+    - val_policy_acc
+    - val_value_mse
+    - best_val_loss
+    - model_config
+    - random_seed
+    - torch_version
+
+hardware:
+  use_amp: true                 # torch.amp.autocast("cuda", dtype=torch.float16)
+  num_workers: 4
+  pin_memory: true

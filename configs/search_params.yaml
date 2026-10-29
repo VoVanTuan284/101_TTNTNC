@@ -1,0 +1,142 @@
+# Tham số lượng giá cổ điển, tìm kiếm Alpha-Beta, MCTS (UCT/PUCT), RL (Cấp 6) & Self-Play (Cấp 8)
+
+evaluation:
+  piece_values:                 # Đơn vị: centipawn (1 Tốt = 100 cp)
+    P: 100
+    N: 320
+    B: 330
+    R: 500
+    Q: 900
+    K: 20000
+
+  # PST Michniewski, hàng 8 -> hàng 1 (góc nhìn Trắng, cột a-h)
+  pst:
+    P:
+      - [  0,   0,   0,   0,   0,   0,   0,   0]
+      - [ 50,  50,  50,  50,  50,  50,  50,  50]
+      - [ 10,  10,  20,  30,  30,  20,  10,  10]
+      - [  5,   5,  10,  25,  25,  10,   5,   5]
+      - [  0,   0,   0,  20,  20,   0,   0,   0]
+      - [  5,  -5, -10,   0,   0, -10,  -5,   5]
+      - [  5,  10,  10, -20, -20,  10,  10,   5]
+      - [  0,   0,   0,   0,   0,   0,   0,   0]
+    N:
+      - [-50, -40, -30, -30, -30, -30, -40, -50]
+      - [-40, -20,   0,   0,   0,   0, -20, -40]
+      - [-30,   0,  10,  15,  15,  10,   0, -30]
+      - [-30,   5,  15,  20,  20,  15,   5, -30]
+      - [-30,   0,  15,  20,  20,  15,   0, -30]
+      - [-30,   5,  10,  15,  15,  10,   5, -30]
+      - [-40, -20,   0,   5,   5,   0, -20, -40]
+      - [-50, -40, -30, -30, -30, -30, -40, -50]
+    B:
+      - [-20, -10, -10, -10, -10, -10, -10, -20]
+      - [-10,   0,   0,   0,   0,   0,   0, -10]
+      - [-10,   0,   5,  10,  10,   5,   0, -10]
+      - [-10,   5,   5,  10,  10,   5,   5, -10]
+      - [-10,   0,  10,  10,  10,  10,   0, -10]
+      - [-10,  10,  10,  10,  10,  10,  10, -10]
+      - [-10,   5,   0,   0,   0,   0,   5, -10]
+      - [-20, -10, -10, -10, -10, -10, -10, -20]
+    R:
+      - [  0,   0,   0,   0,   0,   0,   0,   0]
+      - [  5,  10,  10,  10,  10,  10,  10,   5]
+      - [ -5,   0,   0,   0,   0,   0,   0,  -5]
+      - [ -5,   0,   0,   0,   0,   0,   0,  -5]
+      - [ -5,   0,   0,   0,   0,   0,   0,  -5]
+      - [ -5,   0,   0,   0,   0,   0,   0,  -5]
+      - [ -5,   0,   0,   0,   0,   0,   0,  -5]
+      - [  0,   0,   0,   5,   5,   0,   0,   0]
+    Q:
+      - [-20, -10, -10,  -5,  -5, -10, -10, -20]
+      - [-10,   0,   0,   0,   0,   0,   0, -10]
+      - [-10,   0,   5,   5,   5,   5,   0, -10]
+      - [ -5,   0,   5,   5,   5,   5,   0,  -5]
+      - [  0,   0,   5,   5,   5,   5,   0,  -5]
+      - [-10,   5,   5,   5,   5,   5,   0, -10]
+      - [-10,   0,   5,   0,   0,   0,   0, -10]
+      - [-20, -10, -10,  -5,  -5, -10, -10, -20]
+    K_middlegame:
+      - [-30, -40, -40, -50, -50, -40, -40, -30]
+      - [-30, -40, -40, -50, -50, -40, -40, -30]
+      - [-30, -40, -40, -50, -50, -40, -40, -30]
+      - [-30, -40, -40, -50, -50, -40, -40, -30]
+      - [-20, -30, -30, -40, -40, -30, -30, -20]
+      - [-10, -20, -20, -20, -20, -20, -20, -10]
+      - [ 20,  20,   0,   0,   0,   0,  20,  20]
+      - [ 20,  30,  10,   0,   0,  10,  30,  20]
+    K_endgame:
+      - [-50, -40, -30, -20, -20, -30, -40, -50]
+      - [-30, -20, -10,   0,   0, -10, -20, -30]
+      - [-30, -10,  20,  30,  30,  20, -10, -30]
+      - [-30, -10,  30,  40,  40,  30, -10, -30]
+      - [-30, -10,  30,  40,  40,  30, -10, -30]
+      - [-30, -10,  20,  30,  30,  20, -10, -30]
+      - [-30, -30,   0,   0,   0,   0, -30, -30]
+      - [-50, -30, -30, -30, -30, -30, -30, -50]
+
+  # MVV-LVA[victim][attacker] = 10 * giá trị nạn nhân - giá trị kẻ tấn công (thứ hạng 1..6)
+  mvv_lva:
+    order: [P, N, B, R, Q, K]
+    matrix:                     # hàng: nạn nhân; cột: kẻ tấn công
+      - [15, 14, 13, 12, 11, 10]   # P
+      - [25, 24, 23, 22, 21, 20]   # N
+      - [35, 34, 33, 32, 31, 30]   # B
+      - [45, 44, 43, 42, 41, 40]   # R
+      - [55, 54, 53, 52, 51, 50]   # Q
+      - [ 0,  0,  0,  0,  0,  0]   # K (không bị bắt)
+
+alpha_beta:                     # Cấp 3
+  iterative_deepening: true     # Bắt buộc cho Time-Control và cung cấp PV-move từ TT
+  default_depth: 4
+  ablation_depths: [2, 3, 4]    # Khảo sát độ nhạy theo độ sâu tìm kiếm
+  max_nodes: 10000              # Ngân sách mặc định ở chế độ Workload-Control
+  tt_size_mb: 64
+  quiescence:
+    enabled: true
+    max_plies: 8                # Mở rộng chuỗi bắt quân và thoát chiếu để giảm thiểu Horizon Effect
+    delta_pruning_margin: 950   # Centipawn (tương đương Hậu + biên an toàn)
+
+vanilla_mcts:                   # Cấp 4 (chess_ai/search/mcts_uct.py)
+  c_uct: 1.414
+  default_simulations: 400
+  ablation_simulations: [50, 100, 200, 400, 800, 1000]
+  max_rollout_depth: 60         # Cắt ngắn rollout sau 60 plies để tránh rollout ngẫu nhiên quá dài
+  rollout_cutoff_eval: "static_tanh" # Dùng tanh(static_eval / 600.0) khi chạm trần max_rollout_depth
+  subtree_reuse: true
+
+guided_mcts:                    # Cấp 7 (chess_ai/search/mcts_puct.py)
+  c_puct: 1.414
+  default_simulations: 400
+  ablation_simulations: [50, 100, 200, 400, 800, 1000]
+  subtree_reuse: true
+  eval_mode:                    # Chế độ thi đấu Arena / Đánh giá thực nghiệm
+    use_dirichlet: false        # Tắt nhiễu khi thi đấu chính thức để đạt sức cờ tối đa
+    temperature: 0.0            # Chọn tất định argmax_a N(s, a)
+  selfplay_mode:                # Chế độ tự chơi sinh dữ liệu (Cấp 8)
+    use_dirichlet: true
+    dirichlet_alpha: 0.3
+    dirichlet_epsilon: 0.25
+    temp_initial: 1.0
+    temp_final: 0.1
+    temp_decay_plies: 20        # 20 plies (10 nước) đầu τ=1.0, sau đó τ=0.1
+
+rl_level6:                      # Cấp 6 (Học tăng cường trên thế cờ tàn KRK)
+  subgame: "KRK"                # Vua + Xe (Trắng) đấu Vua đơn độc (Đen) trên bàn 8x8 chuẩn
+  algorithm: "tabular_q_and_reinforce"
+  episodes: 20000
+  gamma: 0.99
+  step_penalty: -0.01           # Phạt nhẹ mỗi nước đi để ép chiếu hết nhanh nhất
+  win_reward: 1.0
+  draw_penalty: -0.2
+  learning_rate: 0.1
+  epsilon_start: 1.0
+  epsilon_end: 0.05
+
+alphazero_level8:               # Cấp 8 (Vòng lặp Self-Play & Checkpoint Arena)
+  warm_start_from_level5: true  # Hỗ trợ khởi tạo từ Cấp 5 (fine-tune) hoặc Tabula Rasa trên cờ tàn
+  selfplay_games_per_iter: 50
+  mcts_sims_per_move: 200
+  replay_buffer_size: 50000
+  arena_eval_games: 40
+  arena_win_threshold: 0.55     # Chỉ cập nhật champion khi tỷ lệ điểm >= 55%
