@@ -45,35 +45,75 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
 
 ---
 
-## 3. Hướng Dẫn Thực Thi Nhanh (Quick Start CLI)
+## 3. Cài Đặt Môi Trường (`.venv`) & Hướng Dẫn Thực Thi Nhanh
+
+> **Lưu ý làm việc nhóm:** Thư mục `.venv/` đã được chặn trong [`.gitignore`](.gitignore) để mỗi thành viên tự tạo môi trường cục bộ theo hệ điều hành của mình mà không xung đột Git.
+
+### 3.1. Khởi tạo môi trường ảo `.venv` (Python 3.11)
+
+**Cách A — Dùng `uv` (Khuyên dùng, tự động tải đúng Python 3.11 theo `.python-version`):**
+```powershell
+# Windows PowerShell
+uv venv --python 3.11 .venv
+.\.venv\Scripts\Activate.ps1
+uv pip install -e .
+```
+
+**Cách B — Dùng `venv + pip` mặc định (Windows / macOS / Linux):**
+```powershell
+# Windows PowerShell (dùng Python >= 3.11)
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+pip install -e .
+```
+```bash
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+```
+
+### 3.2. Các lệnh chạy chính (Quick Start CLI)
+
+Sau khi kích hoạt `.venv`, có thể chạy trực tiếp bằng `python -m ...` hoặc các lệnh CLI đã đăng ký trong [`pyproject.toml`](pyproject.toml):
 
 ```bash
-# 0. Cài đặt gói dự án ở chế độ editable (Python >= 3.11)
-pip install -e .
-
-# 1. Chạy toàn bộ 61 kịch bản kiểm thử tự động
-pytest
+# 1. Chạy kiểm thử tự động (Core & L1-L4 hiện có 11 tests pass; khung 61 TCs của TV3)
+pytest -v
 
 # 2. Trích xuất dữ liệu từ Lichess Elite Database ra mảng nhị phân np.memmap
-python -m chess_ai.etl.pgn_etl --config configs/default_config.yaml
+chess-etl --config configs/default_config.yaml
+# (hoặc: python -m chess_ai.etl.pgn_etl --config configs/default_config.yaml)
 
 # 3. Huấn luyện mạng Dual-Head ResNet (Cấp 5) và RL cờ tàn KRK (Cấp 6)
-python -m chess_ai.training.train_supervised --config configs/model_resnet.yaml
+chess-train --config configs/model_resnet.yaml
 python -m chess_ai.training.train_rl_krk --config configs/search_params.yaml
 
 # 4. Vận hành giải đấu đối kháng Round-Robin (100 ván/cặp trên 50 thế cờ khai cuộc cân bằng)
-python -m chess_ai.arena.tournament --config configs/default_config.yaml --budget-mode workload_control
+chess-arena --config configs/default_config.yaml --budget-mode workload_control
 
 # 5. Tái tạo bảng kết quả, khoảng tin cậy Wilson/Bootstrap 95% và biểu đồ báo cáo
 python scripts/reproduce_experiment.py --from-logs --config configs/default_config.yaml
 
 # 6. Khởi động giao diện đồ họa Pygame (Người đấu Máy & Máy đấu Máy)
-python -m chess_ai.ui.desktop_pygame
+chess-gui
 ```
 
 ---
 
-## 4. Quy Cách Đóng Gói Nộp Bài
+## 4. Quy Trình Nhánh Gitflow & Trạng Thái Hiện Tại
+
+* **Nhánh tích hợp:** `main` (nộp bài ổn định) $\leftarrow$ `dev` (tích hợp nhóm)
+* **Nhánh phát triển thành viên:**
+  * `feature/tv1-core-search-rl` *(TV1)*: **Đã hoàn thiện & pass pytest** phần Core (`ChessEnv`, `evaluation`, `zobrist`), Tìm kiếm cổ điển (`Alpha-Beta + ID`, `TT`, `Move Ordering`, `Quiescence`, `UCT`) và Tác tử **Cấp 1 – Cấp 4**; tiếp theo là Cấp 6 (KRK) & Ablation 1.
+  * `feature/tv2-data-models-puct` *(TV2)*: `board_tensor`, ETL Lichess Elite, Dual-Head ResNet, PUCT và Tác tử Cấp 5, 7, 8.
+  * `feature/tv3-ui-arena-qa` *(TV3)*: UI Pygame, Arena Tournament, Ablation 2, bộ 61 kiểm thử (`TC01`–`TC61`), `reproduce_experiment.py`.
+
+---
+
+## 5. Quy Cách Đóng Gói Nộp Bài
 
 Theo Mục 3.7 của đề bài, toàn bộ hồ sơ nộp cuối kỳ được đóng gói thành một tệp ZIP duy nhất:
 ```text
