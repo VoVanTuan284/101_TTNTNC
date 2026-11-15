@@ -91,11 +91,13 @@ Tài liệu này ghi nhận toàn bộ các quyết định kiến trúc và thi
   1. **`ChessEnv.clone()` và Kiểm tra Kết thúc Nhanh:**
      * `ChessEnv.clone()` sao chép đầy đủ ngăn xếp lịch sử (`self.board.copy(stack=True)`) để bảo toàn khả năng `undo()` và phát hiện hòa lặp 3 lần (Threefold Repetition).
      * Cung cấp thêm phương thức `is_terminal_fast()` trong tìm kiếm nội bộ (kiểm tra chiếu hết, hòa pat, thiếu lực lượng, 50 nước mà không quét lại toàn bộ lịch sử lặp 3 lần tại mọi nút lá) kết hợp kiểm tra lặp khóa Zobrist trên đường đi hiện tại của cây tìm kiếm.
-  2. **Iterative Deepening (ID) & Quản lý Thời gian Hợp tác:**
+  2. **Iterative Deepening (ID), Quản lý Thời gian Hợp tác & Bảng chuyển vị (TT):**
      * Tác tử Cấp 3 (`chess_ai/search/alphabeta.py`) bắt buộc triển khai **Iterative Deepening** ($d = 1, 2, \dots, d_{\max}$) kết hợp kiểm tra đồng hồ hợp tác (Cooperative Time Check mỗi $256$ nút duyệt). Khi chạm ngưỡng thời gian, thuật toán dừng ngay và trả về nước đi tốt nhất từ độ sâu hoàn chỉnh gần nhất.
-  3. **Tách biệt Module MCTS để Tránh Xung đột Git:**
-     * `chess_ai/search/mcts_node.py`: Định nghĩa lớp nút cây MCTS dùng chung và tiện ích tái sử dụng cây con (`subtree_reuse`).
-     * `chess_ai/search/mcts_uct.py` (TV1 phụ trách - Cấp 4): Cài đặt UCT với giới hạn độ sâu mô phỏng `max_rollout_depth: 60` plies; nếu chạm trần chưa kết thúc ván, trả về giá trị lượng giá tĩnh chuẩn hóa $\tanh(\text{eval}_{\text{cp}} / 600.0) \in [-1, 1]$.
+     * **Quy tắc độ sâu theo ngân sách (`Level3AlphaBetaAgent`):** Khi truyền `max_workload` hoặc `time_limit`, mở trần độ sâu (`max_depth = 20`) để tận dụng tối đa ngân sách nút/thời gian; khi không truyền cả hai, dùng `default_depth` từ cấu hình (`4`).
+     * **Vòng đời Transposition Table:** Bảng `TranspositionTable` được giữ theo instance của `Level3AlphaBetaAgent` xuyên suốt một ván đấu để tái sử dụng kết quả giữa các nước, và xóa sạch khi gọi `agent.reset()`.
+  3. **Tách biệt Module MCTS & Tái sử dụng Cây con (`subtree_reuse`):**
+     * `chess_ai/search/mcts_node.py`: Định nghĩa lớp nút cây MCTS dùng chung và tiện ích tái sử dụng cây con (`subtree_reuse`), lưu `zobrist_key` để đối chiếu nhanh.
+     * `chess_ai/search/mcts_uct.py` (TV1 phụ trách - Cấp 4): Cài đặt UCT với giới hạn độ sâu mô phỏng `max_rollout_depth: 60` plies; nếu chạm trần chưa kết thúc ván, trả về giá trị lượng giá tĩnh chuẩn hóa $\tanh(\text{eval}_{\text{cp}} / 600.0) \in [-1, 1]$. Khi `subtree_reuse: true`, `Level4MCTSAgent` giữ `self._root` giữa các nước trong cùng ván, đối chiếu `zobrist_key` ở nút con/nút cháu để tái sử dụng nhánh cây hợp lệ, và xóa khi gọi `agent.reset()`.
      * `chess_ai/search/mcts_puct.py` (TV2 phụ trách - Cấp 7 & 8): Cài đặt PUCT kết hợp Policy Prior $P(s, a)$ và Value Head $V(s)$.
   4. **Tách chế độ `eval_mode` và `selfplay_mode` trong Guided MCTS:**
      * Khi thi đấu giải hoặc đánh giá (`eval_mode`): Tắt hoàn toàn nhiễu Dirichlet ($\epsilon = 0$) và chọn nước đi tất định theo số lần thăm lớn nhất ($\tau \to 0$, tức $\arg\max_a N(s, a)$).
