@@ -100,8 +100,8 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
 ### Cấp 3: Iterative Deepening Minimax & Alpha-Beta Search [BẮT BUỘC]
 
 - **Mục tiêu & Bản chất:** Thuật toán duyệt cây đối kháng theo khuôn mẫu Negamax kết hợp cắt tỉa Alpha-Beta ($\alpha$-$\beta$ pruning) và sâu dần lặp (**Iterative Deepening**):
-  - _Iterative Deepening (ID) & Quản lý thời gian hợp tác:_ Duyệt tuần tự độ sâu $d = 1, 2, \dots, d_{\max}$. Kiểm tra ngân sách thời gian/nút định kỳ mỗi $256$ nút; nếu hết giờ, trả về ngay nước đi tốt nhất từ độ sâu hoàn tất gần nhất.
-  - _Transposition Table (TT):_ Bảng băm Zobrist 64-bit lưu trữ trạng thái đã duyệt, cờ đánh dấu (`EXACT`, `LOWERBOUND`, `UPPERBOUND`), nước đi tốt nhất (`best_move`) và độ sâu tìm kiếm.
+  - _Iterative Deepening (ID) & Quản lý thời gian hợp tác:_ Duyệt tuần tự độ sâu $d = 1, 2, \dots, d_{\max}$. Kiểm tra ngân sách thời gian/nút định kỳ mỗi $256$ nút; nếu hết giờ, trả về ngay nước đi tốt nhất từ độ sâu hoàn tất gần nhất. Khi có `max_workload` hoặc `time_limit`, trần độ sâu mở lên `20` để tận dụng hết ngân sách; ngược lại dùng `default_depth = 4`.
+  - _Transposition Table (TT):_ Bảng băm Zobrist 64-bit lưu trữ trạng thái đã duyệt, cờ đánh dấu (`EXACT`, `LOWERBOUND`, `UPPERBOUND`), nước đi tốt nhất (`best_move`) và độ sâu tìm kiếm; được tái sử dụng xuyên suốt trong một ván và xóa khi `agent.reset()`.
   - _Move Ordering:_ Sắp xếp thứ tự duyệt nước đi tại mỗi nút: ưu tiên PV-move từ TT $\rightarrow$ các nước bắt quân theo MVV-LVA $\rightarrow$ Killer Moves (2 slots/ply) $\rightarrow$ History Heuristic. Giúp hệ số phân nhánh hiệu dụng tiến gần trường hợp tốt nhất lý thuyết $\mathcal{O}(b^{d/2})$.
   - _Quiescence Search (Tìm kiếm tĩnh):_ Tại các nút lá ($d=0$), tiếp tục mở rộng giới hạn (`max_plies: 8`) cho các chuỗi bắt quân và thoát chiếu (kèm Delta Pruning) nhằm giảm thiểu đáng kể hiện tượng mù chân trời (Horizon Effect).
 
@@ -113,6 +113,7 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
   2. _Expansion:_ Mở rộng một nút con hợp lệ chưa được khám phá.
   3. _Simulation (Cut-off Rollout):_ Mô phỏng nhanh (ưu tiên nhẹ nước bắt quân/ngẫu nhiên) tối đa tới độ sâu cắt `max_rollout_depth = 60` plies. Nếu ván cờ chưa kết thúc tại ngưỡng cắt, ước lượng giá trị lá bằng hàm lượng giá tĩnh chuẩn hóa $\tanh(\text{eval}_{\text{cp}} / 600.0) \in [-1, 1]$.
   4. _Backpropagation:_ Cập nhật số lần thăm $N$ và giá trị trung bình $Q$ (đảo dấu theo lượt đi Negamax) ngược lên gốc.
+- **Tái sử dụng cây con (`subtree_reuse`):** Giữ gốc cây theo ván đấu trong `Level4MCTSAgent`, đối chiếu khóa Zobrist 64-bit qua các nút con/cháu để tái sử dụng thống kê từ nước trước và xóa khi gọi `agent.reset()`.
 - **Khảo sát bắt buộc theo đề bài:** Thực hiện khảo sát độ nhạy theo ngân sách mô phỏng $N_{\text{sim}} \in \{50, 100, 200, 400, 800, 1000\}$.
 
 ### Cấp 5: Supervised Neural Network (Dual-Head ResNet) [BẮT BUỘC]
