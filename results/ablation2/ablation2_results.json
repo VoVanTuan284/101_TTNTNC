@@ -1,0 +1,161 @@
+{
+  "experiment": "Ablation_2_MCTS_Sensitivity_And_Guidance",
+  "sim_budgets": [
+    50,
+    100,
+    200,
+    400,
+    800,
+    1000
+  ],
+  "games_per_budget_2a": 50,
+  "opponent_2a": "Level2_Heuristic",
+  "part_2a_uct_level4": [
+    {
+      "agent_a": "Level4_MCTS_UCT",
+      "agent_b": "Level2_Heuristic",
+      "budget_mode": "workload_control",
+      "games": 50,
+      "wins": 0,
+      "draws": 0,
+      "losses": 50,
+      "score": 0.0,
+      "white_score": 0.0,
+      "black_score": 0.0,
+      "wilson_ci_95": [
+        0.0,
+        0.0714
+      ],
+      "bootstrap_ci_95": [
+        0.0,
+        0.0
+      ],
+      "agent_a_avg_latency_ms": 162.426,
+      "agent_b_avg_latency_ms": 9.189,
+      "simulations": 50
+    },
+    {
+      "agent_a": "Level4_MCTS_UCT",
+      "agent_b": "Level2_Heuristic",
+      "budget_mode": "workload_control",
+      "games": 50,
+      "wins": 1,
+      "draws": 0,
+      "losses": 49,
+      "score": 0.02,
+      "white_score": 0.0,
+      "black_score": 0.04,
+      "wilson_ci_95": [
+        0.0035,
+        0.105
+      ],
+      "bootstrap_ci_95": [
+        0.0,
+        0.06
+      ],
+      "agent_a_avg_latency_ms": 329.579,
+      "agent_b_avg_latency_ms": 9.166,
+      "simulations": 100
+    },
+    {
+      "agent_a": "Level4_MCTS_UCT",
+      "agent_b": "Level2_Heuristic",
+      "budget_mode": "workload_control",
+      "games": 50,
+      "wins": 0,
+      "draws": 0,
+      "losses": 50,
+      "score": 0.0,
+      "white_score": 0.0,
+      "black_score": 0.0,
+      "wilson_ci_95": [
+        0.0,
+        0.0714
+      ],
+      "bootstrap_ci_95": [
+        0.0,
+        0.0
+      ],
+      "agent_a_avg_latency_ms": 659.813,
+      "agent_b_avg_latency_ms": 9.647,
+      "simulations": 200
+    },
+    {
+      "agent_a": "Level4_MCTS_UCT",
+      "agent_b": "Level2_Heuristic",
+      "budget_mode": "workload_control",
+      "games": 50,
+      "wins": 0,
+      "draws": 1,
+      "losses": 49,
+      "score": 0.01,
+      "white_score": 0.0,
+      "black_score": 0.02,
+      "wilson_ci_95": [
+        0.001,
+        0.0889
+      ],
+      "bootstrap_ci_95": [
+        0.0,
+        0.03
+      ],
+      "agent_a_avg_latency_ms": 1416.268,
+      "agent_b_avg_latency_ms": 10.458,
+      "simulations": 400
+    },
+    {
+      "agent_a": "Level4_MCTS_UCT",
+      "agent_b": "Level2_Heuristic",
+      "budget_mode": "workload_control",
+      "games": 50,
+      "wins": 0,
+      "draws": 1,
+      "losses": 49,
+      "score": 0.01,
+      "white_score": 0.0,
+      "black_score": 0.02,
+      "wilson_ci_95": [
+        0.001,
+        0.0889
+      ],
+      "bootstrap_ci_95": [
+        0.0,
+        0.03
+      ],
+      "agent_a_avg_latency_ms": 2697.994,
+      "agent_b_avg_latency_ms": 9.964,
+      "simulations": 800
+    },
+    {
+      "agent_a": "Level4_MCTS_UCT",
+      "agent_b": "Level2_Heuristic",
+      "budget_mode": "workload_control",
+      "games": 50,
+      "wins": 0,
+      "draws": 1,
+      "losses": 49,
+      "score": 0.01,
+      "white_score": 0.0,
+      "black_score": 0.02,
+      "wilson_ci_95": [
+        0.001,
+        0.0889
+      ],
+      "bootstrap_ci_95": [
+        0.0,
+        0.03
+      ],
+      "agent_a_avg_latency_ms": 3275.777,
+      "agent_b_avg_latency_ms": 9.211,
+      "simulations": 1000
+    }
+  ],
+  "part_2a_puct_level7": {
+    "status": "skipped",
+    "curve": []
+  },
+  "part_2b_guidance_ablation": {
+    "status": "pending_tv2_level5_level7",
+    "matchups": []
+  }
+}
