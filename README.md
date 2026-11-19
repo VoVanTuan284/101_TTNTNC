@@ -104,6 +104,24 @@ python scripts/reproduce_experiment.py --from-logs --config configs/default_conf
 chess-gui
 ```
 
+### 3.3. UI Pygame: Người vs AI và replay
+
+Lớp giao diện nằm tại [`chess_ai/ui/desktop_pygame.py`](chess_ai/ui/desktop_pygame.py).
+UI không chứa luật cờ hoặc thuật toán tìm kiếm: bàn cờ được dựng từ `ChessEnv.render("fen")`,
+nước đi được lọc từ `legal_actions()` và thực thi bằng `step()`. AI nhận một `clone()` của
+môi trường trong worker riêng, sau đó UI áp dụng nước đi vào môi trường chính.
+
+```text
+ChessPygameApp
+  ├─ ChessEnv: trạng thái, legal actions, SAN, terminal/result
+  ├─ BaseAgent: select_move(env_clone, time_limit, max_workload)
+  └─ MoveRecord: action + snapshot clone + SAN + thời gian
+```
+
+Click một quân rồi click ô đích để đi. Panel hỗ trợ ván mới, đảo bàn, undo và replay.
+Phím tắt: `N` (ván mới), `F` (đảo bàn), `U` (undo), `Home/Left/Right/End` (replay),
+`P` (đổi phe), `A` (đổi cấp AI), `B` (đổi time limit/số mô phỏng).
+
 ---
 
 ## 4. Quy Trình Nhánh Gitflow & Trạng Thái Hiện Tại
