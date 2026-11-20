@@ -73,7 +73,7 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
   - Tầng học tăng cường & lai: Tác tử RL Cấp 6 trên cờ tàn KRK, Tác tử Guided MCTS (PUCT tích hợp Policy/Value) Cấp 7, và Vòng lặp Self-play Cấp 8.
   - Đường ống dữ liệu ETL: Lọc Lichess Elite Database, khử trùng lặp thế cờ bằng Zobrist Hash, phân tách Game-level split tất định, và lưu trữ mảng nhị phân `np.memmap`.
   - Khung đấu Arena trên 50 thế cờ khai cuộc cân bằng, đo kiểm thống kê Wilson Score $95\%$ và Paired Bootstrap $95\%$, độ trễ $p95$, NPS/SPS.
-  - Giao diện đồ họa Pygame đa tiến trình/luồng hỗ trợ Người đấu Máy và Máy đấu Máy.
+  - Giao diện đồ họa Pygame đa luồng/tiến trình (đặc tả chi tiết tại `docs/UI_SPEC.md`) hỗ trợ Người đấu Người, Người đấu Máy, Máy đấu Máy và Tab Nghiên cứu Thực nghiệm.
 
 ---
 

@@ -100,8 +100,9 @@ chess-arena --config configs/default_config.yaml --budget-mode workload_control
 # 5. Tái tạo bảng kết quả, khoảng tin cậy Wilson/Bootstrap 95% và biểu đồ báo cáo
 python scripts/reproduce_experiment.py --from-logs --config configs/default_config.yaml
 
-# 6. Khởi động giao diện đồ họa Pygame (Người đấu Máy & Máy đấu Máy)
-chess-gui
+# 6. Khởi động giao diện đồ họa Pygame (Người vs Người, Người vs Máy, Máy vs Máy & Research Lab)
+chess-ui
+# (hoặc: python -m chess_ai.ui.desktop_pygame)
 ```
 
 ### 3.3. UI Pygame: Người vs AI và replay
