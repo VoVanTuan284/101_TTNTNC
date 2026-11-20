@@ -99,6 +99,28 @@ class ChessEnv(GameEnv):
         new_env.board = self.board.copy(stack=True)
         return new_env
 
+    def san(self, action: chess.Move) -> str:
+        """Trả về SAN của một hành động hợp lệ mà không làm đổi môi trường."""
+        return self.board.san(action)
+
+    def termination_reason(self) -> Optional[str]:
+        """Trả về lý do kết thúc để lớp giao diện hiển thị."""
+        if not self.is_terminal():
+            return None
+        outcome = self.board.outcome(claim_draw=True)
+        if outcome is None:
+            return "Kết thúc ván"
+        reasons = {
+            chess.Termination.CHECKMATE: "Chiếu hết",
+            chess.Termination.STALEMATE: "Hết nước đi (stalemate)",
+            chess.Termination.INSUFFICIENT_MATERIAL: "Thiếu quân chiếu hết",
+            chess.Termination.FIFTY_MOVES: "Luật 50 nước",
+            chess.Termination.SEVENTYFIVE_MOVES: "Luật 75 nước",
+            chess.Termination.THREEFOLD_REPETITION: "Lặp thế cờ 3 lần",
+            chess.Termination.FIVEFOLD_REPETITION: "Lặp thế cờ 5 lần",
+        }
+        return reasons.get(outcome.termination, "Kết thúc ván")
+
     def undo(self) -> None:
         """Hoàn tác nước đi cuối."""
         if len(self.board.move_stack) > 0:
