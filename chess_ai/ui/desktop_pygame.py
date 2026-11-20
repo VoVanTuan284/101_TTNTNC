@@ -1,4 +1,4 @@
-"""Giao diện Pygame tối giản cho người đấu AI và xem lại ván đấu.
+"""Giao diện Pygame tối giản cho người đấu AI, AI đấu AI và xem lại ván đấu.
 
 Module này không đọc ``ChessEnv.board`` và không chứa luật cờ. Mọi trạng thái
 được lấy từ ``render``, ``legal_actions``, ``clone`` và mọi thay đổi đi qua
@@ -9,10 +9,13 @@ from __future__ import annotations
 
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass
+from pathlib import Path
 import time
-from typing import Any, Optional
+from typing import Any, Callable, Optional
 
-from chess_ai.agents.registry import AGENT_SPEC_REGISTRY, create_agent
+import chess
+
+from chess_ai.agents.registry import create_agent, list_full_board_agents
 from chess_ai.core.chess_env import ChessEnv
 
 
@@ -40,19 +43,34 @@ class ChessPygameApp:
     ACCENT = (86, 166, 255)
     HIGHLIGHT = (246, 210, 82)
 
+    BTN_COLS = 2
+    BTN_W = 165
+    BTN_H = 34
+    BTN_GAP_X = 10
+    BTN_GAP_Y = 6
+    BTN_START_X = BOARD_SIZE + 10
+    BTN_START_Y = 10
+
     def __init__(
         self,
         player_color: str = "white",
-        agent_id: str = "level1",
+        agent_id: str = "level3",
+        white_agent_id: str = "level2",
+        mode: str = "human_vs_ai",
         time_limit: Optional[float] = 1.0,
         max_workload: Optional[int] = None,
+        piece_set: str = "cburnett",
     ) -> None:
         self.player_color = player_color
         self.agent_id = agent_id
+        self.white_agent_id = white_agent_id
+        self.mode = mode  # "human_vs_ai" hoặc "ai_vs_ai"
         self.time_limit = time_limit
         self.max_workload = max_workload
+        self.piece_set = piece_set
         self.env = ChessEnv()
         self.agent = create_agent(agent_id)
+        self.white_agent = create_agent(white_agent_id)
         self.records: list[MoveRecord] = []
         self.replay_index = 0
         self.selected_square: Optional[int] = None
@@ -61,6 +79,32 @@ class ChessPygameApp:
         self.ai_started = 0.0
         self.executor = ThreadPoolExecutor(max_workers=1)
         self.flipped = False
+        self._piece_font: Any = None
+        self._ui_font: Any = None
+        self._small_font: Any = None
+        self._piece_images: dict[str, Any] = {}
+
+    def _load_piece_images(self, pygame: Any) -> dict[str, Any]:
+        """Nạp 12 ảnh quân cờ (.svg/.png) từ chess_ai/ui/assets/piece/<piece_set>/."""
+        assets_dir = Path(__file__).resolve().parent / "assets" / "piece" / self.piece_set
+        if not assets_dir.exists():
+            return {}
+
+        tile = self.BOARD_SIZE // 8
+        target_size = (int(tile * 0.88), int(tile * 0.88))
+        fen_to_file = {
+            "K": "wK", "Q": "wQ", "R": "wR", "B": "wB", "N": "wN", "P": "wP",
+            "k": "bK", "q": "bQ", "r": "bR", "b": "bB", "n": "bN", "p": "bP",
+        }
+        images: dict[str, Any] = {}
+        for fen_char, stem in fen_to_file.items():
+            for ext in (".svg", ".png"):
+                img_path = assets_dir / f"{stem}{ext}"
+                if img_path.exists():
+                    surf = pygame.image.load(str(img_path)).convert_alpha()
+                    images[fen_char] = pygame.transform.smoothscale(surf, target_size)
+                    break
+        return images
 
     def run(self) -> None:
         """Vòng lặp Pygame chính."""
@@ -68,7 +112,11 @@ class ChessPygameApp:
 
         pygame.init()
         screen = pygame.display.set_mode(self.WINDOW_SIZE)
-        pygame.display.set_caption("Chess AI - Người vs AI")
+        pygame.display.set_caption(f"101_TTNTNC - Chess AI ({self.piece_set})")
+        self._piece_font = pygame.font.SysFont("segoeuisymbol", 52)
+        self._ui_font = pygame.font.SysFont("segoeui", 15)
+        self._small_font = pygame.font.SysFont("segoeui", 14)
+        self._piece_images = self._load_piece_images(pygame)
         clock = pygame.time.Clock()
         running = True
         try:
@@ -77,7 +125,7 @@ class ChessPygameApp:
                     if event.type == pygame.QUIT:
                         running = False
                     elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        self._handle_click(event.pos, pygame)
+                        self._handle_click(event.pos)
                     elif event.type == pygame.KEYDOWN:
                         running = self._handle_key(event.key, pygame) and running
                 self._poll_ai()
@@ -95,6 +143,7 @@ class ChessPygameApp:
         self.ai_future = None
         self.env = ChessEnv()
         self.agent = create_agent(self.agent_id)
+        self.white_agent = create_agent(self.white_agent_id)
         self.records.clear()
         self.replay_index = 0
         self.selected_square = None
@@ -103,7 +152,10 @@ class ChessPygameApp:
     def _undo(self) -> None:
         if self.ai_future is not None and not self.ai_future.done():
             return
-        count = 2 if self.records and self._is_ai_turn_after_last_move() else 1
+        if self.mode == "human_vs_ai":
+            count = 2 if self.records and self._is_ai_turn_after_last_move() else 1
+        else:
+            count = 1
         del self.records[max(0, len(self.records) - count):]
         self._restore_index(len(self.records))
         self.message = "Đã đi lại một nước"
@@ -126,13 +178,48 @@ class ChessPygameApp:
             raise RuntimeError("ChessEnv không trả về FEN dạng chuỗi")
         return "white" if fen.split()[1] == "w" else "black"
 
+    def _toggle_mode(self) -> None:
+        self.mode = "ai_vs_ai" if self.mode == "human_vs_ai" else "human_vs_ai"
+        self._new_game()
+
+    def _cycle_white_agent(self) -> None:
+        agent_ids = list_full_board_agents()
+        next_index = (agent_ids.index(self.white_agent_id) + 1) % len(agent_ids)
+        self.white_agent_id = agent_ids[next_index]
+        self._new_game()
+
+    def _panel_buttons(self) -> list[tuple[str, Callable[[], None]]]:
+        return [
+            ("Ván mới [N]", self._new_game),
+            ("Đảo bàn [F]", self._toggle_flip),
+            ("Undo [U]", self._undo),
+            ("Chế độ [M]", self._toggle_mode),
+            ("First [Home]", lambda: self._restore_index(0)),
+            ("Prev [←]", lambda: self._restore_index(self.replay_index - 1)),
+            ("Next [→]", lambda: self._restore_index(self.replay_index + 1)),
+            ("Last [End]", lambda: self._restore_index(len(self.records))),
+            ("Đổi phe [P]", self._toggle_player_color),
+            ("Đổi AI [A]", self._cycle_agent),
+            ("Ngân sách [B]", self._toggle_budget),
+            ("AI Trắng [W]", self._cycle_white_agent),
+        ]
+
+    def _toggle_flip(self) -> None:
+        self.flipped = not self.flipped
+
+    def _toggle_player_color(self) -> None:
+        self.player_color = "black" if self.player_color == "white" else "white"
+        self._new_game()
+
     def _handle_key(self, key: int, pygame: Any) -> bool:
         if key == pygame.K_n:
             self._new_game()
         elif key == pygame.K_f:
-            self.flipped = not self.flipped
+            self._toggle_flip()
         elif key == pygame.K_u:
             self._undo()
+        elif key == pygame.K_m:
+            self._toggle_mode()
         elif key == pygame.K_HOME:
             self._restore_index(0)
         elif key == pygame.K_END:
@@ -144,20 +231,21 @@ class ChessPygameApp:
         elif key == pygame.K_ESCAPE:
             self.selected_square = None
         elif key == pygame.K_p:
-            self.player_color = "black" if self.player_color == "white" else "white"
-            self._new_game()
+            self._toggle_player_color()
         elif key == pygame.K_a:
             self._cycle_agent()
         elif key == pygame.K_b:
             self._toggle_budget()
+        elif key == pygame.K_w:
+            self._cycle_white_agent()
         return True
 
-    def _handle_click(self, position: tuple[int, int], pygame: Any) -> None:
+    def _handle_click(self, position: tuple[int, int]) -> None:
         x, y = position
         if x >= self.BOARD_SIZE:
-            self._handle_panel_click(y)
+            self._handle_panel_click(x, y)
             return
-        if self.ai_future is not None or self.env.is_terminal():
+        if self.mode != "human_vs_ai" or self.ai_future is not None or self.env.is_terminal():
             return
         if self.replay_index != len(self.records):
             self._restore_index(len(self.records))
@@ -175,31 +263,18 @@ class ChessPygameApp:
             return
         self._play_action(action)
 
-    def _handle_panel_click(self, y: int) -> None:
-        if y < 48:
-            self._new_game()
-        elif y < 96:
-            self.flipped = not self.flipped
-        elif y < 144:
-            self._undo()
-        elif y < 192:
-            self._restore_index(0)
-        elif y < 240:
-            self._restore_index(self.replay_index - 1)
-        elif y < 288:
-            self._restore_index(self.replay_index + 1)
-        elif y < 336:
-            self._restore_index(len(self.records))
-        elif y < 384:
-            self.player_color = "black" if self.player_color == "white" else "white"
-            self._new_game()
-        elif y < 432:
-            self._cycle_agent()
-        elif y < 480:
-            self._toggle_budget()
+    def _handle_panel_click(self, x: int, y: int) -> None:
+        buttons = self._panel_buttons()
+        for idx, (_, callback) in enumerate(buttons):
+            row, col = divmod(idx, self.BTN_COLS)
+            bx = self.BTN_START_X + col * (self.BTN_W + self.BTN_GAP_X)
+            by = self.BTN_START_Y + row * (self.BTN_H + self.BTN_GAP_Y)
+            if bx <= x <= bx + self.BTN_W and by <= y <= by + self.BTN_H:
+                callback()
+                return
 
     def _cycle_agent(self) -> None:
-        agent_ids = sorted(AGENT_SPEC_REGISTRY)
+        agent_ids = list_full_board_agents()
         next_index = (agent_ids.index(self.agent_id) + 1) % len(agent_ids)
         self.agent_id = agent_ids[next_index]
         self._new_game()
@@ -207,23 +282,29 @@ class ChessPygameApp:
     def _toggle_budget(self) -> None:
         if self.time_limit is not None:
             self.time_limit = None
-            self.max_workload = 200
+            self.max_workload = 400
         else:
             self.time_limit = 1.0
             self.max_workload = None
         self._new_game()
 
-    def _legal_from(self, square: int) -> list[Any]:
+    def _legal_from(self, square: Optional[int]) -> list[Any]:
+        if square is None:
+            return []
         return [
             move for move in self.env.legal_actions()
             if move.from_square == square
         ]
 
     def _find_action(self, source: int, target: int) -> Optional[Any]:
+        fallback: Optional[Any] = None
         for move in self.env.legal_actions():
             if move.from_square == source and move.to_square == target:
-                return move
-        return None
+                if move.promotion in (None, chess.QUEEN):
+                    return move
+                if fallback is None:
+                    fallback = move
+        return fallback
 
     def _play_action(self, action: Any) -> None:
         started = time.perf_counter()
@@ -235,14 +316,23 @@ class ChessPygameApp:
         self.selected_square = None
         self.message = self._status_text()
 
+    def _active_ai_agent(self) -> Optional[Any]:
+        if self.env.is_terminal() or self.replay_index < len(self.records):
+            return None
+        side = self._side_to_move()
+        if self.mode == "human_vs_ai":
+            return None if side == self.player_color else self.agent
+        return self.white_agent if side == "white" else self.agent
+
     def _start_ai(self) -> None:
-        if self.env.is_terminal() or self._side_to_move() == self.player_color:
+        active_agent = self._active_ai_agent()
+        if active_agent is None:
             return
         snapshot = self.env.clone()
         self.ai_started = time.perf_counter()
-        self.message = f"{self.agent.name} đang suy nghĩ..."
+        self.message = f"{active_agent.name} đang suy nghĩ..."
         self.ai_future = self.executor.submit(
-            self.agent.select_move,
+            active_agent.select_move,
             snapshot,
             self.time_limit,
             self.max_workload,
@@ -271,7 +361,7 @@ class ChessPygameApp:
             result = self.env.result()
             winner = "Trắng thắng" if result == 1.0 else "Đen thắng" if result == -1.0 else "Hòa"
             reason = self.env.termination_reason() or "Kết thúc ván"
-            return f"{winner} - {reason}"
+            return f"{winner} ({reason})"
         return "Lượt Trắng" if self._side_to_move() == "white" else "Lượt Đen"
 
     def _square_at(self, x: int, y: int) -> int:
@@ -306,6 +396,10 @@ class ChessPygameApp:
         tile = self.BOARD_SIZE // 8
         pieces = self._pieces()
         legal_targets = {move.to_square for move in self._legal_from(self.selected_square)}
+        glyph_map = {
+            "K": "♔", "Q": "♕", "R": "♖", "B": "♗", "N": "♘", "P": "♙",
+            "k": "♚", "q": "♛", "r": "♜", "b": "♝", "n": "♞", "p": "♟",
+        }
         for square in range(64):
             x, y = self._screen_square(square)
             color = self.LIGHT if (x + y) % 2 == 0 else self.DARK
@@ -316,50 +410,57 @@ class ChessPygameApp:
             elif square in legal_targets:
                 pygame.draw.circle(screen, self.HIGHLIGHT, rect.center, 10)
             if square in pieces:
-                font = pygame.font.SysFont("segoeuisymbol", 52)
-                glyph = {
-                    "K": "♔", "Q": "♕", "R": "♖", "B": "♗", "N": "♘", "P": "♙",
-                    "k": "♚", "q": "♛", "r": "♜", "b": "♝", "n": "♞", "p": "♟",
-                }[pieces[square]]
-                text = font.render(glyph, True, (25, 25, 25) if pieces[square].islower() else (250, 250, 250))
-                screen.blit(text, text.get_rect(center=rect.center))
+                ch = pieces[square]
+                if ch in self._piece_images:
+                    img = self._piece_images[ch]
+                    screen.blit(img, img.get_rect(center=rect.center))
+                else:
+                    text_color = (25, 25, 25) if ch.islower() else (250, 250, 250)
+                    text = self._piece_font.render(glyph_map[ch], True, text_color)
+                    screen.blit(text, text.get_rect(center=rect.center))
         self._draw_panel(screen, pygame)
 
     def _draw_panel(self, screen: Any, pygame: Any) -> None:
-        font = pygame.font.SysFont("segoeui", 18)
-        small = pygame.font.SysFont("segoeui", 15)
-        x = self.BOARD_SIZE + 18
-        buttons = [
-            "Ván mới [N]", "Đảo bàn [F]", "Undo [U]", "Replay: First [Home]",
-            "Prev [←]", "Next [→]", "Last [End]", "Đổi phe [P]",
-            "Đổi AI [A]", "Đổi ngân sách [B]",
-        ]
-        for index, label in enumerate(buttons):
-            rect = pygame.Rect(self.BOARD_SIZE + 10, 10 + index * 48, self.PANEL_WIDTH - 20, 38)
+        x = self.BOARD_SIZE + 12
+        buttons = self._panel_buttons()
+        for idx, (label, _) in enumerate(buttons):
+            row, col = divmod(idx, self.BTN_COLS)
+            bx = self.BTN_START_X + col * (self.BTN_W + self.BTN_GAP_X)
+            by = self.BTN_START_Y + row * (self.BTN_H + self.BTN_GAP_Y)
+            rect = pygame.Rect(bx, by, self.BTN_W, self.BTN_H)
             pygame.draw.rect(screen, (48, 55, 67), rect, border_radius=6)
-            screen.blit(font.render(label, True, self.TEXT), (x, rect.y + 8))
-        y = 515
+            screen.blit(self._ui_font.render(label, True, self.TEXT), (bx + 10, by + 7))
+
+        y = self.BTN_START_Y + 6 * (self.BTN_H + self.BTN_GAP_Y) + 8
+        mode_label = "Người vs AI" if self.mode == "human_vs_ai" else "AI vs AI"
+        ai_label = (
+            f"AI: {self.agent.name}"
+            if self.mode == "human_vs_ai"
+            else f"W: {self.white_agent.name} | B: {self.agent.name}"
+        )
         lines = [
-            f"Người: {'Trắng' if self.player_color == 'white' else 'Đen'}",
-            f"AI: {self.agent.name} ({self.agent_id})",
-            f"Ngân sách: {self.time_limit}s" if self.time_limit is not None else f"Mô phỏng: {self.max_workload}",
+            f"Chế độ: {mode_label} | Phe: {'Trắng' if self.player_color == 'white' else 'Đen'}",
+            ai_label,
+            f"Ngân sách: {self.time_limit}s" if self.time_limit is not None else f"Workload: {self.max_workload}",
             f"Trạng thái: {self.message}",
             f"Replay: {self.replay_index}/{len(self.records)}",
-            "",
             "Lịch sử SAN:",
         ]
         for line in lines:
-            screen.blit(small.render(line, True, self.TEXT if line else self.MUTED), (x, y))
-            y += 22
+            screen.blit(self._small_font.render(line, True, self.TEXT), (x, y))
+            y += 20
+
         history = []
         for i in range(0, len(self.records), 2):
             item = f"{i // 2 + 1}. {self.records[i].san}"
             if i + 1 < len(self.records):
                 item += f" {self.records[i + 1].san}"
             history.append(item)
-        for line in history[-10:]:
-            screen.blit(small.render(line, True, self.MUTED), (x, y))
-            y += 20
+        for line in history[-11:]:
+            if y + 18 > self.BOARD_SIZE:
+                break
+            screen.blit(self._small_font.render(line, True, self.MUTED), (x, y))
+            y += 19
 
 
 def launch_desktop_app() -> None:
@@ -369,4 +470,3 @@ def launch_desktop_app() -> None:
 
 if __name__ == "__main__":
     launch_desktop_app()
-
