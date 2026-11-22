@@ -105,14 +105,19 @@ class ChessPygameApp:
         self.ai_started = 0.0
         self.executor = ThreadPoolExecutor(max_workers=2)
         self.flipped = False
-        self.game_mode = "human_ai"
+        mode_map = {
+            "human_vs_ai": "human_ai",
+            "ai_vs_ai": "ai_ai",
+            "human_vs_human": "human_human",
+        }
+        self.game_mode = mode_map.get(mode, mode)
         self.white_clock = _Clock(600.0)
         self.black_clock = _Clock(600.0)
         self.clock_running = True
         self.last_clock_tick = time.perf_counter()
         self.fullscreen = False
         self.modal_open = False
-        self.modal_mode = "human_ai"
+        self.modal_mode = self.game_mode
         self.modal_human_color = "white"
         self.modal_white_agent = "level1"
         self.modal_black_agent = "level1"
@@ -371,7 +376,7 @@ class ChessPygameApp:
         if key == pygame.K_n:
             self._new_game()
         elif key == pygame.K_f:
-            self._toggle_flip()
+            self.flipped = not self.flipped
         elif key == pygame.K_u:
             self._undo()
         elif key == pygame.K_m:
@@ -389,19 +394,31 @@ class ChessPygameApp:
         elif key == pygame.K_p:
             self.player_color = "black" if self.player_color == "white" else "white"
             self._new_game()
-        elif key == pygame.K_m:
-            self.game_mode = (
-                "human_ai" if self.game_mode == "human_human"
-                else "human_human" if self.game_mode == "ai_ai"
-                else "ai_ai"
-            )
+        elif key == pygame.K_a:
+            self._cycle_agent()
+        elif key == pygame.K_b:
+            self._toggle_budget()
         elif key == pygame.K_r:
             self._resign()
         elif key == pygame.K_d:
             self._offer_draw()
         return True
 
-    def _handle_click(self, position: tuple[int, int]) -> None:
+    def _toggle_flip(self) -> None:
+        self.flipped = not self.flipped
+
+    def _toggle_mode(self) -> None:
+        if self.game_mode == "human_human":
+            self.game_mode = "human_ai"
+            self.mode = "human_vs_ai"
+        elif self.game_mode == "human_ai":
+            self.game_mode = "ai_ai"
+            self.mode = "ai_vs_ai"
+        else:
+            self.game_mode = "human_human"
+            self.mode = "human_vs_human"
+
+    def _handle_click(self, position: tuple[int, int], pygame_mod: Any = None) -> None:
         x, y = position
         if y < self.TAB_HEIGHT:
             if 0 <= x < 350:
@@ -410,7 +427,7 @@ class ChessPygameApp:
                 self.active_tab = "lab"
             return
         if self.modal_open:
-            self._handle_modal_click(x, y, pygame)
+            self._handle_modal_click(x, y, pygame_mod)
             return
         if self.active_tab == "lab":
             self._handle_lab_click(x, y)
@@ -419,20 +436,19 @@ class ChessPygameApp:
             self._handle_promotion_click(x, y)
             return
         if x < self.LEFT_WIDTH:
-            self._handle_left_click(x, y, pygame)
+            self._handle_left_click(x, y, pygame_mod)
         elif x < self.LEFT_WIDTH + self.ARENA_WIDTH:
             self._handle_board_click(x - self.LEFT_WIDTH, y - self.TAB_HEIGHT)
         else:
             self._handle_right_click(x - self.LEFT_WIDTH - self.ARENA_WIDTH, y - self.TAB_HEIGHT)
 
     def _handle_left_click(self, x: int, y: int, pygame: Any = None) -> None:
-        local_y = y - self.TAB_HEIGHT
         ids = list_full_board_agents()
         agent_index = next(
             (
                 index
                 for index in range(len(ids))
-                if 78 + index * 28 <= local_y < 102 + index * 28
+                if 78 + index * 28 <= y < 104 + index * 28
             ),
             None,
         )
@@ -447,22 +463,34 @@ class ChessPygameApp:
                 else:
                     self.white_agent = self.agent
             self.message = f"Đã chọn {self.agent_id}"
-        elif 272 <= local_y <= 306:
+        elif 316 <= y <= 354:
             self._toggle_budget()
-        elif 350 <= local_y <= 382:
+        elif 394 <= y <= 428:
             self.flipped = not self.flipped
-        elif 390 <= local_y <= 422:
+        elif 434 <= y <= 468:
             self._undo()
-        elif 430 <= local_y <= 462:
+        elif 474 <= y <= 508:
             self._resign()
-        elif 470 <= local_y <= 502:
+        elif 514 <= y <= 548:
             self._offer_draw()
-        elif 584 <= local_y <= 630:
+        elif 628 <= y <= 676:
             self._new_game()
 
+    def _handle_panel_click(self, x: int, y: int) -> None:
+        col = (x - self.BTN_START_X) // (self.BTN_W + self.BTN_GAP_X)
+        row = (y - self.BTN_START_Y) // (self.BTN_H + self.BTN_GAP_Y)
+        if row == 1 and col == 1:
+            self._toggle_mode()
+        else:
+            self._handle_click((x, y))
+
     def _handle_board_click(self, x: int, y: int) -> None:
+        board_offset_x = (self.ARENA_WIDTH - self.BOARD_SIZE) // 2
+        if x < board_offset_x or x >= board_offset_x + self.BOARD_SIZE:
+            return
         if y < 48 or y >= 48 + self.BOARD_SIZE:
             return
+        board_x = x - board_offset_x
         board_y = y - 48
         if self.ai_future is not None and not self.ai_future.done():
             return
@@ -470,7 +498,7 @@ class ChessPygameApp:
             return
         if self.replay_index != len(self.records):
             self._restore_index(len(self.records))
-        square = self._square_at(x, board_y)
+        square = self._square_at(board_x, board_y)
         if self.selected_square is None:
             legal = self._legal_from(square)
             if legal:
@@ -653,6 +681,16 @@ class ChessPygameApp:
         if side == "white":
             return self.white_agent
         return self.black_agent
+
+    def _active_ai_agent(self) -> Optional[Any]:
+        if self.env.is_terminal() or self.replay_index != len(self.records):
+            return None
+        side = self._side_to_move()
+        if self.game_mode == "human_ai" and side == self.player_color:
+            return None
+        if self.game_mode == "human_human":
+            return None
+        return self._agent_for_side(side)
 
     def _start_ai(self) -> None:
         if self.env.is_terminal() or self.replay_index != len(self.records):

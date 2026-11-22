@@ -46,5 +46,9 @@ def test_ui_panel_click_and_mode_toggle() -> None:
         app._handle_panel_click(bx, by)
         assert app.mode == "ai_vs_ai"
         assert app._active_ai_agent() is app.white_agent
+
+        # Kiểm tra _handle_click với tham số (position, pygame) như trong run()
+        import pygame
+        app._handle_click((300, 100), pygame)
     finally:
         app.executor.shutdown(wait=False, cancel_futures=True)
