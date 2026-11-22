@@ -1,0 +1,548 @@
+{
+  "experiment": "Level6_RL_Endgames",
+  "elapsed_sec": 649.7,
+  "hardware_environment": {
+    "device": "cpu",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python_version": "3.11.16",
+    "processor": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "cpu_count": 20,
+    "torch_version": "2.15.0+cpu"
+  },
+  "hyperparameters": {
+    "config_path": "configs/search_params.yaml",
+    "tabular_q_episodes_per_endgame": 5000,
+    "reinforce_krk_episodes": 3000,
+    "gamma": 0.99,
+    "learning_rate": 0.25,
+    "reinforce_lr": 0.001,
+    "step_penalty": -0.005,
+    "win_reward": 1.0,
+    "draw_penalty": -0.2,
+    "epsilon_start": 1.0,
+    "epsilon_end": 0.05,
+    "max_steps": 100,
+    "seed": 42
+  },
+  "checkpoint_path": "checkpoints\\l6_krk_qtable.pkl",
+  "checkpoint_size_kb": 35062.44,
+  "endgames": [
+    "KQK",
+    "KRK",
+    "KPK"
+  ],
+  "stage_summary": {
+    "tabular_q_KQK": {
+      "elapsed_sec": 128.17,
+      "q_states": 480756,
+      "final_train_win_rate": 0.46,
+      "final_train_avg_plies": 28.95,
+      "eval_games": 100,
+      "greedy_win_rate": 0.43,
+      "greedy_avg_plies": 28.0
+    },
+    "tabular_q_KRK": {
+      "elapsed_sec": 170.58,
+      "q_states": 387017,
+      "final_train_win_rate": 0.384,
+      "final_train_avg_plies": 32.38,
+      "eval_games": 100,
+      "greedy_win_rate": 0.26,
+      "greedy_avg_plies": 31.81
+    },
+    "tabular_q_KPK": {
+      "elapsed_sec": 100.14,
+      "q_states": 298560,
+      "final_train_win_rate": 0.072,
+      "final_train_avg_plies": 31.71,
+      "eval_games": 100,
+      "greedy_win_rate": 0.0,
+      "greedy_avg_plies": 26.23
+    },
+    "reinforce_KRK": {
+      "elapsed_sec": 244.16,
+      "final_train_win_rate": 0.0,
+      "final_train_avg_plies": 76.17
+    }
+  },
+  "tabular_q_curves": {
+    "KQK": [
+      {
+        "episode": 250,
+        "win_rate": 0.04,
+        "avg_plies": 25.04,
+        "epsilon": 0.9406,
+        "q_states": 5799
+      },
+      {
+        "episode": 500,
+        "win_rate": 0.06,
+        "avg_plies": 26.42,
+        "epsilon": 0.8812,
+        "q_states": 16687
+      },
+      {
+        "episode": 750,
+        "win_rate": 0.04,
+        "avg_plies": 26.94,
+        "epsilon": 0.8219,
+        "q_states": 31595
+      },
+      {
+        "episode": 1000,
+        "win_rate": 0.064,
+        "avg_plies": 27.36,
+        "epsilon": 0.7625,
+        "q_states": 51882
+      },
+      {
+        "episode": 1250,
+        "win_rate": 0.072,
+        "avg_plies": 25.42,
+        "epsilon": 0.7031,
+        "q_states": 73534
+      },
+      {
+        "episode": 1500,
+        "win_rate": 0.112,
+        "avg_plies": 28.5,
+        "epsilon": 0.6438,
+        "q_states": 100614
+      },
+      {
+        "episode": 1750,
+        "win_rate": 0.104,
+        "avg_plies": 28.5,
+        "epsilon": 0.5844,
+        "q_states": 129045
+      },
+      {
+        "episode": 2000,
+        "win_rate": 0.164,
+        "avg_plies": 27.36,
+        "epsilon": 0.525,
+        "q_states": 157404
+      },
+      {
+        "episode": 2250,
+        "win_rate": 0.068,
+        "avg_plies": 26.67,
+        "epsilon": 0.4656,
+        "q_states": 188721
+      },
+      {
+        "episode": 2500,
+        "win_rate": 0.088,
+        "avg_plies": 32.1,
+        "epsilon": 0.4062,
+        "q_states": 226532
+      },
+      {
+        "episode": 2750,
+        "win_rate": 0.116,
+        "avg_plies": 31.7,
+        "epsilon": 0.3469,
+        "q_states": 264799
+      },
+      {
+        "episode": 3000,
+        "win_rate": 0.124,
+        "avg_plies": 31.78,
+        "epsilon": 0.2875,
+        "q_states": 299561
+      },
+      {
+        "episode": 3250,
+        "win_rate": 0.176,
+        "avg_plies": 30.21,
+        "epsilon": 0.2281,
+        "q_states": 330885
+      },
+      {
+        "episode": 3500,
+        "win_rate": 0.172,
+        "avg_plies": 34.94,
+        "epsilon": 0.1688,
+        "q_states": 363428
+      },
+      {
+        "episode": 3750,
+        "win_rate": 0.252,
+        "avg_plies": 29.51,
+        "epsilon": 0.1094,
+        "q_states": 388296
+      },
+      {
+        "episode": 4000,
+        "win_rate": 0.36,
+        "avg_plies": 32.87,
+        "epsilon": 0.05,
+        "q_states": 412508
+      },
+      {
+        "episode": 4250,
+        "win_rate": 0.38,
+        "avg_plies": 32.52,
+        "epsilon": 0.05,
+        "q_states": 433735
+      },
+      {
+        "episode": 4500,
+        "win_rate": 0.368,
+        "avg_plies": 29.53,
+        "epsilon": 0.05,
+        "q_states": 450674
+      },
+      {
+        "episode": 4750,
+        "win_rate": 0.46,
+        "avg_plies": 34.23,
+        "epsilon": 0.05,
+        "q_states": 467987
+      },
+      {
+        "episode": 5000,
+        "win_rate": 0.46,
+        "avg_plies": 28.95,
+        "epsilon": 0.05,
+        "q_states": 480756
+      }
+    ],
+    "KRK": [
+      {
+        "episode": 250,
+        "win_rate": 0.02,
+        "avg_plies": 31.32,
+        "epsilon": 0.9406,
+        "q_states": 6127
+      },
+      {
+        "episode": 500,
+        "win_rate": 0.028,
+        "avg_plies": 29.97,
+        "epsilon": 0.8812,
+        "q_states": 15285
+      },
+      {
+        "episode": 750,
+        "win_rate": 0.036,
+        "avg_plies": 29.96,
+        "epsilon": 0.8219,
+        "q_states": 27890
+      },
+      {
+        "episode": 1000,
+        "win_rate": 0.04,
+        "avg_plies": 27.2,
+        "epsilon": 0.7625,
+        "q_states": 42407
+      },
+      {
+        "episode": 1250,
+        "win_rate": 0.08,
+        "avg_plies": 30.84,
+        "epsilon": 0.7031,
+        "q_states": 60931
+      },
+      {
+        "episode": 1500,
+        "win_rate": 0.052,
+        "avg_plies": 32.49,
+        "epsilon": 0.6438,
+        "q_states": 83165
+      },
+      {
+        "episode": 1750,
+        "win_rate": 0.072,
+        "avg_plies": 32.28,
+        "epsilon": 0.5844,
+        "q_states": 105762
+      },
+      {
+        "episode": 2000,
+        "win_rate": 0.084,
+        "avg_plies": 33.4,
+        "epsilon": 0.525,
+        "q_states": 129530
+      },
+      {
+        "episode": 2250,
+        "win_rate": 0.024,
+        "avg_plies": 32.8,
+        "epsilon": 0.4656,
+        "q_states": 156627
+      },
+      {
+        "episode": 2500,
+        "win_rate": 0.06,
+        "avg_plies": 33.57,
+        "epsilon": 0.4062,
+        "q_states": 185714
+      },
+      {
+        "episode": 2750,
+        "win_rate": 0.04,
+        "avg_plies": 32.86,
+        "epsilon": 0.3469,
+        "q_states": 213718
+      },
+      {
+        "episode": 3000,
+        "win_rate": 0.068,
+        "avg_plies": 34.14,
+        "epsilon": 0.2875,
+        "q_states": 242856
+      },
+      {
+        "episode": 3250,
+        "win_rate": 0.136,
+        "avg_plies": 35.69,
+        "epsilon": 0.2281,
+        "q_states": 268499
+      },
+      {
+        "episode": 3500,
+        "win_rate": 0.168,
+        "avg_plies": 36.56,
+        "epsilon": 0.1688,
+        "q_states": 292525
+      },
+      {
+        "episode": 3750,
+        "win_rate": 0.196,
+        "avg_plies": 34.98,
+        "epsilon": 0.1094,
+        "q_states": 313205
+      },
+      {
+        "episode": 4000,
+        "win_rate": 0.26,
+        "avg_plies": 37.03,
+        "epsilon": 0.05,
+        "q_states": 334148
+      },
+      {
+        "episode": 4250,
+        "win_rate": 0.364,
+        "avg_plies": 32.56,
+        "epsilon": 0.05,
+        "q_states": 349691
+      },
+      {
+        "episode": 4500,
+        "win_rate": 0.328,
+        "avg_plies": 34.48,
+        "epsilon": 0.05,
+        "q_states": 364185
+      },
+      {
+        "episode": 4750,
+        "win_rate": 0.36,
+        "avg_plies": 32.6,
+        "epsilon": 0.05,
+        "q_states": 376976
+      },
+      {
+        "episode": 5000,
+        "win_rate": 0.384,
+        "avg_plies": 32.38,
+        "epsilon": 0.05,
+        "q_states": 387017
+      }
+    ],
+    "KPK": [
+      {
+        "episode": 250,
+        "win_rate": 0.076,
+        "avg_plies": 24.64,
+        "epsilon": 0.9406,
+        "q_states": 2771
+      },
+      {
+        "episode": 500,
+        "win_rate": 0.052,
+        "avg_plies": 26.84,
+        "epsilon": 0.8812,
+        "q_states": 7612
+      },
+      {
+        "episode": 750,
+        "win_rate": 0.064,
+        "avg_plies": 26.64,
+        "epsilon": 0.8219,
+        "q_states": 13904
+      },
+      {
+        "episode": 1000,
+        "win_rate": 0.06,
+        "avg_plies": 25.83,
+        "epsilon": 0.7625,
+        "q_states": 20653
+      },
+      {
+        "episode": 1250,
+        "win_rate": 0.068,
+        "avg_plies": 23.38,
+        "epsilon": 0.7031,
+        "q_states": 28140
+      },
+      {
+        "episode": 1500,
+        "win_rate": 0.076,
+        "avg_plies": 28.91,
+        "epsilon": 0.6438,
+        "q_states": 39517
+      },
+      {
+        "episode": 1750,
+        "win_rate": 0.072,
+        "avg_plies": 25.6,
+        "epsilon": 0.5844,
+        "q_states": 50105
+      },
+      {
+        "episode": 2000,
+        "win_rate": 0.068,
+        "avg_plies": 25.4,
+        "epsilon": 0.525,
+        "q_states": 62642
+      },
+      {
+        "episode": 2250,
+        "win_rate": 0.06,
+        "avg_plies": 35.66,
+        "epsilon": 0.4656,
+        "q_states": 81264
+      },
+      {
+        "episode": 2500,
+        "win_rate": 0.044,
+        "avg_plies": 31.1,
+        "epsilon": 0.4062,
+        "q_states": 97536
+      },
+      {
+        "episode": 2750,
+        "win_rate": 0.052,
+        "avg_plies": 31.57,
+        "epsilon": 0.3469,
+        "q_states": 116005
+      },
+      {
+        "episode": 3000,
+        "win_rate": 0.048,
+        "avg_plies": 30.87,
+        "epsilon": 0.2875,
+        "q_states": 134473
+      },
+      {
+        "episode": 3250,
+        "win_rate": 0.064,
+        "avg_plies": 32.59,
+        "epsilon": 0.2281,
+        "q_states": 155304
+      },
+      {
+        "episode": 3500,
+        "win_rate": 0.06,
+        "avg_plies": 30.6,
+        "epsilon": 0.1688,
+        "q_states": 175835
+      },
+      {
+        "episode": 3750,
+        "win_rate": 0.092,
+        "avg_plies": 32.15,
+        "epsilon": 0.1094,
+        "q_states": 197808
+      },
+      {
+        "episode": 4000,
+        "win_rate": 0.048,
+        "avg_plies": 28.21,
+        "epsilon": 0.05,
+        "q_states": 218794
+      },
+      {
+        "episode": 4250,
+        "win_rate": 0.076,
+        "avg_plies": 30.43,
+        "epsilon": 0.05,
+        "q_states": 241199
+      },
+      {
+        "episode": 4500,
+        "win_rate": 0.06,
+        "avg_plies": 30.46,
+        "epsilon": 0.05,
+        "q_states": 260065
+      },
+      {
+        "episode": 4750,
+        "win_rate": 0.084,
+        "avg_plies": 31.01,
+        "epsilon": 0.05,
+        "q_states": 281112
+      },
+      {
+        "episode": 5000,
+        "win_rate": 0.072,
+        "avg_plies": 31.71,
+        "epsilon": 0.05,
+        "q_states": 298560
+      }
+    ]
+  },
+  "reinforce_krk_curve": [
+    {
+      "episode": 300,
+      "win_rate": 0.0367,
+      "avg_plies": 29.29
+    },
+    {
+      "episode": 600,
+      "win_rate": 0.0267,
+      "avg_plies": 26.93
+    },
+    {
+      "episode": 900,
+      "win_rate": 0.02,
+      "avg_plies": 30.45
+    },
+    {
+      "episode": 1200,
+      "win_rate": 0.0267,
+      "avg_plies": 33.63
+    },
+    {
+      "episode": 1500,
+      "win_rate": 0.0133,
+      "avg_plies": 39.2
+    },
+    {
+      "episode": 1800,
+      "win_rate": 0.0033,
+      "avg_plies": 58.24
+    },
+    {
+      "episode": 2100,
+      "win_rate": 0.0067,
+      "avg_plies": 75.16
+    },
+    {
+      "episode": 2400,
+      "win_rate": 0.0067,
+      "avg_plies": 77.49
+    },
+    {
+      "episode": 2700,
+      "win_rate": 0.0,
+      "avg_plies": 77.57
+    },
+    {
+      "episode": 3000,
+      "win_rate": 0.0,
+      "avg_plies": 76.17
+    }
+  ]
+}

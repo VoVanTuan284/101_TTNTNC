@@ -125,3 +125,14 @@ class ChessEnv(GameEnv):
         """Hoàn tác nước đi cuối."""
         if len(self.board.move_stack) > 0:
             self.board.pop()
+
+    def san(self, action: chess.Move) -> str:
+        """Trả về ký hiệu đại số chuẩn (SAN) của nước đi tại trạng thái hiện tại."""
+        return self.board.san(action)
+
+    def termination_reason(self) -> Optional[str]:
+        """Trả về lý do kết thúc ván cờ (nếu đã kết thúc), ngược lại trả về None."""
+        outcome = self.board.outcome(claim_draw=True)
+        if outcome is None:
+            return None
+        return outcome.termination.name.lower()

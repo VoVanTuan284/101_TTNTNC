@@ -197,6 +197,6 @@ Mỗi thành viên khi bàn giao mã nguồn phải vượt qua các Cổng Ki�
 
 ### 5.3. Tiêu chí Nghiệm thu của TV3 (UI, Arena, Testing, Configs & Analytics Lead)
 1. Bộ 61 bài kiểm thử tự động (`TC01` – `TC61`) được hoàn thiện đúng tiến độ và chạy xanh $100\%$ (`pytest`).
-2. Giao diện `chess_ai/ui/desktop_pygame.py` tách tiến trình/luồng tính toán AI độc lập, không bị đơ giật giao diện, hỗ trợ chọn đủ 8 cấp độ AI ở cả hai chế độ Human-vs-AI và AI-vs-AI.
+2. Giao diện `chess_ai/ui/desktop_pygame.py` (tuân thủ `docs/UI_SPEC.md`) tách tiến trình/luồng tính toán AI độc lập, không bị đơ giật giao diện, hỗ trợ chọn các cấp độ AI hợp lệ ở cả chế độ Human-vs-Human, Human-vs-AI, AI-vs-AI và Tab Nghiên cứu Thực nghiệm.
 3. Động cơ `chess_ai/arena/tournament.py` vận hành tự động loạt đấu 100 ván/cặp trên 50 thế cờ khai cuộc cân bằng (`resources/openings_50.epd`), xuất đầy đủ `matches.jsonl`, `games.pgn`, Wilson Score 95% và Paired Bootstrap 95%.
 4. Hoàn thiện kịch bản `scripts/reproduce_experiment.py` (hỗ trợ `--from-logs` và `--full`) cùng notebook `notebooks/analysis.ipynb` sinh toàn bộ bảng biểu cho báo cáo.

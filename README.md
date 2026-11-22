@@ -4,7 +4,7 @@
 **Chủ đề:** Xây dựng và Đánh giá Game AI Đa Cấp Độ  
 **Trò chơi:** Cờ vua chuẩn FIDE $8 \times 8$ _(Đề tài và phạm vi 8 cấp độ đã được giảng viên phê duyệt chính thức)_  
 **Phiên bản Python chuẩn:** Python $\ge 3.11$ (ghim tại [`.python-version`](.python-version) và [`pyproject.toml`](pyproject.toml))  
-**Quy mô nhóm:** 3 Thành viên (`TV1`, `TV2`, `TV3`) | Phân công đóng góp: $33.3\% - 33.3\% - 33.4\%$ (chi tiết tại [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md))
+**Quy mô nhóm:** 3 Thành viên (`TV1: Tuấn`, `TV2: Đức`, `TV3: Vinh`) | Phân công đóng góp: $33.3\% - 33.3\% - 33.4\%$ (chi tiết tại [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md))
 
 ---
 
@@ -37,11 +37,21 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
 - **Kết quả thực nghiệm & Trọng số nộp bài (`results/`, `checkpoints/`, `report/` — được commit):**
   - `checkpoints/`: Lưu trữ trực tiếp `best_model.pt` ($\sim 5\text{MB}$) và `l6_krk_qtable.pkl` trên Git.
   - `results/`: Lưu trữ log thi đấu thô (`round_robin/matches.jsonl`, `round_robin/games.pgn`), kết quả `ablation1/`, `ablation2/`, `training/` và biểu đồ `figures/`.
+  - `notebooks/`: Bộ 6 notebook phân tích theo chuyên đề (`01`–`06`) và `analysis.ipynb` tổng hợp (chi tiết tại [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md)).
   - `report/`: Chứa báo cáo 5 chương, slide thuyết trình, poster A0 và link video demo.
 - **Tài liệu kỹ thuật (`docs/`):**
+  - [`docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf`](docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf): Đề bài gốc và Rubric chấm điểm môn Trí tuệ Nhân tạo Nâng cao.
   - [`docs/DECISIONS.md`](docs/DECISIONS.md): Hồ sơ các quyết định kiến trúc & kỹ thuật đã đóng băng (`ADR-01` $\to$ `ADR-08`).
-  - [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md): Bảng phân công nhiệm vụ và tỷ lệ đóng góp của 3 thành viên.
-  - [`docs/PROMPT_AND_FILE_SPEC.md`](docs/PROMPT_AND_FILE_SPEC.md), [`docs/DATASET_SPEC.md`](docs/DATASET_SPEC.md), [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md), [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md), [`docs/SPRINT_PLAN_15DAYS.md`](docs/SPRINT_PLAN_15DAYS.md), [`docs/REPORT_OUTLINE.md`](docs/REPORT_OUTLINE.md).
+  - [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md): Bảng phân công nhiệm vụ, nhánh Git và tỷ lệ đóng góp (`33.3% / 33.3% / 33.4%`) của 3 thành viên.
+  - [`docs/PROMPT_AND_FILE_SPEC.md`](docs/PROMPT_AND_FILE_SPEC.md): Đặc tả kiến trúc Clean Architecture, 8 cấp độ tác tử và hợp đồng giao diện `GameEnv` / `ChessEnv` / `BaseAgent`.
+  - [`docs/DATASET_SPEC.md`](docs/DATASET_SPEC.md): Quy trình ETL dữ liệu Lichess Elite Database, bộ lọc 5 tiêu chí, khử trùng Zobrist 64-bit, lưu trữ `np.memmap` và schema checkpoint.
+  - [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md): Giao thức giải đấu Round-Robin 100 ván/cặp trên 50 khai cuộc, kiểm định Wilson/Bootstrap 95% và thiết kế 2 bài Ablation Studies.
+  - [`docs/UI_SPEC.md`](docs/UI_SPEC.md): Đặc tả giao diện Desktop Pygame (bố cục 3 cột, đồng hồ 2 đầu bàn cờ, Modal thiết lập ván đấu mới, Tab Nghiên cứu Thực nghiệm & bộ quân cờ `assets/`).
+  - [`docs/GITFLOW.md`](docs/GITFLOW.md): Quy trình chia nhánh, chuẩn Conventional Commits, quy định Pull Request và quản lý dữ liệu lớn.
+  - [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md): Quy ước bàn giao giữa các thành viên và danh mục 61 kịch bản kiểm thử tự động (`TC01`–`TC61`).
+  - [`docs/SPRINT_PLAN_15DAYS.md`](docs/SPRINT_PLAN_15DAYS.md): Ma trận trách nhiệm RACI và lộ trình triển khai chi tiết 15 ngày theo 5 pha.
+  - [`docs/REPORT_OUTLINE.md`](docs/REPORT_OUTLINE.md): 4 câu hỏi nghiên cứu (`RQ1`–`RQ4`) và dàn ý chi tiết Báo cáo khoa học 5 chương chuẩn IEEE.
+  - [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md): Hướng dẫn cấu trúc, đầu vào/đầu ra và quy ước sử dụng bộ 6 notebook chuyên đề trong `notebooks/`.
 
 ---
 
@@ -83,16 +93,21 @@ pip install -e .
 Sau khi kích hoạt `.venv`, có thể chạy trực tiếp bằng `python -m ...` hoặc các lệnh CLI đã đăng ký trong [`pyproject.toml`](pyproject.toml):
 
 ```bash
-# 1. Chạy kiểm thử tự động (Core & L1-L4 hiện có 11 tests pass; khung 61 TCs của TV3)
+# 1. Chạy kiểm thử tự động (Core, L1-L4, L6 RL, ETL, Arena & UI: 27 tests pass)
 pytest -v
 
 # 2. Trích xuất dữ liệu từ Lichess Elite Database ra mảng nhị phân np.memmap
 chess-etl --config configs/default_config.yaml
 # (hoặc: python -m chess_ai.etl.pgn_etl --config configs/default_config.yaml)
 
-# 3. Huấn luyện mạng Dual-Head ResNet (Cấp 5) và RL cờ tàn KRK (Cấp 6)
-chess-train --config configs/model_resnet.yaml
-python -m chess_ai.training.train_rl_krk --config configs/search_params.yaml
+# 3. Huấn luyện các cấp độ Học máy / Học sâu:
+#    - Cấp 5 (Supervised Dual-Head ResNet) [chờ TV2 hoàn thiện]:
+chess-train-sl --config configs/model_resnet.yaml
+#    - Cấp 6 (RL cờ tàn KQK/KRK/KPK + REINFORCE KRK):
+chess-train-rl --config configs/search_params.yaml
+#      (chạy nhanh: chess-train-rl --episodes 5000 --reinforce-episodes 1000)
+#    - Cấp 8 (AlphaZero Self-Play) [chờ TV2 hoàn thiện]:
+chess-selfplay
 
 # 4. Vận hành giải đấu đối kháng Round-Robin (100 ván/cặp trên 50 thế cờ khai cuộc cân bằng)
 chess-arena --config configs/default_config.yaml --budget-mode workload_control
@@ -100,8 +115,9 @@ chess-arena --config configs/default_config.yaml --budget-mode workload_control
 # 5. Tái tạo bảng kết quả, khoảng tin cậy Wilson/Bootstrap 95% và biểu đồ báo cáo
 python scripts/reproduce_experiment.py --from-logs --config configs/default_config.yaml
 
-# 6. Khởi động giao diện đồ họa Pygame (Người đấu Máy & Máy đấu Máy)
-chess-gui
+# 6. Khởi động giao diện đồ họa Pygame (Người vs Người, Người vs Máy, Máy vs Máy & Research Lab)
+chess-ui
+# (hoặc: python -m chess_ai.ui.desktop_pygame)
 ```
 
 ### 3.3. UI Pygame: Người vs AI và replay
@@ -124,13 +140,9 @@ Phím tắt: `N` (ván mới), `F` (đảo bàn), `U` (undo), `Home/Left/Right/E
 
 ---
 
-## 4. Quy Trình Nhánh Gitflow & Trạng Thái Hiện Tại
+## 4. Quy Trình Gitflow & Quy Định Nhóm
 
-- **Nhánh tích hợp:** `main` (nộp bài ổn định) $\leftarrow$ `dev` (tích hợp nhóm)
-- **Nhánh phát triển thành viên:**
-  - `feature/tv1-core-search-rl` _(TV1)_: **Đã hoàn thiện & pass pytest** phần Core (`ChessEnv`, `evaluation`, `zobrist`), Tìm kiếm cổ điển (`Alpha-Beta + ID`, `TT`, `Move Ordering`, `Quiescence`, `UCT`) và Tác tử **Cấp 1 – Cấp 4**; tiếp theo là Cấp 6 (KRK) & Ablation 1.
-  - `feature/tv2-data-models-puct` _(TV2)_: `board_tensor`, ETL Lichess Elite, Dual-Head ResNet, PUCT và Tác tử Cấp 5, 7, 8.
-  - `feature/tv3-ui-arena-qa` _(TV3)_: UI Pygame, Arena Tournament, Ablation 2, bộ 61 kiểm thử (`TC01`–`TC61`), `reproduce_experiment.py`.
+Toàn bộ quy chuẩn chia nhánh (`main`, `dev`, `feature/tv1-*`, `feature/tv2-*`, `feature/tv3-*`), quy tắc **Conventional Commits**, kiểm tra `pytest` trước khi tạo Pull Request và quy định loại trừ dữ liệu lớn được đặc tả chi tiết tại [`docs/GITFLOW.md`](docs/GITFLOW.md).
 
 ---
 

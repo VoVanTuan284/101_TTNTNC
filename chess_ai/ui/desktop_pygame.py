@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import threading
 import time
-from typing import Any, Optional
+from typing import Any, Callable, Optional
 
 from chess_ai.agents.registry import (
     AGENT_SPEC_REGISTRY,
@@ -65,16 +65,28 @@ class ChessPygameApp:
     HIGHLIGHT = (246, 210, 82)
     LAST_MOVE = (186, 203, 68)
 
+    BTN_COLS = 2
+    BTN_W = 165
+    BTN_H = 34
+    BTN_GAP_X = 10
+    BTN_GAP_Y = 6
+    BTN_START_X = BOARD_SIZE + 10
+    BTN_START_Y = 10
+
     def __init__(
         self,
         player_color: str = "white",
-        agent_id: str = "level1",
+        agent_id: str = "level3",
+        white_agent_id: str = "level2",
+        mode: str = "human_vs_ai",
         time_limit: Optional[float] = 1.0,
         max_workload: Optional[int] = None,
         piece_set: str = "cburnett",
     ) -> None:
         self.player_color = player_color
         self.agent_id = agent_id
+        self.white_agent_id = white_agent_id
+        self.mode = mode  # "human_vs_ai" hoặc "ai_vs_ai"
         self.time_limit = time_limit
         self.max_workload = max_workload
         self.piece_set = piece_set
@@ -358,9 +370,11 @@ class ChessPygameApp:
         if key == pygame.K_n:
             self._new_game()
         elif key == pygame.K_f:
-            self.flipped = not self.flipped
+            self._toggle_flip()
         elif key == pygame.K_u:
             self._undo()
+        elif key == pygame.K_m:
+            self._toggle_mode()
         elif key == pygame.K_HOME:
             self._restore_index(0)
         elif key == pygame.K_END:
@@ -386,7 +400,7 @@ class ChessPygameApp:
             self._offer_draw()
         return True
 
-    def _handle_click(self, position: tuple[int, int], pygame: Any) -> None:
+    def _handle_click(self, position: tuple[int, int]) -> None:
         x, y = position
         if y < self.TAB_HEIGHT:
             if 0 <= x < 350:
@@ -604,6 +618,7 @@ class ChessPygameApp:
         return [move for move in self.env.legal_actions() if move.from_square == square]
 
     def _find_action(self, source: int, target: int) -> Optional[Any]:
+        fallback: Optional[Any] = None
         for move in self.env.legal_actions():
             if (
                 move.from_square == source
@@ -691,7 +706,7 @@ class ChessPygameApp:
             result = self.env.result()
             winner = "Trắng thắng" if result == 1.0 else "Đen thắng" if result == -1.0 else "Hòa"
             reason = self.env.termination_reason() or "Kết thúc ván"
-            return f"{winner} - {reason}"
+            return f"{winner} ({reason})"
         return "Lượt Trắng" if self._side_to_move() == "white" else "Lượt Đen"
 
     def _resign(self) -> None:
