@@ -4,7 +4,7 @@
 **Chủ đề:** Xây dựng và Đánh giá Game AI Đa Cấp Độ  
 **Trò chơi:** Cờ vua chuẩn FIDE $8 \times 8$ _(Đề tài và phạm vi 8 cấp độ đã được giảng viên phê duyệt chính thức)_  
 **Phiên bản Python chuẩn:** Python $\ge 3.11$ (ghim tại [`.python-version`](.python-version) và [`pyproject.toml`](pyproject.toml))  
-**Quy mô nhóm:** 3 Thành viên (`TV1`, `TV2`, `TV3`) | Phân công đóng góp: $33.3\% - 33.3\% - 33.4\%$ (chi tiết tại [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md))
+**Quy mô nhóm:** 3 Thành viên (`TV1: Tuấn`, `TV2: Đức`, `TV3: Vinh`) | Phân công đóng góp: $33.3\% - 33.3\% - 33.4\%$ (chi tiết tại [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md))
 
 ---
 
@@ -91,16 +91,21 @@ pip install -e .
 Sau khi kích hoạt `.venv`, có thể chạy trực tiếp bằng `python -m ...` hoặc các lệnh CLI đã đăng ký trong [`pyproject.toml`](pyproject.toml):
 
 ```bash
-# 1. Chạy kiểm thử tự động (Core & L1-L4 hiện có 11 tests pass; khung 61 TCs của TV3)
+# 1. Chạy kiểm thử tự động (Core, L1-L4, L6 RL, ETL, Arena & UI: 27 tests pass)
 pytest -v
 
 # 2. Trích xuất dữ liệu từ Lichess Elite Database ra mảng nhị phân np.memmap
 chess-etl --config configs/default_config.yaml
 # (hoặc: python -m chess_ai.etl.pgn_etl --config configs/default_config.yaml)
 
-# 3. Huấn luyện mạng Dual-Head ResNet (Cấp 5) và RL cờ tàn KRK (Cấp 6)
-chess-train --config configs/model_resnet.yaml
-python -m chess_ai.training.train_rl_krk --config configs/search_params.yaml
+# 3. Huấn luyện các cấp độ Học máy / Học sâu:
+#    - Cấp 5 (Supervised Dual-Head ResNet) [chờ TV2 hoàn thiện]:
+chess-train-sl --config configs/model_resnet.yaml
+#    - Cấp 6 (RL cờ tàn KQK/KRK/KPK + REINFORCE KRK):
+chess-train-rl --config configs/search_params.yaml
+#      (chạy nhanh: chess-train-rl --episodes 5000 --reinforce-episodes 1000)
+#    - Cấp 8 (AlphaZero Self-Play) [chờ TV2 hoàn thiện]:
+chess-selfplay
 
 # 4. Vận hành giải đấu đối kháng Round-Robin (100 ván/cặp trên 50 thế cờ khai cuộc cân bằng)
 chess-arena --config configs/default_config.yaml --budget-mode workload_control

@@ -14,9 +14,9 @@
 * **Nhánh tích hợp nhóm (`dev`):**
   * Nơi gộp code từ các nhánh thành viên để kiểm tra tích hợp liên phân hệ trước khi đưa lên `main`.
 * **Nhánh phát triển cá nhân (`feature/*`, `fix/*`, `docs/*`):**
-  * `feature/tv1-core-search-rl` _(TV1)_: Core (`ChessEnv`, `evaluation`, `zobrist`), Tìm kiếm cổ điển (`Alpha-Beta + ID`, `TT`, `Move Ordering`, `Quiescence`, `UCT`), Tác tử **Cấp 1 – Cấp 4**, Cấp 6 (KRK) & Ablation 1.
-  * `feature/tv2-data-models-puct` _(TV2)_: `board_tensor`, ETL Lichess Elite, Dual-Head ResNet, PUCT và Tác tử Cấp 5, 7, 8.
-  * `feature/tv3-ui-arena-qa` _(TV3)_: UI Pygame, Arena Tournament, Ablation 2, bộ kiểm thử `tests/`, `reproduce_experiment.py`, `notebooks/analysis.ipynb`.
+  * `feature/tv1-core-search-rl` _(TV1 - Tuấn)_: Core (`ChessEnv`, `evaluation`, `zobrist`), Tìm kiếm cổ điển (`Alpha-Beta + ID`, `TT`, `Move Ordering`, `Quiescence`, `UCT`), Tác tử **Cấp 1 – Cấp 4**, Cấp 6 (KRK) & Ablation 1.
+  * `feature/tv2-data-models-puct` _(TV2 - Đức)_: `board_tensor`, ETL Lichess Elite, Dual-Head ResNet, PUCT và Tác tử Cấp 5, 7, 8.
+  * `feature/tv3-ui-arena-qa` _(TV3 - Vinh)_: UI Pygame, Arena Tournament, Ablation 2, bộ kiểm thử `tests/`, `reproduce_experiment.py`, `notebooks/analysis.ipynb`.
   * Có thể tách nhánh phụ ngắn hạn (ví dụ `feature/<tên_tính_năng>`, `fix/<lỗi>`, `docs/<tài_liệu>`) từ `dev` hoặc `main`, xóa nhánh sau khi merge xong.
 
 ---
