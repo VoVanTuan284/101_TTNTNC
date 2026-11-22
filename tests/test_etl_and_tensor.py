@@ -100,3 +100,89 @@ def test_etl_helpers_and_pipeline(tmp_path: Path) -> None:
     assert s.shape == (18, 8, 8)
     assert 0 <= int(a) < 4096
     assert float(v) in (-1.0, 0.0, 1.0)
+
+
+def test_level5_dual_resnet_loss_agent_and_resume(tmp_path: Path) -> None:
+    import torch
+    from chess_ai.agents.level5_supervised import Level5SupervisedAgent
+    from chess_ai.core.chess_env import ChessEnv
+    from chess_ai.models.dual_resnet import DualHeadResNet
+    from chess_ai.models.loss import DualHeadLoss
+    from chess_ai.training.train_supervised import train_supervised
+
+    # 1. Kiểm tra kiến trúc DualHeadResNet & DualHeadLoss
+    model = DualHeadResNet()
+    criterion = DualHeadLoss()
+    x = torch.randn(4, 18, 8, 8)
+    target_a = torch.tensor([0, 12, 100, 4095], dtype=torch.long)
+    target_v = torch.tensor([1.0, -1.0, 0.0, 0.5], dtype=torch.float32)
+
+    p_logits, v_pred = model(x)
+    assert p_logits.shape == (4, 4096)
+    assert v_pred.shape == (4, 1)
+    assert torch.all(v_pred >= -1.0) and torch.all(v_pred <= 1.0)
+
+    loss, parts = criterion(p_logits, v_pred, target_a, target_v)
+    assert loss.item() > 0.0
+    assert "policy_loss" in parts and "value_loss" in parts
+
+    # 2. Tạo tập memmap giả lập nhỏ (16 mẫu train, 8 mẫu val, 8 mẫu test) để test train_supervised & --resume
+    data_dir = tmp_path / "memmap_data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    meta = {
+        "splits": {
+            "train": {"games": 2, "samples": 16},
+            "val": {"games": 1, "samples": 8},
+            "test": {"games": 1, "samples": 8},
+        }
+    }
+    (data_dir / "dataset_metadata.json").write_text(json.dumps(meta), encoding="utf-8")
+    for sp, n_s in (("train", 16), ("val", 8), ("test", 8)):
+        st = np.memmap(data_dir / f"{sp}_states.dat", dtype=np.uint8, mode="w+", shape=(n_s, 18, 8, 8))
+        ac = np.memmap(data_dir / f"{sp}_actions.dat", dtype=np.int16, mode="w+", shape=(n_s,))
+        va = np.memmap(data_dir / f"{sp}_values.dat", dtype=np.float32, mode="w+", shape=(n_s,))
+        st[:] = np.random.randint(0, 2, size=(n_s, 18, 8, 8), dtype=np.uint8)
+        ac[:] = np.random.randint(0, 4096, size=(n_s,), dtype=np.int16)
+        va[:] = np.random.choice([-1.0, 0.0, 1.0], size=(n_s,)).astype(np.float32)
+        st.flush()
+        ac.flush()
+        va.flush()
+
+    ckpt_dir = tmp_path / "ckpts"
+    metrics_out = tmp_path / "sl_metrics.json"
+
+    # Chạy 1 epoch đầu
+    rep1 = train_supervised(
+        data_dir=str(data_dir),
+        checkpoint_dir=str(ckpt_dir),
+        metrics_output=str(metrics_out),
+        epochs_override=1,
+        batch_size_override=8,
+        num_workers_override=0,
+        verbose=False,
+    )
+    assert rep1["epochs_completed"] == 1
+    assert (ckpt_dir / "latest.pt").exists()
+    assert (ckpt_dir / "best_model.pt").exists()
+
+    # Kiểm tra Resume từ latest.pt chạy tiếp lên epoch 2
+    rep2 = train_supervised(
+        resume_path=str(ckpt_dir / "latest.pt"),
+        data_dir=str(data_dir),
+        checkpoint_dir=str(ckpt_dir),
+        metrics_output=str(metrics_out),
+        epochs_override=2,
+        batch_size_override=8,
+        num_workers_override=0,
+        verbose=False,
+    )
+    assert rep2["epochs_completed"] == 2
+    assert len(rep2["history"]) == 2
+
+    # 3. Kiểm tra Level5SupervisedAgent nạp best_model.pt và chọn nước đi hợp lệ
+    agent = Level5SupervisedAgent(checkpoint_path=str(ckpt_dir / "best_model.pt"))
+    assert agent.checkpoint_loaded is True
+    env = ChessEnv()
+    move = agent.select_move(env)
+    assert move in env.legal_actions()
+    assert -1.0 <= agent.last_search_stats["eval"] <= 1.0
