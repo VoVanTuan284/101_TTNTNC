@@ -39,9 +39,17 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
   - `results/`: Lưu trữ log thi đấu thô (`round_robin/matches.jsonl`, `round_robin/games.pgn`), kết quả `ablation1/`, `ablation2/`, `training/` và biểu đồ `figures/`.
   - `report/`: Chứa báo cáo 5 chương, slide thuyết trình, poster A0 và link video demo.
 - **Tài liệu kỹ thuật (`docs/`):**
+  - [`docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf`](docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf): Đề bài gốc và Rubric chấm điểm môn Trí tuệ Nhân tạo Nâng cao.
   - [`docs/DECISIONS.md`](docs/DECISIONS.md): Hồ sơ các quyết định kiến trúc & kỹ thuật đã đóng băng (`ADR-01` $\to$ `ADR-08`).
-  - [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md): Bảng phân công nhiệm vụ và tỷ lệ đóng góp của 3 thành viên.
-  - [`docs/PROMPT_AND_FILE_SPEC.md`](docs/PROMPT_AND_FILE_SPEC.md), [`docs/DATASET_SPEC.md`](docs/DATASET_SPEC.md), [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md), [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md), [`docs/SPRINT_PLAN_15DAYS.md`](docs/SPRINT_PLAN_15DAYS.md), [`docs/REPORT_OUTLINE.md`](docs/REPORT_OUTLINE.md).
+  - [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md): Bảng phân công nhiệm vụ, nhánh Git và tỷ lệ đóng góp (`33.3% / 33.3% / 33.4%`) của 3 thành viên.
+  - [`docs/PROMPT_AND_FILE_SPEC.md`](docs/PROMPT_AND_FILE_SPEC.md): Đặc tả kiến trúc Clean Architecture, 8 cấp độ tác tử và hợp đồng giao diện `GameEnv` / `ChessEnv` / `BaseAgent`.
+  - [`docs/DATASET_SPEC.md`](docs/DATASET_SPEC.md): Quy trình ETL dữ liệu Lichess Elite Database, bộ lọc 5 tiêu chí, khử trùng Zobrist 64-bit, lưu trữ `np.memmap` và schema checkpoint.
+  - [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md): Giao thức giải đấu Round-Robin 100 ván/cặp trên 50 khai cuộc, kiểm định Wilson/Bootstrap 95% và thiết kế 2 bài Ablation Studies.
+  - [`docs/UI_SPEC.md`](docs/UI_SPEC.md): Đặc tả giao diện Desktop Pygame (bố cục 3 cột, đồng hồ 2 đầu bàn cờ, Modal thiết lập ván đấu mới, Tab Nghiên cứu Thực nghiệm & bộ quân cờ `assets/`).
+  - [`docs/GITFLOW.md`](docs/GITFLOW.md): Quy trình chia nhánh, chuẩn Conventional Commits, quy định Pull Request và quản lý dữ liệu lớn.
+  - [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md): Quy ước bàn giao giữa các thành viên và danh mục 61 kịch bản kiểm thử tự động (`TC01`–`TC61`).
+  - [`docs/SPRINT_PLAN_15DAYS.md`](docs/SPRINT_PLAN_15DAYS.md): Ma trận trách nhiệm RACI và lộ trình triển khai chi tiết 15 ngày theo 5 pha.
+  - [`docs/REPORT_OUTLINE.md`](docs/REPORT_OUTLINE.md): 4 câu hỏi nghiên cứu (`RQ1`–`RQ4`) và dàn ý chi tiết Báo cáo khoa học 5 chương chuẩn IEEE.
 
 ---
 
@@ -125,13 +133,9 @@ Phím tắt: `N` (ván mới), `F` (đảo bàn), `U` (undo), `Home/Left/Right/E
 
 ---
 
-## 4. Quy Trình Nhánh Gitflow & Trạng Thái Hiện Tại
+## 4. Quy Trình Gitflow & Quy Định Nhóm
 
-- **Nhánh tích hợp:** `main` (nộp bài ổn định) $\leftarrow$ `dev` (tích hợp nhóm)
-- **Nhánh phát triển thành viên:**
-  - `feature/tv1-core-search-rl` _(TV1)_: **Đã hoàn thiện & pass pytest** phần Core (`ChessEnv`, `evaluation`, `zobrist`), Tìm kiếm cổ điển (`Alpha-Beta + ID`, `TT`, `Move Ordering`, `Quiescence`, `UCT`) và Tác tử **Cấp 1 – Cấp 4**; tiếp theo là Cấp 6 (KRK) & Ablation 1.
-  - `feature/tv2-data-models-puct` _(TV2)_: `board_tensor`, ETL Lichess Elite, Dual-Head ResNet, PUCT và Tác tử Cấp 5, 7, 8.
-  - `feature/tv3-ui-arena-qa` _(TV3)_: UI Pygame, Arena Tournament, Ablation 2, bộ 61 kiểm thử (`TC01`–`TC61`), `reproduce_experiment.py`.
+Toàn bộ quy chuẩn chia nhánh (`main`, `dev`, `feature/tv1-*`, `feature/tv2-*`, `feature/tv3-*`), quy tắc **Conventional Commits**, kiểm tra `pytest` trước khi tạo Pull Request và quy định loại trừ dữ liệu lớn được đặc tả chi tiết tại [`docs/GITFLOW.md`](docs/GITFLOW.md).
 
 ---
 
