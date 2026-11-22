@@ -30,10 +30,11 @@ checkpoints/selfplay_iter_*.pt
 !checkpoints/best_model.pt
 !checkpoints/l6_krk_qtable.pkl
 
-# Runtime debug logs (bỏ qua khi commit; kết quả thực nghiệm chính thức nằm ở results/ được commit)
+# Runtime debug logs & UI sandbox runs (bỏ qua khi commit; kết quả thực nghiệm chính thức nằm ở results/ được commit)
 logs/*.log
 logs/*.log.*
 !logs/.gitkeep
+results/ui_sandbox/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/

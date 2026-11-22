@@ -21,6 +21,10 @@ def test_ui_play_undo_replay_and_status() -> None:
         assert "Đen thắng" in app._status_text()
         assert "checkmate" in app._status_text()
         assert [r.san for r in app.records] == ["f3", "e5", "g4", "Qh4#"]
+        # Kiểm tra nhận diện ô Vua bị chiếu (e1) và ô quân chiếu (h4)
+        king_sq, checkers = app._check_squares()
+        assert king_sq == chess.E1
+        assert checkers == {chess.H4}
 
         # Kiểm tra Replay về nước 0 và quay lại cuối
         app._restore_index(0)
@@ -47,8 +51,85 @@ def test_ui_panel_click_and_mode_toggle() -> None:
         assert app.mode == "ai_vs_ai"
         assert app._active_ai_agent() is app.white_agent
 
+        # Kiểm tra nút Tạm dừng / Tiếp tục (nút giữa "||" / "▶" trong hàng Replay) ở chế độ AI vs AI
+        import pygame
+        app._handle_click((952 + 2 * 64 + 20, 685), pygame)
+        assert app.paused is True
+        assert app._active_ai_agent() is None
+        app._handle_click((952 + 2 * 64 + 20, 685), pygame)
+        assert app.paused is False
+        assert app._active_ai_agent() is app.white_agent
+
         # Kiểm tra _handle_click với tham số (position, pygame) như trong run()
         import pygame
         app._handle_click((300, 100), pygame)
+
+        # Kiểm tra thanh trượt (Time Limit & Workload) trên panel trái
+        app._handle_click((240, 315), pygame)  # Kéo thanh trượt Time tới mức cuối
+        assert app.time_limit == app.TIME_STEPS[-1]
+        assert app.max_workload is None
+
+        app._handle_click((180, 360), pygame)  # Click thanh trượt Workload
+        assert app.time_limit is None
+        assert app.max_workload in app.WORKLOAD_STEPS
+
+        # Kiểm tra Modal Ván mới: chọn hai bên bằng Hộp thoại trượt (Scrollable Dropdown)
+        app._new_game()
+        assert app.modal_open is True
+        # Click mở hộp thoại trượt bên TRẮNG (mx=340, my=115, box_x=mx+24, box_y=my+88)
+        app._handle_click((340 + 50, 115 + 100), pygame)
+        assert app.modal_dropdown_open == "white"
+        # Chọn mục thứ 3 trong danh sách thả xuống ("level2")
+        app.modal_dropdown_scroll = 0
+        app._handle_click((340 + 50, 115 + 132 + 2 * 34 + 10), pygame)
+        assert app.modal_dropdown_open is None
+        assert app.modal_white_side == "level2"
+
+        # Click mở hộp thoại trượt bên ĐEN (box_x=mx+316, box_y=my+88)
+        app._handle_click((340 + 350, 115 + 100), pygame)
+        assert app.modal_dropdown_open == "black"
+        # Chọn mục đầu tiên trong danh sách thả xuống ("human")
+        app.modal_dropdown_scroll = 0
+        app._handle_click((340 + 350, 115 + 132 + 0 * 34 + 10), pygame)
+        assert app.modal_dropdown_open is None
+        assert app.modal_black_side == "human"
+
+        # Bấm Bắt đầu ván đấu (mx=340..540, my+426..470)
+        app._handle_click((340 + 400, 115 + 445), pygame)
+        assert app.modal_open is False
+        assert app.game_mode == "human_ai"
+        assert app.player_color == "black"
+        assert app.white_agent is not None
+
+        # Kiểm tra hộp thoại Kết thúc ván đấu khi đầu hàng và nút Xem bàn cờ
+        app._resign()
+        assert app._is_game_over() is True
+        assert app.game_over_dismissed is False
+        pygame.init()
+        surface = pygame.Surface(app.WINDOW_SIZE)
+        app._draw(surface, pygame)  # Đảm bảo vẽ banner kết thúc ván không lỗi
+        # Click nút "Xem bàn cờ" trên hộp thoại kết thúc ván
+        board_x = app.LEFT_WIDTH + (app.ARENA_WIDTH - app.BOARD_SIZE) // 2
+        board_y = app.TAB_HEIGHT + 48
+        cx = board_x + app.BOARD_SIZE // 2
+        cy = board_y + app.BOARD_SIZE // 2
+        app._handle_click((cx - 210 + 50, cy - 125 + 195), pygame)
+        assert app.game_over_dismissed is True
+
+        # Kiểm tra Tab 2: Nghiên cứu & Thực nghiệm (Setup tham số & Render các sub-views)
+        app._handle_click((450, 20), pygame)  # Chuyển sang tab "lab"
+        assert app.active_tab == "lab"
+        # Chọn số ván Arena = 50 (nút thứ 4: idx=3 -> x = 18 + 3*61 + 10)
+        app._handle_click((18 + 3 * 61 + 10, 365), pygame)
+        assert app.lab_num_games == 50
+        # Chuyển kịch bản sang Ablation 1 và chọn 25 FEN
+        app._handle_click((100, 140), pygame)
+        assert app.lab_scenario == "ablation1"
+        app._handle_click((18 + 2 * 76 + 10, 315), pygame)
+        assert app.lab_ab1_positions == 25
+        # Kiểm tra vẽ toàn bộ 6 sub-tabs của Research Lab không lỗi
+        for sub_idx in range(6):
+            app._handle_click((354 + sub_idx * 152 + 20, 65), pygame)
+            app._draw(surface, pygame)
     finally:
         app.executor.shutdown(wait=False, cancel_futures=True)
