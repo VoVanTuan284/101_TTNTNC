@@ -37,6 +37,7 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
 - **Kết quả thực nghiệm & Trọng số nộp bài (`results/`, `checkpoints/`, `report/` — được commit):**
   - `checkpoints/`: Lưu trữ trực tiếp `best_model.pt` ($\sim 5\text{MB}$) và `l6_krk_qtable.pkl` trên Git.
   - `results/`: Lưu trữ log thi đấu thô (`round_robin/matches.jsonl`, `round_robin/games.pgn`), kết quả `ablation1/`, `ablation2/`, `training/` và biểu đồ `figures/`.
+  - `notebooks/`: Bộ 6 notebook phân tích theo chuyên đề (`01`–`06`) và `analysis.ipynb` tổng hợp (chi tiết tại [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md)).
   - `report/`: Chứa báo cáo 5 chương, slide thuyết trình, poster A0 và link video demo.
 - **Tài liệu kỹ thuật (`docs/`):**
   - [`docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf`](docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf): Đề bài gốc và Rubric chấm điểm môn Trí tuệ Nhân tạo Nâng cao.
@@ -50,6 +51,7 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
   - [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md): Quy ước bàn giao giữa các thành viên và danh mục 61 kịch bản kiểm thử tự động (`TC01`–`TC61`).
   - [`docs/SPRINT_PLAN_15DAYS.md`](docs/SPRINT_PLAN_15DAYS.md): Ma trận trách nhiệm RACI và lộ trình triển khai chi tiết 15 ngày theo 5 pha.
   - [`docs/REPORT_OUTLINE.md`](docs/REPORT_OUTLINE.md): 4 câu hỏi nghiên cứu (`RQ1`–`RQ4`) và dàn ý chi tiết Báo cáo khoa học 5 chương chuẩn IEEE.
+  - [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md): Hướng dẫn cấu trúc, đầu vào/đầu ra và quy ước sử dụng bộ 6 notebook chuyên đề trong `notebooks/`.
 
 ---
 
