@@ -23,8 +23,8 @@
       "total_nodes": 2574744,
       "avg_nodes": 51494.88,
       "avg_tt_hits": 0.0,
-      "avg_latency_ms": 3013.756,
-      "p95_latency_ms": 5264.462,
+      "avg_latency_ms": 2631.351,
+      "p95_latency_ms": 4429.739,
       "positions": [
         {
           "id": "WAC.001",
@@ -34,7 +34,7 @@
           ],
           "solved": true,
           "nodes": 113842,
-          "time_ms": 7563.189,
+          "time_ms": 6507.238,
           "tt_hits": 0
         },
         {
@@ -45,7 +45,7 @@
           ],
           "solved": false,
           "nodes": 4058,
-          "time_ms": 209.362,
+          "time_ms": 185.733,
           "tt_hits": 0
         },
         {
@@ -56,7 +56,7 @@
           ],
           "solved": true,
           "nodes": 77287,
-          "time_ms": 4923.536,
+          "time_ms": 4030.382,
           "tt_hits": 0
         },
         {
@@ -67,7 +67,7 @@
           ],
           "solved": true,
           "nodes": 56599,
-          "time_ms": 3728.457,
+          "time_ms": 3086.568,
           "tt_hits": 0
         },
         {
@@ -78,7 +78,7 @@
           ],
           "solved": true,
           "nodes": 31921,
-          "time_ms": 1651.919,
+          "time_ms": 1399.107,
           "tt_hits": 0
         },
         {
@@ -89,7 +89,7 @@
           ],
           "solved": false,
           "nodes": 2226,
-          "time_ms": 103.565,
+          "time_ms": 86.744,
           "tt_hits": 0
         },
         {
@@ -100,7 +100,7 @@
           ],
           "solved": false,
           "nodes": 25827,
-          "time_ms": 1936.315,
+          "time_ms": 1428.904,
           "tt_hits": 0
         },
         {
@@ -111,7 +111,7 @@
           ],
           "solved": false,
           "nodes": 38588,
-          "time_ms": 2811.484,
+          "time_ms": 2111.414,
           "tt_hits": 0
         },
         {
@@ -122,7 +122,7 @@
           ],
           "solved": false,
           "nodes": 58521,
-          "time_ms": 3847.488,
+          "time_ms": 2877.091,
           "tt_hits": 0
         },
         {
@@ -133,7 +133,7 @@
           ],
           "solved": true,
           "nodes": 68849,
-          "time_ms": 4598.817,
+          "time_ms": 3753.243,
           "tt_hits": 0
         },
         {
@@ -144,7 +144,7 @@
           ],
           "solved": true,
           "nodes": 52436,
-          "time_ms": 4314.6,
+          "time_ms": 2917.433,
           "tt_hits": 0
         },
         {
@@ -155,7 +155,7 @@
           ],
           "solved": true,
           "nodes": 26367,
-          "time_ms": 1753.996,
+          "time_ms": 1231.222,
           "tt_hits": 0
         },
         {
@@ -166,7 +166,7 @@
           ],
           "solved": false,
           "nodes": 55815,
-          "time_ms": 3593.624,
+          "time_ms": 2677.907,
           "tt_hits": 0
         },
         {
@@ -177,7 +177,7 @@
           ],
           "solved": false,
           "nodes": 70248,
-          "time_ms": 5509.557,
+          "time_ms": 4097.188,
           "tt_hits": 0
         },
         {
@@ -188,7 +188,7 @@
           ],
           "solved": false,
           "nodes": 9650,
-          "time_ms": 550.792,
+          "time_ms": 490.302,
           "tt_hits": 0
         },
         {
@@ -199,7 +199,7 @@
           ],
           "solved": true,
           "nodes": 49624,
-          "time_ms": 3252.236,
+          "time_ms": 2561.765,
           "tt_hits": 0
         },
         {
@@ -210,7 +210,7 @@
           ],
           "solved": false,
           "nodes": 64760,
-          "time_ms": 4183.027,
+          "time_ms": 3193.608,
           "tt_hits": 0
         },
         {
@@ -221,7 +221,7 @@
           ],
           "solved": false,
           "nodes": 2659,
-          "time_ms": 178.044,
+          "time_ms": 106.422,
           "tt_hits": 0
         },
         {
@@ -232,7 +232,7 @@
           ],
           "solved": false,
           "nodes": 61378,
-          "time_ms": 4211.572,
+          "time_ms": 3180.309,
           "tt_hits": 0
         },
         {
@@ -243,7 +243,7 @@
           ],
           "solved": true,
           "nodes": 44344,
-          "time_ms": 3508.764,
+          "time_ms": 2289.841,
           "tt_hits": 0
         },
         {
@@ -254,7 +254,7 @@
           ],
           "solved": false,
           "nodes": 73356,
-          "time_ms": 5469.935,
+          "time_ms": 3559.339,
           "tt_hits": 0
         },
         {
@@ -266,7 +266,7 @@
           ],
           "solved": false,
           "nodes": 52239,
-          "time_ms": 3387.225,
+          "time_ms": 2713.903,
           "tt_hits": 0
         },
         {
@@ -277,7 +277,7 @@
           ],
           "solved": false,
           "nodes": 80621,
-          "time_ms": 4974.946,
+          "time_ms": 4116.783,
           "tt_hits": 0
         },
         {
@@ -288,7 +288,7 @@
           ],
           "solved": true,
           "nodes": 84356,
-          "time_ms": 4496.217,
+          "time_ms": 3699.587,
           "tt_hits": 0
         },
         {
@@ -299,7 +299,7 @@
           ],
           "solved": true,
           "nodes": 5901,
-          "time_ms": 324.401,
+          "time_ms": 259.578,
           "tt_hits": 0
         },
         {
@@ -310,7 +310,7 @@
           ],
           "solved": true,
           "nodes": 59842,
-          "time_ms": 3073.012,
+          "time_ms": 2650.863,
           "tt_hits": 0
         },
         {
@@ -321,7 +321,7 @@
           ],
           "solved": true,
           "nodes": 76393,
-          "time_ms": 4254.748,
+          "time_ms": 3717.046,
           "tt_hits": 0
         },
         {
@@ -332,7 +332,7 @@
           ],
           "solved": true,
           "nodes": 72859,
-          "time_ms": 3613.422,
+          "time_ms": 3507.142,
           "tt_hits": 0
         },
         {
@@ -343,7 +343,7 @@
           ],
           "solved": false,
           "nodes": 85319,
-          "time_ms": 5013.329,
+          "time_ms": 4520.915,
           "tt_hits": 0
         },
         {
@@ -354,7 +354,7 @@
           ],
           "solved": false,
           "nodes": 68034,
-          "time_ms": 3515.327,
+          "time_ms": 3355.202,
           "tt_hits": 0
         },
         {
@@ -368,7 +368,7 @@
           ],
           "solved": true,
           "nodes": 31306,
-          "time_ms": 1455.89,
+          "time_ms": 1494.814,
           "tt_hits": 0
         },
         {
@@ -379,7 +379,7 @@
           ],
           "solved": true,
           "nodes": 38096,
-          "time_ms": 1748.782,
+          "time_ms": 1717.534,
           "tt_hits": 0
         },
         {
@@ -391,7 +391,7 @@
           ],
           "solved": true,
           "nodes": 42390,
-          "time_ms": 1883.0,
+          "time_ms": 1877.429,
           "tt_hits": 0
         },
         {
@@ -402,7 +402,7 @@
           ],
           "solved": true,
           "nodes": 61828,
-          "time_ms": 2797.718,
+          "time_ms": 2792.374,
           "tt_hits": 0
         },
         {
@@ -413,7 +413,7 @@
           ],
           "solved": false,
           "nodes": 71493,
-          "time_ms": 3760.753,
+          "time_ms": 3512.107,
           "tt_hits": 0
         },
         {
@@ -424,7 +424,7 @@
           ],
           "solved": false,
           "nodes": 40702,
-          "time_ms": 1903.483,
+          "time_ms": 1830.472,
           "tt_hits": 0
         },
         {
@@ -435,7 +435,7 @@
           ],
           "solved": true,
           "nodes": 42967,
-          "time_ms": 2063.599,
+          "time_ms": 2008.835,
           "tt_hits": 0
         },
         {
@@ -447,7 +447,7 @@
           ],
           "solved": true,
           "nodes": 37621,
-          "time_ms": 1682.661,
+          "time_ms": 1680.411,
           "tt_hits": 0
         },
         {
@@ -458,7 +458,7 @@
           ],
           "solved": true,
           "nodes": 68455,
-          "time_ms": 3790.933,
+          "time_ms": 3626.149,
           "tt_hits": 0
         },
         {
@@ -469,7 +469,7 @@
           ],
           "solved": true,
           "nodes": 37212,
-          "time_ms": 1653.283,
+          "time_ms": 1658.119,
           "tt_hits": 0
         },
         {
@@ -482,7 +482,7 @@
           ],
           "solved": false,
           "nodes": 5624,
-          "time_ms": 220.585,
+          "time_ms": 213.174,
           "tt_hits": 0
         },
         {
@@ -493,7 +493,7 @@
           ],
           "solved": true,
           "nodes": 61696,
-          "time_ms": 3386.524,
+          "time_ms": 3366.349,
           "tt_hits": 0
         },
         {
@@ -505,7 +505,7 @@
           ],
           "solved": true,
           "nodes": 53927,
-          "time_ms": 2672.124,
+          "time_ms": 2846.766,
           "tt_hits": 0
         },
         {
@@ -516,7 +516,7 @@
           ],
           "solved": true,
           "nodes": 91531,
-          "time_ms": 4584.956,
+          "time_ms": 4318.301,
           "tt_hits": 0
         },
         {
@@ -527,7 +527,7 @@
           ],
           "solved": true,
           "nodes": 43047,
-          "time_ms": 1964.816,
+          "time_ms": 1957.674,
           "tt_hits": 0
         },
         {
@@ -538,7 +538,7 @@
           ],
           "solved": false,
           "nodes": 65227,
-          "time_ms": 3711.181,
+          "time_ms": 3936.756,
           "tt_hits": 0
         },
         {
@@ -549,7 +549,7 @@
           ],
           "solved": true,
           "nodes": 90023,
-          "time_ms": 4776.873,
+          "time_ms": 5473.775,
           "tt_hits": 0
         },
         {
@@ -560,7 +560,7 @@
           ],
           "solved": false,
           "nodes": 63421,
-          "time_ms": 3271.189,
+          "time_ms": 3791.317,
           "tt_hits": 0
         },
         {
@@ -571,7 +571,7 @@
           ],
           "solved": false,
           "nodes": 21935,
-          "time_ms": 1220.936,
+          "time_ms": 1300.568,
           "tt_hits": 0
         },
         {
@@ -582,7 +582,7 @@
           ],
           "solved": false,
           "nodes": 32324,
-          "time_ms": 1585.619,
+          "time_ms": 1851.838,
           "tt_hits": 0
         }
       ],
@@ -608,8 +608,8 @@
       "total_nodes": 362297,
       "avg_nodes": 7245.94,
       "avg_tt_hits": 0.0,
-      "avg_latency_ms": 372.921,
-      "p95_latency_ms": 735.183,
+      "avg_latency_ms": 439.36,
+      "p95_latency_ms": 928.331,
       "positions": [
         {
           "id": "WAC.001",
@@ -619,7 +619,7 @@
           ],
           "solved": true,
           "nodes": 8573,
-          "time_ms": 474.573,
+          "time_ms": 521.049,
           "tt_hits": 0
         },
         {
@@ -630,7 +630,7 @@
           ],
           "solved": false,
           "nodes": 1806,
-          "time_ms": 77.364,
+          "time_ms": 81.067,
           "tt_hits": 0
         },
         {
@@ -641,7 +641,7 @@
           ],
           "solved": true,
           "nodes": 7247,
-          "time_ms": 374.814,
+          "time_ms": 523.349,
           "tt_hits": 0
         },
         {
@@ -652,7 +652,7 @@
           ],
           "solved": true,
           "nodes": 2646,
-          "time_ms": 152.867,
+          "time_ms": 187.582,
           "tt_hits": 0
         },
         {
@@ -663,7 +663,7 @@
           ],
           "solved": true,
           "nodes": 2598,
-          "time_ms": 135.029,
+          "time_ms": 136.922,
           "tt_hits": 0
         },
         {
@@ -674,7 +674,7 @@
           ],
           "solved": false,
           "nodes": 499,
-          "time_ms": 25.193,
+          "time_ms": 21.3,
           "tt_hits": 0
         },
         {
@@ -685,7 +685,7 @@
           ],
           "solved": false,
           "nodes": 4615,
-          "time_ms": 280.708,
+          "time_ms": 282.647,
           "tt_hits": 0
         },
         {
@@ -696,7 +696,7 @@
           ],
           "solved": false,
           "nodes": 6149,
-          "time_ms": 327.633,
+          "time_ms": 413.778,
           "tt_hits": 0
         },
         {
@@ -707,7 +707,7 @@
           ],
           "solved": false,
           "nodes": 14401,
-          "time_ms": 727.427,
+          "time_ms": 861.997,
           "tt_hits": 0
         },
         {
@@ -718,7 +718,7 @@
           ],
           "solved": true,
           "nodes": 12090,
-          "time_ms": 635.873,
+          "time_ms": 721.842,
           "tt_hits": 0
         },
         {
@@ -729,7 +729,7 @@
           ],
           "solved": true,
           "nodes": 7137,
-          "time_ms": 379.595,
+          "time_ms": 488.069,
           "tt_hits": 0
         },
         {
@@ -740,7 +740,7 @@
           ],
           "solved": true,
           "nodes": 5281,
-          "time_ms": 249.303,
+          "time_ms": 295.066,
           "tt_hits": 0
         },
         {
@@ -751,7 +751,7 @@
           ],
           "solved": false,
           "nodes": 9527,
-          "time_ms": 511.865,
+          "time_ms": 560.635,
           "tt_hits": 0
         },
         {
@@ -762,7 +762,7 @@
           ],
           "solved": false,
           "nodes": 6741,
-          "time_ms": 434.75,
+          "time_ms": 459.4,
           "tt_hits": 0
         },
         {
@@ -773,7 +773,7 @@
           ],
           "solved": false,
           "nodes": 2366,
-          "time_ms": 128.972,
+          "time_ms": 146.838,
           "tt_hits": 0
         },
         {
@@ -784,7 +784,7 @@
           ],
           "solved": true,
           "nodes": 4968,
-          "time_ms": 263.572,
+          "time_ms": 311.704,
           "tt_hits": 0
         },
         {
@@ -795,7 +795,7 @@
           ],
           "solved": false,
           "nodes": 12897,
-          "time_ms": 704.811,
+          "time_ms": 852.679,
           "tt_hits": 0
         },
         {
@@ -806,7 +806,7 @@
           ],
           "solved": false,
           "nodes": 849,
-          "time_ms": 34.195,
+          "time_ms": 43.364,
           "tt_hits": 0
         },
         {
@@ -817,7 +817,7 @@
           ],
           "solved": false,
           "nodes": 9136,
-          "time_ms": 514.041,
+          "time_ms": 566.81,
           "tt_hits": 0
         },
         {
@@ -828,7 +828,7 @@
           ],
           "solved": true,
           "nodes": 9208,
-          "time_ms": 506.354,
+          "time_ms": 600.374,
           "tt_hits": 0
         },
         {
@@ -839,7 +839,7 @@
           ],
           "solved": false,
           "nodes": 15149,
-          "time_ms": 741.529,
+          "time_ms": 934.053,
           "tt_hits": 0
         },
         {
@@ -851,7 +851,7 @@
           ],
           "solved": false,
           "nodes": 9131,
-          "time_ms": 506.987,
+          "time_ms": 616.82,
           "tt_hits": 0
         },
         {
@@ -862,7 +862,7 @@
           ],
           "solved": false,
           "nodes": 13727,
-          "time_ms": 713.756,
+          "time_ms": 921.337,
           "tt_hits": 0
         },
         {
@@ -873,7 +873,7 @@
           ],
           "solved": true,
           "nodes": 7635,
-          "time_ms": 348.464,
+          "time_ms": 434.594,
           "tt_hits": 0
         },
         {
@@ -884,7 +884,7 @@
           ],
           "solved": true,
           "nodes": 520,
-          "time_ms": 23.191,
+          "time_ms": 32.623,
           "tt_hits": 0
         },
         {
@@ -895,7 +895,7 @@
           ],
           "solved": true,
           "nodes": 9008,
-          "time_ms": 399.526,
+          "time_ms": 515.446,
           "tt_hits": 0
         },
         {
@@ -906,7 +906,7 @@
           ],
           "solved": true,
           "nodes": 3966,
-          "time_ms": 190.049,
+          "time_ms": 221.522,
           "tt_hits": 0
         },
         {
@@ -917,7 +917,7 @@
           ],
           "solved": true,
           "nodes": 16836,
-          "time_ms": 784.803,
+          "time_ms": 966.281,
           "tt_hits": 0
         },
         {
@@ -928,7 +928,7 @@
           ],
           "solved": false,
           "nodes": 11118,
-          "time_ms": 570.614,
+          "time_ms": 689.933,
           "tt_hits": 0
         },
         {
@@ -939,7 +939,7 @@
           ],
           "solved": false,
           "nodes": 17450,
-          "time_ms": 859.45,
+          "time_ms": 1035.495,
           "tt_hits": 0
         },
         {
@@ -953,7 +953,7 @@
           ],
           "solved": true,
           "nodes": 2035,
-          "time_ms": 97.172,
+          "time_ms": 129.086,
           "tt_hits": 0
         },
         {
@@ -964,7 +964,7 @@
           ],
           "solved": true,
           "nodes": 4561,
-          "time_ms": 200.3,
+          "time_ms": 268.937,
           "tt_hits": 0
         },
         {
@@ -976,7 +976,7 @@
           ],
           "solved": true,
           "nodes": 3379,
-          "time_ms": 148.604,
+          "time_ms": 177.349,
           "tt_hits": 0
         },
         {
@@ -987,7 +987,7 @@
           ],
           "solved": true,
           "nodes": 7387,
-          "time_ms": 330.143,
+          "time_ms": 413.535,
           "tt_hits": 0
         },
         {
@@ -998,7 +998,7 @@
           ],
           "solved": false,
           "nodes": 6763,
-          "time_ms": 361.897,
+          "time_ms": 387.611,
           "tt_hits": 0
         },
         {
@@ -1009,7 +1009,7 @@
           ],
           "solved": false,
           "nodes": 7920,
-          "time_ms": 415.825,
+          "time_ms": 472.736,
           "tt_hits": 0
         },
         {
@@ -1020,7 +1020,7 @@
           ],
           "solved": true,
           "nodes": 3053,
-          "time_ms": 153.191,
+          "time_ms": 187.179,
           "tt_hits": 0
         },
         {
@@ -1032,7 +1032,7 @@
           ],
           "solved": true,
           "nodes": 7835,
-          "time_ms": 358.782,
+          "time_ms": 411.309,
           "tt_hits": 0
         },
         {
@@ -1043,7 +1043,7 @@
           ],
           "solved": true,
           "nodes": 10179,
-          "time_ms": 571.803,
+          "time_ms": 623.054,
           "tt_hits": 0
         },
         {
@@ -1054,7 +1054,7 @@
           ],
           "solved": true,
           "nodes": 3817,
-          "time_ms": 201.902,
+          "time_ms": 210.538,
           "tt_hits": 0
         },
         {
@@ -1067,7 +1067,7 @@
           ],
           "solved": false,
           "nodes": 1241,
-          "time_ms": 54.53,
+          "time_ms": 51.586,
           "tt_hits": 0
         },
         {
@@ -1078,7 +1078,7 @@
           ],
           "solved": true,
           "nodes": 5584,
-          "time_ms": 380.345,
+          "time_ms": 350.041,
           "tt_hits": 0
         },
         {
@@ -1090,7 +1090,7 @@
           ],
           "solved": true,
           "nodes": 7988,
-          "time_ms": 380.429,
+          "time_ms": 482.909,
           "tt_hits": 0
         },
         {
@@ -1101,7 +1101,7 @@
           ],
           "solved": true,
           "nodes": 14552,
-          "time_ms": 721.45,
+          "time_ms": 819.513,
           "tt_hits": 0
         },
         {
@@ -1112,7 +1112,7 @@
           ],
           "solved": true,
           "nodes": 11125,
-          "time_ms": 499.584,
+          "time_ms": 602.899,
           "tt_hits": 0
         },
         {
@@ -1123,7 +1123,7 @@
           ],
           "solved": false,
           "nodes": 7756,
-          "time_ms": 438.513,
+          "time_ms": 511.769,
           "tt_hits": 0
         },
         {
@@ -1134,7 +1134,7 @@
           ],
           "solved": true,
           "nodes": 6937,
-          "time_ms": 383.701,
+          "time_ms": 423.379,
           "tt_hits": 0
         },
         {
@@ -1145,7 +1145,7 @@
           ],
           "solved": false,
           "nodes": 3782,
-          "time_ms": 198.212,
+          "time_ms": 214.378,
           "tt_hits": 0
         },
         {
@@ -1156,7 +1156,7 @@
           ],
           "solved": false,
           "nodes": 5290,
-          "time_ms": 272.012,
+          "time_ms": 360.567,
           "tt_hits": 0
         },
         {
@@ -1167,7 +1167,7 @@
           ],
           "solved": false,
           "nodes": 7839,
-          "time_ms": 400.344,
+          "time_ms": 425.035,
           "tt_hits": 0
         }
       ],
@@ -1193,8 +1193,8 @@
       "total_nodes": 100800,
       "avg_nodes": 2016.0,
       "avg_tt_hits": 0.0,
-      "avg_latency_ms": 107.672,
-      "p95_latency_ms": 233.685,
+      "avg_latency_ms": 125.974,
+      "p95_latency_ms": 275.492,
       "positions": [
         {
           "id": "WAC.001",
@@ -1204,7 +1204,7 @@
           ],
           "solved": true,
           "nodes": 3531,
-          "time_ms": 216.147,
+          "time_ms": 239.399,
           "tt_hits": 0
         },
         {
@@ -1215,7 +1215,7 @@
           ],
           "solved": false,
           "nodes": 868,
-          "time_ms": 43.166,
+          "time_ms": 46.271,
           "tt_hits": 0
         },
         {
@@ -1226,7 +1226,7 @@
           ],
           "solved": true,
           "nodes": 2301,
-          "time_ms": 146.445,
+          "time_ms": 204.622,
           "tt_hits": 0
         },
         {
@@ -1237,7 +1237,7 @@
           ],
           "solved": true,
           "nodes": 887,
-          "time_ms": 57.119,
+          "time_ms": 53.217,
           "tt_hits": 0
         },
         {
@@ -1248,7 +1248,7 @@
           ],
           "solved": true,
           "nodes": 1222,
-          "time_ms": 57.369,
+          "time_ms": 74.129,
           "tt_hits": 0
         },
         {
@@ -1259,7 +1259,7 @@
           ],
           "solved": false,
           "nodes": 316,
-          "time_ms": 13.051,
+          "time_ms": 19.968,
           "tt_hits": 0
         },
         {
@@ -1270,7 +1270,7 @@
           ],
           "solved": false,
           "nodes": 1215,
-          "time_ms": 67.538,
+          "time_ms": 70.438,
           "tt_hits": 0
         },
         {
@@ -1281,7 +1281,7 @@
           ],
           "solved": false,
           "nodes": 1649,
-          "time_ms": 91.966,
+          "time_ms": 100.609,
           "tt_hits": 0
         },
         {
@@ -1292,7 +1292,7 @@
           ],
           "solved": false,
           "nodes": 2917,
-          "time_ms": 154.483,
+          "time_ms": 156.431,
           "tt_hits": 0
         },
         {
@@ -1303,7 +1303,7 @@
           ],
           "solved": true,
           "nodes": 2472,
-          "time_ms": 128.745,
+          "time_ms": 139.689,
           "tt_hits": 0
         },
         {
@@ -1314,7 +1314,7 @@
           ],
           "solved": true,
           "nodes": 1710,
-          "time_ms": 97.821,
+          "time_ms": 104.654,
           "tt_hits": 0
         },
         {
@@ -1325,7 +1325,7 @@
           ],
           "solved": true,
           "nodes": 771,
-          "time_ms": 39.46,
+          "time_ms": 41.367,
           "tt_hits": 0
         },
         {
@@ -1336,7 +1336,7 @@
           ],
           "solved": false,
           "nodes": 1547,
-          "time_ms": 83.885,
+          "time_ms": 89.921,
           "tt_hits": 0
         },
         {
@@ -1347,7 +1347,7 @@
           ],
           "solved": false,
           "nodes": 3212,
-          "time_ms": 191.926,
+          "time_ms": 243.509,
           "tt_hits": 0
         },
         {
@@ -1358,7 +1358,7 @@
           ],
           "solved": false,
           "nodes": 1334,
-          "time_ms": 67.537,
+          "time_ms": 81.206,
           "tt_hits": 0
         },
         {
@@ -1369,7 +1369,7 @@
           ],
           "solved": true,
           "nodes": 1637,
-          "time_ms": 89.106,
+          "time_ms": 103.843,
           "tt_hits": 0
         },
         {
@@ -1380,7 +1380,7 @@
           ],
           "solved": false,
           "nodes": 4530,
-          "time_ms": 248.138,
+          "time_ms": 282.527,
           "tt_hits": 0
         },
         {
@@ -1391,7 +1391,7 @@
           ],
           "solved": false,
           "nodes": 283,
-          "time_ms": 12.449,
+          "time_ms": 13.547,
           "tt_hits": 0
         },
         {
@@ -1402,7 +1402,7 @@
           ],
           "solved": false,
           "nodes": 4419,
-          "time_ms": 248.035,
+          "time_ms": 322.431,
           "tt_hits": 0
         },
         {
@@ -1413,7 +1413,7 @@
           ],
           "solved": true,
           "nodes": 2793,
-          "time_ms": 158.89,
+          "time_ms": 183.003,
           "tt_hits": 0
         },
         {
@@ -1424,7 +1424,7 @@
           ],
           "solved": false,
           "nodes": 1797,
-          "time_ms": 92.495,
+          "time_ms": 112.357,
           "tt_hits": 0
         },
         {
@@ -1436,7 +1436,7 @@
           ],
           "solved": false,
           "nodes": 2100,
-          "time_ms": 127.194,
+          "time_ms": 143.457,
           "tt_hits": 0
         },
         {
@@ -1447,7 +1447,7 @@
           ],
           "solved": false,
           "nodes": 5790,
-          "time_ms": 310.488,
+          "time_ms": 344.735,
           "tt_hits": 0
         },
         {
@@ -1458,7 +1458,7 @@
           ],
           "solved": true,
           "nodes": 1545,
-          "time_ms": 75.545,
+          "time_ms": 82.148,
           "tt_hits": 0
         },
         {
@@ -1469,7 +1469,7 @@
           ],
           "solved": true,
           "nodes": 301,
-          "time_ms": 15.102,
+          "time_ms": 15.697,
           "tt_hits": 0
         },
         {
@@ -1480,7 +1480,7 @@
           ],
           "solved": true,
           "nodes": 3226,
-          "time_ms": 156.8,
+          "time_ms": 173.349,
           "tt_hits": 0
         },
         {
@@ -1491,7 +1491,7 @@
           ],
           "solved": true,
           "nodes": 1007,
-          "time_ms": 50.202,
+          "time_ms": 62.294,
           "tt_hits": 0
         },
         {
@@ -1502,7 +1502,7 @@
           ],
           "solved": true,
           "nodes": 1868,
-          "time_ms": 98.642,
+          "time_ms": 120.893,
           "tt_hits": 0
         },
         {
@@ -1513,7 +1513,7 @@
           ],
           "solved": false,
           "nodes": 3624,
-          "time_ms": 192.939,
+          "time_ms": 250.94,
           "tt_hits": 0
         },
         {
@@ -1524,7 +1524,7 @@
           ],
           "solved": false,
           "nodes": 2014,
-          "time_ms": 106.476,
+          "time_ms": 127.926,
           "tt_hits": 0
         },
         {
@@ -1538,7 +1538,7 @@
           ],
           "solved": true,
           "nodes": 1447,
-          "time_ms": 68.848,
+          "time_ms": 83.51,
           "tt_hits": 0
         },
         {
@@ -1549,7 +1549,7 @@
           ],
           "solved": true,
           "nodes": 2445,
-          "time_ms": 112.348,
+          "time_ms": 121.468,
           "tt_hits": 0
         },
         {
@@ -1561,7 +1561,7 @@
           ],
           "solved": true,
           "nodes": 1912,
-          "time_ms": 86.142,
+          "time_ms": 102.878,
           "tt_hits": 0
         },
         {
@@ -1572,7 +1572,7 @@
           ],
           "solved": true,
           "nodes": 2166,
-          "time_ms": 103.62,
+          "time_ms": 118.495,
           "tt_hits": 0
         },
         {
@@ -1583,7 +1583,7 @@
           ],
           "solved": false,
           "nodes": 2515,
-          "time_ms": 126.746,
+          "time_ms": 146.999,
           "tt_hits": 0
         },
         {
@@ -1594,7 +1594,7 @@
           ],
           "solved": false,
           "nodes": 1198,
-          "time_ms": 54.235,
+          "time_ms": 77.868,
           "tt_hits": 0
         },
         {
@@ -1605,7 +1605,7 @@
           ],
           "solved": true,
           "nodes": 1208,
-          "time_ms": 57.164,
+          "time_ms": 70.236,
           "tt_hits": 0
         },
         {
@@ -1617,7 +1617,7 @@
           ],
           "solved": true,
           "nodes": 1771,
-          "time_ms": 89.184,
+          "time_ms": 100.394,
           "tt_hits": 0
         },
         {
@@ -1628,7 +1628,7 @@
           ],
           "solved": true,
           "nodes": 3604,
-          "time_ms": 206.593,
+          "time_ms": 266.893,
           "tt_hits": 0
         },
         {
@@ -1639,7 +1639,7 @@
           ],
           "solved": true,
           "nodes": 1407,
-          "time_ms": 69.527,
+          "time_ms": 101.256,
           "tt_hits": 0
         },
         {
@@ -1652,7 +1652,7 @@
           ],
           "solved": false,
           "nodes": 592,
-          "time_ms": 22.655,
+          "time_ms": 22.847,
           "tt_hits": 0
         },
         {
@@ -1663,7 +1663,7 @@
           ],
           "solved": true,
           "nodes": 3240,
-          "time_ms": 185.281,
+          "time_ms": 204.107,
           "tt_hits": 0
         },
         {
@@ -1675,7 +1675,7 @@
           ],
           "solved": true,
           "nodes": 2426,
-          "time_ms": 118.816,
+          "time_ms": 130.016,
           "tt_hits": 0
         },
         {
@@ -1686,7 +1686,7 @@
           ],
           "solved": true,
           "nodes": 2532,
-          "time_ms": 126.364,
+          "time_ms": 141.887,
           "tt_hits": 0
         },
         {
@@ -1697,7 +1697,7 @@
           ],
           "solved": true,
           "nodes": 1370,
-          "time_ms": 60.894,
+          "time_ms": 83.982,
           "tt_hits": 0
         },
         {
@@ -1708,7 +1708,7 @@
           ],
           "solved": false,
           "nodes": 3244,
-          "time_ms": 189.369,
+          "time_ms": 218.887,
           "tt_hits": 0
         },
         {
@@ -1719,7 +1719,7 @@
           ],
           "solved": true,
           "nodes": 2108,
-          "time_ms": 117.269,
+          "time_ms": 138.815,
           "tt_hits": 0
         },
         {
@@ -1730,7 +1730,7 @@
           ],
           "solved": false,
           "nodes": 1030,
-          "time_ms": 59.219,
+          "time_ms": 66.242,
           "tt_hits": 0
         },
         {
@@ -1741,7 +1741,7 @@
           ],
           "solved": false,
           "nodes": 771,
-          "time_ms": 41.848,
+          "time_ms": 46.107,
           "tt_hits": 0
         },
         {
@@ -1752,7 +1752,7 @@
           ],
           "solved": false,
           "nodes": 928,
-          "time_ms": 48.341,
+          "time_ms": 51.244,
           "tt_hits": 0
         }
       ],
@@ -1778,8 +1778,8 @@
       "total_nodes": 98080,
       "avg_nodes": 1961.6,
       "avg_tt_hits": 39.34,
-      "avg_latency_ms": 106.876,
-      "p95_latency_ms": 228.758,
+      "avg_latency_ms": 124.088,
+      "p95_latency_ms": 263.325,
       "positions": [
         {
           "id": "WAC.001",
@@ -1789,7 +1789,7 @@
           ],
           "solved": true,
           "nodes": 3410,
-          "time_ms": 208.684,
+          "time_ms": 242.226,
           "tt_hits": 61
         },
         {
@@ -1800,7 +1800,7 @@
           ],
           "solved": false,
           "nodes": 756,
-          "time_ms": 36.319,
+          "time_ms": 36.201,
           "tt_hits": 18
         },
         {
@@ -1811,7 +1811,7 @@
           ],
           "solved": true,
           "nodes": 1799,
-          "time_ms": 98.824,
+          "time_ms": 116.999,
           "tt_hits": 42
         },
         {
@@ -1822,7 +1822,7 @@
           ],
           "solved": true,
           "nodes": 945,
-          "time_ms": 55.569,
+          "time_ms": 63.921,
           "tt_hits": 45
         },
         {
@@ -1833,7 +1833,7 @@
           ],
           "solved": true,
           "nodes": 1222,
-          "time_ms": 59.174,
+          "time_ms": 71.944,
           "tt_hits": 33
         },
         {
@@ -1844,7 +1844,7 @@
           ],
           "solved": false,
           "nodes": 305,
-          "time_ms": 13.915,
+          "time_ms": 20.292,
           "tt_hits": 16
         },
         {
@@ -1855,7 +1855,7 @@
           ],
           "solved": false,
           "nodes": 1247,
-          "time_ms": 72.049,
+          "time_ms": 93.707,
           "tt_hits": 35
         },
         {
@@ -1866,7 +1866,7 @@
           ],
           "solved": false,
           "nodes": 1649,
-          "time_ms": 91.795,
+          "time_ms": 109.38,
           "tt_hits": 45
         },
         {
@@ -1877,7 +1877,7 @@
           ],
           "solved": false,
           "nodes": 2917,
-          "time_ms": 160.906,
+          "time_ms": 162.285,
           "tt_hits": 39
         },
         {
@@ -1888,7 +1888,7 @@
           ],
           "solved": true,
           "nodes": 2759,
-          "time_ms": 144.622,
+          "time_ms": 160.053,
           "tt_hits": 55
         },
         {
@@ -1899,7 +1899,7 @@
           ],
           "solved": true,
           "nodes": 1710,
-          "time_ms": 95.64,
+          "time_ms": 107.414,
           "tt_hits": 43
         },
         {
@@ -1910,7 +1910,7 @@
           ],
           "solved": true,
           "nodes": 847,
-          "time_ms": 44.7,
+          "time_ms": 48.357,
           "tt_hits": 28
         },
         {
@@ -1921,7 +1921,7 @@
           ],
           "solved": false,
           "nodes": 1547,
-          "time_ms": 83.219,
+          "time_ms": 102.089,
           "tt_hits": 38
         },
         {
@@ -1932,7 +1932,7 @@
           ],
           "solved": false,
           "nodes": 3316,
-          "time_ms": 206.444,
+          "time_ms": 231.458,
           "tt_hits": 48
         },
         {
@@ -1943,7 +1943,7 @@
           ],
           "solved": false,
           "nodes": 852,
-          "time_ms": 43.015,
+          "time_ms": 51.696,
           "tt_hits": 26
         },
         {
@@ -1954,7 +1954,7 @@
           ],
           "solved": true,
           "nodes": 1637,
-          "time_ms": 90.853,
+          "time_ms": 100.615,
           "tt_hits": 35
         },
         {
@@ -1965,7 +1965,7 @@
           ],
           "solved": false,
           "nodes": 4399,
-          "time_ms": 242.52,
+          "time_ms": 288.918,
           "tt_hits": 43
         },
         {
@@ -1976,7 +1976,7 @@
           ],
           "solved": false,
           "nodes": 283,
-          "time_ms": 11.874,
+          "time_ms": 15.665,
           "tt_hits": 11
         },
         {
@@ -1987,7 +1987,7 @@
           ],
           "solved": false,
           "nodes": 4340,
-          "time_ms": 247.007,
+          "time_ms": 273.13,
           "tt_hits": 41
         },
         {
@@ -1998,7 +1998,7 @@
           ],
           "solved": true,
           "nodes": 2424,
-          "time_ms": 140.242,
+          "time_ms": 163.773,
           "tt_hits": 37
         },
         {
@@ -2009,7 +2009,7 @@
           ],
           "solved": false,
           "nodes": 1797,
-          "time_ms": 91.962,
+          "time_ms": 97.863,
           "tt_hits": 52
         },
         {
@@ -2021,7 +2021,7 @@
           ],
           "solved": false,
           "nodes": 1849,
-          "time_ms": 108.689,
+          "time_ms": 119.248,
           "tt_hits": 43
         },
         {
@@ -2032,7 +2032,7 @@
           ],
           "solved": false,
           "nodes": 5744,
-          "time_ms": 337.775,
+          "time_ms": 383.995,
           "tt_hits": 57
         },
         {
@@ -2043,7 +2043,7 @@
           ],
           "solved": true,
           "nodes": 1545,
-          "time_ms": 80.045,
+          "time_ms": 111.067,
           "tt_hits": 45
         },
         {
@@ -2054,7 +2054,7 @@
           ],
           "solved": true,
           "nodes": 301,
-          "time_ms": 17.233,
+          "time_ms": 21.943,
           "tt_hits": 21
         },
         {
@@ -2065,7 +2065,7 @@
           ],
           "solved": true,
           "nodes": 3003,
-          "time_ms": 175.999,
+          "time_ms": 178.257,
           "tt_hits": 39
         },
         {
@@ -2076,7 +2076,7 @@
           ],
           "solved": true,
           "nodes": 1007,
-          "time_ms": 57.282,
+          "time_ms": 69.914,
           "tt_hits": 46
         },
         {
@@ -2087,7 +2087,7 @@
           ],
           "solved": true,
           "nodes": 1607,
-          "time_ms": 79.138,
+          "time_ms": 86.803,
           "tt_hits": 43
         },
         {
@@ -2098,7 +2098,7 @@
           ],
           "solved": false,
           "nodes": 3672,
-          "time_ms": 211.938,
+          "time_ms": 251.341,
           "tt_hits": 52
         },
         {
@@ -2109,7 +2109,7 @@
           ],
           "solved": false,
           "nodes": 1640,
-          "time_ms": 84.119,
+          "time_ms": 101.806,
           "tt_hits": 40
         },
         {
@@ -2123,7 +2123,7 @@
           ],
           "solved": true,
           "nodes": 1447,
-          "time_ms": 71.762,
+          "time_ms": 77.64,
           "tt_hits": 38
         },
         {
@@ -2134,7 +2134,7 @@
           ],
           "solved": true,
           "nodes": 1714,
-          "time_ms": 78.089,
+          "time_ms": 91.313,
           "tt_hits": 38
         },
         {
@@ -2146,7 +2146,7 @@
           ],
           "solved": true,
           "nodes": 1677,
-          "time_ms": 74.915,
+          "time_ms": 104.709,
           "tt_hits": 42
         },
         {
@@ -2157,7 +2157,7 @@
           ],
           "solved": true,
           "nodes": 2149,
-          "time_ms": 100.537,
+          "time_ms": 112.83,
           "tt_hits": 43
         },
         {
@@ -2168,7 +2168,7 @@
           ],
           "solved": false,
           "nodes": 2477,
-          "time_ms": 128.797,
+          "time_ms": 149.415,
           "tt_hits": 46
         },
         {
@@ -2179,7 +2179,7 @@
           ],
           "solved": false,
           "nodes": 1156,
-          "time_ms": 54.721,
+          "time_ms": 64.841,
           "tt_hits": 37
         },
         {
@@ -2190,7 +2190,7 @@
           ],
           "solved": true,
           "nodes": 1208,
-          "time_ms": 59.34,
+          "time_ms": 63.925,
           "tt_hits": 35
         },
         {
@@ -2202,7 +2202,7 @@
           ],
           "solved": true,
           "nodes": 1771,
-          "time_ms": 83.933,
+          "time_ms": 99.555,
           "tt_hits": 38
         },
         {
@@ -2213,7 +2213,7 @@
           ],
           "solved": true,
           "nodes": 3644,
-          "time_ms": 205.056,
+          "time_ms": 232.95,
           "tt_hits": 41
         },
         {
@@ -2224,7 +2224,7 @@
           ],
           "solved": true,
           "nodes": 1407,
-          "time_ms": 72.679,
+          "time_ms": 82.089,
           "tt_hits": 34
         },
         {
@@ -2237,7 +2237,7 @@
           ],
           "solved": false,
           "nodes": 526,
-          "time_ms": 20.107,
+          "time_ms": 23.733,
           "tt_hits": 26
         },
         {
@@ -2248,7 +2248,7 @@
           ],
           "solved": true,
           "nodes": 3034,
-          "time_ms": 173.085,
+          "time_ms": 199.479,
           "tt_hits": 42
         },
         {
@@ -2260,7 +2260,7 @@
           ],
           "solved": true,
           "nodes": 3075,
-          "time_ms": 161.449,
+          "time_ms": 230.462,
           "tt_hits": 47
         },
         {
@@ -2271,7 +2271,7 @@
           ],
           "solved": true,
           "nodes": 2707,
-          "time_ms": 146.622,
+          "time_ms": 172.27,
           "tt_hits": 48
         },
         {
@@ -2282,7 +2282,7 @@
           ],
           "solved": true,
           "nodes": 1370,
-          "time_ms": 63.655,
+          "time_ms": 68.639,
           "tt_hits": 42
         },
         {
@@ -2293,7 +2293,7 @@
           ],
           "solved": false,
           "nodes": 3358,
-          "time_ms": 193.789,
+          "time_ms": 234.311,
           "tt_hits": 47
         },
         {
@@ -2304,7 +2304,7 @@
           ],
           "solved": true,
           "nodes": 1993,
-          "time_ms": 109.246,
+          "time_ms": 138.544,
           "tt_hits": 45
         },
         {
@@ -2315,7 +2315,7 @@
           ],
           "solved": false,
           "nodes": 907,
-          "time_ms": 50.963,
+          "time_ms": 55.519,
           "tt_hits": 40
         },
         {
@@ -2326,7 +2326,7 @@
           ],
           "solved": false,
           "nodes": 970,
-          "time_ms": 54.301,
+          "time_ms": 67.257,
           "tt_hits": 27
         },
         {
@@ -2337,7 +2337,7 @@
           ],
           "solved": false,
           "nodes": 961,
-          "time_ms": 49.215,
+          "time_ms": 52.537,
           "tt_hits": 34
         }
       ],
@@ -2363,8 +2363,8 @@
       "total_nodes": 235216,
       "avg_nodes": 4704.32,
       "avg_tt_hits": 37.52,
-      "avg_latency_ms": 181.306,
-      "p95_latency_ms": 422.833,
+      "avg_latency_ms": 228.689,
+      "p95_latency_ms": 530.604,
       "positions": [
         {
           "id": "WAC.001",
@@ -2374,7 +2374,7 @@
           ],
           "solved": true,
           "nodes": 13689,
-          "time_ms": 582.223,
+          "time_ms": 720.536,
           "tt_hits": 61
         },
         {
@@ -2385,7 +2385,7 @@
           ],
           "solved": false,
           "nodes": 1157,
-          "time_ms": 40.323,
+          "time_ms": 52.896,
           "tt_hits": 18
         },
         {
@@ -2396,7 +2396,7 @@
           ],
           "solved": true,
           "nodes": 4590,
-          "time_ms": 176.134,
+          "time_ms": 219.86,
           "tt_hits": 42
         },
         {
@@ -2407,7 +2407,7 @@
           ],
           "solved": true,
           "nodes": 159,
-          "time_ms": 5.918,
+          "time_ms": 8.972,
           "tt_hits": 0
         },
         {
@@ -2418,7 +2418,7 @@
           ],
           "solved": true,
           "nodes": 2960,
-          "time_ms": 98.853,
+          "time_ms": 126.436,
           "tt_hits": 33
         },
         {
@@ -2429,7 +2429,7 @@
           ],
           "solved": true,
           "nodes": 619,
-          "time_ms": 18.954,
+          "time_ms": 22.263,
           "tt_hits": 16
         },
         {
@@ -2440,7 +2440,7 @@
           ],
           "solved": true,
           "nodes": 2887,
-          "time_ms": 101.036,
+          "time_ms": 151.39,
           "tt_hits": 35
         },
         {
@@ -2451,7 +2451,7 @@
           ],
           "solved": true,
           "nodes": 3783,
-          "time_ms": 135.836,
+          "time_ms": 165.764,
           "tt_hits": 45
         },
         {
@@ -2462,7 +2462,7 @@
           ],
           "solved": false,
           "nodes": 5847,
-          "time_ms": 231.995,
+          "time_ms": 283.812,
           "tt_hits": 39
         },
         {
@@ -2473,7 +2473,7 @@
           ],
           "solved": true,
           "nodes": 5381,
-          "time_ms": 187.968,
+          "time_ms": 222.971,
           "tt_hits": 55
         },
         {
@@ -2484,7 +2484,7 @@
           ],
           "solved": true,
           "nodes": 5538,
-          "time_ms": 223.502,
+          "time_ms": 279.877,
           "tt_hits": 43
         },
         {
@@ -2495,7 +2495,7 @@
           ],
           "solved": true,
           "nodes": 4309,
-          "time_ms": 164.898,
+          "time_ms": 247.813,
           "tt_hits": 28
         },
         {
@@ -2506,7 +2506,7 @@
           ],
           "solved": true,
           "nodes": 4411,
-          "time_ms": 183.254,
+          "time_ms": 238.685,
           "tt_hits": 38
         },
         {
@@ -2517,7 +2517,7 @@
           ],
           "solved": false,
           "nodes": 7975,
-          "time_ms": 341.001,
+          "time_ms": 416.052,
           "tt_hits": 48
         },
         {
@@ -2528,7 +2528,7 @@
           ],
           "solved": true,
           "nodes": 1926,
-          "time_ms": 72.0,
+          "time_ms": 86.688,
           "tt_hits": 26
         },
         {
@@ -2539,7 +2539,7 @@
           ],
           "solved": true,
           "nodes": 2732,
-          "time_ms": 102.442,
+          "time_ms": 127.64,
           "tt_hits": 35
         },
         {
@@ -2550,7 +2550,7 @@
           ],
           "solved": true,
           "nodes": 7584,
-          "time_ms": 313.072,
+          "time_ms": 379.779,
           "tt_hits": 42
         },
         {
@@ -2561,7 +2561,7 @@
           ],
           "solved": false,
           "nodes": 769,
-          "time_ms": 24.272,
+          "time_ms": 25.585,
           "tt_hits": 11
         },
         {
@@ -2572,7 +2572,7 @@
           ],
           "solved": false,
           "nodes": 11809,
-          "time_ms": 521.693,
+          "time_ms": 652.551,
           "tt_hits": 41
         },
         {
@@ -2583,7 +2583,7 @@
           ],
           "solved": true,
           "nodes": 3986,
-          "time_ms": 141.334,
+          "time_ms": 226.347,
           "tt_hits": 37
         },
         {
@@ -2594,7 +2594,7 @@
           ],
           "solved": false,
           "nodes": 4414,
-          "time_ms": 152.603,
+          "time_ms": 166.747,
           "tt_hits": 52
         },
         {
@@ -2606,7 +2606,7 @@
           ],
           "solved": true,
           "nodes": 5488,
-          "time_ms": 230.156,
+          "time_ms": 249.948,
           "tt_hits": 43
         },
         {
@@ -2617,7 +2617,7 @@
           ],
           "solved": false,
           "nodes": 9412,
-          "time_ms": 358.266,
+          "time_ms": 436.897,
           "tt_hits": 57
         },
         {
@@ -2628,7 +2628,7 @@
           ],
           "solved": true,
           "nodes": 3893,
-          "time_ms": 141.974,
+          "time_ms": 145.897,
           "tt_hits": 45
         },
         {
@@ -2639,7 +2639,7 @@
           ],
           "solved": true,
           "nodes": 446,
-          "time_ms": 16.635,
+          "time_ms": 18.042,
           "tt_hits": 21
         },
         {
@@ -2650,7 +2650,7 @@
           ],
           "solved": true,
           "nodes": 5261,
-          "time_ms": 196.31,
+          "time_ms": 240.758,
           "tt_hits": 39
         },
         {
@@ -2661,7 +2661,7 @@
           ],
           "solved": true,
           "nodes": 377,
-          "time_ms": 15.691,
+          "time_ms": 17.592,
           "tt_hits": 0
         },
         {
@@ -2672,7 +2672,7 @@
           ],
           "solved": true,
           "nodes": 4370,
-          "time_ms": 156.566,
+          "time_ms": 180.214,
           "tt_hits": 43
         },
         {
@@ -2683,7 +2683,7 @@
           ],
           "solved": true,
           "nodes": 6606,
-          "time_ms": 243.101,
+          "time_ms": 291.499,
           "tt_hits": 52
         },
         {
@@ -2694,7 +2694,7 @@
           ],
           "solved": false,
           "nodes": 11356,
-          "time_ms": 475.661,
+          "time_ms": 570.318,
           "tt_hits": 40
         },
         {
@@ -2708,7 +2708,7 @@
           ],
           "solved": true,
           "nodes": 3628,
-          "time_ms": 120.911,
+          "time_ms": 145.138,
           "tt_hits": 38
         },
         {
@@ -2719,7 +2719,7 @@
           ],
           "solved": true,
           "nodes": 2557,
-          "time_ms": 80.046,
+          "time_ms": 96.105,
           "tt_hits": 38
         },
         {
@@ -2731,7 +2731,7 @@
           ],
           "solved": true,
           "nodes": 4272,
-          "time_ms": 140.874,
+          "time_ms": 196.928,
           "tt_hits": 42
         },
         {
@@ -2742,7 +2742,7 @@
           ],
           "solved": true,
           "nodes": 6233,
-          "time_ms": 230.13,
+          "time_ms": 300.698,
           "tt_hits": 43
         },
         {
@@ -2753,7 +2753,7 @@
           ],
           "solved": false,
           "nodes": 6329,
-          "time_ms": 239.137,
+          "time_ms": 361.355,
           "tt_hits": 46
         },
         {
@@ -2764,7 +2764,7 @@
           ],
           "solved": true,
           "nodes": 2403,
-          "time_ms": 73.273,
+          "time_ms": 95.587,
           "tt_hits": 37
         },
         {
@@ -2775,7 +2775,7 @@
           ],
           "solved": true,
           "nodes": 3964,
-          "time_ms": 140.219,
+          "time_ms": 179.456,
           "tt_hits": 35
         },
         {
@@ -2787,7 +2787,7 @@
           ],
           "solved": true,
           "nodes": 2733,
-          "time_ms": 91.917,
+          "time_ms": 127.787,
           "tt_hits": 38
         },
         {
@@ -2798,7 +2798,7 @@
           ],
           "solved": true,
           "nodes": 5194,
-          "time_ms": 206.567,
+          "time_ms": 274.973,
           "tt_hits": 42
         },
         {
@@ -2809,7 +2809,7 @@
           ],
           "solved": true,
           "nodes": 2867,
-          "time_ms": 94.837,
+          "time_ms": 137.194,
           "tt_hits": 34
         },
         {
@@ -2822,7 +2822,7 @@
           ],
           "solved": true,
           "nodes": 1371,
-          "time_ms": 37.694,
+          "time_ms": 49.52,
           "tt_hits": 26
         },
         {
@@ -2833,7 +2833,7 @@
           ],
           "solved": false,
           "nodes": 6875,
-          "time_ms": 284.543,
+          "time_ms": 338.02,
           "tt_hits": 42
         },
         {
@@ -2845,7 +2845,7 @@
           ],
           "solved": true,
           "nodes": 5618,
-          "time_ms": 195.971,
+          "time_ms": 229.468,
           "tt_hits": 47
         },
         {
@@ -2856,7 +2856,7 @@
           ],
           "solved": true,
           "nodes": 5239,
-          "time_ms": 174.588,
+          "time_ms": 237.14,
           "tt_hits": 48
         },
         {
@@ -2867,7 +2867,7 @@
           ],
           "solved": true,
           "nodes": 3982,
-          "time_ms": 131.499,
+          "time_ms": 184.191,
           "tt_hits": 42
         },
         {
@@ -2878,7 +2878,7 @@
           ],
           "solved": false,
           "nodes": 8068,
-          "time_ms": 348.142,
+          "time_ms": 482.065,
           "tt_hits": 47
         },
         {
@@ -2889,7 +2889,7 @@
           ],
           "solved": true,
           "nodes": 4313,
-          "time_ms": 152.282,
+          "time_ms": 186.748,
           "tt_hits": 45
         },
         {
@@ -2900,7 +2900,7 @@
           ],
           "solved": false,
           "nodes": 7379,
-          "time_ms": 325.333,
+          "time_ms": 414.439,
           "tt_hits": 40
         },
         {
@@ -2911,7 +2911,7 @@
           ],
           "solved": false,
           "nodes": 6401,
-          "time_ms": 273.228,
+          "time_ms": 328.414,
           "tt_hits": 27
         },
         {
@@ -2922,7 +2922,7 @@
           ],
           "solved": true,
           "nodes": 2056,
-          "time_ms": 70.447,
+          "time_ms": 95.387,
           "tt_hits": 34
         }
       ],
@@ -2950,8 +2950,8 @@
       "total_nodes": 55786,
       "avg_nodes": 1115.72,
       "avg_tt_hits": 0.96,
-      "avg_latency_ms": 50.889,
-      "p95_latency_ms": 115.244,
+      "avg_latency_ms": 65.903,
+      "p95_latency_ms": 144.137,
       "positions": [
         {
           "id": "WAC.001",
@@ -2961,7 +2961,7 @@
           ],
           "solved": false,
           "nodes": 3805,
-          "time_ms": 179.095,
+          "time_ms": 200.767,
           "tt_hits": 1
         },
         {
@@ -2972,7 +2972,7 @@
           ],
           "solved": false,
           "nodes": 354,
-          "time_ms": 13.721,
+          "time_ms": 16.351,
           "tt_hits": 1
         },
         {
@@ -2983,7 +2983,7 @@
           ],
           "solved": true,
           "nodes": 1243,
-          "time_ms": 55.664,
+          "time_ms": 68.377,
           "tt_hits": 1
         },
         {
@@ -2994,7 +2994,7 @@
           ],
           "solved": true,
           "nodes": 159,
-          "time_ms": 6.624,
+          "time_ms": 8.184,
           "tt_hits": 0
         },
         {
@@ -3005,7 +3005,7 @@
           ],
           "solved": false,
           "nodes": 573,
-          "time_ms": 25.455,
+          "time_ms": 33.976,
           "tt_hits": 1
         },
         {
@@ -3016,7 +3016,7 @@
           ],
           "solved": false,
           "nodes": 95,
-          "time_ms": 3.513,
+          "time_ms": 4.39,
           "tt_hits": 1
         },
         {
@@ -3027,7 +3027,7 @@
           ],
           "solved": false,
           "nodes": 325,
-          "time_ms": 14.52,
+          "time_ms": 15.945,
           "tt_hits": 1
         },
         {
@@ -3038,7 +3038,7 @@
           ],
           "solved": true,
           "nodes": 640,
-          "time_ms": 29.701,
+          "time_ms": 33.743,
           "tt_hits": 1
         },
         {
@@ -3049,7 +3049,7 @@
           ],
           "solved": false,
           "nodes": 1577,
-          "time_ms": 74.627,
+          "time_ms": 99.419,
           "tt_hits": 1
         },
         {
@@ -3060,7 +3060,7 @@
           ],
           "solved": true,
           "nodes": 773,
-          "time_ms": 33.09,
+          "time_ms": 36.6,
           "tt_hits": 1
         },
         {
@@ -3071,7 +3071,7 @@
           ],
           "solved": false,
           "nodes": 1533,
-          "time_ms": 75.475,
+          "time_ms": 82.138,
           "tt_hits": 1
         },
         {
@@ -3082,7 +3082,7 @@
           ],
           "solved": false,
           "nodes": 1479,
-          "time_ms": 62.938,
+          "time_ms": 78.468,
           "tt_hits": 1
         },
         {
@@ -3093,7 +3093,7 @@
           ],
           "solved": false,
           "nodes": 1238,
-          "time_ms": 54.909,
+          "time_ms": 75.391,
           "tt_hits": 1
         },
         {
@@ -3104,7 +3104,7 @@
           ],
           "solved": false,
           "nodes": 1698,
-          "time_ms": 85.77,
+          "time_ms": 99.301,
           "tt_hits": 1
         },
         {
@@ -3115,7 +3115,7 @@
           ],
           "solved": false,
           "nodes": 499,
-          "time_ms": 21.587,
+          "time_ms": 29.691,
           "tt_hits": 1
         },
         {
@@ -3126,7 +3126,7 @@
           ],
           "solved": true,
           "nodes": 700,
-          "time_ms": 32.489,
+          "time_ms": 42.413,
           "tt_hits": 1
         },
         {
@@ -3137,7 +3137,7 @@
           ],
           "solved": false,
           "nodes": 1842,
-          "time_ms": 90.426,
+          "time_ms": 102.044,
           "tt_hits": 1
         },
         {
@@ -3148,7 +3148,7 @@
           ],
           "solved": false,
           "nodes": 136,
-          "time_ms": 4.013,
+          "time_ms": 4.472,
           "tt_hits": 1
         },
         {
@@ -3159,7 +3159,7 @@
           ],
           "solved": false,
           "nodes": 2108,
-          "time_ms": 99.056,
+          "time_ms": 110.516,
           "tt_hits": 1
         },
         {
@@ -3170,7 +3170,7 @@
           ],
           "solved": false,
           "nodes": 815,
-          "time_ms": 35.265,
+          "time_ms": 38.366,
           "tt_hits": 1
         },
         {
@@ -3181,7 +3181,7 @@
           ],
           "solved": false,
           "nodes": 633,
-          "time_ms": 28.213,
+          "time_ms": 29.532,
           "tt_hits": 1
         },
         {
@@ -3193,7 +3193,7 @@
           ],
           "solved": true,
           "nodes": 1866,
-          "time_ms": 92.425,
+          "time_ms": 104.171,
           "tt_hits": 1
         },
         {
@@ -3204,7 +3204,7 @@
           ],
           "solved": false,
           "nodes": 2671,
-          "time_ms": 124.261,
+          "time_ms": 137.295,
           "tt_hits": 1
         },
         {
@@ -3215,7 +3215,7 @@
           ],
           "solved": true,
           "nodes": 967,
-          "time_ms": 40.708,
+          "time_ms": 44.24,
           "tt_hits": 1
         },
         {
@@ -3226,7 +3226,7 @@
           ],
           "solved": true,
           "nodes": 158,
-          "time_ms": 6.507,
+          "time_ms": 9.029,
           "tt_hits": 1
         },
         {
@@ -3237,7 +3237,7 @@
           ],
           "solved": true,
           "nodes": 1810,
-          "time_ms": 79.954,
+          "time_ms": 140.374,
           "tt_hits": 1
         },
         {
@@ -3248,7 +3248,7 @@
           ],
           "solved": true,
           "nodes": 377,
-          "time_ms": 15.603,
+          "time_ms": 18.722,
           "tt_hits": 0
         },
         {
@@ -3259,7 +3259,7 @@
           ],
           "solved": true,
           "nodes": 600,
-          "time_ms": 26.909,
+          "time_ms": 36.499,
           "tt_hits": 1
         },
         {
@@ -3270,7 +3270,7 @@
           ],
           "solved": true,
           "nodes": 1709,
-          "time_ms": 80.668,
+          "time_ms": 108.696,
           "tt_hits": 1
         },
         {
@@ -3281,7 +3281,7 @@
           ],
           "solved": false,
           "nodes": 698,
-          "time_ms": 32.439,
+          "time_ms": 42.099,
           "tt_hits": 1
         },
         {
@@ -3295,7 +3295,7 @@
           ],
           "solved": true,
           "nodes": 924,
-          "time_ms": 40.557,
+          "time_ms": 48.728,
           "tt_hits": 1
         },
         {
@@ -3306,7 +3306,7 @@
           ],
           "solved": true,
           "nodes": 534,
-          "time_ms": 21.363,
+          "time_ms": 24.95,
           "tt_hits": 1
         },
         {
@@ -3318,7 +3318,7 @@
           ],
           "solved": true,
           "nodes": 842,
-          "time_ms": 36.065,
+          "time_ms": 47.734,
           "tt_hits": 1
         },
         {
@@ -3329,7 +3329,7 @@
           ],
           "solved": true,
           "nodes": 2067,
-          "time_ms": 88.606,
+          "time_ms": 123.977,
           "tt_hits": 1
         },
         {
@@ -3340,7 +3340,7 @@
           ],
           "solved": false,
           "nodes": 1687,
-          "time_ms": 67.413,
+          "time_ms": 108.568,
           "tt_hits": 1
         },
         {
@@ -3351,7 +3351,7 @@
           ],
           "solved": true,
           "nodes": 376,
-          "time_ms": 14.733,
+          "time_ms": 19.605,
           "tt_hits": 1
         },
         {
@@ -3362,7 +3362,7 @@
           ],
           "solved": true,
           "nodes": 1071,
-          "time_ms": 45.161,
+          "time_ms": 53.78,
           "tt_hits": 1
         },
         {
@@ -3374,7 +3374,7 @@
           ],
           "solved": true,
           "nodes": 465,
-          "time_ms": 19.969,
+          "time_ms": 27.097,
           "tt_hits": 1
         },
         {
@@ -3385,7 +3385,7 @@
           ],
           "solved": true,
           "nodes": 1955,
-          "time_ms": 93.707,
+          "time_ms": 129.773,
           "tt_hits": 1
         },
         {
@@ -3396,7 +3396,7 @@
           ],
           "solved": true,
           "nodes": 951,
-          "time_ms": 37.38,
+          "time_ms": 43.101,
           "tt_hits": 1
         },
         {
@@ -3409,7 +3409,7 @@
           ],
           "solved": true,
           "nodes": 231,
-          "time_ms": 7.639,
+          "time_ms": 8.2,
           "tt_hits": 1
         },
         {
@@ -3420,7 +3420,7 @@
           ],
           "solved": false,
           "nodes": 2117,
-          "time_ms": 106.048,
+          "time_ms": 147.216,
           "tt_hits": 1
         },
         {
@@ -3432,7 +3432,7 @@
           ],
           "solved": true,
           "nodes": 1242,
-          "time_ms": 55.35,
+          "time_ms": 68.859,
           "tt_hits": 1
         },
         {
@@ -3443,7 +3443,7 @@
           ],
           "solved": true,
           "nodes": 1077,
-          "time_ms": 48.275,
+          "time_ms": 58.881,
           "tt_hits": 1
         },
         {
@@ -3454,7 +3454,7 @@
           ],
           "solved": true,
           "nodes": 407,
-          "time_ms": 16.051,
+          "time_ms": 21.532,
           "tt_hits": 1
         },
         {
@@ -3465,7 +3465,7 @@
           ],
           "solved": false,
           "nodes": 1529,
-          "time_ms": 74.347,
+          "time_ms": 138.936,
           "tt_hits": 1
         },
         {
@@ -3476,7 +3476,7 @@
           ],
           "solved": true,
           "nodes": 657,
-          "time_ms": 29.231,
+          "time_ms": 44.118,
           "tt_hits": 1
         },
         {
@@ -3487,7 +3487,7 @@
           ],
           "solved": false,
           "nodes": 2457,
-          "time_ms": 122.769,
+          "time_ms": 215.342,
           "tt_hits": 1
         },
         {
@@ -3498,7 +3498,7 @@
           ],
           "solved": false,
           "nodes": 1676,
-          "time_ms": 74.69,
+          "time_ms": 93.042,
           "tt_hits": 1
         },
         {
@@ -3509,7 +3509,7 @@
           ],
           "solved": false,
           "nodes": 440,
-          "time_ms": 19.451,
+          "time_ms": 20.524,
           "tt_hits": 1
         }
       ]
@@ -3534,8 +3534,8 @@
       "total_nodes": 235216,
       "avg_nodes": 4704.32,
       "avg_tt_hits": 37.52,
-      "avg_latency_ms": 181.524,
-      "p95_latency_ms": 431.716,
+      "avg_latency_ms": 230.285,
+      "p95_latency_ms": 539.002,
       "positions": [
         {
           "id": "WAC.001",
@@ -3545,7 +3545,7 @@
           ],
           "solved": true,
           "nodes": 13689,
-          "time_ms": 590.5,
+          "time_ms": 811.464,
           "tt_hits": 61
         },
         {
@@ -3556,7 +3556,7 @@
           ],
           "solved": false,
           "nodes": 1157,
-          "time_ms": 39.403,
+          "time_ms": 52.231,
           "tt_hits": 18
         },
         {
@@ -3567,7 +3567,7 @@
           ],
           "solved": true,
           "nodes": 4590,
-          "time_ms": 183.795,
+          "time_ms": 255.919,
           "tt_hits": 42
         },
         {
@@ -3578,7 +3578,7 @@
           ],
           "solved": true,
           "nodes": 159,
-          "time_ms": 6.678,
+          "time_ms": 9.631,
           "tt_hits": 0
         },
         {
@@ -3589,7 +3589,7 @@
           ],
           "solved": true,
           "nodes": 2960,
-          "time_ms": 98.034,
+          "time_ms": 125.101,
           "tt_hits": 33
         },
         {
@@ -3600,7 +3600,7 @@
           ],
           "solved": true,
           "nodes": 619,
-          "time_ms": 17.987,
+          "time_ms": 19.505,
           "tt_hits": 16
         },
         {
@@ -3611,7 +3611,7 @@
           ],
           "solved": true,
           "nodes": 2887,
-          "time_ms": 107.627,
+          "time_ms": 131.237,
           "tt_hits": 35
         },
         {
@@ -3622,7 +3622,7 @@
           ],
           "solved": true,
           "nodes": 3783,
-          "time_ms": 132.102,
+          "time_ms": 144.863,
           "tt_hits": 45
         },
         {
@@ -3633,7 +3633,7 @@
           ],
           "solved": false,
           "nodes": 5847,
-          "time_ms": 226.121,
+          "time_ms": 275.304,
           "tt_hits": 39
         },
         {
@@ -3644,7 +3644,7 @@
           ],
           "solved": true,
           "nodes": 5381,
-          "time_ms": 180.807,
+          "time_ms": 228.937,
           "tt_hits": 55
         },
         {
@@ -3655,7 +3655,7 @@
           ],
           "solved": true,
           "nodes": 5538,
-          "time_ms": 228.779,
+          "time_ms": 242.638,
           "tt_hits": 43
         },
         {
@@ -3666,7 +3666,7 @@
           ],
           "solved": true,
           "nodes": 4309,
-          "time_ms": 163.116,
+          "time_ms": 204.351,
           "tt_hits": 28
         },
         {
@@ -3677,7 +3677,7 @@
           ],
           "solved": true,
           "nodes": 4411,
-          "time_ms": 179.571,
+          "time_ms": 213.886,
           "tt_hits": 38
         },
         {
@@ -3688,7 +3688,7 @@
           ],
           "solved": false,
           "nodes": 7975,
-          "time_ms": 333.414,
+          "time_ms": 494.399,
           "tt_hits": 48
         },
         {
@@ -3699,7 +3699,7 @@
           ],
           "solved": true,
           "nodes": 1926,
-          "time_ms": 71.429,
+          "time_ms": 106.982,
           "tt_hits": 26
         },
         {
@@ -3710,7 +3710,7 @@
           ],
           "solved": true,
           "nodes": 2732,
-          "time_ms": 102.622,
+          "time_ms": 135.311,
           "tt_hits": 35
         },
         {
@@ -3721,7 +3721,7 @@
           ],
           "solved": true,
           "nodes": 7584,
-          "time_ms": 320.776,
+          "time_ms": 385.306,
           "tt_hits": 42
         },
         {
@@ -3732,7 +3732,7 @@
           ],
           "solved": false,
           "nodes": 769,
-          "time_ms": 22.881,
+          "time_ms": 35.586,
           "tt_hits": 11
         },
         {
@@ -3743,7 +3743,7 @@
           ],
           "solved": false,
           "nodes": 11809,
-          "time_ms": 512.279,
+          "time_ms": 695.927,
           "tt_hits": 41
         },
         {
@@ -3754,7 +3754,7 @@
           ],
           "solved": true,
           "nodes": 3986,
-          "time_ms": 141.717,
+          "time_ms": 195.682,
           "tt_hits": 37
         },
         {
@@ -3765,7 +3765,7 @@
           ],
           "solved": false,
           "nodes": 4414,
-          "time_ms": 152.613,
+          "time_ms": 237.932,
           "tt_hits": 52
         },
         {
@@ -3777,7 +3777,7 @@
           ],
           "solved": true,
           "nodes": 5488,
-          "time_ms": 239.533,
+          "time_ms": 267.918,
           "tt_hits": 43
         },
         {
@@ -3788,7 +3788,7 @@
           ],
           "solved": false,
           "nodes": 9412,
-          "time_ms": 366.429,
+          "time_ms": 456.986,
           "tt_hits": 57
         },
         {
@@ -3799,7 +3799,7 @@
           ],
           "solved": true,
           "nodes": 3893,
-          "time_ms": 131.24,
+          "time_ms": 180.272,
           "tt_hits": 45
         },
         {
@@ -3810,7 +3810,7 @@
           ],
           "solved": true,
           "nodes": 446,
-          "time_ms": 16.88,
+          "time_ms": 25.524,
           "tt_hits": 21
         },
         {
@@ -3821,7 +3821,7 @@
           ],
           "solved": true,
           "nodes": 5261,
-          "time_ms": 194.398,
+          "time_ms": 249.297,
           "tt_hits": 39
         },
         {
@@ -3832,7 +3832,7 @@
           ],
           "solved": true,
           "nodes": 377,
-          "time_ms": 16.394,
+          "time_ms": 19.808,
           "tt_hits": 0
         },
         {
@@ -3843,7 +3843,7 @@
           ],
           "solved": true,
           "nodes": 4370,
-          "time_ms": 154.721,
+          "time_ms": 191.489,
           "tt_hits": 43
         },
         {
@@ -3854,7 +3854,7 @@
           ],
           "solved": true,
           "nodes": 6606,
-          "time_ms": 248.626,
+          "time_ms": 288.271,
           "tt_hits": 52
         },
         {
@@ -3865,7 +3865,7 @@
           ],
           "solved": false,
           "nodes": 11356,
-          "time_ms": 485.131,
+          "time_ms": 575.496,
           "tt_hits": 40
         },
         {
@@ -3879,7 +3879,7 @@
           ],
           "solved": true,
           "nodes": 3628,
-          "time_ms": 125.817,
+          "time_ms": 188.631,
           "tt_hits": 38
         },
         {
@@ -3890,7 +3890,7 @@
           ],
           "solved": true,
           "nodes": 2557,
-          "time_ms": 82.707,
+          "time_ms": 114.362,
           "tt_hits": 38
         },
         {
@@ -3902,7 +3902,7 @@
           ],
           "solved": true,
           "nodes": 4272,
-          "time_ms": 143.608,
+          "time_ms": 182.864,
           "tt_hits": 42
         },
         {
@@ -3913,7 +3913,7 @@
           ],
           "solved": true,
           "nodes": 6233,
-          "time_ms": 235.826,
+          "time_ms": 318.785,
           "tt_hits": 43
         },
         {
@@ -3924,7 +3924,7 @@
           ],
           "solved": false,
           "nodes": 6329,
-          "time_ms": 245.283,
+          "time_ms": 320.616,
           "tt_hits": 46
         },
         {
@@ -3935,7 +3935,7 @@
           ],
           "solved": true,
           "nodes": 2403,
-          "time_ms": 72.825,
+          "time_ms": 94.892,
           "tt_hits": 37
         },
         {
@@ -3946,7 +3946,7 @@
           ],
           "solved": true,
           "nodes": 3964,
-          "time_ms": 141.653,
+          "time_ms": 172.47,
           "tt_hits": 35
         },
         {
@@ -3958,7 +3958,7 @@
           ],
           "solved": true,
           "nodes": 2733,
-          "time_ms": 94.19,
+          "time_ms": 114.915,
           "tt_hits": 38
         },
         {
@@ -3969,7 +3969,7 @@
           ],
           "solved": true,
           "nodes": 5194,
-          "time_ms": 209.335,
+          "time_ms": 236.27,
           "tt_hits": 42
         },
         {
@@ -3980,7 +3980,7 @@
           ],
           "solved": true,
           "nodes": 2867,
-          "time_ms": 100.503,
+          "time_ms": 113.718,
           "tt_hits": 34
         },
         {
@@ -3993,7 +3993,7 @@
           ],
           "solved": true,
           "nodes": 1371,
-          "time_ms": 38.142,
+          "time_ms": 46.398,
           "tt_hits": 26
         },
         {
@@ -4004,7 +4004,7 @@
           ],
           "solved": false,
           "nodes": 6875,
-          "time_ms": 290.509,
+          "time_ms": 430.62,
           "tt_hits": 42
         },
         {
@@ -4016,7 +4016,7 @@
           ],
           "solved": true,
           "nodes": 5618,
-          "time_ms": 194.523,
+          "time_ms": 205.669,
           "tt_hits": 47
         },
         {
@@ -4027,7 +4027,7 @@
           ],
           "solved": true,
           "nodes": 5239,
-          "time_ms": 179.741,
+          "time_ms": 189.506,
           "tt_hits": 48
         },
         {
@@ -4038,7 +4038,7 @@
           ],
           "solved": true,
           "nodes": 3982,
-          "time_ms": 124.348,
+          "time_ms": 146.191,
           "tt_hits": 42
         },
         {
@@ -4049,7 +4049,7 @@
           ],
           "solved": false,
           "nodes": 8068,
-          "time_ms": 333.378,
+          "time_ms": 390.376,
           "tt_hits": 47
         },
         {
@@ -4060,7 +4060,7 @@
           ],
           "solved": true,
           "nodes": 4313,
-          "time_ms": 151.81,
+          "time_ms": 180.031,
           "tt_hits": 45
         },
         {
@@ -4071,7 +4071,7 @@
           ],
           "solved": false,
           "nodes": 7379,
-          "time_ms": 309.578,
+          "time_ms": 391.16,
           "tt_hits": 40
         },
         {
@@ -4082,7 +4082,7 @@
           ],
           "solved": false,
           "nodes": 6401,
-          "time_ms": 264.967,
+          "time_ms": 342.445,
           "tt_hits": 27
         },
         {
@@ -4093,7 +4093,7 @@
           ],
           "solved": true,
           "nodes": 2056,
-          "time_ms": 71.846,
+          "time_ms": 77.104,
           "tt_hits": 34
         }
       ]
@@ -4118,8 +4118,8 @@
       "total_nodes": 936316,
       "avg_nodes": 18726.32,
       "avg_tt_hits": 329.64,
-      "avg_latency_ms": 821.795,
-      "p95_latency_ms": 2591.472,
+      "avg_latency_ms": 892.204,
+      "p95_latency_ms": 2803.6,
       "positions": [
         {
           "id": "WAC.001",
@@ -4129,7 +4129,7 @@
           ],
           "solved": true,
           "nodes": 13689,
-          "time_ms": 609.107,
+          "time_ms": 684.408,
           "tt_hits": 61
         },
         {
@@ -4140,7 +4140,7 @@
           ],
           "solved": false,
           "nodes": 4030,
-          "time_ms": 152.121,
+          "time_ms": 197.432,
           "tt_hits": 129
         },
         {
@@ -4151,7 +4151,7 @@
           ],
           "solved": true,
           "nodes": 14747,
-          "time_ms": 664.817,
+          "time_ms": 863.365,
           "tt_hits": 443
         },
         {
@@ -4162,7 +4162,7 @@
           ],
           "solved": true,
           "nodes": 159,
-          "time_ms": 6.637,
+          "time_ms": 12.058,
           "tt_hits": 0
         },
         {
@@ -4173,7 +4173,7 @@
           ],
           "solved": true,
           "nodes": 2960,
-          "time_ms": 103.452,
+          "time_ms": 115.504,
           "tt_hits": 33
         },
         {
@@ -4184,7 +4184,7 @@
           ],
           "solved": true,
           "nodes": 1127,
-          "time_ms": 36.605,
+          "time_ms": 42.35,
           "tt_hits": 133
         },
         {
@@ -4195,7 +4195,7 @@
           ],
           "solved": true,
           "nodes": 7484,
-          "time_ms": 324.204,
+          "time_ms": 374.145,
           "tt_hits": 322
         },
         {
@@ -4206,7 +4206,7 @@
           ],
           "solved": true,
           "nodes": 8336,
-          "time_ms": 358.526,
+          "time_ms": 402.637,
           "tt_hits": 526
         },
         {
@@ -4217,7 +4217,7 @@
           ],
           "solved": true,
           "nodes": 40316,
-          "time_ms": 1844.003,
+          "time_ms": 2147.738,
           "tt_hits": 270
         },
         {
@@ -4228,7 +4228,7 @@
           ],
           "solved": true,
           "nodes": 12431,
-          "time_ms": 527.906,
+          "time_ms": 597.819,
           "tt_hits": 848
         },
         {
@@ -4239,7 +4239,7 @@
           ],
           "solved": true,
           "nodes": 18685,
-          "time_ms": 841.02,
+          "time_ms": 967.291,
           "tt_hits": 474
         },
         {
@@ -4250,7 +4250,7 @@
           ],
           "solved": true,
           "nodes": 4309,
-          "time_ms": 178.241,
+          "time_ms": 218.48,
           "tt_hits": 28
         },
         {
@@ -4261,7 +4261,7 @@
           ],
           "solved": true,
           "nodes": 13324,
-          "time_ms": 589.429,
+          "time_ms": 674.029,
           "tt_hits": 138
         },
         {
@@ -4272,7 +4272,7 @@
           ],
           "solved": false,
           "nodes": 55739,
-          "time_ms": 2702.579,
+          "time_ms": 3098.415,
           "tt_hits": 414
         },
         {
@@ -4283,7 +4283,7 @@
           ],
           "solved": true,
           "nodes": 4402,
-          "time_ms": 177.482,
+          "time_ms": 212.957,
           "tt_hits": 203
         },
         {
@@ -4294,7 +4294,7 @@
           ],
           "solved": true,
           "nodes": 11105,
-          "time_ms": 461.249,
+          "time_ms": 529.69,
           "tt_hits": 307
         },
         {
@@ -4305,7 +4305,7 @@
           ],
           "solved": true,
           "nodes": 35554,
-          "time_ms": 1641.001,
+          "time_ms": 1985.035,
           "tt_hits": 309
         },
         {
@@ -4316,7 +4316,7 @@
           ],
           "solved": false,
           "nodes": 2594,
-          "time_ms": 71.345,
+          "time_ms": 78.61,
           "tt_hits": 61
         },
         {
@@ -4327,7 +4327,7 @@
           ],
           "solved": true,
           "nodes": 60596,
-          "time_ms": 2755.812,
+          "time_ms": 3479.61,
           "tt_hits": 384
         },
         {
@@ -4338,7 +4338,7 @@
           ],
           "solved": true,
           "nodes": 8842,
-          "time_ms": 379.856,
+          "time_ms": 466.507,
           "tt_hits": 397
         },
         {
@@ -4349,7 +4349,7 @@
           ],
           "solved": false,
           "nodes": 11749,
-          "time_ms": 467.588,
+          "time_ms": 635.67,
           "tt_hits": 682
         },
         {
@@ -4361,7 +4361,7 @@
           ],
           "solved": true,
           "nodes": 29508,
-          "time_ms": 1360.447,
+          "time_ms": 1626.782,
           "tt_hits": 450
         },
         {
@@ -4372,7 +4372,7 @@
           ],
           "solved": true,
           "nodes": 93659,
-          "time_ms": 4227.916,
+          "time_ms": 4402.897,
           "tt_hits": 726
         },
         {
@@ -4383,7 +4383,7 @@
           ],
           "solved": true,
           "nodes": 10998,
-          "time_ms": 460.69,
+          "time_ms": 504.639,
           "tt_hits": 473
         },
         {
@@ -4394,7 +4394,7 @@
           ],
           "solved": true,
           "nodes": 977,
-          "time_ms": 41.286,
+          "time_ms": 43.815,
           "tt_hits": 68
         },
         {
@@ -4405,7 +4405,7 @@
           ],
           "solved": true,
           "nodes": 22984,
-          "time_ms": 953.073,
+          "time_ms": 972.392,
           "tt_hits": 278
         },
         {
@@ -4416,7 +4416,7 @@
           ],
           "solved": true,
           "nodes": 377,
-          "time_ms": 16.16,
+          "time_ms": 14.929,
           "tt_hits": 0
         },
         {
@@ -4427,7 +4427,7 @@
           ],
           "solved": true,
           "nodes": 11717,
-          "time_ms": 507.636,
+          "time_ms": 498.397,
           "tt_hits": 494
         },
         {
@@ -4438,7 +4438,7 @@
           ],
           "solved": true,
           "nodes": 27519,
-          "time_ms": 1224.286,
+          "time_ms": 1223.174,
           "tt_hits": 544
         },
         {
@@ -4449,7 +4449,7 @@
           ],
           "solved": true,
           "nodes": 25788,
-          "time_ms": 1090.483,
+          "time_ms": 1124.953,
           "tt_hits": 288
         },
         {
@@ -4463,7 +4463,7 @@
           ],
           "solved": true,
           "nodes": 12086,
-          "time_ms": 476.335,
+          "time_ms": 496.18,
           "tt_hits": 330
         },
         {
@@ -4474,7 +4474,7 @@
           ],
           "solved": true,
           "nodes": 7526,
-          "time_ms": 306.277,
+          "time_ms": 310.465,
           "tt_hits": 219
         },
         {
@@ -4486,7 +4486,7 @@
           ],
           "solved": true,
           "nodes": 16883,
-          "time_ms": 672.583,
+          "time_ms": 630.839,
           "tt_hits": 403
         },
         {
@@ -4497,7 +4497,7 @@
           ],
           "solved": true,
           "nodes": 20096,
-          "time_ms": 813.398,
+          "time_ms": 827.413,
           "tt_hits": 442
         },
         {
@@ -4508,7 +4508,7 @@
           ],
           "solved": false,
           "nodes": 32088,
-          "time_ms": 1253.527,
+          "time_ms": 1241.074,
           "tt_hits": 462
         },
         {
@@ -4519,7 +4519,7 @@
           ],
           "solved": true,
           "nodes": 7688,
-          "time_ms": 307.048,
+          "time_ms": 297.151,
           "tt_hits": 361
         },
         {
@@ -4530,7 +4530,7 @@
           ],
           "solved": true,
           "nodes": 16117,
-          "time_ms": 688.916,
+          "time_ms": 663.677,
           "tt_hits": 449
         },
         {
@@ -4542,7 +4542,7 @@
           ],
           "solved": true,
           "nodes": 7632,
-          "time_ms": 314.615,
+          "time_ms": 305.833,
           "tt_hits": 245
         },
         {
@@ -4553,7 +4553,7 @@
           ],
           "solved": true,
           "nodes": 17385,
-          "time_ms": 757.955,
+          "time_ms": 772.9,
           "tt_hits": 365
         },
         {
@@ -4564,7 +4564,7 @@
           ],
           "solved": true,
           "nodes": 8602,
-          "time_ms": 340.994,
+          "time_ms": 340.107,
           "tt_hits": 204
         },
         {
@@ -4577,7 +4577,7 @@
           ],
           "solved": true,
           "nodes": 2975,
-          "time_ms": 95.0,
+          "time_ms": 98.383,
           "tt_hits": 137
         },
         {
@@ -4588,7 +4588,7 @@
           ],
           "solved": true,
           "nodes": 35007,
-          "time_ms": 1606.835,
+          "time_ms": 1668.099,
           "tt_hits": 385
         },
         {
@@ -4600,7 +4600,7 @@
           ],
           "solved": true,
           "nodes": 28511,
-          "time_ms": 1177.648,
+          "time_ms": 1224.464,
           "tt_hits": 729
         },
         {
@@ -4611,7 +4611,7 @@
           ],
           "solved": true,
           "nodes": 23645,
-          "time_ms": 1001.873,
+          "time_ms": 1011.434,
           "tt_hits": 470
         },
         {
@@ -4622,7 +4622,7 @@
           ],
           "solved": true,
           "nodes": 9274,
-          "time_ms": 350.151,
+          "time_ms": 348.075,
           "tt_hits": 480
         },
         {
@@ -4633,7 +4633,7 @@
           ],
           "solved": false,
           "nodes": 51084,
-          "time_ms": 2455.674,
+          "time_ms": 2443.269,
           "tt_hits": 306
         },
         {
@@ -4644,7 +4644,7 @@
           ],
           "solved": true,
           "nodes": 15952,
-          "time_ms": 731.514,
+          "time_ms": 760.963,
           "tt_hits": 447
         },
         {
@@ -4655,7 +4655,7 @@
           ],
           "solved": true,
           "nodes": 42612,
-          "time_ms": 1907.145,
+          "time_ms": 1915.246,
           "tt_hits": 353
         },
         {
@@ -4666,7 +4666,7 @@
           ],
           "solved": false,
           "nodes": 23392,
-          "time_ms": 986.275,
+          "time_ms": 989.712,
           "tt_hits": 178
         },
         {
@@ -4677,7 +4677,7 @@
           ],
           "solved": true,
           "nodes": 2056,
-          "time_ms": 71.023,
+          "time_ms": 69.175,
           "tt_hits": 34
         }
       ]

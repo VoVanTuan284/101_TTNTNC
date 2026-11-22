@@ -30,8 +30,8 @@
         0.0,
         0.0
       ],
-      "agent_a_avg_latency_ms": 162.426,
-      "agent_b_avg_latency_ms": 9.189,
+      "agent_a_avg_latency_ms": 171.792,
+      "agent_b_avg_latency_ms": 9.786,
       "simulations": 50
     },
     {
@@ -53,8 +53,8 @@
         0.0,
         0.06
       ],
-      "agent_a_avg_latency_ms": 329.579,
-      "agent_b_avg_latency_ms": 9.166,
+      "agent_a_avg_latency_ms": 335.278,
+      "agent_b_avg_latency_ms": 9.315,
       "simulations": 100
     },
     {
@@ -76,8 +76,8 @@
         0.0,
         0.0
       ],
-      "agent_a_avg_latency_ms": 659.813,
-      "agent_b_avg_latency_ms": 9.647,
+      "agent_a_avg_latency_ms": 681.305,
+      "agent_b_avg_latency_ms": 9.913,
       "simulations": 200
     },
     {
@@ -99,8 +99,8 @@
         0.0,
         0.03
       ],
-      "agent_a_avg_latency_ms": 1416.268,
-      "agent_b_avg_latency_ms": 10.458,
+      "agent_a_avg_latency_ms": 1487.208,
+      "agent_b_avg_latency_ms": 11.275,
       "simulations": 400
     },
     {
@@ -122,8 +122,8 @@
         0.0,
         0.03
       ],
-      "agent_a_avg_latency_ms": 2697.994,
-      "agent_b_avg_latency_ms": 9.964,
+      "agent_a_avg_latency_ms": 3152.675,
+      "agent_b_avg_latency_ms": 12.003,
       "simulations": 800
     },
     {
@@ -145,13 +145,14 @@
         0.0,
         0.03
       ],
-      "agent_a_avg_latency_ms": 3275.777,
-      "agent_b_avg_latency_ms": 9.211,
+      "agent_a_avg_latency_ms": 3648.703,
+      "agent_b_avg_latency_ms": 10.612,
       "simulations": 1000
     }
   ],
   "part_2a_puct_level7": {
-    "status": "skipped",
+    "status": "pending_tv2_level7",
+    "reason": "Level7GuidedMCTSAgent hoặc checkpoint chưa sẵn sàng.",
     "curve": []
   },
   "part_2b_guidance_ablation": {

@@ -1975,8 +1975,13 @@ class ChessPygameApp:
         return surf if not isinstance(surf, str) else None
 
     def _load_existing_lab_results(self) -> None:
+        arena_path = (
+            Path("results/round_robin/tournament_summary.json")
+            if Path("results/round_robin/tournament_summary.json").exists()
+            else Path("results/tournament_summary.json")
+        )
         mapping = {
-            "arena": Path("results/tournament_summary.json"),
+            "arena": arena_path,
             "ablation1": Path("results/ablation1/ablation1_results.json"),
             "ablation2": Path("results/ablation2/ablation2_results.json"),
             "rl_krk": Path("results/training/krk_learning_curve.json"),
@@ -2329,6 +2334,37 @@ class ChessPygameApp:
                 chart_surf = self._get_matplotlib_surface("arena_matchup.png", pygame, max_w=856, max_h=380)
                 if chart_surf is not None:
                     screen.blit(chart_surf, chart_surf.get_rect(center=(809, 535)))
+            elif isinstance(data, dict) and "matchups" in data:
+                matchups = data.get("matchups", [])
+                headers = ["Cặp đấu (Agent A vs Agent B)", "Số ván", "W / D / L (A)", "Điểm S (A)", "Wilson 95% CI", "Bootstrap 95% CI", "Trễ TB A / B"]
+                col_x = [376, 610, 675, 795, 880, 1015, 1145]
+                pygame.draw.rect(screen, self.PANEL_2, pygame.Rect(370, 146, 876, 28), border_radius=6)
+                for h_txt, cx in zip(headers, col_x):
+                    screen.blit(sec_font.render(h_txt, True, self.ACCENT), (cx, 152))
+
+                for idx, m in enumerate(matchups[:6]):
+                    ry = 178 + idx * 30
+                    row_rect = pygame.Rect(370, ry, 876, 27)
+                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else (18, 24, 35), row_rect, border_radius=5)
+                    w_ci = m.get("wilson_ci_95", [0, 0])
+                    b_ci = m.get("bootstrap_ci_95", [0, 0])
+                    a_short = str(m.get("agent_a", "")).replace("Level", "L")
+                    b_short = str(m.get("agent_b", "")).replace("Level", "L")
+                    vals = [
+                        f"{a_short} vs {b_short}",
+                        str(m.get("games", 0)),
+                        f"+{m.get('wins', 0)}/={m.get('draws', 0)}/-{m.get('losses', 0)}",
+                        f"{float(m.get('score', 0)):.3f}",
+                        f"[{w_ci[0]:.2f}, {w_ci[1]:.2f}]",
+                        f"[{b_ci[0]:.2f}, {b_ci[1]:.2f}]",
+                        f"{float(m.get('agent_a_avg_latency_ms', 0)):.0f}/{float(m.get('agent_b_avg_latency_ms', 0)):.0f}ms",
+                    ]
+                    for v_txt, cx in zip(vals, col_x):
+                        screen.blit(mono.render(v_txt, True, self.TEXT), (cx, ry + 5))
+
+                chart_surf = self._get_matplotlib_surface("arena_matchup.png", pygame, max_w=856, max_h=365)
+                if chart_surf is not None:
+                    screen.blit(chart_surf, chart_surf.get_rect(center=(809, 550)))
             else:
                 self._draw_empty_lab_hint(screen, small, "Chưa có kết quả Arena. Hãy chọn 2 Agent bên trái rồi bấm 'Chạy thực nghiệm'.")
 

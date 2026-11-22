@@ -57,9 +57,24 @@ def test_round_robin_smoke(tmp_path: Path) -> None:
     )
     assert report["games_per_pair"] == 4
     assert len(report["matchups"]) == 1
+    assert report["matchups"][0]["newly_played_games"] == 4
+    assert report["matchups"][0]["reused_games"] == 0
     assert (tmp_path / "matches.jsonl").exists()
     assert (tmp_path / "games.pgn").exists()
     assert (tmp_path / "tournament_summary.json").exists()
+
+    # Kiểm tra chạy tiếp nối (resume=True): chạy lại cùng cặp a1 vs a2 phải tái sử dụng 100% (0 ván mới)
+    report_resume = run_round_robin_tournament(
+        agents=[a1, a2],
+        budget_mode="workload_control",
+        num_openings=2,
+        output_dir=str(tmp_path),
+        resume=True,
+    )
+    assert report_resume["matchups"][0]["newly_played_games"] == 0
+    assert report_resume["matchups"][0]["reused_games"] == 4
+    lines = (tmp_path / "matches.jsonl").read_text(encoding="utf-8").strip().splitlines()
+    assert len(lines) == 4  # Không bị nhân đôi số dòng trong matches.jsonl
 
 
 def test_ablation_mcts_smoke(tmp_path: Path) -> None:

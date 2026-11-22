@@ -89,6 +89,41 @@ def _run_pair_worker(task: Tuple[Any, ...]) -> Tuple[Dict[str, Any], Dict[str, A
     return g1, g2
 
 
+def _load_existing_matches_index(jsonl_path: Optional[str]) -> Dict[Tuple[str, str, str, str], Dict[str, Any]]:
+    """
+    Đọc tệp matches.jsonl hiện có và lập chỉ mục theo khóa:
+    (white_agent_name, black_agent_name, opening_id, budget_mode) -> bản_ghi_ván_đấu.
+    Giúp chạy tiếp nối (resume) mà không bao giờ phải đánh lại các ván đã hoàn tất.
+    """
+    index: Dict[Tuple[str, str, str, str], Dict[str, Any]] = {}
+    if not jsonl_path:
+        return index
+    p = Path(jsonl_path)
+    if not p.exists():
+        return index
+    try:
+        with open(p, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                    key = (
+                        str(rec.get("white", "")),
+                        str(rec.get("black", "")),
+                        str(rec.get("opening_id", "")),
+                        str(rec.get("budget_mode", "")),
+                    )
+                    if all(key):
+                        index[key] = rec
+                except Exception:
+                    continue
+    except Exception:
+        pass
+    return index
+
+
 def run_paired_matchup(
     agent_a: BaseAgent,
     agent_b: BaseAgent,
@@ -105,64 +140,84 @@ def run_paired_matchup(
     workers: int = 1,
     factory_a: Optional[Callable[[], BaseAgent]] = None,
     factory_b: Optional[Callable[[], BaseAgent]] = None,
+    existing_index: Optional[Dict[Tuple[str, str, str, str], Dict[str, Any]]] = None,
 ) -> Dict[str, Any]:
     """
     Cho cặp (agent_a, agent_b) đấu đối xứng qua toàn bộ danh sách thế cờ khai cuộc (2 ván/khai cuộc).
-    Trả về thống kê W/D/L, điểm S, Wilson 95% CI và Paired-Opening Bootstrap 95% CI cho agent_a.
+    Nếu existing_index (hoặc jsonl_path) đã có kết quả của cặp ván ở khai cuộc nào thì tự động tái sử dụng,
+    chỉ chạy các khai cuộc còn thiếu và ghi nối tiếp (append) những ván mới vào jsonl_path / pgn_path.
     """
-    pair_results: List[Tuple[Dict[str, Any], Dict[str, Any]]] = []
+    cache_idx = existing_index if existing_index is not None else _load_existing_matches_index(jsonl_path)
 
-    if workers > 1 and budget_mode == "workload_control" and factory_a is not None and factory_b is not None:
-        tasks = []
-        for idx, rec in enumerate(openings):
-            seed = seeds[(idx // 5) % len(seeds)]
-            tasks.append(
-                (
-                    factory_a,
-                    factory_b,
-                    rec.record_id,
-                    rec.fen,
-                    seed,
-                    time_limit_sec,
-                    workload_a,
-                    workload_b,
-                    max_plies,
-                    budget_mode,
+    cached_by_pos: Dict[int, Tuple[Dict[str, Any], Dict[str, Any]]] = {}
+    missing_indices: List[int] = []
+
+    for idx, rec in enumerate(openings):
+        key_w = (agent_a.name, agent_b.name, rec.record_id, budget_mode)
+        key_b = (agent_b.name, agent_a.name, rec.record_id, budget_mode)
+        if key_w in cache_idx and key_b in cache_idx:
+            cached_by_pos[idx] = (cache_idx[key_w], cache_idx[key_b])
+        else:
+            missing_indices.append(idx)
+
+    newly_played_by_pos: Dict[int, Tuple[Dict[str, Any], Dict[str, Any]]] = {}
+
+    if missing_indices:
+        if workers > 1 and budget_mode == "workload_control" and factory_a is not None and factory_b is not None:
+            tasks = []
+            for idx in missing_indices:
+                rec = openings[idx]
+                seed = seeds[(idx // 5) % len(seeds)]
+                tasks.append(
+                    (
+                        factory_a,
+                        factory_b,
+                        rec.record_id,
+                        rec.fen,
+                        seed,
+                        time_limit_sec,
+                        workload_a,
+                        workload_b,
+                        max_plies,
+                        budget_mode,
+                    )
                 )
-            )
-        with ProcessPoolExecutor(max_workers=workers) as pool:
-            pair_results = list(pool.map(_run_pair_worker, tasks))
-    else:
-        for idx, rec in enumerate(openings):
-            seed = seeds[(idx // 5) % len(seeds)]
-            g1 = play_single_match(
-                white_agent=agent_a,
-                black_agent=agent_b,
-                initial_fen=rec.fen,
-                time_limit_sec=time_limit_sec,
-                max_plies=max_plies,
-                seed=seed,
-                white_workload=workload_a,
-                black_workload=workload_b,
-            )
-            g1["opening_id"] = rec.record_id
-            g1["budget_mode"] = budget_mode
-            g1["match_id"] = f"{agent_a.name}_vs_{agent_b.name}_{rec.record_id}_w"
+            with ProcessPoolExecutor(max_workers=workers) as pool:
+                computed = list(pool.map(_run_pair_worker, tasks))
+            for idx, pair in zip(missing_indices, computed):
+                newly_played_by_pos[idx] = pair
+        else:
+            for idx in missing_indices:
+                rec = openings[idx]
+                seed = seeds[(idx // 5) % len(seeds)]
+                g1 = play_single_match(
+                    white_agent=agent_a,
+                    black_agent=agent_b,
+                    initial_fen=rec.fen,
+                    time_limit_sec=time_limit_sec,
+                    max_plies=max_plies,
+                    seed=seed,
+                    white_workload=workload_a,
+                    black_workload=workload_b,
+                )
+                g1["opening_id"] = rec.record_id
+                g1["budget_mode"] = budget_mode
+                g1["match_id"] = f"{agent_a.name}_vs_{agent_b.name}_{rec.record_id}_w"
 
-            g2 = play_single_match(
-                white_agent=agent_b,
-                black_agent=agent_a,
-                initial_fen=rec.fen,
-                time_limit_sec=time_limit_sec,
-                max_plies=max_plies,
-                seed=seed,
-                white_workload=workload_b,
-                black_workload=workload_a,
-            )
-            g2["opening_id"] = rec.record_id
-            g2["budget_mode"] = budget_mode
-            g2["match_id"] = f"{agent_a.name}_vs_{agent_b.name}_{rec.record_id}_b"
-            pair_results.append((g1, g2))
+                g2 = play_single_match(
+                    white_agent=agent_b,
+                    black_agent=agent_a,
+                    initial_fen=rec.fen,
+                    time_limit_sec=time_limit_sec,
+                    max_plies=max_plies,
+                    seed=seed,
+                    white_workload=workload_b,
+                    black_workload=workload_a,
+                )
+                g2["opening_id"] = rec.record_id
+                g2["budget_mode"] = budget_mode
+                g2["match_id"] = f"{agent_a.name}_vs_{agent_b.name}_{rec.record_id}_b"
+                newly_played_by_pos[idx] = (g1, g2)
 
     wins = draws = losses = 0
     white_pts = 0.0
@@ -171,24 +226,34 @@ def run_paired_matchup(
     a_latencies: List[float] = []
     b_latencies: List[float] = []
 
-    for g1, g2 in pair_results:
+    for idx in range(len(openings)):
+        is_new = idx in newly_played_by_pos
+        g1, g2 = newly_played_by_pos[idx] if is_new else cached_by_pos[idx]
         for g, a_is_white in ((g1, True), (g2, False)):
-            if jsonl_path:
-                append_match_jsonl(jsonl_path, g)
-            if pgn_path:
-                moves = [chess.Move.from_uci(u) for u in g["moves_uci"]]
-                pgn_txt = export_game_to_pgn(
-                    moves=moves,
-                    headers={
-                        "Event": f"101_TTNTNC Arena ({budget_mode})",
-                        "Site": g["opening_id"],
-                        "White": g["white"],
-                        "Black": g["black"],
-                        "Result": g["result"],
-                    },
-                    initial_fen=g["opening_fen"],
+            if is_new:
+                if jsonl_path:
+                    append_match_jsonl(jsonl_path, g)
+                if pgn_path:
+                    moves = [chess.Move.from_uci(u) for u in g["moves_uci"]]
+                    pgn_txt = export_game_to_pgn(
+                        moves=moves,
+                        headers={
+                            "Event": f"101_TTNTNC Arena ({budget_mode})",
+                            "Site": g["opening_id"],
+                            "White": g["white"],
+                            "Black": g["black"],
+                            "Result": g["result"],
+                        },
+                        initial_fen=g["opening_fen"],
+                    )
+                    append_pgn_file(pgn_path, pgn_txt)
+                key_g = (
+                    str(g.get("white", "")),
+                    str(g.get("black", "")),
+                    str(g.get("opening_id", "")),
+                    str(g.get("budget_mode", "")),
                 )
-                append_pgn_file(pgn_path, pgn_txt)
+                cache_idx[key_g] = g
 
             if a_is_white:
                 a_latencies.append(g["white_avg_latency_ms"])
@@ -222,6 +287,8 @@ def run_paired_matchup(
         "agent_b": agent_b.name,
         "budget_mode": budget_mode,
         "games": total_games,
+        "reused_games": len(cached_by_pos) * 2,
+        "newly_played_games": len(newly_played_by_pos) * 2,
         "wins": wins,
         "draws": draws,
         "losses": losses,
@@ -235,6 +302,17 @@ def run_paired_matchup(
     }
 
 
+def _find_agent_id_for_instance(agent: BaseAgent) -> Optional[str]:
+    for aid in list_full_board_agents():
+        try:
+            probe = create_agent(aid)
+            if probe.name == agent.name:
+                return aid
+        except Exception:
+            continue
+    return None
+
+
 def run_round_robin_tournament(
     agents: List[BaseAgent],
     config_path: str = "configs/default_config.yaml",
@@ -242,8 +320,17 @@ def run_round_robin_tournament(
     num_openings: Optional[int] = None,
     output_dir: Optional[str] = None,
     workers: int = 1,
+    resume: bool = True,
 ) -> Dict[str, Any]:
-    """Vận hành giải đấu đối kháng giữa danh sách tác tử và lưu vết ra results/round_robin/."""
+    """
+    Vận hành giải đấu đối kháng giữa danh sách tác tử và lưu vết ra results/round_robin/.
+    - Khi resume=True (mặc định): đọc matches.jsonl và tournament_summary.json hiện có,
+      tự động bỏ qua mọi ván/cặp đấu đã hoàn tất và chỉ đánh nối tiếp các cặp/ván còn thiếu,
+      đồng thời gộp đầy đủ kết quả cũ + mới vào tournament_summary.json.
+    - Khi resume=False: xóa sạch matches.jsonl và games.pgn để chạy lại từ đầu.
+    """
+    from functools import partial
+
     cfg = load_yaml_config(config_path)
     search_cfg = load_yaml_config("search_params.yaml")
     arena_cfg = cfg["arena"]
@@ -267,16 +354,43 @@ def run_round_robin_tournament(
     out_base.mkdir(parents=True, exist_ok=True)
     jsonl_path = str(out_base / "matches.jsonl")
     pgn_path = str(out_base / "games.pgn")
+    summary_path = out_base / "tournament_summary.json"
 
-    # Xóa log cũ nếu chạy giải mới tại thư mục đích
-    for p in (Path(jsonl_path), Path(pgn_path)):
-        if p.exists():
-            p.unlink()
+    if not resume:
+        for p in (Path(jsonl_path), Path(pgn_path), summary_path):
+            if p.exists():
+                p.unlink()
 
-    matchups: List[Dict[str, Any]] = []
+    existing_index = _load_existing_matches_index(jsonl_path) if resume else {}
+
+    # Nạp các cặp đấu đã lưu từ tournament_summary.json trước đó (để không làm mất các cặp không nằm trong danh sách --agents lần chạy này)
+    merged_matchups_map: Dict[Tuple[str, str], Dict[str, Any]] = {}
+    all_agent_names: List[str] = []
+    if resume and summary_path.exists():
+        try:
+            prev_report = json.loads(summary_path.read_text(encoding="utf-8"))
+            if prev_report.get("budget_mode") == budget_mode and prev_report.get("num_openings") == len(openings):
+                for prev_a in prev_report.get("agents", []):
+                    if prev_a not in all_agent_names:
+                        all_agent_names.append(prev_a)
+                for pm in prev_report.get("matchups", []):
+                    pair_key = (str(pm.get("agent_a", "")), str(pm.get("agent_b", "")))
+                    merged_matchups_map[pair_key] = pm
+        except Exception:
+            pass
+
+    for a in agents:
+        if a.name not in all_agent_names:
+            all_agent_names.append(a.name)
+
     for agent_a, agent_b in combinations(agents, 2):
         wl_a = _default_workload_for_agent(agent_a, search_cfg) if budget_mode == "workload_control" else None
         wl_b = _default_workload_for_agent(agent_b, search_cfg) if budget_mode == "workload_control" else None
+        aid_a = _find_agent_id_for_instance(agent_a)
+        aid_b = _find_agent_id_for_instance(agent_b)
+        fac_a = partial(create_agent, aid_a) if aid_a is not None else None
+        fac_b = partial(create_agent, aid_b) if aid_b is not None else None
+
         summary = run_paired_matchup(
             agent_a=agent_a,
             agent_b=agent_b,
@@ -291,26 +405,39 @@ def run_round_robin_tournament(
             pgn_path=pgn_path,
             bootstrap_resamples=bootstrap_resamples,
             workers=workers,
+            factory_a=fac_a,
+            factory_b=fac_b,
+            existing_index=existing_index,
         )
-        matchups.append(summary)
+        # Xóa khóa ngược chiều nếu có để tránh trùng cặp (A, B) và (B, A)
+        rev_key = (agent_b.name, agent_a.name)
+        if rev_key in merged_matchups_map:
+            del merged_matchups_map[rev_key]
+        merged_matchups_map[(agent_a.name, agent_b.name)] = summary
+
+    matchups = list(merged_matchups_map.values())
 
     report = {
         "tournament": "101_TTNTNC_Round_Robin",
         "budget_mode": budget_mode,
         "num_openings": len(openings),
         "games_per_pair": len(openings) * 2,
-        "agents": [a.name for a in agents],
+        "agents": all_agent_names,
         "matchups": matchups,
     }
-    summary_path = out_base / "tournament_summary.json"
     with open(summary_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
+    root_summary = Path("results/tournament_summary.json")
+    if root_summary.resolve() != summary_path.resolve() and output_dir is None:
+        root_summary.parent.mkdir(parents=True, exist_ok=True)
+        with open(root_summary, "w", encoding="utf-8") as f:
+            json.dump(report, f, ensure_ascii=False, indent=2)
 
     return report
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Chạy giải đấu Round-Robin Arena cho các cấp độ tác tử.")
+    parser = argparse.ArgumentParser(description="Chạy giải đấu Round-Robin Arena cho các cấp độ tác tử (hỗ trợ chạy tiếp nối).")
     parser.add_argument("--config", default="configs/default_config.yaml", help="Đường dẫn cấu hình YAML.")
     parser.add_argument(
         "--budget-mode",
@@ -327,6 +454,11 @@ def main() -> None:
     parser.add_argument("--num-openings", type=int, default=None, help="Giới hạn số khai cuộc để chạy nhanh.")
     parser.add_argument("--output-dir", default=None, help="Thư mục lưu kết quả giải đấu.")
     parser.add_argument("--workers", type=int, default=1, help="Số tiến trình song song (chỉ dùng cho workload_control).")
+    parser.add_argument(
+        "--reset",
+        action="store_true",
+        help="Xóa sạch kết quả cũ (matches.jsonl, games.pgn, tournament_summary.json) để chạy lại từ đầu.",
+    )
     args = parser.parse_args()
 
     valid_ids = set(list_full_board_agents())
@@ -343,11 +475,14 @@ def main() -> None:
         num_openings=args.num_openings,
         output_dir=args.output_dir,
         workers=args.workers,
+        resume=not args.reset,
     )
-    print(f"Giải đấu hoàn tất ({report['games_per_pair']} ván/cặp, chế độ {report['budget_mode']}).")
+    print(f"Giải đấu hoàn tất ({report['games_per_pair']} ván/cặp, chế độ {report['budget_mode']}, resume={not args.reset}).")
     for m in report["matchups"]:
+        reused = m.get("reused_games", 0)
+        played = m.get("newly_played_games", m["games"])
         print(
-            f"{m['agent_a']} vs {m['agent_b']}: "
+            f"{m['agent_a']} vs {m['agent_b']} [mới: {played}, tái sử dụng: {reused}]: "
             f"W/D/L={m['wins']}/{m['draws']}/{m['losses']} | "
             f"S={m['score']:.3f} | Wilson95={m['wilson_ci_95']} | Boot95={m['bootstrap_ci_95']}"
         )

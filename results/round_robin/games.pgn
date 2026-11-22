@@ -1,0 +1,1305 @@
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bc4 dxe5 2. b4 Nc6 3. Bxd5 Qxd5 4. dxe5 Qxd1+ 5. Kxd1 Nxb4 6. Bd2 e6 7. c4
+Bc5 8. h3 O-O 9. Rh2 Bd7 10. Bxb4 Bxb4 11. Nc3 Bxc3 12. g3 Bxa1 13. Ke2 Bc3 14.
+Ne1 Bxe5 15. f4 Bd4 16. Kf3 e5 17. a3 exf4 18. Kxf4 Rfe8 19. Ra2 Rxe1 20. Rg2
+Bxh3 21. Rf2 Bxf2 22. Kg5 Bxg3 23. Kh6 Bf4# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Nb4 2. Bc4 f6 3. O-O Nd3 4. Qxd3 e6 5. exd6 f5 6. Bf4 Be7 7. dxe7 c5 8.
+exd8=Q+ Kxd8 9. dxc5+ Ke8 10. Nd4 Nc6 11. Bxe6 Ne7 12. Rfe1 Nc6 13. Bxc8+ Kd8
+14. Bxb7 Rf8 15. Nxc6# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Qf3 Nxd4 2. Ba6 Nxf3+ 3. Kd1 bxa6 4. b4 Nd4 5. Bd2 Nxe4 6. Bg5 Nxg5 7. Ke1
+Nxc2+ 8. Kf1 Nxa1 9. Na3 d5 10. f3 e5 11. f4 exf4 12. Kf2 Ne4+ 13. Ke2 Bg4+ 14.
+Kf1 Bxb4 15. Kg1 Bxa3 16. Kf1 Nc2 17. Kg1 O-O 18. g3 fxg3 19. hxg3 Nxg3 20. Rh2
+Bc5+ 21. Rf2 Bxf2+ 22. Kxf2 Ne4+ 23. Kg1 Qb6+ 24. Kh2 Nd4 25. Kg2 Rfe8 26. a3
+Rac8 27. a4 Rc2+ 28. Kh1 Qb1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nxc6 Nxe4 2. Nxd8 h5 3. Nxf7 g5 4. Nxh8 Nc5 5. Bxg5 d5 6. Qxd5 Rb8 7. Qxc5
+a6 8. Bxe7 Bd7 9. Bxf8 Bc6 10. Qe7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Ng5 Bxc3 2. f4 Bd4 3. g3 d5 4. Qf3 Nxe4 5. Ba6 bxa6 6. Rb1 Nxg5 7. d3 Nxf3+
+8. Ke2 e4 9. Re1 Nxe1 10. b4 Nxc2 11. f5 Bxf5 12. dxe4 dxe4 13. Bb2 N2xb4 14.
+Bxd4 Nxd4+ 15. Kd1 Nxa2 16. Rb5 axb5 17. g4 Bxg4+ 18. Ke1 Nc3 19. Kd2 Nd5 20.
+h3 Bxh3 21. Ke1 O-O 22. Kf2 Qd6 23. Kg1 Bg4 24. Kg2 Rfe8 25. Kh1 b4 26. Kg2 b3
+27. Kf1 b2 28. Ke1 b1=Q+ 29. Kf2 Qh2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bxc6 Bc5 2. Bb5 Ng4 3. d4 f5 4. dxc5 f4 5. Bxd7+ Kf7 6. O-O Nf6 7. Nxe5+ Kf8
+8. Bxf4 h6 9. Bxc8 Nxe4 10. Qxd8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Rc1 dxc4 2. a4 Nc6 3. b3 Qxd4 4. b4 Qxd1+ 5. Nxd1 Bxb4+ 6. Nc3 Bxc3+ 7. Rxc3
+Ne5 8. Bh4 O-O 9. Ra3 Bd7 10. Rb3 cxb3 11. Bxf6 gxf6 12. f4 Nc4 13. f5 exf5 14.
+e4 Be6 15. Ke2 fxe4 16. Nh3 b2 17. Rg1 b1=Q 18. Rh1 Qd3+ 19. Kf2 Qe3# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. cxd5 Bd7 2. Nf3 h5 3. Bxf6 Ba3 4. Bxd8 b6 5. bxa3 Kf8 6. Bxc7 f6 7. e4 Kg8
+8. Bb5 Rh6 9. Bxd7 Kf8 10. Bxe6 g5 11. O-O Rh8 12. Qc2 g4 13. Bd6+ Ke8 14. Qa4+
+Nd7 15. Qxd7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bd3 Nc6 2. Ne6 Bxe6 3. Kd2 Qb6 4. Qf3 Ne5 5. Kc3 Nxf3 6. h4 Qd4# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Nc6 2. Nxc6 Bf5 3. Nxd8 Nd7 4. Nxb7 Bh3 5. gxh3 Ne5 6. Be3 g6 7. Bb5+
+Nd7 8. Bxd7+ Kxd7 9. Nc5+ Kc6 10. Qd5+ Kc7 11. Qxa8 a5 12. Nd5# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Qa4 Nbd7 2. Ne4 Nxe4 3. Qc2 Bd6 4. Kd1 O-O 5. g3 Re8 6. Qb3 Nxf2+ 7. Kd2
+Nxh1 8. Rb1 Nf2 9. Ke1 Ne4 10. Be2 Qa5+ 11. Kf1 e5 12. Qc2 Qxa2 13. h4 Nxg3+
+14. Kf2 Nxe2 15. Kxe2 exd4 16. Qd3 dxe3 17. Qd1 Qxb1 18. Ke1 Nc5 19. Kf1 Bf5
+20. Qb3 Nxb3 21. Ke2 Qxc1 22. Kf3 Qf1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. cxd5 Rg8 2. Nf3 exd5 3. Bd3 Qb6 4. O-O Bh3 5. gxh3 Qa6 6. Bxa6 Bb4 7. Bxb7
+Be7 8. Bxa8 Bf8 9. e4 Kd8 10. exd5 Ke7 11. Bxc6 Ne8 12. Bf4 f5 13. Bxb8 g5 14.
+Bxa7 Nf6 15. Bc5+ Kf7 16. Bxf8 Ne4 17. Nxe4 h5 18. Nfxg5+ Rxg5+ 19. Nxg5+ Kg8
+20. Bd6 Kh8 21. Qxh5+ Kg7 22. Ne6+ Kg8 23. Qxf5 Kh8 24. Rfe1 Kg8 25. Bb5 Kh8
+26. Rac1 Kg8 27. Rc8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nb3 Nc6 2. h3 Bb4+ 3. Nd2 Nxd4 4. h4 Nxe5 5. Be2 Bxd2+ 6. Kf1 Nxe2 7. Nh3
+Bxc1 8. Ng5 Bxg5 9. Ke1 Bxh4 10. Rc1 Nxc1 11. Kd2 Nxa2 12. Ke3 Nb4 13. Rg1 O-O
+14. Qe1 Nxc2+ 15. Ke2 Nxe1 16. Rf1 Nxg2 17. Rg1 Nf4+ 18. Ke1 Bd7 19. Kd2 Bxf2
+20. b3 Bxg1 21. Kc3 Bc5 22. Kd2 Bb5 23. Kc2 Qg5 24. Kb1 Rfd8 25. Kc1 Bd3 26.
+Kd1 a5 27. Kc1 a4 28. b4 Bxb4 29. Kb2 Bc5 30. Ka2 a3 31. Ka1 a2 32. Kb2 a1=Q+
+33. Kb3 Ra3# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Ngf3 g5 2. Bd3 Nf6 3. exf6 b6 4. Nxg5 Ba6 5. Nxh7 Be7 6. fxe7 c6 7. exd8=Q+
+Kxd8 8. Nf6 Bxd3 9. cxd3 Rh4 10. Nf3 Rh5 11. Nxh5 Na6 12. Nf6 Rb8 13. Bf4 Rc8
+14. O-O b5 15. Qc2 b4 16. Rfe1 c5 17. dxc5 Ra8 18. d4 e5 19. Nxe5 Kc8 20. Nxd5
+Nc7 21. Nxb4 Rb8 22. Nbc6 Nd5 23. Nxb8 Nc7 24. Nbc6 a5 25. Nxf7 Ne8 26. Rxe8+
+Kd7 27. Qe4 a4 28. Rd8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bf1 cxd4 2. g3 Nc6 3. Nbd2 dxe3 4. Qe2 exd2+ 5. Nxd2 Bd6 6. Qc4 dxc4 7. Bd3
+cxd3 8. c4 O-O 9. Ne4 Nxe4 10. Bd2 Nxd2 11. b3 Ne4 12. Rd1 d2+ 13. Ke2 e5 14.
+Ke3 Bf5 15. Kd3 Qb6 16. f4 exf4 17. Ra1 fxg3 18. Rac1 dxc1=Q 19. Rxc1 gxh2 20.
+Rh1 Rfe8 21. b4 Qxb4 22. Rd1 Nf6# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Nfd7 2. O-O Ke7 3. Ne5 Qe8 4. Nxd7 Kd8 5. Nxc5 Rg8 6. Bxh7 Bd7 7. Bxg8
+Nc6 8. Nxb7+ Ke7 9. Nc5 e5 10. Nxd5+ Kd8 11. Nxd7 a5 12. Nxe5 Nxe5 13. dxe5 Ra7
+14. Qd4 Qc6 15. Qxa7 Qb5 16. Bxf7 Qxf1+ 17. Kxf1 a4 18. Qc7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Qh5 Qxh5 2. dxc5 Qxc5 3. h3 Nc6 4. a3 Bf5 5. Rh2 e5 6. Ke2 Bd6 7. Bd2 O-O 8.
+Nf3 Qc4+ 9. Ke1 Bd3 10. Bh6 gxh6 11. Nd4 exd4 12. g4 Bxh2 13. Be2 Bxe2 14. Ra2
+Qxa2 15. b4 Bd6 16. b5 Bxb5 17. cxd4 Qe2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 Ne4 2. Bf4 Qb3 3. Qxb3 Ng3 4. hxg3 Be6 5. Qxb7 Bh3 6. Qxa8 Kd7 7. Rxh3
+e6 8. Qxb8 Ke7 9. Qxa7+ Kf6 10. dxc5 Be7 11. Nbd2 Rb8 12. Bxb8 h5 13. Rxh5 Bxc5
+14. Qxc5 g5 15. Qxg5# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level2_Heuristic"]
+[Result "0-1"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bf4 exf4 2. b3 d5 3. Qd2 dxc4 4. h4 cxd3 5. Qc3 Nxe4 6. Kf1 Nxc3 7. a3 Ne4
+8. Nc3 Nxc3 9. Ne1 Bxh4 10. Rg1 O-O 11. Rc1 dxc2 12. b4 Bf5 13. g3 fxg3 14. Ng2
+gxf2 15. Re1 fxe1=Q+ 16. Nxe1 c1=Q 17. Rh1 Qxe1+ 18. Kg2 Qf2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Ng8 2. O-O g6 3. Be3 Na5 4. Nxe5 c5 5. Bxf7+ Kf8 6. Qf3 Bd6 7. Bxg6+ Kg7
+8. Qf7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. exd6 Qxd6 2. Na3 Qb4+ 3. Qd2 Nc6 4. h3 Bf5 5. Ne5 Qxd2+ 6. Kxd2 Bh6+ 7. Ke2
+Nxd4+ 8. Ke1 Bxc1 9. Bc4 Bxb2 10. Bd3 Bxa1 11. Nd7 Bc3+ 12. Kd1 Bxd3 13. h4
+Be2+ 14. Kc1 Kxd7 15. g4 Bf3 16. h5 Bxh1 17. f4 gxh5 18. g5 Be4 19. Nb1 Ne2+
+20. Kd1 Nexf4 21. Kc1 e5 22. g6 hxg6 23. a3 Kd6 24. Nxc3 Nxc3 25. Kb2 Nd1+ 26.
+Ka1 Bxc2 27. a4 Bxa4 28. Kb1 Ne3 29. Kc1 Nc4 30. Kb1 h4 31. Ka1 h3 32. Kb1 h2
+33. Kc1 h1=Q# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. c4 Bf5 2. cxd5 Bg7 3. Qb3 Bh6 4. Bxh6 Be6 5. dxe6 a5 6. Qxb7 Na6 7. Qc6+ Qd7
+8. Qxd7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 e5 2. Na4 Nxd4 3. Qf3 Nxf3+ 4. Ke2 Nd4+ 5. Kd3 d5 6. Rg1 dxe4+ 7. Ke3
+Nxc2+ 8. Ke2 Qd3# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nxc6 g6 2. Nxd8 a5 3. e5 Ng8 4. Nxf7 Ra7 5. Nxh8 Ra6 6. Bxa6 Kd8 7. Nf7+ Ke8
+8. Bc4 Nh6 9. Bxh6 e6 10. Nd6+ Kd8 11. Bxf8 b5 12. Qd4 Ba6 13. Qb6# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. d4 exd4 2. g4 dxc3 3. Be2 cxb2+ 4. Bd2 bxa1=Q 5. c3 Qxd1+ 6. Kxd1 Nxe4 7.
+cxb4 Nxf2+ 8. Kc2 Nxh1 9. Bd3 Qf6 10. Ba6 bxa6 11. h4 Qxf3 12. Kb1 Qxg4 13. h5
+d5 14. Be3 Qe4+ 15. Ka1 Bf5 16. a4 Qb1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. O-O h5 2. d3 d5 3. Nxe5 Nd7 4. Bxc6 g6 5. Bxd7+ Kf8 6. Qf3 Kg7 7. Qxf7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. b4 Bxb4 2. Qb1 Bxc3+ 3. Kd1 Bxa1 4. Ke1 Bxd4 5. Qa1 Bxa1 6. Be3 Bc3+ 7. Bd2
+Bxd2+ 8. Kd1 Ne4 9. f3 Nf2+ 10. Kxd2 Nxh1 11. Kc3 Qh4 12. a3 Qxc4+ 13. Kb2 Qd4+
+14. Kc1 Qxg1 15. g3 Qxf1+ 16. Kd2 Nc6 17. e4 Qf2+ 18. Kc1 Qg1+ 19. Kd2 Qxh2+
+20. Kd3 Ne5+ 21. Ke3 Qf2+ 22. Kf4 f6 23. a4 Qxf3# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 a5 2. Bxf6 Na6 3. Bxg7 f6 4. Bxh8 Kf7 5. cxd5 a4 6. dxe6+ Kf8 7. e4 Bd7
+8. exd7 Kf7 9. Bc4+ Kg6 10. Nh4+ Kg5 11. Nf3+ Kh5 12. Ne5+ Kg5 13. Qg4+ Kh6 14.
+Bg7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Qd2 Nxe4 2. g4 Nxd2 3. Be2 e5 4. f4 Nxb1 5. Bd2 Qh4+ 6. Kf1 Nxd2+ 7. Kg1
+exd4 8. a4 Bxg4 9. Bf3 Bxf3 10. Ra3 Qe1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bb5+ Bd7 2. Bxd7+ Nfxd7 3. Nc3 Nb6 4. O-O h5 5. Qd3 d5 6. exd5 a6 7. Nf3
+N8d7 8. Bf4 Nf6 9. Rfd1 Ng8 10. Ne4 Nd7 11. Qb3 Nc5 12. Nxc5 Ra7 13. Nxb7 Nf6
+14. Nxd8 h4 15. Qb8 Nd7 16. Qxa7 Rg8 17. Nc6 Nc5 18. Qb8+ Kd7 19. Qd8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. cxd5 cxd5 2. Nge2 Nc6 3. Qd3 Bd6 4. Rb1 O-O 5. Nxd5 exd5 6. Qd1 Bf5 7. Bd2
+Bxb1 8. g3 Bxa2 9. Bh3 Qb6 10. Bf1 Qxb2 11. h3 Bb3 12. e4 Bxd1 13. Rh2 Bxe2 14.
+g4 Nxe4 15. Rh1 Qxd2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 Rg8 2. Bd3 Bb4 3. Qb3 g5 4. Qxb4 Qe7 5. c5 Bd7 6. Qxb7 Kd8 7. Qxa8 g4 8.
+Qxb8+ Bc8 9. Ne5 Nh5 10. Nxc6+ Ke8 11. Qxc8+ Qd8 12. Qxd8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nb1 Nc6 2. Bg5 Qxg5 3. Qh5 Qxh5 4. g4 Qxg4 5. b3 Qxd4 6. Nf3 Qxa1 7. Be2
+Qxb1+ 8. Bd1 Qxa2 9. Nd4 Nxd4 10. O-O Nxe5 11. Bf3 Ndxf3+ 12. Kg2 Qxc2 13. Re1
+Nxe1+ 14. Kf1 Ng4 15. Kxe1 Bb4+ 16. Kf1 Qxf2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Ngf3 h6 2. Bd3 Nxe5 3. Nxe5 c6 4. Qf3 Qd6 5. Nxf7 Rh7 6. Nxd6+ Kd7 7. Qxf8
+c5 8. Qxc8+ Ke7 9. dxc5 b5 10. Bxh7 e5 11. Qe8+ Kf6 12. N6e4+ dxe4 13. Nxe4#
+1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. h3 c4 2. Nh4 cxd3 3. Nc3 dxc2 4. Qg4 Nxg4 5. hxg4 Nc6 6. f3 g5 7. Rh2 gxh4
+8. g5 Qxg5 9. Nd1 Qg3+ 10. Kd2 cxd1=Q+ 11. Kc3 Bb4# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Kd7 2. Ne5+ Kd6 3. Nxf7+ Kc6 4. Nxd8+ Kd7 5. Nf7 h6 6. Nxh8 Bd6 7. dxc5
+e5 8. Bf5+ Ke7 9. cxd6+ Kf8 10. Bxc8 Ng8 11. Qxd5 Nd7 12. Qf7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. a3 cxd4 2. Nh3 Bxh3 3. Qb3 Qxb3 4. Be3 dxe3 5. Bc4 exf2+ 6. Ke2 Qxc4+ 7.
+Kxf2 Qf4+ 8. Kg1 Ng4 9. b4 Qf2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 Ng4 2. Qb3 Nd7 3. Qxd5 Rg8 4. Ng5 Nde5 5. dxe5 Bd7 6. Qxf7+ Kd8 7. Qxg8
+Be6 8. Nxe6+ Ke8 9. Bb5# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Rg1 d5 2. Bb3 dxe4 3. Ke2 exf3+ 4. gxf3 Nd4+ 5. Ke1 Nxb3 6. Qd2 Nxd2 7. Rh1
+Nxf3+ 8. Ke2 Nd4+ 9. Kd1 Bg4+ 10. Ke1 Nxc2+ 11. Kf1 Qxd3+ 12. Kg1 Bf3 13. b3
+Qd1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Kf8 2. d4 h5 3. dxe5 Rg8 4. exf6 Nd4 5. fxe7+ Ke8 6. exd8=Q+ Kxd8 7.
+Qxd4 d6 8. Bxf7 Rh8 9. Bg5+ Kd7 10. Ne5# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. b4 g5 2. Ba3 Bh6 3. Nbd2 Nxb4 4. e6 Bf8 5. exf7+ Kxf7 6. d5 Qe8 7. Nb3 g4 8.
+Rb1 e6 9. Na1 Kg7 10. Qc1 Nxa2 11. Rxb7 Kg6 12. Ne5+ Kf5 13. c3 Bxb7 14. Qb2
+Bc8 15. Qd2 Nd7 16. Qc2+ Kxe5 17. g3 Rg8 18. Qxa2 a6 19. Qe2+ Kf5 20. Qb2 h5
+21. Qd2 Be7 22. Qc2+ Ke5 23. Bc5 Nf6 24. c4 Bb7 25. Kd1 Rg7 26. Qc1 Qh8 27. Qh6
+Qe8 28. Qg6 Qc8 29. Qh7 Bf8 30. Qh8 Ra7 31. Bxa7 Be7 32. Ke1 Qd7 33. Qh7 Rxh7
+34. h3 Nxd5 35. h4 Nf6 36. f4+ gxf3 37. Bb6 Bc8 38. Bxc7 Rf7 39. Rh2 Ne8 40.
+Rh1 Ng7 41. Kf2 Bb7 42. g4 Nf5 43. Bb6 Rf6 44. Ba7 Bd5 45. cxd5 Nxh4 46. Bb5
+Ke4 47. Be3 Kxd5 48. gxh5 Ke5 49. Bxa6 Rf4 50. Nb3 Ke4 51. Bf1 Ng2 52. Nc5+
+dxc5 53. Bxc5 Rg4 54. Ba3 Qd4# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bd2 f5 2. c3 Ne3 3. Qc2 g5 4. Qc1 Kf7 5. h4 f4 6. fxe3 g4 7. Nh2 e6 8. exf4
+c6 9. Rg1 Kg6 10. Nf3 Qf6 11. Kd1 Be7 12. Ng5 Rd8 13. exf6 Kh6 14. a3 c5 15.
+fxe7 Nc6 16. exd8=Q cxd4 17. Nxh7 g3 18. c4 Nb4 19. Be2 Nc6 20. b4 b6 21. Kc2
+Na5 22. Qd1 Kg7 23. c5 Kf7 24. cxb6 Nb3 25. Qf8+ Kg6 26. Bd3# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. f4 Nb8 2. e5 g6 3. Ba6 Nh5 4. b3 Ng3 5. b4 Nxa6 6. c4 Qb6 7. Ne6 Qxb4+ 8.
+Nc3 b5 9. Nd4 Nxh1 10. Ne2 Qxc3+ 11. Kf1 Qxa1 12. Qc2 bxc4 13. e6 Qxa2 14. Ba3
+dxe6 15. Qd2 Qxd2 16. g4 Qd7 17. Bc1 Qb7 18. Ke1 c3 19. Bd2 Kd7 20. Nd4 g5 21.
+Ne2 Qc7 22. Kd1 Qc4 23. Bc1 Rg8 24. Kc2 gxf4 25. Bxf4 Qa4+ 26. Kd3 Nf2+ 27.
+Kxc3 Nxg4 28. Kd3 Qa2 29. Bc1 Rg6 30. Bb2 Qa4 31. Bh8 Qc2+ 32. Kd4 Qa2 33. Kc3
+Qc2+ 34. Kxc2 h6 35. h3 Nb8 36. Kd3 Rg8 37. Bb2 Ne5+ 38. Kc2 Nec6 39. Kd3 Bg7
+40. Nf4 h5 41. Ng2 a6 42. Be5 f5 43. Ke2 Re8 44. Bxb8 Be5 45. Kf3 Bc7 46. Nh4
+Rh8 47. Kg2 Bd6 48. Ng6 Bb4 49. Be5 Bc3 50. Bxh8 Na7 51. Bg7 Ba1 52. Bf6 Nc6
+53. Kg1 e5 54. Kh2 exf6 55. Nf8+ Ke7 56. Nh7 Nb4 57. Ng5 Bc3 58. h4 f4 59. Nh3
+Bb7 60. Ng5 Bc8 61. Nh3 Ra7 62. Nxf4 Nc6 63. Nxh5 Kd7 64. Kg2 Kd6 65. Ng7 Bd7
+66. Kh1 e4 67. Kh2 Ba1 68. h5 Ra8 69. Kg3 Nb4 70. Kh2 Nc6 71. h6 Na7 72. Kh1
+Rc8 73. Kg1 Bg4 74. Ne8+ Rxe8 75. Kh1 Bd1 76. h7 e3 77. Kg2 Bc2 78. h8=R Bd4
+79. Kf1 Re7 80. Rb8 a5 81. Rc8 Rh7 82. Rc5 Bxc5 83. Ke1 Rd7 84. Kf1 Ba4 85. Kg1
+Re7 86. Kg2 Nb5 87. Kh1 Nd4 88. Kg2 Ke5 89. Kh2 Nb3 90. Kh1 Kd4 91. Kg2 f5 92.
+Kh1 Na1 93. Kg1 Bb3 94. Kf1 Re4 95. Kg1 Ba3 96. Kh2 Ba4 97. Kh1 Re6 98. Kg2 Re4
+99. Kh2 Bc6 100. Kg2 Kc4 101. Kg3 Be7 102. Kh3 Re5 103. Kg3 Rd5 104. Kf3 Bf6
+105. Kf4 Nb3 106. Kxe3 Bd7 107. Ke2 Kd4 108. Kf2 Bg5 109. Kf3 Be7 110. Kf2 Ke4
+111. Kg3 Rc5 112. Kh2 Bf8 113. Kh3 Bd6 114. Kh4 Ke5 115. Kg3 Be8 116. Kh2 Bh5
+117. Kh3 Nd4 118. Kh2 Rc4 119. Kg2 Bb8 120. Kf2 Bg6 121. Kf1 Rc8 122. Kg2 Ba7
+123. Kg1 Rc6 124. Kf1 Rc1+ 125. Kf2 Rc4 126. Kf1 Kd5 127. Ke1 Rc3 128. Kd1 Ne6
+129. Ke1 a4 130. Ke2 Rb3 131. Kf1 Ng7 132. Ke2 Kc6 133. Ke1 Kd6 134. Kd2 Re3
+135. Kd1 Kd5 136. Kc1 Re8 137. Kb1 Kc6 138. Kc2 Bh5 139. Kd2 Rg8 140. Kd3 Bg6
+141. Ke2 Rb8 142. Kf3 Rd8 143. Kg2 Rf8 144. Kf1 Ne8 145. Ke2 Ng7 146. Kd1 Kd6
+147. Ke2 Bf7 148. Kd2 Ke6 149. Kc2 Ke5 150. Kb1 Re8 151. Kc1 Rc8+ 152. Kd2 Rc4
+153. Kd1 Nh5 154. Ke1 Be8 155. Ke2 Rc8 156. Kf1 Bc5 157. Ke2 Bb4 158. Kf3 a3
+159. Ke3 a2 160. Kf3 Bg6 161. Kf2 Bf8 162. Kf1 a1=R+ 163. Kg2 Ra5 164. Kg1 Ra2
+165. Kf1 Rc1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. f3 e5 2. a3 g6 3. Qd3 Ne7 4. Qe3 Neg8 5. Nb3 g5 6. N3d2 Ke7 7. Rg1 Bg7 8.
+Rh1 g4 9. Ke2 Ne8 10. c4 gxf3+ 11. Kxf3 Bh6 12. Qg1 f6 13. Kf2 a5 14. Ke1 Kf8
+15. g3 f5 16. Nb3 Bg7 17. Qb6 Nef6 18. Qd4 b6 19. Nc5 Nh5 20. Qc3 Rb8 21. Nb7
+d6 22. b3 Qg5 23. exf5 Ke8 24. Rg1 Bxf5 25. c5 Nxg3 26. h3 Bc2 27. cxb6 Bh6 28.
+Bxg5 Kd7 29. Qb2 Bxb3 30. Bxh6 Bd5 31. Bc1 Re8 32. Qc3 Ke7 33. Bg2 Nh1 34. Nxd6
+Kf6 35. Rxh1 Rf8 36. Qc8 Bxg2 37. Kd2 Bd5 38. Qb8 Rxb8 39. Nc3 Ba8 40. Rh2 e4
+41. Bb2 Rc8 42. Ndxe4+ Kf5 43. Rah1 Ke5 44. Kd1 h6 45. Rf1 h5 46. Ng5 Kd6 47.
+Ba1 Rd8 48. Nce4+ Kd5 49. Rf8 Rh7 50. Nc3+ Kc4+ 51. Rxd8 Kb3 52. Rd6 Bg2 53. b7
+Bxh3 54. Ra2 Bg4+ 55. Kd2 a4 56. Nxh7 Nh6 57. Nf6 h4 58. Nh5 Nf7 59. Bb2 Bd7
+60. Rxd7 Nd6 61. Bc1 Nf7 62. Rxf7 Kc4 63. Nxa4 Kb5 64. Nb2 Kc6 65. Rf3 Kc7 66.
+Kc3 Kb8 67. Kd4 h3 68. Ke5 Kc7 69. Rc3+ Kb8 70. Bh6 Ka7 71. Rf3 Kb6 72. b8=B
+Kb5 73. Kf6 Kc5 74. a4 Kc6 75. Be5 Kb7 76. Bd4 Kc6 77. Bg5 Kb7 78. Ke6 Kc6 79.
+Ke5 Kd7 80. Kd5 Kc8 81. Ng7 h2 82. Rh3 h1=R 83. Rh4 Kb8 84. Bd2 Rf1 85. Ra3 Rg1
+86. Re3 Rh1 87. Nf5 Rf1 88. Rh1 Re1 89. Rg3 Re6 90. Ne3 Rc6 91. a5 Re6 92. Be1
+Rxe3 93. Bf2 Re8 94. Rhg1 Re6 95. Kc4 Rc6+ 96. Kd3 Ra6 97. Rh1 Re6 98. Rh2 Rg6
+99. Bb6 Rd6+ 100. Ke2 Rd3 101. Bg1 Ka8 102. Rhg2 Rb3 103. Rh3 Rxb2+ 104. Kd3
+Kb8 105. Kc3 Ka8 106. Kxb2 Kb8 107. Rgg3 Ka8 108. Bc7 Kb7 109. Ba7 Ka6 110. Rg7
+Kxa7 111. Kb1 Ka8 112. Rg1 Ka7 113. Bg3 Kb7 114. Bf2 Kc6 115. Rc3+ Kb7 116.
+Rcg3 Kc7 117. Rf1 Kd8 118. Rc3 Ke7 119. Ra3 Ke6 120. Rd1 Kf6 121. Ra2 Kg5 122.
+Rg1+ Kh6 123. Kc2 Kh7 124. a6 Kh6 125. Bg3 Kg6 126. a7 Kh7 127. Bc7 Kh6 128.
+Rb1 Kg6 129. Kc1 Kf6 130. Rab2 Ke7 131. Rd2 Ke6 132. a8=Q Kf7 133. Qa1 Kg6 134.
+Qd4 Kf5 135. Rg2 Ke6 136. Bb8 Kf5 137. Qe5# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. d3 d5 2. Rb1 Be6 3. a3 Bxc3+ 4. Bd2 Qb8 5. bxc3 dxe4 6. Ke2 Bd7 7. Kf1 exd3
+8. Nd4 h5 9. Qf3 Nd5 10. Re1 Nxd4 11. a4 dxc2 12. Ba6 Ke7 13. h4 Qf8 14. Qg3
+Bxa4 15. Bh6 Rc8 16. Qe3 Nb6 17. Bxg7 Ne6 18. Qxb6 axb6 19. Rh3 Nc5 20. Rhe3
+Qxg7 21. Re4 Kd7 22. Rf4 exf4 23. Be2 Qg8 24. g4 Rb8 25. Ra1 Rh7 26. f3 Qxg4
+27. Bd1 Rg7 28. Ke2 Rgg8 29. Kf2 Qg1+ 30. Ke2 Rg2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Qe2 g6 2. Na4 d6 3. Rf1 Bxd2+ 4. Qxd2 Nxe4 5. b3 Nxf2 6. Ng1 d5 7. c3 Bg4 8.
+a3 Nd3+ 9. Bxd3 a5 10. Qf2 d4 11. Qxf7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "1/2-1/2"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. g4 Ne4 2. a4 Nxf2 3. c5 Nxd1 4. Bg2 f5 5. Rxd1 c6 6. Kd2 Bf8 7. Kc2 e5 8.
+Rb1 exd4 9. Rc1 Bd6 10. b3 dxc3 11. Bd2 fxg4 12. Bf4 Nd7 13. Re1 Qb6 14. cxb6
+Kf7 15. Nf3 Nf8 16. Kd3 Rg8 17. Rc1 gxf3 18. Rhg1 fxg2 19. e3 Bxf4 20. Rce1 c5
+21. Rd1 axb6 22. h4 Ke8 23. exf4 Bg4 24. Kc2 Bh5 25. Rb1 h6 26. Rxg2 Bf7 27.
+Rc1 Rxa4 28. Re2+ Kd8 29. Re6 Bxe6 30. Ra1 Rh8 31. Kc1 Rxa1+ 32. Kc2 h5 33. b4
+Ra8 34. Kb3 Bd7 35. Kc2 Ke8 36. Kd1 Rd8 37. Kc1 Ne6 38. f5 Rc8 39. b5 Nf4 40.
+Kb1 Rg8 41. Ka2 Nd3 42. Ka3 Ra8+ 43. Kb3 Ne5 44. Kxc3 Ra1 45. Kd2 Ra4 46. Kc2
+Ra1 47. Kb3 Re1 48. Kc3 Bxb5 49. f6 Rh1 50. Kc2 Rf1 51. Kd2 g6 52. Ke3 Rf5 53.
+Kd2 Kf7 54. Kc1 Rb8 55. Kd2 Bd7 56. Ke2 Be8 57. Kd2 Kg8 58. Ke2 Nc4 59. Kd1
+Rxf6 60. Ke1 Rf4 61. Ke2 Ne5 62. Kd1 Ra4 63. Kc1 Rg4 64. Kd1 Rxh4 65. Kc1 Kg7
+66. Kd2 Ra4 67. Ke3 Ra7 68. Kf4 Nf7 69. Kf3 Nh6 70. Ke2 g5 71. Kd2 Kf6 72. Kd3
+Kf5 73. Kc2 Ra1 74. Kd3 Ra6 75. Ke3 Rd8 76. Kf2 Ba4 77. Ke3 Rc8 78. Kf3 Be8 79.
+Ke2 Rb8 80. Ke3 g4 81. Ke2 Nf7 82. Ke1 Ra3 83. Kf1 Ra1+ 84. Kg2 Nh6 85. Kf2 h4
+86. Kg2 Rg1+ 87. Kf2 Bd7 88. Ke2 b5 89. Kd2 Bc6 90. Kd3 Rg8 91. Ke3 g3 92. Kf3
+Rg4 93. Ke3 Rg5 94. Kd3 Kg6 95. Kc3 Kg7 96. Kb3 Rh5 97. Kb2 d4 98. Kc2 Ra1 99.
+Kd2 Kf6 100. Kd3 Bg2 101. Kc2 Kg6 102. Kb3 Kg5 103. Kc2 Bh3 104. Kd2 Bf1 105.
+Kc2 Kf4 106. Kb2 Ra6 107. Kb3 b4 108. Kb2 Rc6 109. Kc2 b6 110. Kb3 Ke3 111. Kb2
+Bg2 112. Ka2 Rg6 113. Ka1 Rc6 114. Ka2 Rg5 115. Kb1 Nf5 116. Ka1 c4 117. Kb1
+Rg8 118. Kc2 Ke4 119. Kd2 Rg5 120. Ke2 b3 121. Ke1 d3 122. Kd1 Nd4 123. Kc1 Rb5
+124. Kb1 Rc7 125. Ka1 Rd7 126. Kb2 Rd6 127. Kb1 Kd5 128. Kc1 Bh1 129. Kd2 Ke6
+130. Kd1 Nf5 131. Kc1 Nh6 132. Kb1 h3 133. Kb2 Bf3 134. Kc3 Be2 135. Kd2 Bh5
+136. Kc1 Rc5 137. Kb1 b5 138. Ka1 Rc7 139. Kb1 Rh7 140. Kb2 Rd5 141. Ka1 Rc5
+142. Kb1 Rhc7 143. Kc1 Be8 144. Kb1 Kd7 145. Kc1 Rc8 146. Kd2 Rd8 147. Ke3 Rdc8
+148. Kd2 Ke7 149. Kc3 Bg6 150. Kd2 Ra8 151. Ke3 b2 152. Kd4 Kd6 153. Kc3 Rd8
+154. Kb4 Re8 155. Ka3 Rb8 156. Ka2 Nf7 157. Ka3 Rc7 158. Kxb2 Re8 159. Kc1 Re6
+160. Kb1 Re5 161. Kb2 Kc6 162. Kb1 d2+ 163. Kb2 Rg5 164. Ka1 Rb7 165. Kb2 d1=B
+166. Ka3 Rg4 167. Kb4 Be2 168. Ka5 Nd8 169. Ka6 h2 170. Ka5 Bf5 171. Ka6 Bb1
+172. Ka5 Bf3 173. Kb4 Rf4 174. Kc3 Bc2 175. Kb2 Rg4 176. Ka2 Ba4 177. Ka1 Rb6
+178. Kb1 Bh1 179. Ka2 Kd7 180. Kb1 Ke6 181. Kc1 Bc2 182. Kxc2 Bf3 183. Kc1 Rg6
+184. Kb2 Rc6 185. Ka2 Rg5 186. Kb1 Rg8 187. Kb2 Ke5 188. Kc1 Re6 189. Kd2 Ba8
+190. Ke3 Rc6 191. Ke2 Ra6 192. Ke1 Re6 193. Kd1 Rb6 194. Kd2 Rbg6 195. Ke2 h1=B
+196. Ke3 Bhg2 197. Ke2 Rh8 198. Ke3 Rhg8 199. Kd2 Bab7 200. Kc3 R6g7 1/2-1/2
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Rb1 e5 2. h4 Bc5 3. e4 Qd7 4. Nge2 Ng8 5. dxc5 h5 6. Ra1 g6 7. cxd5 a5 8.
+Nd4 Qa4 9. Bd3 Ne7 10. Ke2 Nd7 11. Qb1 Nxd5 12. Nxd5 Qc6 13. Bc2 Qb5+ 14. Nxb5
+Rh6 15. f4 a4 16. Rd1 f6 17. c6 exf4 18. Bxf4 Kf7 19. Rd3 Nb6 20. Be5 Bf5 21.
+b3 Ra6 22. Bg3 Bh3 23. Nf4 Bd7 24. Qh1 Bxc6 25. Qe1 Na8 26. e5 Bxb5 27. Ke3 Nb6
+28. Nxh5 Kg8 29. Kd2 Nc4+ 30. bxc4 c6 31. Bb3 Kf8 32. Nf4 Ke7 33. exf6+ Kf7 34.
+Bxa4 b6 35. Bc2 Ba4 36. Kc3 Ra8 37. Rb1 Kf8 38. Ra1 Rxh4 39. Re3 Rh7 40. Rf3
+Rg7 41. Qd2 c5 42. Bb1 Bc2 43. Re3 Rg8 44. Re8+ Kf7 45. Re7+ Kxf6 46. Nh3 Kxe7
+47. Kb2 Kf6 48. Bh2 Rgd8 49. Qxd8+ Ke6 50. Nf2 b5 51. Qd4 Bf5 52. Qh8 Rg8 53.
+cxb5 Ra8 54. Qg7 Bc2 55. Qc7 Rc8 56. Qb8 Kd5 57. Qf4 Bf5 58. Qh4 c4 59. Qg4 Re8
+60. a3 Bd7 61. Qg5+ Re5 62. Qxe5# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf5 Nxe4 2. Nxg7+ Bxg7 3. c3 b6 4. Qd4 Bh6 5. Qxd6 a6 6. b3 Nxd6 7. h3 Bxc1
+8. Bb5+ axb5 9. b4 Bb2 10. Kd2 Ra4 11. Ke3 Rf8 12. Kf4 Bb7 13. c4 Bxa1 14. Nd2
+Ne4 15. Rf1 f5 16. f3 Qxd2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Ba6 e6 2. Nxe6 Nxe4 3. Be2 Qc7 4. Qd2 Nc6 5. Bb5 Nc3 6. Bxc6+ Ke7 7. bxc3
+Qb8 8. Nxg7 d5 9. Ba3+ Kd8 10. g4 d4 11. Qg5+ Kc7 12. Kd2 Be6 13. f4 Bc5 14.
+Nxe6+ Kb6 15. Nxc5 h6 16. Bxb7 Rg8 17. Nb3 Rf8 18. Ba6 Qe5 19. Bb7 Qe7 20. f5
+Kb5 21. Qg8 d3 22. Qh8 Qe5 23. h4 f6 24. Rg1 Rxh8 25. Bxa8 Qc7 26. Rf1 Rd8 27.
+Rf4 Qb6 28. Bb2 Qd6 29. Rf3 Qc6 30. Bb7 Kc4 31. Re3 Ra8 32. Bxc6 Re8 33. Na3#
+1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. h4 h6 2. Be2 Qd7 3. h5 Ke7 4. Nb1 c5 5. Qa4 Qxa4 6. Bf3 Nxh5 7. a3 cxd4 8.
+Nc3 Nf6 9. cxd5 b6 10. e4 dxc3 11. b4 e5 12. Rh2 Qc6 13. Be2 Rg8 14. Be3 Nxd5
+15. Bf4 exf4 16. Rh4 Bb7 17. Bc4 Ke8 18. Bb3 Qa4 19. O-O-O Ba6 20. g4 Qxb3 21.
+Rxh6 Qb2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 g6 2. Nxd5 Bc5 3. Nb6 Be7 4. Bd2 g5 5. Na4 Ba3 6. b3 Qc7 7. h3 Kd8 8.
+Nc3 a5 9. d5 Rf8 10. h4 g4 11. dxe6 Ne4 12. Qc1 Bxe6 13. Ke2 b6 14. Qxa3 Ra6
+15. b4 Rh8 16. Kd3 Nxc3 17. Be1 Bd7 18. Rc1 gxf3 19. Qb2 Qh2 20. Kd2 Qh3 21.
+gxh3 h6 22. Kd3 Re8 23. Rh2 Ke7 24. b5 Ne4 25. Kxe4 Bxh3 26. Rxh3 Kd7+ 27. Kxf3
+c5 28. bxa6 Rf8 29. h5 a4 30. Qc2 Kd6 31. Bg2 Nd7 32. Kf4 Nf6 33. Bh1 Rd8 34.
+Qd1+ Ke7 35. Bc3 Nh7 36. Rh4 Ke8 37. Rh3 b5 38. Qe1 Ng5 39. Bf6 Rc8 40. Be4 Nf3
+41. Rh1 Kf8 42. Kg3 Ke8 43. Bf5 Ne5 44. Kh3 Nf3 45. Ba1 Rc7 46. Rb1 b4 47. Rb2
+Nd4 48. Kg3 Kf8 49. Qd1 Kg7 50. Rh3 Kg8 51. a7 b3 52. Bg4 Nf5+ 53. Bxf5 Kh8 54.
+a8=B bxa2 55. Rb8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. h4 Qxh4 2. Bc4 Qxh1 3. Qh5 c5 4. Bb5 Qxh5 5. Bc4 Nc6 6. b4 cxb4 7. Ba3 Qxe5+
+8. Ne4 f5 9. Kd1 fxe4 10. Bb3 Qc7 11. Nf3 Qb6 12. Bc1 Qa6 13. g3 Nf6 14. Nh2 g6
+15. f4 Nb8 16. g4 Qb5 17. f5 Bd6 18. Nf3 O-O 19. Bh6 Qb6 20. Bxd5 Qxd4+ 21. Ke1
+Re8 22. Rd1 Nxg4 23. Bxb7 Qf2# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. a3 c5 2. c3 Qb6 3. f4 Na6 4. h3 g6 5. Ndf3 Qd8 6. Ra2 f6 7. exf6 h6 8. Bd2
+h5 9. Qb1 e5 10. Qxg6# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "1/2-1/2"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Kf1 Qb6 2. Nbd2 Qb4 3. dxc5 Qxd2 4. Qe1 Qxe1+ 5. Nxe1 Nc6 6. Be4 Ng8 7. Rb1
+a6 8. b4 h5 9. Kg1 Nge7 10. Kf1 Nxb4 11. Bf3 Nxa2 12. Nd3 Nxc1 13. g3 Nxd3 14.
+Bd1 h4 15. g4 Nf5 16. g5 Ne5 17. e4 Ne7 18. Bf3 d4 19. Bh5 g6 20. Rc1 Nd7 21.
+f4 Nb6 22. Bxg6 Nc6 23. Rd1 Bxc5 24. c4 Rh7 25. h3 Rb8 26. e5 Na5 27. Ra1 Naxc4
+28. Bxh7 Ke7 29. Rg1 Nd5 30. Ra4 Ncb6 31. Rxa6 Bd7 32. Rxb6 Bxb6 33. Ke2 Bc6
+34. Re1 Kf8 35. g6 Ke7 36. Ra1 Rh8 37. Rh1 fxg6 38. Kd1 Bd7 39. f5 Bc6 40. Kc1
+Bd8 41. fxe6 g5 42. Bb1 Nc7 43. Re1 Na6 44. Bd3 Nb4 45. Be2 Rh7 46. Rf1 Kxe6
+47. Rh1 Ba5 48. Bd1 Bd5 49. Bg4+ Kxe5 50. Bh5 b5 51. Rh2 Rh8 52. Rb2 Ke6 53.
+Bd1 Kd7 54. Rb3 Ke7 55. Bg4 Ra8 56. Kb1 Rb8 57. Be6 Bxe6 58. Ka1 Bxh3 59. Rg3
+Bc8 60. Rg1 Kf6 61. Rf1+ Bf5 62. Rd1 Nd5 63. Rd2 Bh3 64. Rh2 Kg6 65. Rb2 Kf5
+66. Ra2 Bd8 67. Ra5 Bxa5 68. Kb2 Ke4 69. Kc1 Bc8 70. Kd1 Nb4 71. Ke2 d3+ 72.
+Ke1 Nd5+ 73. Kd1 Nc3+ 74. Kc1 Nd5 75. Kd1 Bb7 76. Kc1 Rg8 77. Kb2 Rg6 78. Kb3
+Kf4 79. Ka3 Bd2 80. Ka2 Nc7 81. Kb1 Bc8 82. Kb2 Rg7 83. Ka3 Bg4 84. Ka2 Ne8 85.
+Kb1 Ke5 86. Ka1 Rh7 87. Kb1 Rh6 88. Ka2 Rg6 89. Kb3 Rh6 90. Ka3 b4+ 91. Kb2 Ke4
+92. Ka1 Rh7 93. Ka2 h3 94. Kb1 b3 95. Ka1 Nc7 96. Kb2 Be3 97. Ka3 Bh5 98. Kb4
+Bd1 99. Kc4 Rh4 100. Kb4 Bh5 101. Kc4 Nb5 102. Kb4 Nc7 103. Ka3 h2 104. Kb4 Na8
+105. Kb5 Kf3 106. Ka5 d2 107. Kb5 h1=N 108. Ka6 Nb6 109. Kb7 Kg4 110. Kc7 Kf5
+111. Kd8 Nd5 112. Kd7 Bg6 113. Kd8 Nf6 114. Ke7 Ng8+ 115. Kd8 Rg4 116. Kc7 Re4
+117. Kc8 Kg4 118. Kc7 Bd4 119. Kb7 Nf6 120. Ka8 Re2 121. Kb8 Ba1 122. Kc7 Bh7
+123. Kd8 Re5 124. Kc8 Re1 125. Kc7 d1=R 126. Kb7 Ng8 127. Kb8 Rd3 128. Kb7 b2
+129. Ka8 Rc1 130. Kb8 Bg6 131. Ka7 b1=N 132. Kb6 Nh6 133. Ka5 Rcd1 134. Kb5 Bh7
+135. Kc6 Rd4 136. Kc7 Kf4 137. Kc6 Nd2 138. Kb7 Rb1+ 139. Kc7 Ra4 140. Kd7 Rf1
+141. Kc6 Re4 142. Kd7 Rc1 143. Kd6 Rg1 144. Kc7 Bg7 145. Kb7 Bc3 146. Kc8 Bf5+
+147. Kb7 Rg2 148. Ka6 Bc8+ 149. Ka7 Ba6 150. Kxa6 Rd4 151. Kb5 Rg4 152. Ka6 Rd3
+153. Ka7 Bd4+ 154. Ka8 Nf3 155. Kb8 Bh8 156. Kb7 Rd2 157. Kb8 Nf7 158. Ka8 Rd6
+159. Kb8 Bc3 160. Ka8 Rd5 161. Kb7 N3e5 162. Kb6 Rg3 163. Ka6 Rdd3 164. Kb5 Rg4
+165. Kb6 Re3 166. Ka7 Bb2 167. Kb8 Nc4 168. Ka8 Ke5 169. Kb8 Na5 170. Kc8 Ba1
+171. Kd7 Rb3 172. Kc8 Rb1 173. Kd7 Bc3 174. Kc8 Rb5 175. Kc7 Rb8 176. Kxb8 Nh8
+177. Ka8 Nb3 178. Ka7 Nc1 179. Kb8 Bb4 180. Ka7 Bf8 181. Kb7 Bh6 182. Ka6 Rf4
+183. Kb5 Kf6 184. Kb6 Ke5 185. Kb7 Ne2 186. Ka8 Rf3 187. Kb7 Ke4 188. Ka8 Nf2
+189. Kb7 Nd3 190. Ka7 g4 191. Ka6 Ng3 192. Kb5 Bg5 193. Kc6 Bd8 194. Kd7 Rf2
+195. Kxd8 Nc1 196. Kc8 Nb3 197. Kd8 Nh1 198. Kd7 Kf5 199. Kc7 Ke5 200. Kb7 Rf4
+1/2-1/2
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Qd2 g5 2. Ba6 Qd7 3. c4 Bg7 4. cxd5 Qa4 5. Bc4 e5 6. a3 Qa5 7. Qxa5 h5 8. b3
+Ke7 9. Ng1 Na6 10. Qxa6 Ne8 11. Qc6 a5 12. Qxc5+ Nd6 13. Nh3 e4 14. f3 Kf6 15.
+g4 Rf8 16. fxe4 b5 17. Ke2 Rg8 18. Qxd6+ Be6 19. gxh5 a4 20. Rf1# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Qh5 Kd7 2. Be2 c4 3. Bg5 Qxg2 4. Bf1 Nd5 5. h3 Qxh1 6. Qxh7 Nxc3 7. Qg6 Qxg1
+8. Kd2 fxg6 9. bxc3 a6 10. Ke2 Kd6 11. Bc1 Qxf1+ 12. Kf3 Nd7 13. Bh6 b6 14.
+Bxg7 Rxh3+ 15. Ke4 Kc6 16. a3 Bxg7 17. f4 Qf3# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bf4 Qe4+ 2. Ne2 Be6 3. Bxb8 Bd5 4. Bc7 Qxg2 5. dxc5 Bc4 6. Qd3 Ne4 7. Bd6
+exd6 8. Bxg2 dxc5 9. Qxc4 Nd2 10. Nxd2 a6 11. Qb4 Rg8 12. a4 Kd7 13. Rd1 a5 14.
+Qh4 Re8 15. Qe4 g5 16. Rc1 g4 17. Bf1 Bd6 18. Rd1 Re7 19. Qxh7 g3 20. b3 g2 21.
+Ra1 Kc6 22. Bxg2+ Kc7 23. Be4 Bxh2 24. Qg7 c4 25. Qd4 Rd7 26. bxc4 Rh8 27. Nb1
+Bf4 28. Qc5+ Kb8 29. O-O Rd4 30. Qxa5 Rh7 31. c5 b6 32. Bxh7 Re4 33. Kh1 Bc1
+34. Kg1 Re6 35. f4 Re5 36. cxb6 Rc5 37. Kh1 Rh5+ 38. Kg2 Rb5 39. Kg1 Rf5 40.
+Qxf5 Ka8 41. Qc8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level1_Random"]
+[Black "Level4_MCTS_UCT"]
+[Result "0-1"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Ng5 h5 2. g3 Nxe4 3. Qe2 d6 4. Nxf7 Nxg3 5. Qxh5 Nd4 6. Nc3 Bd7 7. Nb1 Rxh5
+8. Nxd8 Rxd8 9. Kd1 Nxh1 10. Na3 a5 11. Bg5 Rxg5 12. Bf7+ Kxf7 13. h3 Bxh3 14.
+c4 Be6 15. Kc1 Rg8 16. Kb1 Rg1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level4_MCTS_UCT"]
+[Black "Level1_Random"]
+[Result "1-0"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bb5 O-O 2. Bxc6 dxc6 3. Nbd2 Qd4 4. Nxd4 Bb4 5. Rg1 Ba3 6. bxa3 h6 7. Qf3
+Ng4 8. Qg3 Nf6 9. Nf5 Kh7 10. Qxg7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Nxc3 2. bxc3 dxe5 3. Nxe5 Nc6 4. Nxc6 bxc6 5. Bc4 Bf5 6. O-O Bg7 7. Bf4
+c5 8. Re1 cxd4 9. cxd4 Bxd4 10. Rb1 O-O 11. Rb7 Rc8 12. Rxc7 Rxc7 13. Bxc7
+Bxf2+ 14. Kxf2 Qxc7 15. Qd4 Bxc2 16. Kg1 e6 17. Bd3 Rd8 18. Qe3 Bxd3 19. Qe5
+Qb6+ 20. Re3 Rd5 21. Qf4 Rf5 22. Qxf5 Qxe3+ 23. Qf2 Qc1+ 24. Qe1 Qxe1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.001"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "rnbqkb1r/ppp1pp1p/3p2p1/3nP3/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. c4 Nb4 2. a3 N4c6 3. Nc3 dxe5 4. dxe5 Qxd1+ 5. Kxd1 Nd7 6. Nd5 Ndxe5 7.
+Nxc7+ Kd8 8. Nxa8 Nxf3 9. gxf3 e5 10. Bd3 Bc5 11. Bg5+ Ke8 12. Nc7+ Kf8 13. Bf6
+Rg8 14. Be4 Bxf2 15. Bxc6 bxc6 16. Bxe5 Bf5 17. Ke2 Bc5 18. Na6 Bb6 19. c5 Bd8
+20. Nb4 Bd7 21. Rad1 Ke7 22. Rhg1 Ba5 23. Ke3 Bxb4 24. axb4 Bf5 25. f4 Rd8 26.
+Bf6+ Kxf6 27. Rxd8 g5 28. fxg5+ Ke5 29. Ra1 h6 30. gxh6 a6 31. Rxa6 Be4 32.
+Re8+ Kd5 33. Rxe4 f5 34. h7 fxe4 35. h8=Q Ke6 36. Qh7 Ke5 37. Rxc6 Kd5 38.
+Qxe4# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "1/2-1/2"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nxc6 bxc6 2. Nc3 d5 3. exd5 cxd5 4. Nxd5 Qxd5 5. Qxd5 Nxd5 6. Bd3 e5 7. O-O
+Rb8 8. Re1 Bd6 9. a3 O-O 10. b4 Bg4 11. Bg5 Rfe8 12. Rab1 Rb7 13. Ra1 h6 14.
+Be3 e4 15. Bc4 Nxe3 16. Rxe3 Bf4 17. Ree1 Be5 18. Rab1 Rc7 19. Rxe4 Bxh2+ 20.
+Kxh2 Rxe4 21. Bd3 Re5 22. Kg1 Rc3 23. Ra1 Re8 24. a4 Rb8 25. Rb1 Ra3 26. a5
+Rxa5 27. bxa5 Rxb1+ 28. Kh2 Ra1 29. a6 Bc8 30. Kg3 Bxa6 31. Bxa6 Rxa6 32. Kf4
+Ra2 33. Ke4 Rxc2 34. Ke3 f5 35. Kf3 Kf7 36. Ke3 Ke6 37. Kf3 f4 38. Kxf4 Rxf2+
+39. Kg3 Rf8 40. Kg4 Ke5 41. Kg3 Rf7 42. Kg4 Rf8 43. Kg3 a6 44. Kg4 Rf1 45. Kg3
+Rf8 46. Kg4 Rf1 47. Kg3 1/2-1/2
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.002"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "r1bqkb1r/pp1ppppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nxc6 dxc6 2. Qxd8+ Kxd8 3. Nc3 e5 4. Be3 Be6 5. O-O-O+ Kc7 6. a3 Bd6 7. Be2
+h6 8. Kb1 c5 9. Nb5+ Kd7 10. Nxd6 Kc6 11. Bb5+ Kb6 12. Bc4 Bxc4 13. Nxc4+ Kc6
+14. Nxe5+ Kc7 15. Nxf7 Nxe4 16. Bf4+ Nd6 17. Bxd6+ Kc6 18. Nxh8 Rxh8 19. Be5
+Rg8 20. Rd6+ Kc7 21. Rxh6+ Kd7 22. Rg6 c4 23. Rd1+ Ke7 24. Rg4 b5 25. Bxg7 Rd8
+26. Re4+ Kf7 27. Rxd8 Kxg7 28. Rd6 Kf7 29. Ra6 c3 30. bxc3 b4 31. cxb4 Kg8 32.
+Rxa7 Kf8 33. Rd7 Kg8 34. Re8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bxc6 dxc6 2. Nxe5 Bxc3 3. dxc3 Qxd1+ 4. Kxd1 Nxe4 5. Be3 Be6 6. Ke2 f6 7.
+Nd3 O-O 8. Kf3 Bd5 9. h3 Nxc3+ 10. Kg3 Nxa2 11. Kh2 Rfe8 12. Kg1 a5 13. Rd1 Nb4
+14. Nxb4 axb4 15. Bf4 Re2 16. Bxc7 Rxc2 17. Rb1 Ra2 18. Bf4 Rcxb2 19. Rxb2 Rxb2
+20. Bd6 Kf7 21. Bf4 c5 22. h4 Ke6 23. Rh3 Kf5 24. Bd6 c4 25. Re3 c3 26. Re1 c2
+27. h5 Rb1 28. Rxb1 cxb1=Q+ 29. Kh2 b3 30. Kg3 Qd1 31. f3 b2 32. Kf2 b1=Q 33.
+Ke3 Qb6+ 34. Bc5 Qxc5# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.003"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "r1bqk2r/pppp1ppp/2n2n2/1B2p3/1b2P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. O-O Bxc3 2. dxc3 Nxe4 3. Bxc6 dxc6 4. Nxe5 Qxd1 5. Rxd1 O-O 6. Be3 Be6 7.
+Rd4 Bf5 8. Re1 Rfd8 9. Rxd8+ Rxd8 10. Bxa7 c5 11. g4 Bg6 12. Nxg6 hxg6 13. Rxe4
+Rd1+ 14. Kg2 Rd5 15. Re7 Rd2 16. Rxc7 Rxc2 17. Rxb7 c4 18. Be3 Re2 19. Kf3 Rc2
+20. Bf4 Kf8 21. Be3 Kg8 22. Ke4 Re2 23. Kd5 Rxe3 24. fxe3 g5 25. e4 Kf8 26.
+Kxc4 Kg8 27. Rb5 f6 28. Rb7 Kf8 29. Kd4 Kg8 30. c4 Kf8 31. c5 Kg8 32. c6 Kf8
+33. c7 Kf7 34. c8=Q+ Kg6 35. Qh8 f5 36. Qxg7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "1/2-1/2"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. cxd5 Nxd5 2. Nxd5 exd5 3. Bxe7 Kxe7 4. Nf3 Nc6 5. e3 Qd6 6. Bd3 Qb4+ 7. Qd2
+Bg4 8. Qxb4+ Nxb4 9. Ke2 Nxd3 10. Kxd3 Bf5+ 11. e4 dxe4+ 12. Ke3 exf3 13. Kxf3
+Kd6 14. Rhe1 Rhe8 15. Rxe8 Rxe8 16. Rc1 Be4+ 17. Kg3 Re6 18. h3 Bd5 19. a3 Rg6+
+20. Kh2 Rxg2+ 21. Kh1 Rxf2+ 22. Kg1 Rxb2 23. Re1 Rg2+ 24. Kf1 Rd2 25. Kg1 Rg2+
+26. Kf1 Rd2 27. Kg1 1/2-1/2
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.004"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "rnbqk2r/ppp1bppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 dxc4 2. e4 Nc6 3. e5 Nxd4 4. Nxd4 Nd5 5. Bxe7 Qxe7 6. Bxc4 Nxc3 7. bxc3
+O-O 8. O-O Bd7 9. Qf3 Bc6 10. Nxc6 bxc6 11. Qxc6 Rfd8 12. Rfd1 Rxd1+ 13. Rxd1
+Rd8 14. Rd4 Rxd4 15. cxd4 h6 16. Qa8+ Qf8 17. Qb7 Qe7 18. Qb8+ Kh7 19. Bd3+ f5
+20. exf6+ g6 21. fxe7 e5 22. e8=Q h5 23. Qxg6# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 Nc6 2. Nxc6 bxc6 3. Be3 Be6 4. Bd3 Qb8 5. Rb1 Bg4 6. Qd2 e5 7. O-O Be7
+8. Bc4 Qb4 9. Qd3 O-O 10. a3 Qa5 11. Ra1 c5 12. Rfe1 Rab8 13. Bb3 h6 14. Nd5
+Nxd5 15. exd5 Bf6 16. Bd2 Qc7 17. Re4 Bf5 18. Rd1 Bxe4 19. Qxe4 c4 20. Qxc4
+Qxc4 21. Bxc4 Rxb2 22. Bd3 Rc8 23. Be3 a6 24. Re1 Bg5 25. Bxg5 hxg5 26. h3 Rc5
+27. Bxa6 Rcxc2 28. Bd3 Rxf2 29. Kh2 Rxg2+ 30. Kh1 Rgd2 31. Re3 Rd1+ 32. Re1
+Rxe1+ 33. Bf1 Rxf1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.005"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Bb5+ Nc6 2. Nxc6 bxc6 3. Bxc6+ Bd7 4. Bxa8 Qxa8 5. Nc3 Nxe4 6. O-O Nxc3 7.
+bxc3 Qe4 8. Re1 Qc4 9. Qd4 Qxd4 10. cxd4 e5 11. dxe5 dxe5 12. Rxe5+ Be7 13. Bb2
+Be6 14. Ra5 O-O 15. Rxa7 Bd6 16. Rd1 Rd8 17. Rxd6 Rxd6 18. Ra8+ Bc8 19. Rxc8+
+Rd8 20. Rxd8# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. cxd5 cxd5 2. Nf3 Nc6 3. Bd3 Bd6 4. O-O O-O 5. Ne5 Nxe5 6. dxe5 Bxe5 7. Qf3
+Qc7 8. Bd2 Bxh2+ 9. Kh1 Bd7 10. e4 d4 11. Nb5 Bxb5 12. Bxb5 Qc5 13. Kxh2 Qxb5
+14. Rab1 Qe5+ 15. Kg1 Qxe4 16. Qxe4 Nxe4 17. Bf4 g5 18. Be5 Nd2 19. Bxd4 Rfd8
+20. Be5 Rd5 21. Rfe1 Nxb1 22. Rxb1 Rxe5 23. Rd1 Re2 24. Rb1 Rd8 25. a3 Rdd2 26.
+a4 Rxf2 27. a5 Rxg2+ 28. Kf1 Rdf2+ 29. Ke1 Rf4 30. b4 Rg1+ 31. Kd2 Rxb1 32. Kc3
+Rbxb4 33. Kd3 Rf3+ 34. Kc2 Ra4 35. a6 bxa6 36. Kd2 Ra2+ 37. Ke1 e5 38. Kd1 Rf1#
+0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.006"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 Nbd7 2. cxd5 cxd5 3. Bd3 Bd6 4. O-O Ne4 5. Nxe4 dxe4 6. Bxe4 O-O 7. Qb3
+Qa5 8. Bd2 Qb6 9. Qxb6 Nxb6 10. Ne5 Bxe5 11. dxe5 Nd5 12. Bd3 Bd7 13. e4 Ne7
+14. Bb4 Rfe8 15. Rfe1 Bc6 16. Bd6 Ng6 17. Bc4 Nf4 18. Rac1 Red8 19. Rc3 a6 20.
+Rf3 g5 21. Be7 Rd2 22. Bxg5 Ne2+ 23. Bxe2 Rxb2 24. Bc4 Re8 25. Rg3 Rc8 26. Be7+
+Kh8 27. Bf6# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Ngf3 Nc6 2. Bd3 Bb4 3. O-O O-O 4. Nb3 h6 5. Nc5 Nxc5 6. dxc5 Bxc5 7. Be3
+Bxe3 8. fxe3 Qe7 9. Qd2 Qc5 10. a3 Bd7 11. Rfe1 a6 12. Qc3 Qxc3 13. bxc3 f6 14.
+exf6 Rxf6 15. Nd4 e5 16. Nxc6 Bxc6 17. Rab1 e4 18. Be2 Re8 19. Rb4 a5 20. Rd4
+Rd8 21. Rb1 Kf8 22. Bg4 Ke8 23. c4 Ke7 24. cxd5 Bxd5 25. Be2 Rc6 26. Rxb7 Rxc2
+27. Rxd5 Rxd5 28. Kf2 Rdd2 29. h3 Rxe2+ 30. Kg1 Rxg2+ 31. Kf1 Rh2 32. Kg1 Rhe2
+33. Rb1 Rxe3 34. Rd1 Ke6 35. Rb1 Rxh3 36. a4 Ra3 37. Rd1 Rxa4 38. Rd8 Ra1+ 39.
+Rd1 Rxd1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.007"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1/2-1/2"]
+[FEN "rnbqkb1r/pppn1ppp/4p3/3pP3/3P4/8/PPPN1PPP/R1BQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Ngf3 Nc6 2. Bd3 Bb4 3. a3 Bxd2+ 4. Bxd2 O-O 5. O-O Qe7 6. Bf4 Re8 7. Qd2 a6
+8. Qc3 Rd8 9. Bg5 f6 10. Be3 fxe5 11. Nxe5 Ndxe5 12. Bxh7+ Kxh7 13. dxe5 d4 14.
+Qd3+ Kg8 15. Bf4 Bd7 16. Rfe1 Qc5 17. Qe4 Nxe5 18. Qxe5 Qxe5 19. Bxe5 c5 20.
+Bd6 c4 21. Re4 e5 22. Bxe5 Bf5 23. Rf4 Bxc2 24. Re1 c3 25. Bxd4 cxb2 26. Bxb2
+Bg6 27. Rb4 Rd7 28. Rb6 Bf5 29. Be5 Rc8 30. Rb4 Rc6 31. Rf4 Rf7 32. Rd1 Rf8 33.
+Rf3 Rc4 34. Rg3 Re8 35. Rxg7+ Kh8 36. Re7+ Kg8 37. Rxe8+ Kf7 38. Red8 Ke6 39.
+Re1 Bg6 40. Bd4+ Kf7 41. Rd7+ Kg8 42. Kh1 b5 43. Rg7+ Kf8 44. Rxg6 Rxd4 45.
+Rxa6 Kf7 46. Kg1 Rd2 47. Rb1 Rd5 48. Ra5 Ke6 49. Raxb5 Rxb5 50. Rxb5 Kd6 51.
+Rb7 Kd5 52. Kf1 Ke5 53. Ke2 Kd5 54. Kd3 Ke5 55. Kc4 Ke4 56. Rb5 Kf4 57. Kd4 Kg4
+58. Ke4 Kh4 59. Rf5 Kg4 60. Rd5 Kh4 61. Rf5 Kg4 62. Rd5 Kh4 1/2-1/2
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 c4 2. Be2 Nc6 3. O-O Bd6 4. Ne5 Nxe5 5. dxe5 Bxe5 6. e4 Bxc3 7. bxc3
+Nxe4 8. Qd4 Qf6 9. Qxf6 gxf6 10. Bb2 e5 11. Rfd1 Be6 12. Rab1 f5 13. Bf3 Rg8
+14. Bxe4 fxe4 15. Ba3 Bh3 16. Rxd5 Rxg2+ 17. Kh1 Be6 18. Kxg2 Bxd5 19. Bd6 e3+
+20. Kg1 exf2+ 21. Kxf2 f6 22. Ke3 Kd7 23. Bc5 f5 24. Rg1 Kc6 25. Be7 f4+ 26.
+Kd2 e4 27. Bf6 e3+ 28. Ke2 Re8 29. Bd4 f3+ 30. Kd1 f2 31. Rf1 e2+ 32. Kd2 e1=Q+
+33. Rxe1 fxe1=Q# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.008"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 cxd4 2. exd4 Nc6 3. O-O Bd6 4. Re1 O-O 5. Ne5 Nxe5 6. dxe5 Bxe5 7. Rxe5
+Ne4 8. Nxe4 dxe4 9. Rxe4 Bd7 10. Rd4 e5 11. Rxd7 Qxd7 12. Bxh7+ Kxh7 13. Qxd7
+Rab8 14. Qf5+ Kg8 15. Qxe5 Rfd8 16. Bg5 Re8 17. Qc5 Ra8 18. Rd1 Re2 19. Be3 a6
+20. Qc4 Rxe3 21. fxe3 Re8 22. Rd7 Rxe3 23. Qxf7+ Kh8 24. Qxg7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 Nc6 2. Bf4 Qe4+ 3. Be3 e5 4. Nxe5 Nxe5 5. dxe5 Qxe5 6. Nd2 Nd5 7. Bd3
+Nxe3 8. fxe3 Qxe3+ 9. Qe2 Qxe2+ 10. Kxe2 Bd6 11. Kf2 Be6 12. Nc4 Bc7 13. Kg1
+Rd8 14. Rd1 Bxc4 15. Re1+ Be6 16. Bc4 Kd7 17. Bxe6+ fxe6 18. c4 Ke7 19. a3 Be5
+20. Rxe5 Rd1+ 21. Kf2 Rxh1 22. Rxc5 Rf8+ 23. Kg3 Rd1 24. Re5 Rd3+ 25. Kg4 Rd2
+26. Re1 Rxg2+ 27. Kh3 Rxb2 28. c5 Rf5 29. Rc1 Rh5+ 30. Kg3 Rhxh2 31. Kf4 Rh4+
+32. Ke3 Rb3+ 33. Kd2 Rh2+ 34. Kd1 Rg3 35. a4 Rg1# 0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.009"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "rnb1kb1r/pp2pppp/5n2/2pq4/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nf3 cxd4 2. cxd4 Nc6 3. Nc3 Qd6 4. d5 Nxd5 5. Nxd5 Bf5 6. Bc4 e5 7. O-O Nd4
+8. Nxd4 exd4 9. Re1+ Be7 10. Rxe7+ Qxe7 11. Nxe7 Kxe7 12. Qxd4 Rhg8 13. Bg5+
+Kf8 14. Qc5+ Ke8 15. Qe7# 1-0
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level2_Heuristic"]
+[Black "Level3_AlphaBeta"]
+[Result "0-1"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 O-O 2. O-O Bc5 3. Be3 Bxe3 4. fxe3 d6 5. d4 Bg4 6. dxe5 Nxe5 7. Qd4 c5
+8. Bxf7+ Rxf7 9. Qa4 Bxf3 10. gxf3 Qe8 11. Qxe8+ Rxe8 12. Nd5 Nxd5 13. exd5
+Nxf3+ 14. Rxf3 Rxf3 15. Re1 Re4 16. a3 c4 17. Kg2 Rf5 18. Kg3 Kf7 19. Rd1 Rxe3+
+20. Kg4 Rf2 21. h3 Rxc2 22. Rf1+ Kg8 23. Rb1 Re5 24. Kf4 Rxd5 25. Ke4 Rd3 26.
+h4 Re2+ 27. Kf4 Rb3 28. h5 c3 29. Kf5 cxb2 30. a4 Rb4 31. Re1 Rxe1 32. h6 Re5#
+0-1
+
+[Event "101_TTNTNC Arena (workload_control)"]
+[Site "OPEN.010"]
+[Date "????.??.??"]
+[Round "?"]
+[White "Level3_AlphaBeta"]
+[Black "Level2_Heuristic"]
+[Result "1-0"]
+[FEN "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1"]
+[SetUp "1"]
+
+1. Nc3 d5 2. exd5 Nxd5 3. Bxd5 O-O 4. Bxc6 bxc6 5. Nxe5 Qd6 6. Bf4 Be6 7. Ng6
+Qc5 8. Nxf8 Rxf8 9. Bxc7 Bd6 10. Bxd6 Qxd6 11. O-O Rb8 12. Rb1 c5 13. Qf3 Rb4
+14. Rfe1 Qf4 15. Qc6 Rb8 16. Qxc5 a6 17. Nd5 Bxd5 18. Qxd5 Rc8 19. Re4 Qf6 20.
+Qb3 Qd6 21. Rbe1 Rc5 22. d4 Rb5 23. Re8+ Qf8 24. Qa3 Rc5 25. Qxc5 h6 26. Rxf8+
+Kh7 27. Qf5+ g6 28. Qxf7# 1-0
+
