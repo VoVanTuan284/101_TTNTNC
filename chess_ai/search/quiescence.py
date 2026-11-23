@@ -8,7 +8,7 @@ Phụ trách: TV1 (Core, Classical Search, UCT & RL Lead)
 from typing import Any, List, Optional
 import chess
 from chess_ai.config import load_yaml_config
-from chess_ai.core.evaluation import MATE_VALUE, PIECE_VALUES, evaluate_board
+from chess_ai.core.evaluation import MATE_VALUE, PIECE_VALUES, evaluate_board, see_capture
 from chess_ai.search.move_ordering import mvv_lva_score, order_moves
 
 
@@ -33,6 +33,7 @@ def quiescence_search(
     delta_margin: float = _DEFAULT_DELTA_MARGIN,
     q_ply: int = 0,
     search_ctx: Optional[Any] = None,
+    use_see_pruning: bool = True,
 ) -> float:
     """Đánh giá ổn định tại nút lá bằng chuỗi bắt quân và thoát chiếu."""
     if search_ctx is not None:
@@ -71,10 +72,12 @@ def quiescence_search(
         moves = sorted(captures, key=lambda m: mvv_lva_score(board, m), reverse=True)
 
     for move in moves:
-        # Delta Pruning: bỏ qua nước bắt quân không đủ bù đắp khoảng cách tới alpha
+        # Delta Pruning & SEE Pruning: bỏ qua nước bắt quân không đủ bù đắp hoặc lỗ vật chất (SEE < 0)
         if not in_check and move.promotion is None:
             gain = _captured_value(board, move)
             if stand_pat + gain + delta_margin < alpha:
+                continue
+            if use_see_pruning and see_capture(board, move) < 0:
                 continue
 
         board.push(move)
@@ -86,6 +89,7 @@ def quiescence_search(
             delta_margin=delta_margin,
             q_ply=q_ply + 1,
             search_ctx=search_ctx,
+            use_see_pruning=use_see_pruning,
         )
         board.pop()
 

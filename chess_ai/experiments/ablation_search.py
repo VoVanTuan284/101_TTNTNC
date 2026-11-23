@@ -30,6 +30,8 @@ class AblationConfigSpec:
     use_move_ordering: bool
     use_tt: bool
     use_quiescence: bool
+    use_pvs: bool = False
+    use_aspiration: bool = False
 
 
 def _evaluate_config(
@@ -57,6 +59,8 @@ def _evaluate_config(
             use_quiescence=spec.use_quiescence,
             use_alpha_beta=spec.use_alpha_beta,
             tt=tt,
+            use_pvs=spec.use_pvs,
+            use_aspiration=spec.use_aspiration,
         )
         is_solved = move in rec.best_moves
         if is_solved:
@@ -96,6 +100,8 @@ def _evaluate_config(
             "move_ordering": spec.use_move_ordering,
             "transposition_table": spec.use_tt,
             "quiescence": spec.use_quiescence,
+            "pvs": spec.use_pvs,
+            "aspiration_windows": spec.use_aspiration,
         },
         "total_positions": total,
         "solved_count": solved_count,
@@ -130,7 +136,8 @@ def run_ablation_search(
         AblationConfigSpec("Config_B", "Alpha-Beta Pruning", base_depth, True, False, False, False),
         AblationConfigSpec("Config_C1", "Alpha-Beta + Move Ordering (MVV-LVA, Killer, History)", base_depth, True, True, False, False),
         AblationConfigSpec("Config_C2", "Alpha-Beta + Move Ordering + Zobrist TT (ID)", base_depth, True, True, True, False),
-        AblationConfigSpec("Config_D", "Cấp 3 đầy đủ (Config_C2 + Quiescence Search)", base_depth, True, True, True, True),
+        AblationConfigSpec("Config_D", "Config_C2 + Quiescence Search (kèm SEE Pruning)", base_depth, True, True, True, True),
+        AblationConfigSpec("Config_E", "Cấp 3 hoàn chỉnh (Config_D + PVS + Aspiration Windows)", base_depth, True, True, True, True, True, True),
     ]
 
     part_1a: List[Dict[str, Any]] = []
@@ -153,12 +160,14 @@ def run_ablation_search(
     for d in ablation_depths:
         spec = AblationConfigSpec(
             name=f"Depth_{d}",
-            description=f"Config_D (Cấp 3 đầy đủ) ở độ sâu d={d}",
+            description=f"Config_E (Cấp 3 hoàn chỉnh) ở độ sâu d={d}",
             depth=d,
             use_alpha_beta=True,
             use_move_ordering=True,
             use_tt=True,
             use_quiescence=True,
+            use_pvs=True,
+            use_aspiration=True,
         )
         part_1b.append(_evaluate_config(spec, records))
 

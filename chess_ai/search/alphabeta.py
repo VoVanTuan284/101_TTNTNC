@@ -65,6 +65,24 @@ def _from_tt_score(value: float, ply: int) -> float:
     return value
 
 
+def _build_history_zobrist_counts(board: chess.Board) -> Dict[int, int]:
+    """Đếm số lần xuất hiện khóa Zobrist từ lịch sử move_stack (trong phạm vi halfmove_clock)."""
+    counts: Dict[int, int] = {}
+    root_key = compute_zobrist_hash(board)
+    counts[root_key] = 1
+
+    if not board.move_stack or board.halfmove_clock == 0:
+        return counts
+
+    tmp = board.copy(stack=True)
+    steps_back = min(len(tmp.move_stack), board.halfmove_clock)
+    for _ in range(steps_back):
+        tmp.pop()
+        k = compute_zobrist_hash(tmp)
+        counts[k] = counts.get(k, 0) + 1
+    return counts
+
+
 def _negamax(
     board: chess.Board,
     depth: int,
@@ -75,9 +93,11 @@ def _negamax(
     tt: Optional[TranspositionTable],
     orderer: Optional[MoveOrderer],
     path_hashes: Set[int],
+    history_counts: Dict[int, int],
     use_alpha_beta: bool,
     use_move_ordering: bool,
     use_quiescence: bool,
+    use_pvs: bool = False,
 ) -> Tuple[float, Optional[chess.Move]]:
     ctx.tick()
     if ctx.stopped:
@@ -94,7 +114,7 @@ def _negamax(
         return 0.0, None
 
     zobrist_key = compute_zobrist_hash(board)
-    if ply > 0 and zobrist_key in path_hashes:
+    if ply > 0 and (zobrist_key in path_hashes or history_counts.get(zobrist_key, 0) >= 2):
         return 0.0, None
 
     pv_move: Optional[chess.Move] = None
@@ -140,26 +160,81 @@ def _negamax(
     added_hash = zobrist_key not in path_hashes
     if added_hash:
         path_hashes.add(zobrist_key)
+    if ply > 0:
+        history_counts[zobrist_key] = history_counts.get(zobrist_key, 0) + 1
 
     try:
-        for move in legal_moves:
+        for move_idx, move in enumerate(legal_moves):
             board.push(move)
-            child_alpha = -beta if use_alpha_beta else -_INF
-            child_beta = -alpha if use_alpha_beta else _INF
-            child_score, _ = _negamax(
-                board,
-                depth - 1,
-                child_alpha,
-                child_beta,
-                ply + 1,
-                ctx,
-                tt,
-                orderer,
-                path_hashes,
-                use_alpha_beta,
-                use_move_ordering,
-                use_quiescence,
-            )
+            if not use_alpha_beta:
+                child_score, _ = _negamax(
+                    board,
+                    depth - 1,
+                    -_INF,
+                    _INF,
+                    ply + 1,
+                    ctx,
+                    tt,
+                    orderer,
+                    path_hashes,
+                    history_counts,
+                    use_alpha_beta,
+                    use_move_ordering,
+                    use_quiescence,
+                    use_pvs,
+                )
+            elif not use_pvs or move_idx == 0 or alpha == -_INF:
+                child_score, _ = _negamax(
+                    board,
+                    depth - 1,
+                    -beta,
+                    -alpha,
+                    ply + 1,
+                    ctx,
+                    tt,
+                    orderer,
+                    path_hashes,
+                    history_counts,
+                    use_alpha_beta,
+                    use_move_ordering,
+                    use_quiescence,
+                    use_pvs,
+                )
+            else:
+                # Principal Variation Search (null-window probe)
+                child_score, _ = _negamax(
+                    board,
+                    depth - 1,
+                    -alpha - 1.0,
+                    -alpha,
+                    ply + 1,
+                    ctx,
+                    tt,
+                    orderer,
+                    path_hashes,
+                    history_counts,
+                    use_alpha_beta,
+                    use_move_ordering,
+                    use_quiescence,
+                    use_pvs,
+                )
+                if not ctx.stopped and alpha < -child_score < beta:
+                    child_score, _ = _negamax(
+                        board,
+                        depth - 1,
+                        -beta,
+                        -alpha,
+                        ply + 1,
+                        ctx,
+                        tt,
+                        orderer,
+                        path_hashes,
+                        history_counts,
+                        use_alpha_beta,
+                        use_move_ordering,
+                        use_quiescence,
+                        use_pvs,
+                    )
             board.pop()
 
             if ctx.stopped:
@@ -180,6 +255,12 @@ def _negamax(
     finally:
         if added_hash:
             path_hashes.discard(zobrist_key)
+        if ply > 0:
+            new_cnt = history_counts.get(zobrist_key, 1) - 1
+            if new_cnt <= 0:
+                history_counts.pop(zobrist_key, None)
+            else:
+                history_counts[zobrist_key] = new_cnt
 
     if tt is not None and not ctx.stopped:
         if best_score <= orig_alpha:
@@ -211,6 +292,9 @@ def search_alphabeta(
     use_quiescence: bool = True,
     use_alpha_beta: bool = True,
     tt: Optional[TranspositionTable] = None,
+    use_pvs: bool = False,
+    use_aspiration: bool = False,
+    aspiration_window: float = 50.0,
 ) -> Tuple[chess.Move, Dict[str, float]]:
     """
     Thực hiện tìm kiếm Iterative Deepening Alpha-Beta và trả về (best_move, stats).
@@ -227,6 +311,7 @@ def search_alphabeta(
     orderer = MoveOrderer() if use_move_ordering else None
     ctx = _SearchContext(time_limit=time_limit, max_nodes=max_nodes)
     path_hashes: Set[int] = set()
+    history_counts = _build_history_zobrist_counts(board)
 
     best_move = legal_moves[0]
     best_value = 0.0
@@ -235,20 +320,54 @@ def search_alphabeta(
     work_board = board.copy(stack=False)
 
     for depth in range(1, max(1, max_depth) + 1):
-        val, move = _negamax(
-            work_board,
-            depth=depth,
-            alpha=-_INF,
-            beta=_INF,
-            ply=0,
-            ctx=ctx,
-            tt=active_tt,
-            orderer=orderer,
-            path_hashes=path_hashes,
-            use_alpha_beta=use_alpha_beta,
-            use_move_ordering=use_move_ordering,
-            use_quiescence=use_quiescence,
-        )
+        if use_alpha_beta and use_aspiration and depth >= 3 and abs(best_value) < _MATE_THRESHOLD:
+            delta = max(10.0, float(aspiration_window))
+            asp_alpha = best_value - delta
+            asp_beta = best_value + delta
+            while True:
+                val, move = _negamax(
+                    work_board,
+                    depth=depth,
+                    alpha=asp_alpha,
+                    beta=asp_beta,
+                    ply=0,
+                    ctx=ctx,
+                    tt=active_tt,
+                    orderer=orderer,
+                    path_hashes=path_hashes,
+                    history_counts=history_counts,
+                    use_alpha_beta=use_alpha_beta,
+                    use_move_ordering=use_move_ordering,
+                    use_quiescence=use_quiescence,
+                    use_pvs=use_pvs,
+                )
+                if ctx.stopped:
+                    break
+                if val <= asp_alpha:
+                    asp_alpha = -_INF if delta >= 400.0 else asp_alpha - delta
+                    delta *= 2.0
+                elif val >= asp_beta:
+                    asp_beta = _INF if delta >= 400.0 else asp_beta + delta
+                    delta *= 2.0
+                else:
+                    break
+        else:
+            val, move = _negamax(
+                work_board,
+                depth=depth,
+                alpha=-_INF,
+                beta=_INF,
+                ply=0,
+                ctx=ctx,
+                tt=active_tt,
+                orderer=orderer,
+                path_hashes=path_hashes,
+                history_counts=history_counts,
+                use_alpha_beta=use_alpha_beta,
+                use_move_ordering=use_move_ordering,
+                use_quiescence=use_quiescence,
+                use_pvs=use_pvs,
+            )
         if ctx.stopped and completed_depth >= 1:
             break
         if move is not None:

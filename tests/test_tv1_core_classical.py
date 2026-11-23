@@ -22,6 +22,7 @@ from chess_ai.core.evaluation import (
 )
 from chess_ai.core.zobrist import compute_zobrist_hash
 from chess_ai.search.alphabeta import search_alphabeta
+from chess_ai.search.quiescence import quiescence_search
 from chess_ai.search.transposition import EXACT, TranspositionTable, TTEntry
 
 
@@ -194,6 +195,42 @@ def test_level2_see_anti_stalemate_and_conflict_stats() -> None:
     assert promo_move == chess.Move.from_uci("a7a8q")
     assert l2.last_search_stats["selected_tier"] == 2
     assert l2.last_search_stats["selected_rule"] == "RULE_T2_SAFE_PROMOTION"
+
+
+def test_level3_see_pruning_in_quiescence_and_history_repetition() -> None:
+    # 1. SEE pruning trong quiescence_search bỏ qua nước bắt quân lỗ (Qd1xd5 vs e6)
+    class _Counter:
+        def __init__(self) -> None:
+            self.nodes = 0
+            self.stopped = False
+
+        def tick(self) -> None:
+            self.nodes += 1
+
+    b_see = chess.Board("4k3/8/4p3/3p4/8/8/8/3QK3 w - - 0 1")
+    ctx_no_see = _Counter()
+    ctx_see = _Counter()
+    quiescence_search(b_see, -10000.0, 10000.0, search_ctx=ctx_no_see, use_see_pruning=False)
+    quiescence_search(b_see, -10000.0, 10000.0, search_ctx=ctx_see, use_see_pruning=True)
+    assert ctx_see.nodes < ctx_no_see.nodes
+
+    # 2. Phát hiện hòa lặp 3 lần từ lịch sử move_stack trước gốc: Trắng đang hơn Hậu không được lặp lần 3
+    env_rep = ChessEnv(fen="4k3/8/8/8/8/8/3Q4/4K3 w - - 0 1")
+    for uci in ("d2c2", "e8f8", "c2d2", "f8e8", "d2c2", "e8f8", "c2d2", "f8e8"):
+        env_rep.step(chess.Move.from_uci(uci))
+    # Hiện tại d2c2 -> e8f8 -> ... đã lặp 2 lần trước gốc; d2c2 sẽ tạo lại thế cờ sau d2c2 lần thứ 3
+    l3 = Level3AlphaBetaAgent(default_depth=2)
+    chosen = l3.select_move(env_rep)
+    assert chosen != chess.Move.from_uci("d2c2")
+    assert l3.last_search_stats["eval"] > 500.0
+
+    # 3. PVS + Aspiration Windows bảo toàn giá trị Minimax ở depth=3 và không làm tăng số nút
+    b_pvs = chess.Board("r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3")
+    _, st_base = search_alphabeta(b_pvs, max_depth=3, use_quiescence=False, use_pvs=False, use_aspiration=False)
+    _, st_pvs = search_alphabeta(b_pvs, max_depth=3, use_quiescence=False, use_pvs=True, use_aspiration=True)
+    assert st_pvs["eval"] == pytest.approx(st_base["eval"], abs=1e-5)
+    assert st_pvs["nodes"] <= st_base["nodes"]
+
 
 
 def test_evaluation_pawn_structure_rook_file_and_bishop_pair() -> None:

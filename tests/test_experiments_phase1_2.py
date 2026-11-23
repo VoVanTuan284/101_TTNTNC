@@ -78,6 +78,6 @@ def test_ablation_search_smoke(tmp_path: Path) -> None:
     assert out_json.exists()
     loaded = json.loads(out_json.read_text(encoding="utf-8"))
     assert loaded["num_positions"] == 3
-    assert len(loaded["part_1a_progressive_configs"]) == 5
+    assert len(loaded["part_1a_progressive_configs"]) == 6
     assert len(loaded["part_1b_depth_sensitivity"]) == 3
-    assert res["part_1a_progressive_configs"][-1]["name"] == "Config_D"
+    assert res["part_1a_progressive_configs"][-1]["name"] == "Config_E"

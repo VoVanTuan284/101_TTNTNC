@@ -6,7 +6,7 @@ Phụ trách: TV1 (Core, Classical Search, UCT & RL Lead)
 """
 
 import math
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 import chess
 from chess_ai.config import load_yaml_config
 
@@ -271,3 +271,85 @@ def evaluate_board(board: chess.Board) -> float:
 def evaluate_board_tanh(board: chess.Board, scale: float = 600.0) -> float:
     """Chuẩn hóa điểm lượng giá tĩnh về khoảng [-1.0, 1.0] qua hàm tanh (dùng cho MCTS UCT cutoff)."""
     return math.tanh(evaluate_board(board) / scale)
+
+
+_SEE_PIECE_ORDER: Tuple[int, ...] = (
+    chess.PAWN,
+    chess.KNIGHT,
+    chess.BISHOP,
+    chess.ROOK,
+    chess.QUEEN,
+    chess.KING,
+)
+
+
+def _least_valuable_attacker(
+    board: chess.Board,
+    square: int,
+    color: chess.Color,
+    occupied: int,
+) -> Optional[Tuple[int, int]]:
+    """Tìm quân có giá trị nhỏ nhất của `color` đang tấn công `square` trong tập `occupied`."""
+    attackers = board.attackers_mask(color, square) & occupied
+    if not attackers:
+        return None
+    for pt in _SEE_PIECE_ORDER:
+        subset = attackers & board.pieces_mask(pt, color)
+        if subset:
+            sq = (subset & -subset).bit_length() - 1
+            return sq, PIECE_VALUES[pt]
+    return None
+
+
+def see_capture(board: chess.Board, move: chess.Move) -> int:
+    """
+    Static Exchange Evaluation (SEE) tại ô đích của nước bắt quân `move`.
+    Trả về ước lượng lời/lỗ vật chất (centipawns) sau chuỗi ăn qua lại tối ưu trên ô đó.
+    """
+    if not board.is_capture(move):
+        return 0
+
+    to_sq = move.to_square
+    from_sq = move.from_square
+
+    if board.is_en_passant(move):
+        victim_val = PIECE_VALUES[chess.PAWN]
+    else:
+        victim = board.piece_at(to_sq)
+        if victim is None:
+            return 0
+        victim_val = PIECE_VALUES[victim.piece_type]
+
+    attacker = board.piece_at(from_sq)
+    if attacker is None:
+        return 0
+    attacker_val = PIECE_VALUES[attacker.piece_type]
+
+    gains: List[int] = [victim_val]
+    occupied = board.occupied ^ (1 << from_sq)
+    if board.is_en_passant(move):
+        ep_victim_sq = chess.square(chess.square_file(to_sq), chess.square_rank(from_sq))
+        occupied ^= 1 << ep_victim_sq
+
+    side = not board.turn
+    current_target_val = attacker_val
+
+    for _ in range(16):
+        found = _least_valuable_attacker(board, to_sq, side, occupied)
+        if found is None:
+            break
+        att_sq, att_val = found
+        gains.append(current_target_val - gains[-1])
+        if att_val == PIECE_VALUES[chess.KING]:
+            opp_still = _least_valuable_attacker(board, to_sq, not side, occupied ^ (1 << att_sq))
+            if opp_still is not None:
+                gains.pop()
+            break
+        occupied ^= 1 << att_sq
+        current_target_val = att_val
+        side = not side
+
+    for i in range(len(gains) - 1, 0, -1):
+        gains[i - 1] = -max(-gains[i - 1], gains[i])
+
+    return gains[0]

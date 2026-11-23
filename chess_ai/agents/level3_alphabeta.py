@@ -26,11 +26,15 @@ class Level3AlphaBetaAgent(BaseAgent):
         max_nodes: int = int(_AB_CFG.get("max_nodes", 10000)),
         tt_size_mb: int = int(_AB_CFG.get("tt_size_mb", 64)),
         use_quiescence: bool = bool(_AB_CFG.get("quiescence", {}).get("enabled", True)),
+        use_pvs: bool = True,
+        use_aspiration: bool = True,
     ) -> None:
         super().__init__(name="Level3_AlphaBeta")
         self.default_depth = default_depth
         self.max_nodes = max_nodes
         self.use_quiescence = use_quiescence
+        self.use_pvs = use_pvs
+        self.use_aspiration = use_aspiration
         self.tt = TranspositionTable(max_size_mb=tt_size_mb)
 
     def reset(self) -> None:
@@ -61,6 +65,8 @@ class Level3AlphaBetaAgent(BaseAgent):
             use_quiescence=self.use_quiescence,
             use_alpha_beta=True,
             tt=self.tt,
+            use_pvs=self.use_pvs,
+            use_aspiration=self.use_aspiration,
         )
         self.last_search_stats = stats
         return best_move

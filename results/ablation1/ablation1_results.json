@@ -11,20 +11,22 @@
         "alpha_beta": false,
         "move_ordering": false,
         "transposition_table": false,
-        "quiescence": false
+        "quiescence": false,
+        "pvs": false,
+        "aspiration_windows": false
       },
       "total_positions": 50,
-      "solved_count": 27,
-      "tactical_accuracy": 0.54,
+      "solved_count": 25,
+      "tactical_accuracy": 0.5,
       "wilson_ci_95": [
-        0.404,
-        0.6703
+        0.3664,
+        0.6336
       ],
       "total_nodes": 2574744,
       "avg_nodes": 51494.88,
       "avg_tt_hits": 0.0,
-      "avg_latency_ms": 2631.351,
-      "p95_latency_ms": 4429.739,
+      "avg_latency_ms": 3389.759,
+      "p95_latency_ms": 6116.258,
       "positions": [
         {
           "id": "WAC.001",
@@ -34,7 +36,7 @@
           ],
           "solved": true,
           "nodes": 113842,
-          "time_ms": 6507.238,
+          "time_ms": 7806.466,
           "tt_hits": 0
         },
         {
@@ -45,7 +47,7 @@
           ],
           "solved": false,
           "nodes": 4058,
-          "time_ms": 185.733,
+          "time_ms": 236.581,
           "tt_hits": 0
         },
         {
@@ -56,7 +58,7 @@
           ],
           "solved": true,
           "nodes": 77287,
-          "time_ms": 4030.382,
+          "time_ms": 4836.987,
           "tt_hits": 0
         },
         {
@@ -67,7 +69,7 @@
           ],
           "solved": true,
           "nodes": 56599,
-          "time_ms": 3086.568,
+          "time_ms": 3632.73,
           "tt_hits": 0
         },
         {
@@ -78,7 +80,7 @@
           ],
           "solved": true,
           "nodes": 31921,
-          "time_ms": 1399.107,
+          "time_ms": 1730.019,
           "tt_hits": 0
         },
         {
@@ -89,7 +91,7 @@
           ],
           "solved": false,
           "nodes": 2226,
-          "time_ms": 86.744,
+          "time_ms": 104.013,
           "tt_hits": 0
         },
         {
@@ -100,7 +102,7 @@
           ],
           "solved": false,
           "nodes": 25827,
-          "time_ms": 1428.904,
+          "time_ms": 1639.538,
           "tt_hits": 0
         },
         {
@@ -111,18 +113,18 @@
           ],
           "solved": false,
           "nodes": 38588,
-          "time_ms": 2111.414,
+          "time_ms": 2329.776,
           "tt_hits": 0
         },
         {
           "id": "WAC.009",
-          "found_move": "d6b4",
+          "found_move": "h4g4",
           "expected_moves": [
             "d6h2"
           ],
           "solved": false,
           "nodes": 58521,
-          "time_ms": 2877.091,
+          "time_ms": 3410.578,
           "tt_hits": 0
         },
         {
@@ -133,7 +135,7 @@
           ],
           "solved": true,
           "nodes": 68849,
-          "time_ms": 3753.243,
+          "time_ms": 4124.484,
           "tt_hits": 0
         },
         {
@@ -144,7 +146,7 @@
           ],
           "solved": true,
           "nodes": 52436,
-          "time_ms": 2917.433,
+          "time_ms": 3269.257,
           "tt_hits": 0
         },
         {
@@ -155,18 +157,18 @@
           ],
           "solved": true,
           "nodes": 26367,
-          "time_ms": 1231.222,
+          "time_ms": 1448.244,
           "tt_hits": 0
         },
         {
           "id": "WAC.013",
-          "found_move": "f1d1",
+          "found_move": "f1e1",
           "expected_moves": [
             "f1f8"
           ],
           "solved": false,
           "nodes": 55815,
-          "time_ms": 2677.907,
+          "time_ms": 3199.238,
           "tt_hits": 0
         },
         {
@@ -177,7 +179,7 @@
           ],
           "solved": false,
           "nodes": 70248,
-          "time_ms": 4097.188,
+          "time_ms": 4632.392,
           "tt_hits": 0
         },
         {
@@ -188,7 +190,7 @@
           ],
           "solved": false,
           "nodes": 9650,
-          "time_ms": 490.302,
+          "time_ms": 547.436,
           "tt_hits": 0
         },
         {
@@ -199,7 +201,7 @@
           ],
           "solved": true,
           "nodes": 49624,
-          "time_ms": 2561.765,
+          "time_ms": 3021.775,
           "tt_hits": 0
         },
         {
@@ -210,7 +212,7 @@
           ],
           "solved": false,
           "nodes": 64760,
-          "time_ms": 3193.608,
+          "time_ms": 3871.38,
           "tt_hits": 0
         },
         {
@@ -221,7 +223,7 @@
           ],
           "solved": false,
           "nodes": 2659,
-          "time_ms": 106.422,
+          "time_ms": 117.096,
           "tt_hits": 0
         },
         {
@@ -232,7 +234,7 @@
           ],
           "solved": false,
           "nodes": 61378,
-          "time_ms": 3180.309,
+          "time_ms": 3805.522,
           "tt_hits": 0
         },
         {
@@ -243,7 +245,7 @@
           ],
           "solved": true,
           "nodes": 44344,
-          "time_ms": 2289.841,
+          "time_ms": 2657.905,
           "tt_hits": 0
         },
         {
@@ -254,7 +256,7 @@
           ],
           "solved": false,
           "nodes": 73356,
-          "time_ms": 3559.339,
+          "time_ms": 4156.67,
           "tt_hits": 0
         },
         {
@@ -266,7 +268,7 @@
           ],
           "solved": false,
           "nodes": 52239,
-          "time_ms": 2713.903,
+          "time_ms": 3334.572,
           "tt_hits": 0
         },
         {
@@ -277,7 +279,7 @@
           ],
           "solved": false,
           "nodes": 80621,
-          "time_ms": 4116.783,
+          "time_ms": 4964.307,
           "tt_hits": 0
         },
         {
@@ -288,7 +290,7 @@
           ],
           "solved": true,
           "nodes": 84356,
-          "time_ms": 3699.587,
+          "time_ms": 4401.995,
           "tt_hits": 0
         },
         {
@@ -299,7 +301,7 @@
           ],
           "solved": true,
           "nodes": 5901,
-          "time_ms": 259.578,
+          "time_ms": 325.335,
           "tt_hits": 0
         },
         {
@@ -310,7 +312,7 @@
           ],
           "solved": true,
           "nodes": 59842,
-          "time_ms": 2650.863,
+          "time_ms": 3188.699,
           "tt_hits": 0
         },
         {
@@ -321,7 +323,7 @@
           ],
           "solved": true,
           "nodes": 76393,
-          "time_ms": 3717.046,
+          "time_ms": 4828.905,
           "tt_hits": 0
         },
         {
@@ -332,7 +334,7 @@
           ],
           "solved": true,
           "nodes": 72859,
-          "time_ms": 3507.142,
+          "time_ms": 5357.885,
           "tt_hits": 0
         },
         {
@@ -343,7 +345,7 @@
           ],
           "solved": false,
           "nodes": 85319,
-          "time_ms": 4520.915,
+          "time_ms": 7670.629,
           "tt_hits": 0
         },
         {
@@ -354,7 +356,7 @@
           ],
           "solved": false,
           "nodes": 68034,
-          "time_ms": 3355.202,
+          "time_ms": 5318.508,
           "tt_hits": 0
         },
         {
@@ -368,7 +370,7 @@
           ],
           "solved": true,
           "nodes": 31306,
-          "time_ms": 1494.814,
+          "time_ms": 2122.826,
           "tt_hits": 0
         },
         {
@@ -379,7 +381,7 @@
           ],
           "solved": true,
           "nodes": 38096,
-          "time_ms": 1717.534,
+          "time_ms": 2483.902,
           "tt_hits": 0
         },
         {
@@ -391,29 +393,29 @@
           ],
           "solved": true,
           "nodes": 42390,
-          "time_ms": 1877.429,
+          "time_ms": 2780.981,
           "tt_hits": 0
         },
         {
           "id": "WAC.034",
-          "found_move": "d4g1",
+          "found_move": "b7e4",
           "expected_moves": [
             "d4g1"
           ],
-          "solved": true,
+          "solved": false,
           "nodes": 61828,
-          "time_ms": 2792.374,
+          "time_ms": 4433.652,
           "tt_hits": 0
         },
         {
           "id": "WAC.035",
-          "found_move": "c7f7",
+          "found_move": "d1c1",
           "expected_moves": [
             "h4h7"
           ],
           "solved": false,
           "nodes": 71493,
-          "time_ms": 3512.107,
+          "time_ms": 5380.849,
           "tt_hits": 0
         },
         {
@@ -424,7 +426,7 @@
           ],
           "solved": false,
           "nodes": 40702,
-          "time_ms": 1830.472,
+          "time_ms": 2737.516,
           "tt_hits": 0
         },
         {
@@ -435,7 +437,7 @@
           ],
           "solved": true,
           "nodes": 42967,
-          "time_ms": 2008.835,
+          "time_ms": 3095.105,
           "tt_hits": 0
         },
         {
@@ -447,7 +449,7 @@
           ],
           "solved": true,
           "nodes": 37621,
-          "time_ms": 1680.411,
+          "time_ms": 2528.68,
           "tt_hits": 0
         },
         {
@@ -458,7 +460,7 @@
           ],
           "solved": true,
           "nodes": 68455,
-          "time_ms": 3626.149,
+          "time_ms": 5493.341,
           "tt_hits": 0
         },
         {
@@ -469,7 +471,7 @@
           ],
           "solved": true,
           "nodes": 37212,
-          "time_ms": 1658.119,
+          "time_ms": 2563.297,
           "tt_hits": 0
         },
         {
@@ -482,7 +484,7 @@
           ],
           "solved": false,
           "nodes": 5624,
-          "time_ms": 213.174,
+          "time_ms": 320.814,
           "tt_hits": 0
         },
         {
@@ -493,19 +495,19 @@
           ],
           "solved": true,
           "nodes": 61696,
-          "time_ms": 3366.349,
+          "time_ms": 4929.421,
           "tt_hits": 0
         },
         {
           "id": "WAC.043",
-          "found_move": "a3e7",
+          "found_move": "c1c8",
           "expected_moves": [
             "a3e7",
             "d5a8"
           ],
-          "solved": true,
+          "solved": false,
           "nodes": 53927,
-          "time_ms": 2846.766,
+          "time_ms": 3969.302,
           "tt_hits": 0
         },
         {
@@ -516,7 +518,7 @@
           ],
           "solved": true,
           "nodes": 91531,
-          "time_ms": 4318.301,
+          "time_ms": 6537.784,
           "tt_hits": 0
         },
         {
@@ -527,7 +529,7 @@
           ],
           "solved": true,
           "nodes": 43047,
-          "time_ms": 1957.674,
+          "time_ms": 2753.115,
           "tt_hits": 0
         },
         {
@@ -538,7 +540,7 @@
           ],
           "solved": false,
           "nodes": 65227,
-          "time_ms": 3936.756,
+          "time_ms": 4246.895,
           "tt_hits": 0
         },
         {
@@ -549,7 +551,7 @@
           ],
           "solved": true,
           "nodes": 90023,
-          "time_ms": 5473.775,
+          "time_ms": 5601.06,
           "tt_hits": 0
         },
         {
@@ -560,7 +562,7 @@
           ],
           "solved": false,
           "nodes": 63421,
-          "time_ms": 3791.317,
+          "time_ms": 3833.123,
           "tt_hits": 0
         },
         {
@@ -571,7 +573,7 @@
           ],
           "solved": false,
           "nodes": 21935,
-          "time_ms": 1300.568,
+          "time_ms": 1441.833,
           "tt_hits": 0
         },
         {
@@ -582,7 +584,7 @@
           ],
           "solved": false,
           "nodes": 32324,
-          "time_ms": 1851.838,
+          "time_ms": 2265.509,
           "tt_hits": 0
         }
       ],
@@ -596,20 +598,22 @@
         "alpha_beta": true,
         "move_ordering": false,
         "transposition_table": false,
-        "quiescence": false
+        "quiescence": false,
+        "pvs": false,
+        "aspiration_windows": false
       },
       "total_positions": 50,
-      "solved_count": 27,
-      "tactical_accuracy": 0.54,
+      "solved_count": 25,
+      "tactical_accuracy": 0.5,
       "wilson_ci_95": [
-        0.404,
-        0.6703
+        0.3664,
+        0.6336
       ],
-      "total_nodes": 362297,
-      "avg_nodes": 7245.94,
+      "total_nodes": 356469,
+      "avg_nodes": 7129.38,
       "avg_tt_hits": 0.0,
-      "avg_latency_ms": 439.36,
-      "p95_latency_ms": 928.331,
+      "avg_latency_ms": 520.174,
+      "p95_latency_ms": 1058.924,
       "positions": [
         {
           "id": "WAC.001",
@@ -618,8 +622,8 @@
             "g3g6"
           ],
           "solved": true,
-          "nodes": 8573,
-          "time_ms": 521.049,
+          "nodes": 8321,
+          "time_ms": 676.625,
           "tt_hits": 0
         },
         {
@@ -629,8 +633,8 @@
             "b3b2"
           ],
           "solved": false,
-          "nodes": 1806,
-          "time_ms": 81.067,
+          "nodes": 1774,
+          "time_ms": 130.643,
           "tt_hits": 0
         },
         {
@@ -640,8 +644,8 @@
             "e3g3"
           ],
           "solved": true,
-          "nodes": 7247,
-          "time_ms": 523.349,
+          "nodes": 6964,
+          "time_ms": 534.881,
           "tt_hits": 0
         },
         {
@@ -652,7 +656,7 @@
           ],
           "solved": true,
           "nodes": 2646,
-          "time_ms": 187.582,
+          "time_ms": 212.029,
           "tt_hits": 0
         },
         {
@@ -662,8 +666,8 @@
             "c6c4"
           ],
           "solved": true,
-          "nodes": 2598,
-          "time_ms": 136.922,
+          "nodes": 2590,
+          "time_ms": 164.511,
           "tt_hits": 0
         },
         {
@@ -673,8 +677,8 @@
             "b6b7"
           ],
           "solved": false,
-          "nodes": 499,
-          "time_ms": 21.3,
+          "nodes": 513,
+          "time_ms": 33.359,
           "tt_hits": 0
         },
         {
@@ -684,8 +688,8 @@
             "g4e3"
           ],
           "solved": false,
-          "nodes": 4615,
-          "time_ms": 282.647,
+          "nodes": 4701,
+          "time_ms": 401.822,
           "tt_hits": 0
         },
         {
@@ -695,19 +699,19 @@
             "e7f7"
           ],
           "solved": false,
-          "nodes": 6149,
-          "time_ms": 413.778,
+          "nodes": 6360,
+          "time_ms": 463.036,
           "tt_hits": 0
         },
         {
           "id": "WAC.009",
-          "found_move": "d6b4",
+          "found_move": "h4g4",
           "expected_moves": [
             "d6h2"
           ],
           "solved": false,
-          "nodes": 14401,
-          "time_ms": 861.997,
+          "nodes": 13306,
+          "time_ms": 986.459,
           "tt_hits": 0
         },
         {
@@ -717,8 +721,8 @@
             "h4h7"
           ],
           "solved": true,
-          "nodes": 12090,
-          "time_ms": 721.842,
+          "nodes": 11132,
+          "time_ms": 846.685,
           "tt_hits": 0
         },
         {
@@ -728,8 +732,8 @@
             "f3c6"
           ],
           "solved": true,
-          "nodes": 7137,
-          "time_ms": 488.069,
+          "nodes": 7214,
+          "time_ms": 567.271,
           "tt_hits": 0
         },
         {
@@ -739,19 +743,19 @@
             "g4f3"
           ],
           "solved": true,
-          "nodes": 5281,
-          "time_ms": 295.066,
+          "nodes": 4356,
+          "time_ms": 336.569,
           "tt_hits": 0
         },
         {
           "id": "WAC.013",
-          "found_move": "f1d1",
+          "found_move": "f1e1",
           "expected_moves": [
             "f1f8"
           ],
           "solved": false,
-          "nodes": 9527,
-          "time_ms": 560.635,
+          "nodes": 11032,
+          "time_ms": 828.874,
           "tt_hits": 0
         },
         {
@@ -761,8 +765,8 @@
             "h3h7"
           ],
           "solved": false,
-          "nodes": 6741,
-          "time_ms": 459.4,
+          "nodes": 6628,
+          "time_ms": 544.703,
           "tt_hits": 0
         },
         {
@@ -772,8 +776,8 @@
             "b8b7"
           ],
           "solved": false,
-          "nodes": 2366,
-          "time_ms": 146.838,
+          "nodes": 2555,
+          "time_ms": 225.883,
           "tt_hits": 0
         },
         {
@@ -783,8 +787,8 @@
             "e2c3"
           ],
           "solved": true,
-          "nodes": 4968,
-          "time_ms": 311.704,
+          "nodes": 5040,
+          "time_ms": 421.161,
           "tt_hits": 0
         },
         {
@@ -794,8 +798,8 @@
             "c4e5"
           ],
           "solved": false,
-          "nodes": 12897,
-          "time_ms": 852.679,
+          "nodes": 11797,
+          "time_ms": 953.11,
           "tt_hits": 0
         },
         {
@@ -806,7 +810,7 @@
           ],
           "solved": false,
           "nodes": 849,
-          "time_ms": 43.364,
+          "time_ms": 44.593,
           "tt_hits": 0
         },
         {
@@ -816,8 +820,8 @@
             "c5c6"
           ],
           "solved": false,
-          "nodes": 9136,
-          "time_ms": 566.81,
+          "nodes": 9586,
+          "time_ms": 717.953,
           "tt_hits": 0
         },
         {
@@ -827,8 +831,8 @@
             "d7b5"
           ],
           "solved": true,
-          "nodes": 9208,
-          "time_ms": 600.374,
+          "nodes": 8573,
+          "time_ms": 610.366,
           "tt_hits": 0
         },
         {
@@ -838,8 +842,8 @@
             "d2h6"
           ],
           "solved": false,
-          "nodes": 15149,
-          "time_ms": 934.053,
+          "nodes": 11439,
+          "time_ms": 904.616,
           "tt_hits": 0
         },
         {
@@ -850,8 +854,8 @@
             "g5f7"
           ],
           "solved": false,
-          "nodes": 9131,
-          "time_ms": 616.82,
+          "nodes": 9296,
+          "time_ms": 771.781,
           "tt_hits": 0
         },
         {
@@ -861,8 +865,8 @@
             "g2g4"
           ],
           "solved": false,
-          "nodes": 13727,
-          "time_ms": 921.337,
+          "nodes": 13828,
+          "time_ms": 1118.214,
           "tt_hits": 0
         },
         {
@@ -872,8 +876,8 @@
             "g7d4"
           ],
           "solved": true,
-          "nodes": 7635,
-          "time_ms": 434.594,
+          "nodes": 7317,
+          "time_ms": 491.792,
           "tt_hits": 0
         },
         {
@@ -883,8 +887,8 @@
             "g4h4"
           ],
           "solved": true,
-          "nodes": 520,
-          "time_ms": 32.623,
+          "nodes": 554,
+          "time_ms": 34.796,
           "tt_hits": 0
         },
         {
@@ -894,8 +898,8 @@
             "d7f5"
           ],
           "solved": true,
-          "nodes": 9008,
-          "time_ms": 515.446,
+          "nodes": 8346,
+          "time_ms": 635.276,
           "tt_hits": 0
         },
         {
@@ -905,8 +909,8 @@
             "a3f8"
           ],
           "solved": true,
-          "nodes": 3966,
-          "time_ms": 221.522,
+          "nodes": 3992,
+          "time_ms": 268.791,
           "tt_hits": 0
         },
         {
@@ -916,8 +920,8 @@
             "b4e1"
           ],
           "solved": true,
-          "nodes": 16836,
-          "time_ms": 966.281,
+          "nodes": 16961,
+          "time_ms": 1176.575,
           "tt_hits": 0
         },
         {
@@ -927,8 +931,8 @@
             "c5c6"
           ],
           "solved": false,
-          "nodes": 11118,
-          "time_ms": 689.933,
+          "nodes": 11622,
+          "time_ms": 868.109,
           "tt_hits": 0
         },
         {
@@ -938,8 +942,8 @@
             "e4d6"
           ],
           "solved": false,
-          "nodes": 17450,
-          "time_ms": 1035.495,
+          "nodes": 17138,
+          "time_ms": 1239.757,
           "tt_hits": 0
         },
         {
@@ -952,8 +956,8 @@
             "g2g3"
           ],
           "solved": true,
-          "nodes": 2035,
-          "time_ms": 129.086,
+          "nodes": 2009,
+          "time_ms": 140.974,
           "tt_hits": 0
         },
         {
@@ -964,7 +968,7 @@
           ],
           "solved": true,
           "nodes": 4561,
-          "time_ms": 268.937,
+          "time_ms": 287.978,
           "tt_hits": 0
         },
         {
@@ -975,30 +979,30 @@
             "e4f4"
           ],
           "solved": true,
-          "nodes": 3379,
-          "time_ms": 177.349,
+          "nodes": 3429,
+          "time_ms": 223.173,
           "tt_hits": 0
         },
         {
           "id": "WAC.034",
-          "found_move": "d4g1",
+          "found_move": "b7e4",
           "expected_moves": [
             "d4g1"
           ],
-          "solved": true,
-          "nodes": 7387,
-          "time_ms": 413.535,
+          "solved": false,
+          "nodes": 7074,
+          "time_ms": 452.483,
           "tt_hits": 0
         },
         {
           "id": "WAC.035",
-          "found_move": "c7f7",
+          "found_move": "d1c1",
           "expected_moves": [
             "h4h7"
           ],
           "solved": false,
-          "nodes": 6763,
-          "time_ms": 387.611,
+          "nodes": 7555,
+          "time_ms": 531.567,
           "tt_hits": 0
         },
         {
@@ -1008,8 +1012,8 @@
             "e7e1"
           ],
           "solved": false,
-          "nodes": 7920,
-          "time_ms": 472.736,
+          "nodes": 7479,
+          "time_ms": 484.742,
           "tt_hits": 0
         },
         {
@@ -1019,8 +1023,8 @@
             "c6d4"
           ],
           "solved": true,
-          "nodes": 3053,
-          "time_ms": 187.179,
+          "nodes": 3012,
+          "time_ms": 220.202,
           "tt_hits": 0
         },
         {
@@ -1031,8 +1035,8 @@
             "d2d8"
           ],
           "solved": true,
-          "nodes": 7835,
-          "time_ms": 411.309,
+          "nodes": 9040,
+          "time_ms": 724.653,
           "tt_hits": 0
         },
         {
@@ -1042,8 +1046,8 @@
             "c3a4"
           ],
           "solved": true,
-          "nodes": 10179,
-          "time_ms": 623.054,
+          "nodes": 9838,
+          "time_ms": 849.841,
           "tt_hits": 0
         },
         {
@@ -1053,8 +1057,8 @@
             "d8c8"
           ],
           "solved": true,
-          "nodes": 3817,
-          "time_ms": 210.538,
+          "nodes": 3282,
+          "time_ms": 216.572,
           "tt_hits": 0
         },
         {
@@ -1066,8 +1070,8 @@
             "b6b7"
           ],
           "solved": false,
-          "nodes": 1241,
-          "time_ms": 51.586,
+          "nodes": 1222,
+          "time_ms": 68.547,
           "tt_hits": 0
         },
         {
@@ -1077,20 +1081,20 @@
             "b4a5"
           ],
           "solved": true,
-          "nodes": 5584,
-          "time_ms": 350.041,
+          "nodes": 5261,
+          "time_ms": 441.455,
           "tt_hits": 0
         },
         {
           "id": "WAC.043",
-          "found_move": "a3e7",
+          "found_move": "c1c8",
           "expected_moves": [
             "a3e7",
             "d5a8"
           ],
-          "solved": true,
-          "nodes": 7988,
-          "time_ms": 482.909,
+          "solved": false,
+          "nodes": 7873,
+          "time_ms": 545.183,
           "tt_hits": 0
         },
         {
@@ -1100,8 +1104,8 @@
             "d5c4"
           ],
           "solved": true,
-          "nodes": 14552,
-          "time_ms": 819.513,
+          "nodes": 13767,
+          "time_ms": 873.757,
           "tt_hits": 0
         },
         {
@@ -1111,8 +1115,8 @@
             "f1a1"
           ],
           "solved": true,
-          "nodes": 11125,
-          "time_ms": 602.899,
+          "nodes": 11127,
+          "time_ms": 645.39,
           "tt_hits": 0
         },
         {
@@ -1122,8 +1126,8 @@
             "c3b5"
           ],
           "solved": false,
-          "nodes": 7756,
-          "time_ms": 511.769,
+          "nodes": 7576,
+          "time_ms": 497.277,
           "tt_hits": 0
         },
         {
@@ -1133,8 +1137,8 @@
             "c6d4"
           ],
           "solved": true,
-          "nodes": 6937,
-          "time_ms": 423.379,
+          "nodes": 8873,
+          "time_ms": 539.677,
           "tt_hits": 0
         },
         {
@@ -1144,8 +1148,8 @@
             "b8b4"
           ],
           "solved": false,
-          "nodes": 3782,
-          "time_ms": 214.378,
+          "nodes": 3409,
+          "time_ms": 212.286,
           "tt_hits": 0
         },
         {
@@ -1155,8 +1159,8 @@
             "h5h7"
           ],
           "solved": false,
-          "nodes": 5290,
-          "time_ms": 360.567,
+          "nodes": 5532,
+          "time_ms": 351.606,
           "tt_hits": 0
         },
         {
@@ -1166,12 +1170,12 @@
             "b7b6"
           ],
           "solved": false,
-          "nodes": 7839,
-          "time_ms": 425.035,
+          "nodes": 8120,
+          "time_ms": 491.084,
           "tt_hits": 0
         }
       ],
-      "node_reduction_vs_minimax_pct": 85.93
+      "node_reduction_vs_minimax_pct": 86.16
     },
     {
       "name": "Config_C1",
@@ -1181,20 +1185,22 @@
         "alpha_beta": true,
         "move_ordering": true,
         "transposition_table": false,
-        "quiescence": false
+        "quiescence": false,
+        "pvs": false,
+        "aspiration_windows": false
       },
       "total_positions": 50,
-      "solved_count": 27,
-      "tactical_accuracy": 0.54,
+      "solved_count": 25,
+      "tactical_accuracy": 0.5,
       "wilson_ci_95": [
-        0.404,
-        0.6703
+        0.3664,
+        0.6336
       ],
-      "total_nodes": 100800,
-      "avg_nodes": 2016.0,
+      "total_nodes": 100430,
+      "avg_nodes": 2008.6,
       "avg_tt_hits": 0.0,
-      "avg_latency_ms": 125.974,
-      "p95_latency_ms": 275.492,
+      "avg_latency_ms": 140.978,
+      "p95_latency_ms": 300.526,
       "positions": [
         {
           "id": "WAC.001",
@@ -1204,7 +1210,7 @@
           ],
           "solved": true,
           "nodes": 3531,
-          "time_ms": 239.399,
+          "time_ms": 254.747,
           "tt_hits": 0
         },
         {
@@ -1214,8 +1220,8 @@
             "b3b2"
           ],
           "solved": false,
-          "nodes": 868,
-          "time_ms": 46.271,
+          "nodes": 924,
+          "time_ms": 63.401,
           "tt_hits": 0
         },
         {
@@ -1225,8 +1231,8 @@
             "e3g3"
           ],
           "solved": true,
-          "nodes": 2301,
-          "time_ms": 204.622,
+          "nodes": 2262,
+          "time_ms": 185.451,
           "tt_hits": 0
         },
         {
@@ -1237,7 +1243,7 @@
           ],
           "solved": true,
           "nodes": 887,
-          "time_ms": 53.217,
+          "time_ms": 64.345,
           "tt_hits": 0
         },
         {
@@ -1247,8 +1253,8 @@
             "c6c4"
           ],
           "solved": true,
-          "nodes": 1222,
-          "time_ms": 74.129,
+          "nodes": 1221,
+          "time_ms": 72.2,
           "tt_hits": 0
         },
         {
@@ -1258,8 +1264,8 @@
             "b6b7"
           ],
           "solved": false,
-          "nodes": 316,
-          "time_ms": 19.968,
+          "nodes": 320,
+          "time_ms": 16.38,
           "tt_hits": 0
         },
         {
@@ -1269,8 +1275,8 @@
             "g4e3"
           ],
           "solved": false,
-          "nodes": 1215,
-          "time_ms": 70.438,
+          "nodes": 1255,
+          "time_ms": 88.093,
           "tt_hits": 0
         },
         {
@@ -1281,18 +1287,18 @@
           ],
           "solved": false,
           "nodes": 1649,
-          "time_ms": 100.609,
+          "time_ms": 110.329,
           "tt_hits": 0
         },
         {
           "id": "WAC.009",
-          "found_move": "d6b4",
+          "found_move": "h4g4",
           "expected_moves": [
             "d6h2"
           ],
           "solved": false,
-          "nodes": 2917,
-          "time_ms": 156.431,
+          "nodes": 2133,
+          "time_ms": 145.324,
           "tt_hits": 0
         },
         {
@@ -1303,7 +1309,7 @@
           ],
           "solved": true,
           "nodes": 2472,
-          "time_ms": 139.689,
+          "time_ms": 163.588,
           "tt_hits": 0
         },
         {
@@ -1314,7 +1320,7 @@
           ],
           "solved": true,
           "nodes": 1710,
-          "time_ms": 104.654,
+          "time_ms": 121.168,
           "tt_hits": 0
         },
         {
@@ -1325,18 +1331,18 @@
           ],
           "solved": true,
           "nodes": 771,
-          "time_ms": 41.367,
+          "time_ms": 47.111,
           "tt_hits": 0
         },
         {
           "id": "WAC.013",
-          "found_move": "f1d1",
+          "found_move": "f1e1",
           "expected_moves": [
             "f1f8"
           ],
           "solved": false,
-          "nodes": 1547,
-          "time_ms": 89.921,
+          "nodes": 1623,
+          "time_ms": 105.028,
           "tt_hits": 0
         },
         {
@@ -1346,8 +1352,8 @@
             "h3h7"
           ],
           "solved": false,
-          "nodes": 3212,
-          "time_ms": 243.509,
+          "nodes": 3238,
+          "time_ms": 235.274,
           "tt_hits": 0
         },
         {
@@ -1357,8 +1363,8 @@
             "b8b7"
           ],
           "solved": false,
-          "nodes": 1334,
-          "time_ms": 81.206,
+          "nodes": 1493,
+          "time_ms": 97.446,
           "tt_hits": 0
         },
         {
@@ -1368,8 +1374,8 @@
             "e2c3"
           ],
           "solved": true,
-          "nodes": 1637,
-          "time_ms": 103.843,
+          "nodes": 1725,
+          "time_ms": 126.143,
           "tt_hits": 0
         },
         {
@@ -1379,8 +1385,8 @@
             "c4e5"
           ],
           "solved": false,
-          "nodes": 4530,
-          "time_ms": 282.527,
+          "nodes": 4555,
+          "time_ms": 326.801,
           "tt_hits": 0
         },
         {
@@ -1391,7 +1397,7 @@
           ],
           "solved": false,
           "nodes": 283,
-          "time_ms": 13.547,
+          "time_ms": 13.781,
           "tt_hits": 0
         },
         {
@@ -1401,8 +1407,8 @@
             "c5c6"
           ],
           "solved": false,
-          "nodes": 4419,
-          "time_ms": 322.431,
+          "nodes": 4017,
+          "time_ms": 284.296,
           "tt_hits": 0
         },
         {
@@ -1412,8 +1418,8 @@
             "d7b5"
           ],
           "solved": true,
-          "nodes": 2793,
-          "time_ms": 183.003,
+          "nodes": 2507,
+          "time_ms": 177.087,
           "tt_hits": 0
         },
         {
@@ -1424,7 +1430,7 @@
           ],
           "solved": false,
           "nodes": 1797,
-          "time_ms": 112.357,
+          "time_ms": 115.887,
           "tt_hits": 0
         },
         {
@@ -1435,8 +1441,8 @@
             "g5f7"
           ],
           "solved": false,
-          "nodes": 2100,
-          "time_ms": 143.457,
+          "nodes": 1973,
+          "time_ms": 146.052,
           "tt_hits": 0
         },
         {
@@ -1446,8 +1452,8 @@
             "g2g4"
           ],
           "solved": false,
-          "nodes": 5790,
-          "time_ms": 344.735,
+          "nodes": 6097,
+          "time_ms": 450.232,
           "tt_hits": 0
         },
         {
@@ -1458,7 +1464,7 @@
           ],
           "solved": true,
           "nodes": 1545,
-          "time_ms": 82.148,
+          "time_ms": 91.627,
           "tt_hits": 0
         },
         {
@@ -1469,7 +1475,7 @@
           ],
           "solved": true,
           "nodes": 301,
-          "time_ms": 15.697,
+          "time_ms": 20.325,
           "tt_hits": 0
         },
         {
@@ -1479,8 +1485,8 @@
             "d7f5"
           ],
           "solved": true,
-          "nodes": 3226,
-          "time_ms": 173.349,
+          "nodes": 3253,
+          "time_ms": 201.35,
           "tt_hits": 0
         },
         {
@@ -1491,7 +1497,7 @@
           ],
           "solved": true,
           "nodes": 1007,
-          "time_ms": 62.294,
+          "time_ms": 61.231,
           "tt_hits": 0
         },
         {
@@ -1501,8 +1507,8 @@
             "b4e1"
           ],
           "solved": true,
-          "nodes": 1868,
-          "time_ms": 120.893,
+          "nodes": 1849,
+          "time_ms": 121.922,
           "tt_hits": 0
         },
         {
@@ -1512,8 +1518,8 @@
             "c5c6"
           ],
           "solved": false,
-          "nodes": 3624,
-          "time_ms": 250.94,
+          "nodes": 3669,
+          "time_ms": 307.697,
           "tt_hits": 0
         },
         {
@@ -1523,8 +1529,8 @@
             "e4d6"
           ],
           "solved": false,
-          "nodes": 2014,
-          "time_ms": 127.926,
+          "nodes": 2082,
+          "time_ms": 175.077,
           "tt_hits": 0
         },
         {
@@ -1537,8 +1543,8 @@
             "g2g3"
           ],
           "solved": true,
-          "nodes": 1447,
-          "time_ms": 83.51,
+          "nodes": 1449,
+          "time_ms": 115.017,
           "tt_hits": 0
         },
         {
@@ -1549,7 +1555,7 @@
           ],
           "solved": true,
           "nodes": 2445,
-          "time_ms": 121.468,
+          "time_ms": 186.613,
           "tt_hits": 0
         },
         {
@@ -1560,30 +1566,30 @@
             "e4f4"
           ],
           "solved": true,
-          "nodes": 1912,
-          "time_ms": 102.878,
+          "nodes": 1878,
+          "time_ms": 111.31,
           "tt_hits": 0
         },
         {
           "id": "WAC.034",
-          "found_move": "d4g1",
+          "found_move": "b7e4",
           "expected_moves": [
             "d4g1"
           ],
-          "solved": true,
-          "nodes": 2166,
-          "time_ms": 118.495,
+          "solved": false,
+          "nodes": 2014,
+          "time_ms": 116.232,
           "tt_hits": 0
         },
         {
           "id": "WAC.035",
-          "found_move": "c7f7",
+          "found_move": "d1c1",
           "expected_moves": [
             "h4h7"
           ],
           "solved": false,
-          "nodes": 2515,
-          "time_ms": 146.999,
+          "nodes": 2628,
+          "time_ms": 163.168,
           "tt_hits": 0
         },
         {
@@ -1593,8 +1599,8 @@
             "e7e1"
           ],
           "solved": false,
-          "nodes": 1198,
-          "time_ms": 77.868,
+          "nodes": 1197,
+          "time_ms": 80.074,
           "tt_hits": 0
         },
         {
@@ -1605,7 +1611,7 @@
           ],
           "solved": true,
           "nodes": 1208,
-          "time_ms": 70.236,
+          "time_ms": 78.261,
           "tt_hits": 0
         },
         {
@@ -1616,8 +1622,8 @@
             "d2d8"
           ],
           "solved": true,
-          "nodes": 1771,
-          "time_ms": 100.394,
+          "nodes": 1804,
+          "time_ms": 125.174,
           "tt_hits": 0
         },
         {
@@ -1627,8 +1633,8 @@
             "c3a4"
           ],
           "solved": true,
-          "nodes": 3604,
-          "time_ms": 266.893,
+          "nodes": 3526,
+          "time_ms": 291.761,
           "tt_hits": 0
         },
         {
@@ -1638,8 +1644,8 @@
             "d8c8"
           ],
           "solved": true,
-          "nodes": 1407,
-          "time_ms": 101.256,
+          "nodes": 1197,
+          "time_ms": 84.526,
           "tt_hits": 0
         },
         {
@@ -1652,7 +1658,7 @@
           ],
           "solved": false,
           "nodes": 592,
-          "time_ms": 22.847,
+          "time_ms": 34.02,
           "tt_hits": 0
         },
         {
@@ -1662,20 +1668,20 @@
             "b4a5"
           ],
           "solved": true,
-          "nodes": 3240,
-          "time_ms": 204.107,
+          "nodes": 3201,
+          "time_ms": 273.363,
           "tt_hits": 0
         },
         {
           "id": "WAC.043",
-          "found_move": "a3e7",
+          "found_move": "c1c8",
           "expected_moves": [
             "a3e7",
             "d5a8"
           ],
-          "solved": true,
-          "nodes": 2426,
-          "time_ms": 130.016,
+          "solved": false,
+          "nodes": 2780,
+          "time_ms": 185.549,
           "tt_hits": 0
         },
         {
@@ -1685,8 +1691,8 @@
             "d5c4"
           ],
           "solved": true,
-          "nodes": 2532,
-          "time_ms": 141.887,
+          "nodes": 2490,
+          "time_ms": 159.327,
           "tt_hits": 0
         },
         {
@@ -1697,7 +1703,7 @@
           ],
           "solved": true,
           "nodes": 1370,
-          "time_ms": 83.982,
+          "time_ms": 75.312,
           "tt_hits": 0
         },
         {
@@ -1707,8 +1713,8 @@
             "c3b5"
           ],
           "solved": false,
-          "nodes": 3244,
-          "time_ms": 218.887,
+          "nodes": 3240,
+          "time_ms": 224.88,
           "tt_hits": 0
         },
         {
@@ -1719,7 +1725,7 @@
           ],
           "solved": true,
           "nodes": 2108,
-          "time_ms": 138.815,
+          "time_ms": 147.505,
           "tt_hits": 0
         },
         {
@@ -1729,8 +1735,8 @@
             "b8b4"
           ],
           "solved": false,
-          "nodes": 1030,
-          "time_ms": 66.242,
+          "nodes": 1027,
+          "time_ms": 69.208,
           "tt_hits": 0
         },
         {
@@ -1740,8 +1746,8 @@
             "h5h7"
           ],
           "solved": false,
-          "nodes": 771,
-          "time_ms": 46.107,
+          "nodes": 1199,
+          "time_ms": 79.789,
           "tt_hits": 0
         },
         {
@@ -1752,11 +1758,11 @@
           ],
           "solved": false,
           "nodes": 928,
-          "time_ms": 51.244,
+          "time_ms": 58.403,
           "tt_hits": 0
         }
       ],
-      "node_reduction_vs_minimax_pct": 96.09
+      "node_reduction_vs_minimax_pct": 96.1
     },
     {
       "name": "Config_C2",
@@ -1766,20 +1772,22 @@
         "alpha_beta": true,
         "move_ordering": true,
         "transposition_table": true,
-        "quiescence": false
+        "quiescence": false,
+        "pvs": false,
+        "aspiration_windows": false
       },
       "total_positions": 50,
-      "solved_count": 27,
-      "tactical_accuracy": 0.54,
+      "solved_count": 25,
+      "tactical_accuracy": 0.5,
       "wilson_ci_95": [
-        0.404,
-        0.6703
+        0.3664,
+        0.6336
       ],
-      "total_nodes": 98080,
-      "avg_nodes": 1961.6,
+      "total_nodes": 98377,
+      "avg_nodes": 1967.54,
       "avg_tt_hits": 39.34,
-      "avg_latency_ms": 124.088,
-      "p95_latency_ms": 263.325,
+      "avg_latency_ms": 130.845,
+      "p95_latency_ms": 274.973,
       "positions": [
         {
           "id": "WAC.001",
@@ -1789,7 +1797,7 @@
           ],
           "solved": true,
           "nodes": 3410,
-          "time_ms": 242.226,
+          "time_ms": 261.607,
           "tt_hits": 61
         },
         {
@@ -1799,8 +1807,8 @@
             "b3b2"
           ],
           "solved": false,
-          "nodes": 756,
-          "time_ms": 36.201,
+          "nodes": 757,
+          "time_ms": 56.56,
           "tt_hits": 18
         },
         {
@@ -1810,8 +1818,8 @@
             "e3g3"
           ],
           "solved": true,
-          "nodes": 1799,
-          "time_ms": 116.999,
+          "nodes": 1809,
+          "time_ms": 187.373,
           "tt_hits": 42
         },
         {
@@ -1822,7 +1830,7 @@
           ],
           "solved": true,
           "nodes": 945,
-          "time_ms": 63.921,
+          "time_ms": 76.218,
           "tt_hits": 45
         },
         {
@@ -1832,8 +1840,8 @@
             "c6c4"
           ],
           "solved": true,
-          "nodes": 1222,
-          "time_ms": 71.944,
+          "nodes": 1221,
+          "time_ms": 75.984,
           "tt_hits": 33
         },
         {
@@ -1843,8 +1851,8 @@
             "b6b7"
           ],
           "solved": false,
-          "nodes": 305,
-          "time_ms": 20.292,
+          "nodes": 431,
+          "time_ms": 24.793,
           "tt_hits": 16
         },
         {
@@ -1854,8 +1862,8 @@
             "g4e3"
           ],
           "solved": false,
-          "nodes": 1247,
-          "time_ms": 93.707,
+          "nodes": 1307,
+          "time_ms": 97.846,
           "tt_hits": 35
         },
         {
@@ -1866,18 +1874,18 @@
           ],
           "solved": false,
           "nodes": 1649,
-          "time_ms": 109.38,
+          "time_ms": 120.944,
           "tt_hits": 45
         },
         {
           "id": "WAC.009",
-          "found_move": "d6b4",
+          "found_move": "h4g4",
           "expected_moves": [
             "d6h2"
           ],
           "solved": false,
-          "nodes": 2917,
-          "time_ms": 162.285,
+          "nodes": 2133,
+          "time_ms": 140.786,
           "tt_hits": 39
         },
         {
@@ -1888,7 +1896,7 @@
           ],
           "solved": true,
           "nodes": 2759,
-          "time_ms": 160.053,
+          "time_ms": 181.263,
           "tt_hits": 55
         },
         {
@@ -1899,7 +1907,7 @@
           ],
           "solved": true,
           "nodes": 1710,
-          "time_ms": 107.414,
+          "time_ms": 117.704,
           "tt_hits": 43
         },
         {
@@ -1910,18 +1918,18 @@
           ],
           "solved": true,
           "nodes": 847,
-          "time_ms": 48.357,
+          "time_ms": 51.629,
           "tt_hits": 28
         },
         {
           "id": "WAC.013",
-          "found_move": "f1d1",
+          "found_move": "f1e1",
           "expected_moves": [
             "f1f8"
           ],
           "solved": false,
-          "nodes": 1547,
-          "time_ms": 102.089,
+          "nodes": 1623,
+          "time_ms": 102.278,
           "tt_hits": 38
         },
         {
@@ -1931,8 +1939,8 @@
             "h3h7"
           ],
           "solved": false,
-          "nodes": 3316,
-          "time_ms": 231.458,
+          "nodes": 3287,
+          "time_ms": 282.544,
           "tt_hits": 48
         },
         {
@@ -1942,8 +1950,8 @@
             "b8b7"
           ],
           "solved": false,
-          "nodes": 852,
-          "time_ms": 51.696,
+          "nodes": 965,
+          "time_ms": 64.246,
           "tt_hits": 26
         },
         {
@@ -1953,8 +1961,8 @@
             "e2c3"
           ],
           "solved": true,
-          "nodes": 1637,
-          "time_ms": 100.615,
+          "nodes": 1725,
+          "time_ms": 117.794,
           "tt_hits": 35
         },
         {
@@ -1964,8 +1972,8 @@
             "c4e5"
           ],
           "solved": false,
-          "nodes": 4399,
-          "time_ms": 288.918,
+          "nodes": 4369,
+          "time_ms": 293.249,
           "tt_hits": 43
         },
         {
@@ -1976,7 +1984,7 @@
           ],
           "solved": false,
           "nodes": 283,
-          "time_ms": 15.665,
+          "time_ms": 13.804,
           "tt_hits": 11
         },
         {
@@ -1986,8 +1994,8 @@
             "c5c6"
           ],
           "solved": false,
-          "nodes": 4340,
-          "time_ms": 273.13,
+          "nodes": 3895,
+          "time_ms": 265.719,
           "tt_hits": 41
         },
         {
@@ -1997,8 +2005,8 @@
             "d7b5"
           ],
           "solved": true,
-          "nodes": 2424,
-          "time_ms": 163.773,
+          "nodes": 2164,
+          "time_ms": 144.575,
           "tt_hits": 37
         },
         {
@@ -2009,7 +2017,7 @@
           ],
           "solved": false,
           "nodes": 1797,
-          "time_ms": 97.863,
+          "time_ms": 107.922,
           "tt_hits": 52
         },
         {
@@ -2020,8 +2028,8 @@
             "g5f7"
           ],
           "solved": false,
-          "nodes": 1849,
-          "time_ms": 119.248,
+          "nodes": 1812,
+          "time_ms": 127.8,
           "tt_hits": 43
         },
         {
@@ -2031,8 +2039,8 @@
             "g2g4"
           ],
           "solved": false,
-          "nodes": 5744,
-          "time_ms": 383.995,
+          "nodes": 6051,
+          "time_ms": 403.77,
           "tt_hits": 57
         },
         {
@@ -2043,7 +2051,7 @@
           ],
           "solved": true,
           "nodes": 1545,
-          "time_ms": 111.067,
+          "time_ms": 92.541,
           "tt_hits": 45
         },
         {
@@ -2054,7 +2062,7 @@
           ],
           "solved": true,
           "nodes": 301,
-          "time_ms": 21.943,
+          "time_ms": 19.195,
           "tt_hits": 21
         },
         {
@@ -2064,8 +2072,8 @@
             "d7f5"
           ],
           "solved": true,
-          "nodes": 3003,
-          "time_ms": 178.257,
+          "nodes": 2999,
+          "time_ms": 188.282,
           "tt_hits": 39
         },
         {
@@ -2076,7 +2084,7 @@
           ],
           "solved": true,
           "nodes": 1007,
-          "time_ms": 69.914,
+          "time_ms": 66.143,
           "tt_hits": 46
         },
         {
@@ -2087,7 +2095,7 @@
           ],
           "solved": true,
           "nodes": 1607,
-          "time_ms": 86.803,
+          "time_ms": 98.853,
           "tt_hits": 43
         },
         {
@@ -2097,8 +2105,8 @@
             "c5c6"
           ],
           "solved": false,
-          "nodes": 3672,
-          "time_ms": 251.341,
+          "nodes": 3866,
+          "time_ms": 256.831,
           "tt_hits": 52
         },
         {
@@ -2109,7 +2117,7 @@
           ],
           "solved": false,
           "nodes": 1640,
-          "time_ms": 101.806,
+          "time_ms": 104.274,
           "tt_hits": 40
         },
         {
@@ -2122,8 +2130,8 @@
             "g2g3"
           ],
           "solved": true,
-          "nodes": 1447,
-          "time_ms": 77.64,
+          "nodes": 1449,
+          "time_ms": 87.322,
           "tt_hits": 38
         },
         {
@@ -2134,7 +2142,7 @@
           ],
           "solved": true,
           "nodes": 1714,
-          "time_ms": 91.313,
+          "time_ms": 97.337,
           "tt_hits": 38
         },
         {
@@ -2146,29 +2154,29 @@
           ],
           "solved": true,
           "nodes": 1677,
-          "time_ms": 104.709,
+          "time_ms": 96.781,
           "tt_hits": 42
         },
         {
           "id": "WAC.034",
-          "found_move": "d4g1",
+          "found_move": "b7e4",
           "expected_moves": [
             "d4g1"
           ],
-          "solved": true,
-          "nodes": 2149,
-          "time_ms": 112.83,
+          "solved": false,
+          "nodes": 1997,
+          "time_ms": 118.085,
           "tt_hits": 43
         },
         {
           "id": "WAC.035",
-          "found_move": "c7f7",
+          "found_move": "d1c1",
           "expected_moves": [
             "h4h7"
           ],
           "solved": false,
-          "nodes": 2477,
-          "time_ms": 149.415,
+          "nodes": 2628,
+          "time_ms": 163.379,
           "tt_hits": 46
         },
         {
@@ -2178,8 +2186,8 @@
             "e7e1"
           ],
           "solved": false,
-          "nodes": 1156,
-          "time_ms": 64.841,
+          "nodes": 1155,
+          "time_ms": 64.971,
           "tt_hits": 37
         },
         {
@@ -2190,7 +2198,7 @@
           ],
           "solved": true,
           "nodes": 1208,
-          "time_ms": 63.925,
+          "time_ms": 71.604,
           "tt_hits": 35
         },
         {
@@ -2201,8 +2209,8 @@
             "d2d8"
           ],
           "solved": true,
-          "nodes": 1771,
-          "time_ms": 99.555,
+          "nodes": 1804,
+          "time_ms": 105.744,
           "tt_hits": 38
         },
         {
@@ -2212,8 +2220,8 @@
             "c3a4"
           ],
           "solved": true,
-          "nodes": 3644,
-          "time_ms": 232.95,
+          "nodes": 3566,
+          "time_ms": 235.871,
           "tt_hits": 41
         },
         {
@@ -2223,8 +2231,8 @@
             "d8c8"
           ],
           "solved": true,
-          "nodes": 1407,
-          "time_ms": 82.089,
+          "nodes": 1197,
+          "time_ms": 70.508,
           "tt_hits": 34
         },
         {
@@ -2237,7 +2245,7 @@
           ],
           "solved": false,
           "nodes": 526,
-          "time_ms": 23.733,
+          "time_ms": 24.362,
           "tt_hits": 26
         },
         {
@@ -2248,19 +2256,19 @@
           ],
           "solved": true,
           "nodes": 3034,
-          "time_ms": 199.479,
+          "time_ms": 207.688,
           "tt_hits": 42
         },
         {
           "id": "WAC.043",
-          "found_move": "a3e7",
+          "found_move": "c1c8",
           "expected_moves": [
             "a3e7",
             "d5a8"
           ],
-          "solved": true,
-          "nodes": 3075,
-          "time_ms": 230.462,
+          "solved": false,
+          "nodes": 4060,
+          "time_ms": 252.876,
           "tt_hits": 47
         },
         {
@@ -2270,8 +2278,8 @@
             "d5c4"
           ],
           "solved": true,
-          "nodes": 2707,
-          "time_ms": 172.27,
+          "nodes": 2663,
+          "time_ms": 161.653,
           "tt_hits": 48
         },
         {
@@ -2282,7 +2290,7 @@
           ],
           "solved": true,
           "nodes": 1370,
-          "time_ms": 68.639,
+          "time_ms": 75.762,
           "tt_hits": 42
         },
         {
@@ -2292,8 +2300,8 @@
             "c3b5"
           ],
           "solved": false,
-          "nodes": 3358,
-          "time_ms": 234.311,
+          "nodes": 3323,
+          "time_ms": 227.196,
           "tt_hits": 47
         },
         {
@@ -2304,7 +2312,7 @@
           ],
           "solved": true,
           "nodes": 1993,
-          "time_ms": 138.544,
+          "time_ms": 133.562,
           "tt_hits": 45
         },
         {
@@ -2314,8 +2322,8 @@
             "b8b4"
           ],
           "solved": false,
-          "nodes": 907,
-          "time_ms": 55.519,
+          "nodes": 945,
+          "time_ms": 63.218,
           "tt_hits": 40
         },
         {
@@ -2325,8 +2333,8 @@
             "h5h7"
           ],
           "solved": false,
-          "nodes": 970,
-          "time_ms": 67.257,
+          "nodes": 1193,
+          "time_ms": 79.701,
           "tt_hits": 27
         },
         {
@@ -2337,34 +2345,36 @@
           ],
           "solved": false,
           "nodes": 961,
-          "time_ms": 52.537,
+          "time_ms": 62.116,
           "tt_hits": 34
         }
       ],
-      "node_reduction_vs_minimax_pct": 96.19
+      "node_reduction_vs_minimax_pct": 96.18
     },
     {
       "name": "Config_D",
-      "description": "Cấp 3 đầy đủ (Config_C2 + Quiescence Search)",
+      "description": "Config_C2 + Quiescence Search (kèm SEE Pruning)",
       "depth": 3,
       "flags": {
         "alpha_beta": true,
         "move_ordering": true,
         "transposition_table": true,
-        "quiescence": true
+        "quiescence": true,
+        "pvs": false,
+        "aspiration_windows": false
       },
       "total_positions": 50,
-      "solved_count": 37,
-      "tactical_accuracy": 0.74,
+      "solved_count": 36,
+      "tactical_accuracy": 0.72,
       "wilson_ci_95": [
-        0.6045,
-        0.8413
+        0.5833,
+        0.8253
       ],
-      "total_nodes": 235216,
-      "avg_nodes": 4704.32,
-      "avg_tt_hits": 37.52,
-      "avg_latency_ms": 228.689,
-      "p95_latency_ms": 530.604,
+      "total_nodes": 180574,
+      "avg_nodes": 3611.48,
+      "avg_tt_hits": 36.88,
+      "avg_latency_ms": 165.274,
+      "p95_latency_ms": 318.503,
       "positions": [
         {
           "id": "WAC.001",
@@ -2373,8 +2383,8 @@
             "g3g6"
           ],
           "solved": true,
-          "nodes": 13689,
-          "time_ms": 720.536,
+          "nodes": 10169,
+          "time_ms": 515.232,
           "tt_hits": 61
         },
         {
@@ -2384,8 +2394,8 @@
             "b3b2"
           ],
           "solved": false,
-          "nodes": 1157,
-          "time_ms": 52.896,
+          "nodes": 780,
+          "time_ms": 31.344,
           "tt_hits": 18
         },
         {
@@ -2395,8 +2405,8 @@
             "e3g3"
           ],
           "solved": true,
-          "nodes": 4590,
-          "time_ms": 219.86,
+          "nodes": 3727,
+          "time_ms": 164.426,
           "tt_hits": 42
         },
         {
@@ -2406,8 +2416,8 @@
             "h6h7"
           ],
           "solved": true,
-          "nodes": 159,
-          "time_ms": 8.972,
+          "nodes": 111,
+          "time_ms": 4.937,
           "tt_hits": 0
         },
         {
@@ -2417,9 +2427,9 @@
             "c6c4"
           ],
           "solved": true,
-          "nodes": 2960,
-          "time_ms": 126.436,
-          "tt_hits": 33
+          "nodes": 72,
+          "time_ms": 2.493,
+          "tt_hits": 0
         },
         {
           "id": "WAC.006",
@@ -2428,8 +2438,8 @@
             "b6b7"
           ],
           "solved": true,
-          "nodes": 619,
-          "time_ms": 22.263,
+          "nodes": 595,
+          "time_ms": 20.68,
           "tt_hits": 16
         },
         {
@@ -2439,8 +2449,8 @@
             "g4e3"
           ],
           "solved": true,
-          "nodes": 2887,
-          "time_ms": 151.39,
+          "nodes": 2757,
+          "time_ms": 121.178,
           "tt_hits": 35
         },
         {
@@ -2450,8 +2460,8 @@
             "e7f7"
           ],
           "solved": true,
-          "nodes": 3783,
-          "time_ms": 165.764,
+          "nodes": 3591,
+          "time_ms": 155.767,
           "tt_hits": 45
         },
         {
@@ -2461,8 +2471,8 @@
             "d6h2"
           ],
           "solved": false,
-          "nodes": 5847,
-          "time_ms": 283.812,
+          "nodes": 4175,
+          "time_ms": 186.646,
           "tt_hits": 39
         },
         {
@@ -2472,8 +2482,8 @@
             "h4h7"
           ],
           "solved": true,
-          "nodes": 5381,
-          "time_ms": 222.971,
+          "nodes": 4941,
+          "time_ms": 216.201,
           "tt_hits": 55
         },
         {
@@ -2483,8 +2493,8 @@
             "f3c6"
           ],
           "solved": true,
-          "nodes": 5538,
-          "time_ms": 279.877,
+          "nodes": 5218,
+          "time_ms": 279.748,
           "tt_hits": 43
         },
         {
@@ -2494,8 +2504,8 @@
             "g4f3"
           ],
           "solved": true,
-          "nodes": 4309,
-          "time_ms": 247.813,
+          "nodes": 2586,
+          "time_ms": 150.262,
           "tt_hits": 28
         },
         {
@@ -2505,1764 +2515,9 @@
             "f1f8"
           ],
           "solved": true,
-          "nodes": 4411,
-          "time_ms": 238.685,
+          "nodes": 2043,
+          "time_ms": 128.022,
           "tt_hits": 38
-        },
-        {
-          "id": "WAC.014",
-          "found_move": "b2f6",
-          "expected_moves": [
-            "h3h7"
-          ],
-          "solved": false,
-          "nodes": 7975,
-          "time_ms": 416.052,
-          "tt_hits": 48
-        },
-        {
-          "id": "WAC.015",
-          "found_move": "b8b7",
-          "expected_moves": [
-            "b8b7"
-          ],
-          "solved": true,
-          "nodes": 1926,
-          "time_ms": 86.688,
-          "tt_hits": 26
-        },
-        {
-          "id": "WAC.016",
-          "found_move": "e2c3",
-          "expected_moves": [
-            "e2c3"
-          ],
-          "solved": true,
-          "nodes": 2732,
-          "time_ms": 127.64,
-          "tt_hits": 35
-        },
-        {
-          "id": "WAC.017",
-          "found_move": "c4e5",
-          "expected_moves": [
-            "c4e5"
-          ],
-          "solved": true,
-          "nodes": 7584,
-          "time_ms": 379.779,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.018",
-          "found_move": "g1f1",
-          "expected_moves": [
-            "a8h8"
-          ],
-          "solved": false,
-          "nodes": 769,
-          "time_ms": 25.585,
-          "tt_hits": 11
-        },
-        {
-          "id": "WAC.019",
-          "found_move": "a3c4",
-          "expected_moves": [
-            "c5c6"
-          ],
-          "solved": false,
-          "nodes": 11809,
-          "time_ms": 652.551,
-          "tt_hits": 41
-        },
-        {
-          "id": "WAC.020",
-          "found_move": "d7b5",
-          "expected_moves": [
-            "d7b5"
-          ],
-          "solved": true,
-          "nodes": 3986,
-          "time_ms": 226.347,
-          "tt_hits": 37
-        },
-        {
-          "id": "WAC.021",
-          "found_move": "d2c3",
-          "expected_moves": [
-            "d2h6"
-          ],
-          "solved": false,
-          "nodes": 4414,
-          "time_ms": 166.747,
-          "tt_hits": 52
-        },
-        {
-          "id": "WAC.022",
-          "found_move": "c4a2",
-          "expected_moves": [
-            "c4a2",
-            "g5f7"
-          ],
-          "solved": true,
-          "nodes": 5488,
-          "time_ms": 249.948,
-          "tt_hits": 43
-        },
-        {
-          "id": "WAC.023",
-          "found_move": "c5e6",
-          "expected_moves": [
-            "g2g4"
-          ],
-          "solved": false,
-          "nodes": 9412,
-          "time_ms": 436.897,
-          "tt_hits": 57
-        },
-        {
-          "id": "WAC.024",
-          "found_move": "g7d4",
-          "expected_moves": [
-            "g7d4"
-          ],
-          "solved": true,
-          "nodes": 3893,
-          "time_ms": 145.897,
-          "tt_hits": 45
-        },
-        {
-          "id": "WAC.025",
-          "found_move": "g4h4",
-          "expected_moves": [
-            "g4h4"
-          ],
-          "solved": true,
-          "nodes": 446,
-          "time_ms": 18.042,
-          "tt_hits": 21
-        },
-        {
-          "id": "WAC.026",
-          "found_move": "d7f5",
-          "expected_moves": [
-            "d7f5"
-          ],
-          "solved": true,
-          "nodes": 5261,
-          "time_ms": 240.758,
-          "tt_hits": 39
-        },
-        {
-          "id": "WAC.027",
-          "found_move": "a3f8",
-          "expected_moves": [
-            "a3f8"
-          ],
-          "solved": true,
-          "nodes": 377,
-          "time_ms": 17.592,
-          "tt_hits": 0
-        },
-        {
-          "id": "WAC.028",
-          "found_move": "b4e1",
-          "expected_moves": [
-            "b4e1"
-          ],
-          "solved": true,
-          "nodes": 4370,
-          "time_ms": 180.214,
-          "tt_hits": 43
-        },
-        {
-          "id": "WAC.029",
-          "found_move": "c5c6",
-          "expected_moves": [
-            "c5c6"
-          ],
-          "solved": true,
-          "nodes": 6606,
-          "time_ms": 291.499,
-          "tt_hits": 52
-        },
-        {
-          "id": "WAC.030",
-          "found_move": "c1c3",
-          "expected_moves": [
-            "e4d6"
-          ],
-          "solved": false,
-          "nodes": 11356,
-          "time_ms": 570.318,
-          "tt_hits": 40
-        },
-        {
-          "id": "WAC.031",
-          "found_move": "d5d6",
-          "expected_moves": [
-            "b7a8",
-            "d5d6",
-            "d5e6",
-            "g2g3"
-          ],
-          "solved": true,
-          "nodes": 3628,
-          "time_ms": 145.138,
-          "tt_hits": 38
-        },
-        {
-          "id": "WAC.032",
-          "found_move": "d1d8",
-          "expected_moves": [
-            "d1d8"
-          ],
-          "solved": true,
-          "nodes": 2557,
-          "time_ms": 96.105,
-          "tt_hits": 38
-        },
-        {
-          "id": "WAC.033",
-          "found_move": "e4e5",
-          "expected_moves": [
-            "e4e5",
-            "e4f4"
-          ],
-          "solved": true,
-          "nodes": 4272,
-          "time_ms": 196.928,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.034",
-          "found_move": "d4g1",
-          "expected_moves": [
-            "d4g1"
-          ],
-          "solved": true,
-          "nodes": 6233,
-          "time_ms": 300.698,
-          "tt_hits": 43
-        },
-        {
-          "id": "WAC.035",
-          "found_move": "c7b7",
-          "expected_moves": [
-            "h4h7"
-          ],
-          "solved": false,
-          "nodes": 6329,
-          "time_ms": 361.355,
-          "tt_hits": 46
-        },
-        {
-          "id": "WAC.036",
-          "found_move": "e7e1",
-          "expected_moves": [
-            "e7e1"
-          ],
-          "solved": true,
-          "nodes": 2403,
-          "time_ms": 95.587,
-          "tt_hits": 37
-        },
-        {
-          "id": "WAC.037",
-          "found_move": "c6d4",
-          "expected_moves": [
-            "c6d4"
-          ],
-          "solved": true,
-          "nodes": 3964,
-          "time_ms": 179.456,
-          "tt_hits": 35
-        },
-        {
-          "id": "WAC.038",
-          "found_move": "d2d8",
-          "expected_moves": [
-            "c3d3",
-            "d2d8"
-          ],
-          "solved": true,
-          "nodes": 2733,
-          "time_ms": 127.787,
-          "tt_hits": 38
-        },
-        {
-          "id": "WAC.039",
-          "found_move": "c3a4",
-          "expected_moves": [
-            "c3a4"
-          ],
-          "solved": true,
-          "nodes": 5194,
-          "time_ms": 274.973,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.040",
-          "found_move": "d8c8",
-          "expected_moves": [
-            "d8c8"
-          ],
-          "solved": true,
-          "nodes": 2867,
-          "time_ms": 137.194,
-          "tt_hits": 34
-        },
-        {
-          "id": "WAC.041",
-          "found_move": "b6b7",
-          "expected_moves": [
-            "b5a5",
-            "b5c5",
-            "b6b7"
-          ],
-          "solved": true,
-          "nodes": 1371,
-          "time_ms": 49.52,
-          "tt_hits": 26
-        },
-        {
-          "id": "WAC.042",
-          "found_move": "e2d3",
-          "expected_moves": [
-            "b4a5"
-          ],
-          "solved": false,
-          "nodes": 6875,
-          "time_ms": 338.02,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.043",
-          "found_move": "a3e7",
-          "expected_moves": [
-            "a3e7",
-            "d5a8"
-          ],
-          "solved": true,
-          "nodes": 5618,
-          "time_ms": 229.468,
-          "tt_hits": 47
-        },
-        {
-          "id": "WAC.044",
-          "found_move": "d5c4",
-          "expected_moves": [
-            "d5c4"
-          ],
-          "solved": true,
-          "nodes": 5239,
-          "time_ms": 237.14,
-          "tt_hits": 48
-        },
-        {
-          "id": "WAC.045",
-          "found_move": "f1a1",
-          "expected_moves": [
-            "f1a1"
-          ],
-          "solved": true,
-          "nodes": 3982,
-          "time_ms": 184.191,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.046",
-          "found_move": "f1d3",
-          "expected_moves": [
-            "c3b5"
-          ],
-          "solved": false,
-          "nodes": 8068,
-          "time_ms": 482.065,
-          "tt_hits": 47
-        },
-        {
-          "id": "WAC.047",
-          "found_move": "c6d4",
-          "expected_moves": [
-            "c6d4"
-          ],
-          "solved": true,
-          "nodes": 4313,
-          "time_ms": 186.748,
-          "tt_hits": 45
-        },
-        {
-          "id": "WAC.048",
-          "found_move": "b8b7",
-          "expected_moves": [
-            "b8b4"
-          ],
-          "solved": false,
-          "nodes": 7379,
-          "time_ms": 414.439,
-          "tt_hits": 40
-        },
-        {
-          "id": "WAC.049",
-          "found_move": "h5h6",
-          "expected_moves": [
-            "h5h7"
-          ],
-          "solved": false,
-          "nodes": 6401,
-          "time_ms": 328.414,
-          "tt_hits": 27
-        },
-        {
-          "id": "WAC.050",
-          "found_move": "b7b6",
-          "expected_moves": [
-            "b7b6"
-          ],
-          "solved": true,
-          "nodes": 2056,
-          "time_ms": 95.387,
-          "tt_hits": 34
-        }
-      ],
-      "node_reduction_vs_minimax_pct": 90.86
-    }
-  ],
-  "part_1b_depth_sensitivity": [
-    {
-      "name": "Depth_2",
-      "description": "Config_D (Cấp 3 đầy đủ) ở độ sâu d=2",
-      "depth": 2,
-      "flags": {
-        "alpha_beta": true,
-        "move_ordering": true,
-        "transposition_table": true,
-        "quiescence": true
-      },
-      "total_positions": 50,
-      "solved_count": 26,
-      "tactical_accuracy": 0.52,
-      "wilson_ci_95": [
-        0.3851,
-        0.652
-      ],
-      "total_nodes": 55786,
-      "avg_nodes": 1115.72,
-      "avg_tt_hits": 0.96,
-      "avg_latency_ms": 65.903,
-      "p95_latency_ms": 144.137,
-      "positions": [
-        {
-          "id": "WAC.001",
-          "found_move": "e5c6",
-          "expected_moves": [
-            "g3g6"
-          ],
-          "solved": false,
-          "nodes": 3805,
-          "time_ms": 200.767,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.002",
-          "found_move": "c4c3",
-          "expected_moves": [
-            "b3b2"
-          ],
-          "solved": false,
-          "nodes": 354,
-          "time_ms": 16.351,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.003",
-          "found_move": "e3g3",
-          "expected_moves": [
-            "e3g3"
-          ],
-          "solved": true,
-          "nodes": 1243,
-          "time_ms": 68.377,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.004",
-          "found_move": "h6h7",
-          "expected_moves": [
-            "h6h7"
-          ],
-          "solved": true,
-          "nodes": 159,
-          "time_ms": 8.184,
-          "tt_hits": 0
-        },
-        {
-          "id": "WAC.005",
-          "found_move": "c6d6",
-          "expected_moves": [
-            "c6c4"
-          ],
-          "solved": false,
-          "nodes": 573,
-          "time_ms": 33.976,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.006",
-          "found_move": "h6g5",
-          "expected_moves": [
-            "b6b7"
-          ],
-          "solved": false,
-          "nodes": 95,
-          "time_ms": 4.39,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.007",
-          "found_move": "g4e5",
-          "expected_moves": [
-            "g4e3"
-          ],
-          "solved": false,
-          "nodes": 325,
-          "time_ms": 15.945,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.008",
-          "found_move": "e7f7",
-          "expected_moves": [
-            "e7f7"
-          ],
-          "solved": true,
-          "nodes": 640,
-          "time_ms": 33.743,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.009",
-          "found_move": "h4g4",
-          "expected_moves": [
-            "d6h2"
-          ],
-          "solved": false,
-          "nodes": 1577,
-          "time_ms": 99.419,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.010",
-          "found_move": "h4h7",
-          "expected_moves": [
-            "h4h7"
-          ],
-          "solved": true,
-          "nodes": 773,
-          "time_ms": 36.6,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.011",
-          "found_move": "a4c5",
-          "expected_moves": [
-            "f3c6"
-          ],
-          "solved": false,
-          "nodes": 1533,
-          "time_ms": 82.138,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.012",
-          "found_move": "g7f7",
-          "expected_moves": [
-            "g4f3"
-          ],
-          "solved": false,
-          "nodes": 1479,
-          "time_ms": 78.468,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.013",
-          "found_move": "g2f3",
-          "expected_moves": [
-            "f1f8"
-          ],
-          "solved": false,
-          "nodes": 1238,
-          "time_ms": 75.391,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.014",
-          "found_move": "b2f6",
-          "expected_moves": [
-            "h3h7"
-          ],
-          "solved": false,
-          "nodes": 1698,
-          "time_ms": 99.301,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.015",
-          "found_move": "b8g8",
-          "expected_moves": [
-            "b8b7"
-          ],
-          "solved": false,
-          "nodes": 499,
-          "time_ms": 29.691,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.016",
-          "found_move": "e2c3",
-          "expected_moves": [
-            "e2c3"
-          ],
-          "solved": true,
-          "nodes": 700,
-          "time_ms": 42.413,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.017",
-          "found_move": "c1f4",
-          "expected_moves": [
-            "c4e5"
-          ],
-          "solved": false,
-          "nodes": 1842,
-          "time_ms": 102.044,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.018",
-          "found_move": "g1f1",
-          "expected_moves": [
-            "a8h8"
-          ],
-          "solved": false,
-          "nodes": 136,
-          "time_ms": 4.472,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.019",
-          "found_move": "a3c4",
-          "expected_moves": [
-            "c5c6"
-          ],
-          "solved": false,
-          "nodes": 2108,
-          "time_ms": 110.516,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.020",
-          "found_move": "d7e6",
-          "expected_moves": [
-            "d7b5"
-          ],
-          "solved": false,
-          "nodes": 815,
-          "time_ms": 38.366,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.021",
-          "found_move": "f5e7",
-          "expected_moves": [
-            "d2h6"
-          ],
-          "solved": false,
-          "nodes": 633,
-          "time_ms": 29.532,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.022",
-          "found_move": "c4a2",
-          "expected_moves": [
-            "c4a2",
-            "g5f7"
-          ],
-          "solved": true,
-          "nodes": 1866,
-          "time_ms": 104.171,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.023",
-          "found_move": "c5e6",
-          "expected_moves": [
-            "g2g4"
-          ],
-          "solved": false,
-          "nodes": 2671,
-          "time_ms": 137.295,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.024",
-          "found_move": "g7d4",
-          "expected_moves": [
-            "g7d4"
-          ],
-          "solved": true,
-          "nodes": 967,
-          "time_ms": 44.24,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.025",
-          "found_move": "g4h4",
-          "expected_moves": [
-            "g4h4"
-          ],
-          "solved": true,
-          "nodes": 158,
-          "time_ms": 9.029,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.026",
-          "found_move": "d7f5",
-          "expected_moves": [
-            "d7f5"
-          ],
-          "solved": true,
-          "nodes": 1810,
-          "time_ms": 140.374,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.027",
-          "found_move": "a3f8",
-          "expected_moves": [
-            "a3f8"
-          ],
-          "solved": true,
-          "nodes": 377,
-          "time_ms": 18.722,
-          "tt_hits": 0
-        },
-        {
-          "id": "WAC.028",
-          "found_move": "b4e1",
-          "expected_moves": [
-            "b4e1"
-          ],
-          "solved": true,
-          "nodes": 600,
-          "time_ms": 36.499,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.029",
-          "found_move": "c5c6",
-          "expected_moves": [
-            "c5c6"
-          ],
-          "solved": true,
-          "nodes": 1709,
-          "time_ms": 108.696,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.030",
-          "found_move": "c1c3",
-          "expected_moves": [
-            "e4d6"
-          ],
-          "solved": false,
-          "nodes": 698,
-          "time_ms": 42.099,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.031",
-          "found_move": "d5d6",
-          "expected_moves": [
-            "b7a8",
-            "d5d6",
-            "d5e6",
-            "g2g3"
-          ],
-          "solved": true,
-          "nodes": 924,
-          "time_ms": 48.728,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.032",
-          "found_move": "d1d8",
-          "expected_moves": [
-            "d1d8"
-          ],
-          "solved": true,
-          "nodes": 534,
-          "time_ms": 24.95,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.033",
-          "found_move": "e4e5",
-          "expected_moves": [
-            "e4e5",
-            "e4f4"
-          ],
-          "solved": true,
-          "nodes": 842,
-          "time_ms": 47.734,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.034",
-          "found_move": "d4g1",
-          "expected_moves": [
-            "d4g1"
-          ],
-          "solved": true,
-          "nodes": 2067,
-          "time_ms": 123.977,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.035",
-          "found_move": "d1b1",
-          "expected_moves": [
-            "h4h7"
-          ],
-          "solved": false,
-          "nodes": 1687,
-          "time_ms": 108.568,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.036",
-          "found_move": "e7e1",
-          "expected_moves": [
-            "e7e1"
-          ],
-          "solved": true,
-          "nodes": 376,
-          "time_ms": 19.605,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.037",
-          "found_move": "c6d4",
-          "expected_moves": [
-            "c6d4"
-          ],
-          "solved": true,
-          "nodes": 1071,
-          "time_ms": 53.78,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.038",
-          "found_move": "d2d8",
-          "expected_moves": [
-            "c3d3",
-            "d2d8"
-          ],
-          "solved": true,
-          "nodes": 465,
-          "time_ms": 27.097,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.039",
-          "found_move": "c3a4",
-          "expected_moves": [
-            "c3a4"
-          ],
-          "solved": true,
-          "nodes": 1955,
-          "time_ms": 129.773,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.040",
-          "found_move": "d8c8",
-          "expected_moves": [
-            "d8c8"
-          ],
-          "solved": true,
-          "nodes": 951,
-          "time_ms": 43.101,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.041",
-          "found_move": "b6b7",
-          "expected_moves": [
-            "b5a5",
-            "b5c5",
-            "b6b7"
-          ],
-          "solved": true,
-          "nodes": 231,
-          "time_ms": 8.2,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.042",
-          "found_move": "e2d3",
-          "expected_moves": [
-            "b4a5"
-          ],
-          "solved": false,
-          "nodes": 2117,
-          "time_ms": 147.216,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.043",
-          "found_move": "a3e7",
-          "expected_moves": [
-            "a3e7",
-            "d5a8"
-          ],
-          "solved": true,
-          "nodes": 1242,
-          "time_ms": 68.859,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.044",
-          "found_move": "d5c4",
-          "expected_moves": [
-            "d5c4"
-          ],
-          "solved": true,
-          "nodes": 1077,
-          "time_ms": 58.881,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.045",
-          "found_move": "f1a1",
-          "expected_moves": [
-            "f1a1"
-          ],
-          "solved": true,
-          "nodes": 407,
-          "time_ms": 21.532,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.046",
-          "found_move": "f1d3",
-          "expected_moves": [
-            "c3b5"
-          ],
-          "solved": false,
-          "nodes": 1529,
-          "time_ms": 138.936,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.047",
-          "found_move": "c6d4",
-          "expected_moves": [
-            "c6d4"
-          ],
-          "solved": true,
-          "nodes": 657,
-          "time_ms": 44.118,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.048",
-          "found_move": "b8b7",
-          "expected_moves": [
-            "b8b4"
-          ],
-          "solved": false,
-          "nodes": 2457,
-          "time_ms": 215.342,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.049",
-          "found_move": "h4f5",
-          "expected_moves": [
-            "h5h7"
-          ],
-          "solved": false,
-          "nodes": 1676,
-          "time_ms": 93.042,
-          "tt_hits": 1
-        },
-        {
-          "id": "WAC.050",
-          "found_move": "b7g7",
-          "expected_moves": [
-            "b7b6"
-          ],
-          "solved": false,
-          "nodes": 440,
-          "time_ms": 20.524,
-          "tt_hits": 1
-        }
-      ]
-    },
-    {
-      "name": "Depth_3",
-      "description": "Config_D (Cấp 3 đầy đủ) ở độ sâu d=3",
-      "depth": 3,
-      "flags": {
-        "alpha_beta": true,
-        "move_ordering": true,
-        "transposition_table": true,
-        "quiescence": true
-      },
-      "total_positions": 50,
-      "solved_count": 37,
-      "tactical_accuracy": 0.74,
-      "wilson_ci_95": [
-        0.6045,
-        0.8413
-      ],
-      "total_nodes": 235216,
-      "avg_nodes": 4704.32,
-      "avg_tt_hits": 37.52,
-      "avg_latency_ms": 230.285,
-      "p95_latency_ms": 539.002,
-      "positions": [
-        {
-          "id": "WAC.001",
-          "found_move": "g3g6",
-          "expected_moves": [
-            "g3g6"
-          ],
-          "solved": true,
-          "nodes": 13689,
-          "time_ms": 811.464,
-          "tt_hits": 61
-        },
-        {
-          "id": "WAC.002",
-          "found_move": "c4c3",
-          "expected_moves": [
-            "b3b2"
-          ],
-          "solved": false,
-          "nodes": 1157,
-          "time_ms": 52.231,
-          "tt_hits": 18
-        },
-        {
-          "id": "WAC.003",
-          "found_move": "e3g3",
-          "expected_moves": [
-            "e3g3"
-          ],
-          "solved": true,
-          "nodes": 4590,
-          "time_ms": 255.919,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.004",
-          "found_move": "h6h7",
-          "expected_moves": [
-            "h6h7"
-          ],
-          "solved": true,
-          "nodes": 159,
-          "time_ms": 9.631,
-          "tt_hits": 0
-        },
-        {
-          "id": "WAC.005",
-          "found_move": "c6c4",
-          "expected_moves": [
-            "c6c4"
-          ],
-          "solved": true,
-          "nodes": 2960,
-          "time_ms": 125.101,
-          "tt_hits": 33
-        },
-        {
-          "id": "WAC.006",
-          "found_move": "b6b7",
-          "expected_moves": [
-            "b6b7"
-          ],
-          "solved": true,
-          "nodes": 619,
-          "time_ms": 19.505,
-          "tt_hits": 16
-        },
-        {
-          "id": "WAC.007",
-          "found_move": "g4e3",
-          "expected_moves": [
-            "g4e3"
-          ],
-          "solved": true,
-          "nodes": 2887,
-          "time_ms": 131.237,
-          "tt_hits": 35
-        },
-        {
-          "id": "WAC.008",
-          "found_move": "e7f7",
-          "expected_moves": [
-            "e7f7"
-          ],
-          "solved": true,
-          "nodes": 3783,
-          "time_ms": 144.863,
-          "tt_hits": 45
-        },
-        {
-          "id": "WAC.009",
-          "found_move": "h4g4",
-          "expected_moves": [
-            "d6h2"
-          ],
-          "solved": false,
-          "nodes": 5847,
-          "time_ms": 275.304,
-          "tt_hits": 39
-        },
-        {
-          "id": "WAC.010",
-          "found_move": "h4h7",
-          "expected_moves": [
-            "h4h7"
-          ],
-          "solved": true,
-          "nodes": 5381,
-          "time_ms": 228.937,
-          "tt_hits": 55
-        },
-        {
-          "id": "WAC.011",
-          "found_move": "f3c6",
-          "expected_moves": [
-            "f3c6"
-          ],
-          "solved": true,
-          "nodes": 5538,
-          "time_ms": 242.638,
-          "tt_hits": 43
-        },
-        {
-          "id": "WAC.012",
-          "found_move": "g4f3",
-          "expected_moves": [
-            "g4f3"
-          ],
-          "solved": true,
-          "nodes": 4309,
-          "time_ms": 204.351,
-          "tt_hits": 28
-        },
-        {
-          "id": "WAC.013",
-          "found_move": "f1f8",
-          "expected_moves": [
-            "f1f8"
-          ],
-          "solved": true,
-          "nodes": 4411,
-          "time_ms": 213.886,
-          "tt_hits": 38
-        },
-        {
-          "id": "WAC.014",
-          "found_move": "b2f6",
-          "expected_moves": [
-            "h3h7"
-          ],
-          "solved": false,
-          "nodes": 7975,
-          "time_ms": 494.399,
-          "tt_hits": 48
-        },
-        {
-          "id": "WAC.015",
-          "found_move": "b8b7",
-          "expected_moves": [
-            "b8b7"
-          ],
-          "solved": true,
-          "nodes": 1926,
-          "time_ms": 106.982,
-          "tt_hits": 26
-        },
-        {
-          "id": "WAC.016",
-          "found_move": "e2c3",
-          "expected_moves": [
-            "e2c3"
-          ],
-          "solved": true,
-          "nodes": 2732,
-          "time_ms": 135.311,
-          "tt_hits": 35
-        },
-        {
-          "id": "WAC.017",
-          "found_move": "c4e5",
-          "expected_moves": [
-            "c4e5"
-          ],
-          "solved": true,
-          "nodes": 7584,
-          "time_ms": 385.306,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.018",
-          "found_move": "g1f1",
-          "expected_moves": [
-            "a8h8"
-          ],
-          "solved": false,
-          "nodes": 769,
-          "time_ms": 35.586,
-          "tt_hits": 11
-        },
-        {
-          "id": "WAC.019",
-          "found_move": "a3c4",
-          "expected_moves": [
-            "c5c6"
-          ],
-          "solved": false,
-          "nodes": 11809,
-          "time_ms": 695.927,
-          "tt_hits": 41
-        },
-        {
-          "id": "WAC.020",
-          "found_move": "d7b5",
-          "expected_moves": [
-            "d7b5"
-          ],
-          "solved": true,
-          "nodes": 3986,
-          "time_ms": 195.682,
-          "tt_hits": 37
-        },
-        {
-          "id": "WAC.021",
-          "found_move": "d2c3",
-          "expected_moves": [
-            "d2h6"
-          ],
-          "solved": false,
-          "nodes": 4414,
-          "time_ms": 237.932,
-          "tt_hits": 52
-        },
-        {
-          "id": "WAC.022",
-          "found_move": "c4a2",
-          "expected_moves": [
-            "c4a2",
-            "g5f7"
-          ],
-          "solved": true,
-          "nodes": 5488,
-          "time_ms": 267.918,
-          "tt_hits": 43
-        },
-        {
-          "id": "WAC.023",
-          "found_move": "c5e6",
-          "expected_moves": [
-            "g2g4"
-          ],
-          "solved": false,
-          "nodes": 9412,
-          "time_ms": 456.986,
-          "tt_hits": 57
-        },
-        {
-          "id": "WAC.024",
-          "found_move": "g7d4",
-          "expected_moves": [
-            "g7d4"
-          ],
-          "solved": true,
-          "nodes": 3893,
-          "time_ms": 180.272,
-          "tt_hits": 45
-        },
-        {
-          "id": "WAC.025",
-          "found_move": "g4h4",
-          "expected_moves": [
-            "g4h4"
-          ],
-          "solved": true,
-          "nodes": 446,
-          "time_ms": 25.524,
-          "tt_hits": 21
-        },
-        {
-          "id": "WAC.026",
-          "found_move": "d7f5",
-          "expected_moves": [
-            "d7f5"
-          ],
-          "solved": true,
-          "nodes": 5261,
-          "time_ms": 249.297,
-          "tt_hits": 39
-        },
-        {
-          "id": "WAC.027",
-          "found_move": "a3f8",
-          "expected_moves": [
-            "a3f8"
-          ],
-          "solved": true,
-          "nodes": 377,
-          "time_ms": 19.808,
-          "tt_hits": 0
-        },
-        {
-          "id": "WAC.028",
-          "found_move": "b4e1",
-          "expected_moves": [
-            "b4e1"
-          ],
-          "solved": true,
-          "nodes": 4370,
-          "time_ms": 191.489,
-          "tt_hits": 43
-        },
-        {
-          "id": "WAC.029",
-          "found_move": "c5c6",
-          "expected_moves": [
-            "c5c6"
-          ],
-          "solved": true,
-          "nodes": 6606,
-          "time_ms": 288.271,
-          "tt_hits": 52
-        },
-        {
-          "id": "WAC.030",
-          "found_move": "c1c3",
-          "expected_moves": [
-            "e4d6"
-          ],
-          "solved": false,
-          "nodes": 11356,
-          "time_ms": 575.496,
-          "tt_hits": 40
-        },
-        {
-          "id": "WAC.031",
-          "found_move": "d5d6",
-          "expected_moves": [
-            "b7a8",
-            "d5d6",
-            "d5e6",
-            "g2g3"
-          ],
-          "solved": true,
-          "nodes": 3628,
-          "time_ms": 188.631,
-          "tt_hits": 38
-        },
-        {
-          "id": "WAC.032",
-          "found_move": "d1d8",
-          "expected_moves": [
-            "d1d8"
-          ],
-          "solved": true,
-          "nodes": 2557,
-          "time_ms": 114.362,
-          "tt_hits": 38
-        },
-        {
-          "id": "WAC.033",
-          "found_move": "e4e5",
-          "expected_moves": [
-            "e4e5",
-            "e4f4"
-          ],
-          "solved": true,
-          "nodes": 4272,
-          "time_ms": 182.864,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.034",
-          "found_move": "d4g1",
-          "expected_moves": [
-            "d4g1"
-          ],
-          "solved": true,
-          "nodes": 6233,
-          "time_ms": 318.785,
-          "tt_hits": 43
-        },
-        {
-          "id": "WAC.035",
-          "found_move": "c7b7",
-          "expected_moves": [
-            "h4h7"
-          ],
-          "solved": false,
-          "nodes": 6329,
-          "time_ms": 320.616,
-          "tt_hits": 46
-        },
-        {
-          "id": "WAC.036",
-          "found_move": "e7e1",
-          "expected_moves": [
-            "e7e1"
-          ],
-          "solved": true,
-          "nodes": 2403,
-          "time_ms": 94.892,
-          "tt_hits": 37
-        },
-        {
-          "id": "WAC.037",
-          "found_move": "c6d4",
-          "expected_moves": [
-            "c6d4"
-          ],
-          "solved": true,
-          "nodes": 3964,
-          "time_ms": 172.47,
-          "tt_hits": 35
-        },
-        {
-          "id": "WAC.038",
-          "found_move": "d2d8",
-          "expected_moves": [
-            "c3d3",
-            "d2d8"
-          ],
-          "solved": true,
-          "nodes": 2733,
-          "time_ms": 114.915,
-          "tt_hits": 38
-        },
-        {
-          "id": "WAC.039",
-          "found_move": "c3a4",
-          "expected_moves": [
-            "c3a4"
-          ],
-          "solved": true,
-          "nodes": 5194,
-          "time_ms": 236.27,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.040",
-          "found_move": "d8c8",
-          "expected_moves": [
-            "d8c8"
-          ],
-          "solved": true,
-          "nodes": 2867,
-          "time_ms": 113.718,
-          "tt_hits": 34
-        },
-        {
-          "id": "WAC.041",
-          "found_move": "b6b7",
-          "expected_moves": [
-            "b5a5",
-            "b5c5",
-            "b6b7"
-          ],
-          "solved": true,
-          "nodes": 1371,
-          "time_ms": 46.398,
-          "tt_hits": 26
-        },
-        {
-          "id": "WAC.042",
-          "found_move": "e2d3",
-          "expected_moves": [
-            "b4a5"
-          ],
-          "solved": false,
-          "nodes": 6875,
-          "time_ms": 430.62,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.043",
-          "found_move": "a3e7",
-          "expected_moves": [
-            "a3e7",
-            "d5a8"
-          ],
-          "solved": true,
-          "nodes": 5618,
-          "time_ms": 205.669,
-          "tt_hits": 47
-        },
-        {
-          "id": "WAC.044",
-          "found_move": "d5c4",
-          "expected_moves": [
-            "d5c4"
-          ],
-          "solved": true,
-          "nodes": 5239,
-          "time_ms": 189.506,
-          "tt_hits": 48
-        },
-        {
-          "id": "WAC.045",
-          "found_move": "f1a1",
-          "expected_moves": [
-            "f1a1"
-          ],
-          "solved": true,
-          "nodes": 3982,
-          "time_ms": 146.191,
-          "tt_hits": 42
-        },
-        {
-          "id": "WAC.046",
-          "found_move": "f1d3",
-          "expected_moves": [
-            "c3b5"
-          ],
-          "solved": false,
-          "nodes": 8068,
-          "time_ms": 390.376,
-          "tt_hits": 47
-        },
-        {
-          "id": "WAC.047",
-          "found_move": "c6d4",
-          "expected_moves": [
-            "c6d4"
-          ],
-          "solved": true,
-          "nodes": 4313,
-          "time_ms": 180.031,
-          "tt_hits": 45
-        },
-        {
-          "id": "WAC.048",
-          "found_move": "b8b7",
-          "expected_moves": [
-            "b8b4"
-          ],
-          "solved": false,
-          "nodes": 7379,
-          "time_ms": 391.16,
-          "tt_hits": 40
-        },
-        {
-          "id": "WAC.049",
-          "found_move": "h5h6",
-          "expected_moves": [
-            "h5h7"
-          ],
-          "solved": false,
-          "nodes": 6401,
-          "time_ms": 342.445,
-          "tt_hits": 27
-        },
-        {
-          "id": "WAC.050",
-          "found_move": "b7b6",
-          "expected_moves": [
-            "b7b6"
-          ],
-          "solved": true,
-          "nodes": 2056,
-          "time_ms": 77.104,
-          "tt_hits": 34
-        }
-      ]
-    },
-    {
-      "name": "Depth_4",
-      "description": "Config_D (Cấp 3 đầy đủ) ở độ sâu d=4",
-      "depth": 4,
-      "flags": {
-        "alpha_beta": true,
-        "move_ordering": true,
-        "transposition_table": true,
-        "quiescence": true
-      },
-      "total_positions": 50,
-      "solved_count": 43,
-      "tactical_accuracy": 0.86,
-      "wilson_ci_95": [
-        0.7381,
-        0.9305
-      ],
-      "total_nodes": 936316,
-      "avg_nodes": 18726.32,
-      "avg_tt_hits": 329.64,
-      "avg_latency_ms": 892.204,
-      "p95_latency_ms": 2803.6,
-      "positions": [
-        {
-          "id": "WAC.001",
-          "found_move": "g3g6",
-          "expected_moves": [
-            "g3g6"
-          ],
-          "solved": true,
-          "nodes": 13689,
-          "time_ms": 684.408,
-          "tt_hits": 61
-        },
-        {
-          "id": "WAC.002",
-          "found_move": "f6e6",
-          "expected_moves": [
-            "b3b2"
-          ],
-          "solved": false,
-          "nodes": 4030,
-          "time_ms": 197.432,
-          "tt_hits": 129
-        },
-        {
-          "id": "WAC.003",
-          "found_move": "e3g3",
-          "expected_moves": [
-            "e3g3"
-          ],
-          "solved": true,
-          "nodes": 14747,
-          "time_ms": 863.365,
-          "tt_hits": 443
-        },
-        {
-          "id": "WAC.004",
-          "found_move": "h6h7",
-          "expected_moves": [
-            "h6h7"
-          ],
-          "solved": true,
-          "nodes": 159,
-          "time_ms": 12.058,
-          "tt_hits": 0
-        },
-        {
-          "id": "WAC.005",
-          "found_move": "c6c4",
-          "expected_moves": [
-            "c6c4"
-          ],
-          "solved": true,
-          "nodes": 2960,
-          "time_ms": 115.504,
-          "tt_hits": 33
-        },
-        {
-          "id": "WAC.006",
-          "found_move": "b6b7",
-          "expected_moves": [
-            "b6b7"
-          ],
-          "solved": true,
-          "nodes": 1127,
-          "time_ms": 42.35,
-          "tt_hits": 133
-        },
-        {
-          "id": "WAC.007",
-          "found_move": "g4e3",
-          "expected_moves": [
-            "g4e3"
-          ],
-          "solved": true,
-          "nodes": 7484,
-          "time_ms": 374.145,
-          "tt_hits": 322
-        },
-        {
-          "id": "WAC.008",
-          "found_move": "e7f7",
-          "expected_moves": [
-            "e7f7"
-          ],
-          "solved": true,
-          "nodes": 8336,
-          "time_ms": 402.637,
-          "tt_hits": 526
-        },
-        {
-          "id": "WAC.009",
-          "found_move": "d6h2",
-          "expected_moves": [
-            "d6h2"
-          ],
-          "solved": true,
-          "nodes": 40316,
-          "time_ms": 2147.738,
-          "tt_hits": 270
-        },
-        {
-          "id": "WAC.010",
-          "found_move": "h4h7",
-          "expected_moves": [
-            "h4h7"
-          ],
-          "solved": true,
-          "nodes": 12431,
-          "time_ms": 597.819,
-          "tt_hits": 848
-        },
-        {
-          "id": "WAC.011",
-          "found_move": "f3c6",
-          "expected_moves": [
-            "f3c6"
-          ],
-          "solved": true,
-          "nodes": 18685,
-          "time_ms": 967.291,
-          "tt_hits": 474
-        },
-        {
-          "id": "WAC.012",
-          "found_move": "g4f3",
-          "expected_moves": [
-            "g4f3"
-          ],
-          "solved": true,
-          "nodes": 4309,
-          "time_ms": 218.48,
-          "tt_hits": 28
-        },
-        {
-          "id": "WAC.013",
-          "found_move": "f1f8",
-          "expected_moves": [
-            "f1f8"
-          ],
-          "solved": true,
-          "nodes": 13324,
-          "time_ms": 674.029,
-          "tt_hits": 138
         },
         {
           "id": "WAC.014",
@@ -4271,9 +2526,9 @@
             "h3h7"
           ],
           "solved": false,
-          "nodes": 55739,
-          "time_ms": 3098.415,
-          "tt_hits": 414
+          "nodes": 5794,
+          "time_ms": 320.051,
+          "tt_hits": 48
         },
         {
           "id": "WAC.015",
@@ -4282,9 +2537,9 @@
             "b8b7"
           ],
           "solved": true,
-          "nodes": 4402,
-          "time_ms": 212.957,
-          "tt_hits": 203
+          "nodes": 1657,
+          "time_ms": 71.194,
+          "tt_hits": 26
         },
         {
           "id": "WAC.016",
@@ -4293,9 +2548,9 @@
             "e2c3"
           ],
           "solved": true,
-          "nodes": 11105,
-          "time_ms": 529.69,
-          "tt_hits": 307
+          "nodes": 2473,
+          "time_ms": 141.264,
+          "tt_hits": 35
         },
         {
           "id": "WAC.017",
@@ -4304,9 +2559,9 @@
             "c4e5"
           ],
           "solved": true,
-          "nodes": 35554,
-          "time_ms": 1985.035,
-          "tt_hits": 309
+          "nodes": 5006,
+          "time_ms": 274.638,
+          "tt_hits": 43
         },
         {
           "id": "WAC.018",
@@ -4315,20 +2570,20 @@
             "a8h8"
           ],
           "solved": false,
-          "nodes": 2594,
-          "time_ms": 78.61,
-          "tt_hits": 61
+          "nodes": 667,
+          "time_ms": 24.033,
+          "tt_hits": 11
         },
         {
           "id": "WAC.019",
-          "found_move": "c5c6",
+          "found_move": "a3c4",
           "expected_moves": [
             "c5c6"
           ],
-          "solved": true,
-          "nodes": 60596,
-          "time_ms": 3479.61,
-          "tt_hits": 384
+          "solved": false,
+          "nodes": 5858,
+          "time_ms": 276.091,
+          "tt_hits": 41
         },
         {
           "id": "WAC.020",
@@ -4337,9 +2592,9 @@
             "d7b5"
           ],
           "solved": true,
-          "nodes": 8842,
-          "time_ms": 466.507,
-          "tt_hits": 397
+          "nodes": 3706,
+          "time_ms": 153.389,
+          "tt_hits": 37
         },
         {
           "id": "WAC.021",
@@ -4348,9 +2603,9 @@
             "d2h6"
           ],
           "solved": false,
-          "nodes": 11749,
-          "time_ms": 635.67,
-          "tt_hits": 682
+          "nodes": 3973,
+          "time_ms": 156.053,
+          "tt_hits": 52
         },
         {
           "id": "WAC.022",
@@ -4360,20 +2615,20 @@
             "g5f7"
           ],
           "solved": true,
-          "nodes": 29508,
-          "time_ms": 1626.782,
-          "tt_hits": 450
+          "nodes": 4395,
+          "time_ms": 207.296,
+          "tt_hits": 43
         },
         {
           "id": "WAC.023",
-          "found_move": "g2g4",
+          "found_move": "c5e6",
           "expected_moves": [
             "g2g4"
           ],
-          "solved": true,
-          "nodes": 93659,
-          "time_ms": 4402.897,
-          "tt_hits": 726
+          "solved": false,
+          "nodes": 7187,
+          "time_ms": 316.611,
+          "tt_hits": 57
         },
         {
           "id": "WAC.024",
@@ -4382,9 +2637,9 @@
             "g7d4"
           ],
           "solved": true,
-          "nodes": 10998,
-          "time_ms": 504.639,
-          "tt_hits": 473
+          "nodes": 3458,
+          "time_ms": 127.223,
+          "tt_hits": 45
         },
         {
           "id": "WAC.025",
@@ -4393,9 +2648,9 @@
             "g4h4"
           ],
           "solved": true,
-          "nodes": 977,
-          "time_ms": 43.815,
-          "tt_hits": 68
+          "nodes": 440,
+          "time_ms": 20.055,
+          "tt_hits": 21
         },
         {
           "id": "WAC.026",
@@ -4404,9 +2659,9 @@
             "d7f5"
           ],
           "solved": true,
-          "nodes": 22984,
-          "time_ms": 972.392,
-          "tt_hits": 278
+          "nodes": 3874,
+          "time_ms": 153.839,
+          "tt_hits": 39
         },
         {
           "id": "WAC.027",
@@ -4415,8 +2670,8 @@
             "a3f8"
           ],
           "solved": true,
-          "nodes": 377,
-          "time_ms": 14.929,
+          "nodes": 143,
+          "time_ms": 6.679,
           "tt_hits": 0
         },
         {
@@ -4426,9 +2681,9 @@
             "b4e1"
           ],
           "solved": true,
-          "nodes": 11717,
-          "time_ms": 498.397,
-          "tt_hits": 494
+          "nodes": 3135,
+          "time_ms": 118.782,
+          "tt_hits": 43
         },
         {
           "id": "WAC.029",
@@ -4437,9 +2692,2357 @@
             "c5c6"
           ],
           "solved": true,
-          "nodes": 27519,
-          "time_ms": 1223.174,
-          "tt_hits": 544
+          "nodes": 6935,
+          "time_ms": 287.542,
+          "tt_hits": 52
+        },
+        {
+          "id": "WAC.030",
+          "found_move": "c1c3",
+          "expected_moves": [
+            "e4d6"
+          ],
+          "solved": false,
+          "nodes": 5458,
+          "time_ms": 269.626,
+          "tt_hits": 40
+        },
+        {
+          "id": "WAC.031",
+          "found_move": "d5e6",
+          "expected_moves": [
+            "b7a8",
+            "d5d6",
+            "d5e6",
+            "g2g3"
+          ],
+          "solved": true,
+          "nodes": 2094,
+          "time_ms": 94.126,
+          "tt_hits": 38
+        },
+        {
+          "id": "WAC.032",
+          "found_move": "d1d8",
+          "expected_moves": [
+            "d1d8"
+          ],
+          "solved": true,
+          "nodes": 2432,
+          "time_ms": 97.969,
+          "tt_hits": 38
+        },
+        {
+          "id": "WAC.033",
+          "found_move": "g3g4",
+          "expected_moves": [
+            "e4e5",
+            "e4f4"
+          ],
+          "solved": false,
+          "nodes": 4296,
+          "time_ms": 189.773,
+          "tt_hits": 42
+        },
+        {
+          "id": "WAC.034",
+          "found_move": "d4g1",
+          "expected_moves": [
+            "d4g1"
+          ],
+          "solved": true,
+          "nodes": 4342,
+          "time_ms": 182.484,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.035",
+          "found_move": "c7c2",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": false,
+          "nodes": 6095,
+          "time_ms": 270.993,
+          "tt_hits": 46
+        },
+        {
+          "id": "WAC.036",
+          "found_move": "e7e1",
+          "expected_moves": [
+            "e7e1"
+          ],
+          "solved": true,
+          "nodes": 2335,
+          "time_ms": 87.012,
+          "tt_hits": 37
+        },
+        {
+          "id": "WAC.037",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 3055,
+          "time_ms": 148.33,
+          "tt_hits": 35
+        },
+        {
+          "id": "WAC.038",
+          "found_move": "d2d8",
+          "expected_moves": [
+            "c3d3",
+            "d2d8"
+          ],
+          "solved": true,
+          "nodes": 2408,
+          "time_ms": 95.033,
+          "tt_hits": 38
+        },
+        {
+          "id": "WAC.039",
+          "found_move": "c3a4",
+          "expected_moves": [
+            "c3a4"
+          ],
+          "solved": true,
+          "nodes": 3944,
+          "time_ms": 180.44,
+          "tt_hits": 42
+        },
+        {
+          "id": "WAC.040",
+          "found_move": "d8c8",
+          "expected_moves": [
+            "d8c8"
+          ],
+          "solved": true,
+          "nodes": 2548,
+          "time_ms": 123.426,
+          "tt_hits": 34
+        },
+        {
+          "id": "WAC.041",
+          "found_move": "f7f8",
+          "expected_moves": [
+            "b5a5",
+            "b5c5",
+            "b6b7"
+          ],
+          "solved": false,
+          "nodes": 1380,
+          "time_ms": 45.086,
+          "tt_hits": 26
+        },
+        {
+          "id": "WAC.042",
+          "found_move": "f1c1",
+          "expected_moves": [
+            "b4a5"
+          ],
+          "solved": false,
+          "nodes": 6200,
+          "time_ms": 314.026,
+          "tt_hits": 42
+        },
+        {
+          "id": "WAC.043",
+          "found_move": "a3e7",
+          "expected_moves": [
+            "a3e7",
+            "d5a8"
+          ],
+          "solved": true,
+          "nodes": 5000,
+          "time_ms": 213.896,
+          "tt_hits": 47
+        },
+        {
+          "id": "WAC.044",
+          "found_move": "d5c4",
+          "expected_moves": [
+            "d5c4"
+          ],
+          "solved": true,
+          "nodes": 4726,
+          "time_ms": 181.994,
+          "tt_hits": 48
+        },
+        {
+          "id": "WAC.045",
+          "found_move": "f1a1",
+          "expected_moves": [
+            "f1a1"
+          ],
+          "solved": true,
+          "nodes": 3236,
+          "time_ms": 122.938,
+          "tt_hits": 42
+        },
+        {
+          "id": "WAC.046",
+          "found_move": "f1d3",
+          "expected_moves": [
+            "c3b5"
+          ],
+          "solved": false,
+          "nodes": 6817,
+          "time_ms": 335.013,
+          "tt_hits": 47
+        },
+        {
+          "id": "WAC.047",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 4070,
+          "time_ms": 159.248,
+          "tt_hits": 45
+        },
+        {
+          "id": "WAC.048",
+          "found_move": "b8b4",
+          "expected_moves": [
+            "b8b4"
+          ],
+          "solved": true,
+          "nodes": 4050,
+          "time_ms": 175.757,
+          "tt_hits": 40
+        },
+        {
+          "id": "WAC.049",
+          "found_move": "g5g2",
+          "expected_moves": [
+            "h5h7"
+          ],
+          "solved": false,
+          "nodes": 4587,
+          "time_ms": 251.422,
+          "tt_hits": 27
+        },
+        {
+          "id": "WAC.050",
+          "found_move": "b7b6",
+          "expected_moves": [
+            "b7b6"
+          ],
+          "solved": true,
+          "nodes": 2035,
+          "time_ms": 93.436,
+          "tt_hits": 34
+        }
+      ],
+      "node_reduction_vs_minimax_pct": 92.99
+    },
+    {
+      "name": "Config_E",
+      "description": "Cấp 3 hoàn chỉnh (Config_D + PVS + Aspiration Windows)",
+      "depth": 3,
+      "flags": {
+        "alpha_beta": true,
+        "move_ordering": true,
+        "transposition_table": true,
+        "quiescence": true,
+        "pvs": true,
+        "aspiration_windows": true
+      },
+      "total_positions": 50,
+      "solved_count": 36,
+      "tactical_accuracy": 0.72,
+      "wilson_ci_95": [
+        0.5833,
+        0.8253
+      ],
+      "total_nodes": 179613,
+      "avg_nodes": 3592.26,
+      "avg_tt_hits": 59.18,
+      "avg_latency_ms": 161.67,
+      "p95_latency_ms": 307.682,
+      "positions": [
+        {
+          "id": "WAC.001",
+          "found_move": "g3g6",
+          "expected_moves": [
+            "g3g6"
+          ],
+          "solved": true,
+          "nodes": 10632,
+          "time_ms": 556.586,
+          "tt_hits": 303
+        },
+        {
+          "id": "WAC.002",
+          "found_move": "c4c3",
+          "expected_moves": [
+            "b3b2"
+          ],
+          "solved": false,
+          "nodes": 789,
+          "time_ms": 32.196,
+          "tt_hits": 19
+        },
+        {
+          "id": "WAC.003",
+          "found_move": "e3g3",
+          "expected_moves": [
+            "e3g3"
+          ],
+          "solved": true,
+          "nodes": 4008,
+          "time_ms": 182.691,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.004",
+          "found_move": "h6h7",
+          "expected_moves": [
+            "h6h7"
+          ],
+          "solved": true,
+          "nodes": 121,
+          "time_ms": 6.0,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.005",
+          "found_move": "c6c4",
+          "expected_moves": [
+            "c6c4"
+          ],
+          "solved": true,
+          "nodes": 79,
+          "time_ms": 3.15,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.006",
+          "found_move": "b6b7",
+          "expected_moves": [
+            "b6b7"
+          ],
+          "solved": true,
+          "nodes": 757,
+          "time_ms": 28.699,
+          "tt_hits": 78
+        },
+        {
+          "id": "WAC.007",
+          "found_move": "g4e3",
+          "expected_moves": [
+            "g4e3"
+          ],
+          "solved": true,
+          "nodes": 3422,
+          "time_ms": 157.003,
+          "tt_hits": 169
+        },
+        {
+          "id": "WAC.008",
+          "found_move": "e7f7",
+          "expected_moves": [
+            "e7f7"
+          ],
+          "solved": true,
+          "nodes": 3683,
+          "time_ms": 153.387,
+          "tt_hits": 46
+        },
+        {
+          "id": "WAC.009",
+          "found_move": "h4g4",
+          "expected_moves": [
+            "d6h2"
+          ],
+          "solved": false,
+          "nodes": 3778,
+          "time_ms": 161.265,
+          "tt_hits": 39
+        },
+        {
+          "id": "WAC.010",
+          "found_move": "h4h7",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": true,
+          "nodes": 4986,
+          "time_ms": 192.872,
+          "tt_hits": 55
+        },
+        {
+          "id": "WAC.011",
+          "found_move": "f3c6",
+          "expected_moves": [
+            "f3c6"
+          ],
+          "solved": true,
+          "nodes": 4522,
+          "time_ms": 212.84,
+          "tt_hits": 66
+        },
+        {
+          "id": "WAC.012",
+          "found_move": "g4f3",
+          "expected_moves": [
+            "g4f3"
+          ],
+          "solved": true,
+          "nodes": 2531,
+          "time_ms": 107.317,
+          "tt_hits": 51
+        },
+        {
+          "id": "WAC.013",
+          "found_move": "f1f8",
+          "expected_moves": [
+            "f1f8"
+          ],
+          "solved": true,
+          "nodes": 2216,
+          "time_ms": 101.259,
+          "tt_hits": 51
+        },
+        {
+          "id": "WAC.014",
+          "found_move": "b3b4",
+          "expected_moves": [
+            "h3h7"
+          ],
+          "solved": false,
+          "nodes": 5589,
+          "time_ms": 263.84,
+          "tt_hits": 50
+        },
+        {
+          "id": "WAC.015",
+          "found_move": "b8b7",
+          "expected_moves": [
+            "b8b7"
+          ],
+          "solved": true,
+          "nodes": 1943,
+          "time_ms": 85.36,
+          "tt_hits": 74
+        },
+        {
+          "id": "WAC.016",
+          "found_move": "e2c3",
+          "expected_moves": [
+            "e2c3"
+          ],
+          "solved": true,
+          "nodes": 2497,
+          "time_ms": 113.667,
+          "tt_hits": 35
+        },
+        {
+          "id": "WAC.017",
+          "found_move": "c4e5",
+          "expected_moves": [
+            "c4e5"
+          ],
+          "solved": true,
+          "nodes": 5054,
+          "time_ms": 270.812,
+          "tt_hits": 85
+        },
+        {
+          "id": "WAC.018",
+          "found_move": "g1f1",
+          "expected_moves": [
+            "a8h8"
+          ],
+          "solved": false,
+          "nodes": 687,
+          "time_ms": 32.286,
+          "tt_hits": 13
+        },
+        {
+          "id": "WAC.019",
+          "found_move": "a3c4",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": false,
+          "nodes": 4927,
+          "time_ms": 256.886,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.020",
+          "found_move": "d7b5",
+          "expected_moves": [
+            "d7b5"
+          ],
+          "solved": true,
+          "nodes": 4205,
+          "time_ms": 183.227,
+          "tt_hits": 198
+        },
+        {
+          "id": "WAC.021",
+          "found_move": "d2c3",
+          "expected_moves": [
+            "d2h6"
+          ],
+          "solved": false,
+          "nodes": 4239,
+          "time_ms": 172.614,
+          "tt_hits": 73
+        },
+        {
+          "id": "WAC.022",
+          "found_move": "g5f7",
+          "expected_moves": [
+            "c4a2",
+            "g5f7"
+          ],
+          "solved": true,
+          "nodes": 4327,
+          "time_ms": 207.593,
+          "tt_hits": 76
+        },
+        {
+          "id": "WAC.023",
+          "found_move": "c5e6",
+          "expected_moves": [
+            "g2g4"
+          ],
+          "solved": false,
+          "nodes": 7260,
+          "time_ms": 338.539,
+          "tt_hits": 59
+        },
+        {
+          "id": "WAC.024",
+          "found_move": "g7d4",
+          "expected_moves": [
+            "g7d4"
+          ],
+          "solved": true,
+          "nodes": 3597,
+          "time_ms": 147.632,
+          "tt_hits": 46
+        },
+        {
+          "id": "WAC.025",
+          "found_move": "g4h4",
+          "expected_moves": [
+            "g4h4"
+          ],
+          "solved": true,
+          "nodes": 459,
+          "time_ms": 23.711,
+          "tt_hits": 21
+        },
+        {
+          "id": "WAC.026",
+          "found_move": "d7f5",
+          "expected_moves": [
+            "d7f5"
+          ],
+          "solved": true,
+          "nodes": 3760,
+          "time_ms": 159.601,
+          "tt_hits": 40
+        },
+        {
+          "id": "WAC.027",
+          "found_move": "a3f8",
+          "expected_moves": [
+            "a3f8"
+          ],
+          "solved": true,
+          "nodes": 159,
+          "time_ms": 7.259,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.028",
+          "found_move": "b4e1",
+          "expected_moves": [
+            "b4e1"
+          ],
+          "solved": true,
+          "nodes": 3167,
+          "time_ms": 129.566,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.029",
+          "found_move": "c5c6",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": true,
+          "nodes": 6118,
+          "time_ms": 265.107,
+          "tt_hits": 53
+        },
+        {
+          "id": "WAC.030",
+          "found_move": "c1c3",
+          "expected_moves": [
+            "e4d6"
+          ],
+          "solved": false,
+          "nodes": 4994,
+          "time_ms": 253.401,
+          "tt_hits": 41
+        },
+        {
+          "id": "WAC.031",
+          "found_move": "d5e6",
+          "expected_moves": [
+            "b7a8",
+            "d5d6",
+            "d5e6",
+            "g2g3"
+          ],
+          "solved": true,
+          "nodes": 2095,
+          "time_ms": 85.908,
+          "tt_hits": 39
+        },
+        {
+          "id": "WAC.032",
+          "found_move": "d1d8",
+          "expected_moves": [
+            "d1d8"
+          ],
+          "solved": true,
+          "nodes": 2465,
+          "time_ms": 93.758,
+          "tt_hits": 44
+        },
+        {
+          "id": "WAC.033",
+          "found_move": "g3g4",
+          "expected_moves": [
+            "e4e5",
+            "e4f4"
+          ],
+          "solved": false,
+          "nodes": 4209,
+          "time_ms": 167.504,
+          "tt_hits": 75
+        },
+        {
+          "id": "WAC.034",
+          "found_move": "d4g1",
+          "expected_moves": [
+            "d4g1"
+          ],
+          "solved": true,
+          "nodes": 4683,
+          "time_ms": 192.01,
+          "tt_hits": 47
+        },
+        {
+          "id": "WAC.035",
+          "found_move": "c7c2",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": false,
+          "nodes": 6473,
+          "time_ms": 276.361,
+          "tt_hits": 92
+        },
+        {
+          "id": "WAC.036",
+          "found_move": "e7e1",
+          "expected_moves": [
+            "e7e1"
+          ],
+          "solved": true,
+          "nodes": 2359,
+          "time_ms": 83.854,
+          "tt_hits": 37
+        },
+        {
+          "id": "WAC.037",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 2997,
+          "time_ms": 126.556,
+          "tt_hits": 35
+        },
+        {
+          "id": "WAC.038",
+          "found_move": "d2d8",
+          "expected_moves": [
+            "c3d3",
+            "d2d8"
+          ],
+          "solved": true,
+          "nodes": 2342,
+          "time_ms": 91.538,
+          "tt_hits": 39
+        },
+        {
+          "id": "WAC.039",
+          "found_move": "c3a4",
+          "expected_moves": [
+            "c3a4"
+          ],
+          "solved": true,
+          "nodes": 4060,
+          "time_ms": 206.411,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.040",
+          "found_move": "d8c8",
+          "expected_moves": [
+            "d8c8"
+          ],
+          "solved": true,
+          "nodes": 2753,
+          "time_ms": 122.723,
+          "tt_hits": 36
+        },
+        {
+          "id": "WAC.041",
+          "found_move": "f7f8",
+          "expected_moves": [
+            "b5a5",
+            "b5c5",
+            "b6b7"
+          ],
+          "solved": false,
+          "nodes": 1344,
+          "time_ms": 46.604,
+          "tt_hits": 30
+        },
+        {
+          "id": "WAC.042",
+          "found_move": "f1c1",
+          "expected_moves": [
+            "b4a5"
+          ],
+          "solved": false,
+          "nodes": 6036,
+          "time_ms": 316.44,
+          "tt_hits": 81
+        },
+        {
+          "id": "WAC.043",
+          "found_move": "a3e7",
+          "expected_moves": [
+            "a3e7",
+            "d5a8"
+          ],
+          "solved": true,
+          "nodes": 5172,
+          "time_ms": 230.353,
+          "tt_hits": 48
+        },
+        {
+          "id": "WAC.044",
+          "found_move": "d5c4",
+          "expected_moves": [
+            "d5c4"
+          ],
+          "solved": true,
+          "nodes": 4662,
+          "time_ms": 176.717,
+          "tt_hits": 48
+        },
+        {
+          "id": "WAC.045",
+          "found_move": "f1a1",
+          "expected_moves": [
+            "f1a1"
+          ],
+          "solved": true,
+          "nodes": 3863,
+          "time_ms": 144.636,
+          "tt_hits": 130
+        },
+        {
+          "id": "WAC.046",
+          "found_move": "f1d3",
+          "expected_moves": [
+            "c3b5"
+          ],
+          "solved": false,
+          "nodes": 5979,
+          "time_ms": 296.978,
+          "tt_hits": 49
+        },
+        {
+          "id": "WAC.047",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 4055,
+          "time_ms": 170.476,
+          "tt_hits": 45
+        },
+        {
+          "id": "WAC.048",
+          "found_move": "b8b4",
+          "expected_moves": [
+            "b8b4"
+          ],
+          "solved": true,
+          "nodes": 4532,
+          "time_ms": 201.494,
+          "tt_hits": 46
+        },
+        {
+          "id": "WAC.049",
+          "found_move": "g5g2",
+          "expected_moves": [
+            "h5h7"
+          ],
+          "solved": false,
+          "nodes": 2913,
+          "time_ms": 152.848,
+          "tt_hits": 67
+        },
+        {
+          "id": "WAC.050",
+          "found_move": "b7b6",
+          "expected_moves": [
+            "b7b6"
+          ],
+          "solved": true,
+          "nodes": 2115,
+          "time_ms": 93.951,
+          "tt_hits": 58
+        }
+      ],
+      "node_reduction_vs_minimax_pct": 93.02
+    }
+  ],
+  "part_1b_depth_sensitivity": [
+    {
+      "name": "Depth_2",
+      "description": "Config_E (Cấp 3 hoàn chỉnh) ở độ sâu d=2",
+      "depth": 2,
+      "flags": {
+        "alpha_beta": true,
+        "move_ordering": true,
+        "transposition_table": true,
+        "quiescence": true,
+        "pvs": true,
+        "aspiration_windows": true
+      },
+      "total_positions": 50,
+      "solved_count": 29,
+      "tactical_accuracy": 0.58,
+      "wilson_ci_95": [
+        0.4423,
+        0.7063
+      ],
+      "total_nodes": 31542,
+      "avg_nodes": 630.84,
+      "avg_tt_hits": 1.74,
+      "avg_latency_ms": 34.456,
+      "p95_latency_ms": 77.572,
+      "positions": [
+        {
+          "id": "WAC.001",
+          "found_move": "e5c6",
+          "expected_moves": [
+            "g3g6"
+          ],
+          "solved": false,
+          "nodes": 1501,
+          "time_ms": 96.278,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.002",
+          "found_move": "c4c3",
+          "expected_moves": [
+            "b3b2"
+          ],
+          "solved": false,
+          "nodes": 244,
+          "time_ms": 10.594,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.003",
+          "found_move": "e3g3",
+          "expected_moves": [
+            "e3g3"
+          ],
+          "solved": true,
+          "nodes": 879,
+          "time_ms": 50.42,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.004",
+          "found_move": "h6h7",
+          "expected_moves": [
+            "h6h7"
+          ],
+          "solved": true,
+          "nodes": 121,
+          "time_ms": 5.098,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.005",
+          "found_move": "c6c4",
+          "expected_moves": [
+            "c6c4"
+          ],
+          "solved": true,
+          "nodes": 79,
+          "time_ms": 3.42,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.006",
+          "found_move": "h6g5",
+          "expected_moves": [
+            "b6b7"
+          ],
+          "solved": false,
+          "nodes": 94,
+          "time_ms": 3.299,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.007",
+          "found_move": "g4e5",
+          "expected_moves": [
+            "g4e3"
+          ],
+          "solved": false,
+          "nodes": 277,
+          "time_ms": 15.19,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.008",
+          "found_move": "e7f7",
+          "expected_moves": [
+            "e7f7"
+          ],
+          "solved": true,
+          "nodes": 581,
+          "time_ms": 36.081,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.009",
+          "found_move": "h4g4",
+          "expected_moves": [
+            "d6h2"
+          ],
+          "solved": false,
+          "nodes": 586,
+          "time_ms": 30.653,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.010",
+          "found_move": "h4h7",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": true,
+          "nodes": 565,
+          "time_ms": 31.652,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.011",
+          "found_move": "a4c5",
+          "expected_moves": [
+            "f3c6"
+          ],
+          "solved": false,
+          "nodes": 995,
+          "time_ms": 59.424,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.012",
+          "found_move": "g7f7",
+          "expected_moves": [
+            "g4f3"
+          ],
+          "solved": false,
+          "nodes": 825,
+          "time_ms": 34.762,
+          "tt_hits": 4
+        },
+        {
+          "id": "WAC.013",
+          "found_move": "g2f3",
+          "expected_moves": [
+            "f1f8"
+          ],
+          "solved": false,
+          "nodes": 551,
+          "time_ms": 27.872,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.014",
+          "found_move": "b3b4",
+          "expected_moves": [
+            "h3h7"
+          ],
+          "solved": false,
+          "nodes": 949,
+          "time_ms": 50.978,
+          "tt_hits": 3
+        },
+        {
+          "id": "WAC.015",
+          "found_move": "c1d1",
+          "expected_moves": [
+            "b8b7"
+          ],
+          "solved": false,
+          "nodes": 268,
+          "time_ms": 12.849,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.016",
+          "found_move": "e2c3",
+          "expected_moves": [
+            "e2c3"
+          ],
+          "solved": true,
+          "nodes": 537,
+          "time_ms": 30.205,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.017",
+          "found_move": "c1f4",
+          "expected_moves": [
+            "c4e5"
+          ],
+          "solved": false,
+          "nodes": 712,
+          "time_ms": 39.179,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.018",
+          "found_move": "g1f1",
+          "expected_moves": [
+            "a8h8"
+          ],
+          "solved": false,
+          "nodes": 124,
+          "time_ms": 4.635,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.019",
+          "found_move": "a3c4",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": false,
+          "nodes": 668,
+          "time_ms": 39.656,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.020",
+          "found_move": "d7e6",
+          "expected_moves": [
+            "d7b5"
+          ],
+          "solved": false,
+          "nodes": 721,
+          "time_ms": 36.292,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.021",
+          "found_move": "f5e7",
+          "expected_moves": [
+            "d2h6"
+          ],
+          "solved": false,
+          "nodes": 394,
+          "time_ms": 22.569,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.022",
+          "found_move": "c4a2",
+          "expected_moves": [
+            "c4a2",
+            "g5f7"
+          ],
+          "solved": true,
+          "nodes": 662,
+          "time_ms": 45.505,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.023",
+          "found_move": "c5e6",
+          "expected_moves": [
+            "g2g4"
+          ],
+          "solved": false,
+          "nodes": 1018,
+          "time_ms": 63.399,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.024",
+          "found_move": "g7d4",
+          "expected_moves": [
+            "g7d4"
+          ],
+          "solved": true,
+          "nodes": 753,
+          "time_ms": 38.573,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.025",
+          "found_move": "g4h4",
+          "expected_moves": [
+            "g4h4"
+          ],
+          "solved": true,
+          "nodes": 175,
+          "time_ms": 7.938,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.026",
+          "found_move": "d7f5",
+          "expected_moves": [
+            "d7f5"
+          ],
+          "solved": true,
+          "nodes": 951,
+          "time_ms": 51.534,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.027",
+          "found_move": "a3f8",
+          "expected_moves": [
+            "a3f8"
+          ],
+          "solved": true,
+          "nodes": 159,
+          "time_ms": 7.653,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.028",
+          "found_move": "b4e1",
+          "expected_moves": [
+            "b4e1"
+          ],
+          "solved": true,
+          "nodes": 483,
+          "time_ms": 29.707,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.029",
+          "found_move": "c5c6",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": true,
+          "nodes": 972,
+          "time_ms": 55.09,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.030",
+          "found_move": "c1c3",
+          "expected_moves": [
+            "e4d6"
+          ],
+          "solved": false,
+          "nodes": 398,
+          "time_ms": 23.731,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.031",
+          "found_move": "d5e6",
+          "expected_moves": [
+            "b7a8",
+            "d5d6",
+            "d5e6",
+            "g2g3"
+          ],
+          "solved": true,
+          "nodes": 610,
+          "time_ms": 29.367,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.032",
+          "found_move": "d1d8",
+          "expected_moves": [
+            "d1d8"
+          ],
+          "solved": true,
+          "nodes": 611,
+          "time_ms": 27.315,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.033",
+          "found_move": "e4e5",
+          "expected_moves": [
+            "e4e5",
+            "e4f4"
+          ],
+          "solved": true,
+          "nodes": 522,
+          "time_ms": 26.762,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.034",
+          "found_move": "d4g1",
+          "expected_moves": [
+            "d4g1"
+          ],
+          "solved": true,
+          "nodes": 1394,
+          "time_ms": 77.603,
+          "tt_hits": 5
+        },
+        {
+          "id": "WAC.035",
+          "found_move": "d1b1",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": false,
+          "nodes": 1670,
+          "time_ms": 79.754,
+          "tt_hits": 8
+        },
+        {
+          "id": "WAC.036",
+          "found_move": "e7e1",
+          "expected_moves": [
+            "e7e1"
+          ],
+          "solved": true,
+          "nodes": 347,
+          "time_ms": 23.43,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.037",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 542,
+          "time_ms": 32.724,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.038",
+          "found_move": "d2d8",
+          "expected_moves": [
+            "c3d3",
+            "d2d8"
+          ],
+          "solved": true,
+          "nodes": 288,
+          "time_ms": 13.599,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.039",
+          "found_move": "c3a4",
+          "expected_moves": [
+            "c3a4"
+          ],
+          "solved": true,
+          "nodes": 863,
+          "time_ms": 50.917,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.040",
+          "found_move": "d8c8",
+          "expected_moves": [
+            "d8c8"
+          ],
+          "solved": true,
+          "nodes": 869,
+          "time_ms": 41.454,
+          "tt_hits": 3
+        },
+        {
+          "id": "WAC.041",
+          "found_move": "b6b7",
+          "expected_moves": [
+            "b5a5",
+            "b5c5",
+            "b6b7"
+          ],
+          "solved": true,
+          "nodes": 186,
+          "time_ms": 7.106,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.042",
+          "found_move": "b4a5",
+          "expected_moves": [
+            "b4a5"
+          ],
+          "solved": true,
+          "nodes": 1075,
+          "time_ms": 69.068,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.043",
+          "found_move": "a3e7",
+          "expected_moves": [
+            "a3e7",
+            "d5a8"
+          ],
+          "solved": true,
+          "nodes": 971,
+          "time_ms": 50.961,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.044",
+          "found_move": "d5c4",
+          "expected_moves": [
+            "d5c4"
+          ],
+          "solved": true,
+          "nodes": 589,
+          "time_ms": 30.78,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.045",
+          "found_move": "f1a1",
+          "expected_moves": [
+            "f1a1"
+          ],
+          "solved": true,
+          "nodes": 296,
+          "time_ms": 15.603,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.046",
+          "found_move": "f1b5",
+          "expected_moves": [
+            "c3b5"
+          ],
+          "solved": false,
+          "nodes": 432,
+          "time_ms": 24.36,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.047",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 486,
+          "time_ms": 27.631,
+          "tt_hits": 1
+        },
+        {
+          "id": "WAC.048",
+          "found_move": "b8b4",
+          "expected_moves": [
+            "b8b4"
+          ],
+          "solved": true,
+          "nodes": 1604,
+          "time_ms": 77.534,
+          "tt_hits": 7
+        },
+        {
+          "id": "WAC.049",
+          "found_move": "h5h6",
+          "expected_moves": [
+            "h5h7"
+          ],
+          "solved": false,
+          "nodes": 524,
+          "time_ms": 29.167,
+          "tt_hits": 2
+        },
+        {
+          "id": "WAC.050",
+          "found_move": "b7g7",
+          "expected_moves": [
+            "b7b6"
+          ],
+          "solved": false,
+          "nodes": 421,
+          "time_ms": 23.455,
+          "tt_hits": 1
+        }
+      ]
+    },
+    {
+      "name": "Depth_3",
+      "description": "Config_E (Cấp 3 hoàn chỉnh) ở độ sâu d=3",
+      "depth": 3,
+      "flags": {
+        "alpha_beta": true,
+        "move_ordering": true,
+        "transposition_table": true,
+        "quiescence": true,
+        "pvs": true,
+        "aspiration_windows": true
+      },
+      "total_positions": 50,
+      "solved_count": 36,
+      "tactical_accuracy": 0.72,
+      "wilson_ci_95": [
+        0.5833,
+        0.8253
+      ],
+      "total_nodes": 179613,
+      "avg_nodes": 3592.26,
+      "avg_tt_hits": 59.18,
+      "avg_latency_ms": 160.105,
+      "p95_latency_ms": 297.07,
+      "positions": [
+        {
+          "id": "WAC.001",
+          "found_move": "g3g6",
+          "expected_moves": [
+            "g3g6"
+          ],
+          "solved": true,
+          "nodes": 10632,
+          "time_ms": 553.768,
+          "tt_hits": 303
+        },
+        {
+          "id": "WAC.002",
+          "found_move": "c4c3",
+          "expected_moves": [
+            "b3b2"
+          ],
+          "solved": false,
+          "nodes": 789,
+          "time_ms": 32.929,
+          "tt_hits": 19
+        },
+        {
+          "id": "WAC.003",
+          "found_move": "e3g3",
+          "expected_moves": [
+            "e3g3"
+          ],
+          "solved": true,
+          "nodes": 4008,
+          "time_ms": 183.27,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.004",
+          "found_move": "h6h7",
+          "expected_moves": [
+            "h6h7"
+          ],
+          "solved": true,
+          "nodes": 121,
+          "time_ms": 5.725,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.005",
+          "found_move": "c6c4",
+          "expected_moves": [
+            "c6c4"
+          ],
+          "solved": true,
+          "nodes": 79,
+          "time_ms": 2.849,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.006",
+          "found_move": "b6b7",
+          "expected_moves": [
+            "b6b7"
+          ],
+          "solved": true,
+          "nodes": 757,
+          "time_ms": 27.617,
+          "tt_hits": 78
+        },
+        {
+          "id": "WAC.007",
+          "found_move": "g4e3",
+          "expected_moves": [
+            "g4e3"
+          ],
+          "solved": true,
+          "nodes": 3422,
+          "time_ms": 151.339,
+          "tt_hits": 169
+        },
+        {
+          "id": "WAC.008",
+          "found_move": "e7f7",
+          "expected_moves": [
+            "e7f7"
+          ],
+          "solved": true,
+          "nodes": 3683,
+          "time_ms": 205.531,
+          "tt_hits": 46
+        },
+        {
+          "id": "WAC.009",
+          "found_move": "h4g4",
+          "expected_moves": [
+            "d6h2"
+          ],
+          "solved": false,
+          "nodes": 3778,
+          "time_ms": 205.405,
+          "tt_hits": 39
+        },
+        {
+          "id": "WAC.010",
+          "found_move": "h4h7",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": true,
+          "nodes": 4986,
+          "time_ms": 225.635,
+          "tt_hits": 55
+        },
+        {
+          "id": "WAC.011",
+          "found_move": "f3c6",
+          "expected_moves": [
+            "f3c6"
+          ],
+          "solved": true,
+          "nodes": 4522,
+          "time_ms": 232.298,
+          "tt_hits": 66
+        },
+        {
+          "id": "WAC.012",
+          "found_move": "g4f3",
+          "expected_moves": [
+            "g4f3"
+          ],
+          "solved": true,
+          "nodes": 2531,
+          "time_ms": 108.247,
+          "tt_hits": 51
+        },
+        {
+          "id": "WAC.013",
+          "found_move": "f1f8",
+          "expected_moves": [
+            "f1f8"
+          ],
+          "solved": true,
+          "nodes": 2216,
+          "time_ms": 107.218,
+          "tt_hits": 51
+        },
+        {
+          "id": "WAC.014",
+          "found_move": "b3b4",
+          "expected_moves": [
+            "h3h7"
+          ],
+          "solved": false,
+          "nodes": 5589,
+          "time_ms": 280.657,
+          "tt_hits": 50
+        },
+        {
+          "id": "WAC.015",
+          "found_move": "b8b7",
+          "expected_moves": [
+            "b8b7"
+          ],
+          "solved": true,
+          "nodes": 1943,
+          "time_ms": 92.798,
+          "tt_hits": 74
+        },
+        {
+          "id": "WAC.016",
+          "found_move": "e2c3",
+          "expected_moves": [
+            "e2c3"
+          ],
+          "solved": true,
+          "nodes": 2497,
+          "time_ms": 118.116,
+          "tt_hits": 35
+        },
+        {
+          "id": "WAC.017",
+          "found_move": "c4e5",
+          "expected_moves": [
+            "c4e5"
+          ],
+          "solved": true,
+          "nodes": 5054,
+          "time_ms": 252.563,
+          "tt_hits": 85
+        },
+        {
+          "id": "WAC.018",
+          "found_move": "g1f1",
+          "expected_moves": [
+            "a8h8"
+          ],
+          "solved": false,
+          "nodes": 687,
+          "time_ms": 25.953,
+          "tt_hits": 13
+        },
+        {
+          "id": "WAC.019",
+          "found_move": "a3c4",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": false,
+          "nodes": 4927,
+          "time_ms": 235.527,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.020",
+          "found_move": "d7b5",
+          "expected_moves": [
+            "d7b5"
+          ],
+          "solved": true,
+          "nodes": 4205,
+          "time_ms": 192.054,
+          "tt_hits": 198
+        },
+        {
+          "id": "WAC.021",
+          "found_move": "d2c3",
+          "expected_moves": [
+            "d2h6"
+          ],
+          "solved": false,
+          "nodes": 4239,
+          "time_ms": 172.815,
+          "tt_hits": 73
+        },
+        {
+          "id": "WAC.022",
+          "found_move": "g5f7",
+          "expected_moves": [
+            "c4a2",
+            "g5f7"
+          ],
+          "solved": true,
+          "nodes": 4327,
+          "time_ms": 203.19,
+          "tt_hits": 76
+        },
+        {
+          "id": "WAC.023",
+          "found_move": "c5e6",
+          "expected_moves": [
+            "g2g4"
+          ],
+          "solved": false,
+          "nodes": 7260,
+          "time_ms": 306.851,
+          "tt_hits": 59
+        },
+        {
+          "id": "WAC.024",
+          "found_move": "g7d4",
+          "expected_moves": [
+            "g7d4"
+          ],
+          "solved": true,
+          "nodes": 3597,
+          "time_ms": 133.021,
+          "tt_hits": 46
+        },
+        {
+          "id": "WAC.025",
+          "found_move": "g4h4",
+          "expected_moves": [
+            "g4h4"
+          ],
+          "solved": true,
+          "nodes": 459,
+          "time_ms": 20.002,
+          "tt_hits": 21
+        },
+        {
+          "id": "WAC.026",
+          "found_move": "d7f5",
+          "expected_moves": [
+            "d7f5"
+          ],
+          "solved": true,
+          "nodes": 3760,
+          "time_ms": 155.51,
+          "tt_hits": 40
+        },
+        {
+          "id": "WAC.027",
+          "found_move": "a3f8",
+          "expected_moves": [
+            "a3f8"
+          ],
+          "solved": true,
+          "nodes": 159,
+          "time_ms": 8.093,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.028",
+          "found_move": "b4e1",
+          "expected_moves": [
+            "b4e1"
+          ],
+          "solved": true,
+          "nodes": 3167,
+          "time_ms": 127.393,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.029",
+          "found_move": "c5c6",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": true,
+          "nodes": 6118,
+          "time_ms": 258.303,
+          "tt_hits": 53
+        },
+        {
+          "id": "WAC.030",
+          "found_move": "c1c3",
+          "expected_moves": [
+            "e4d6"
+          ],
+          "solved": false,
+          "nodes": 4994,
+          "time_ms": 236.764,
+          "tt_hits": 41
+        },
+        {
+          "id": "WAC.031",
+          "found_move": "d5e6",
+          "expected_moves": [
+            "b7a8",
+            "d5d6",
+            "d5e6",
+            "g2g3"
+          ],
+          "solved": true,
+          "nodes": 2095,
+          "time_ms": 83.272,
+          "tt_hits": 39
+        },
+        {
+          "id": "WAC.032",
+          "found_move": "d1d8",
+          "expected_moves": [
+            "d1d8"
+          ],
+          "solved": true,
+          "nodes": 2465,
+          "time_ms": 89.032,
+          "tt_hits": 44
+        },
+        {
+          "id": "WAC.033",
+          "found_move": "g3g4",
+          "expected_moves": [
+            "e4e5",
+            "e4f4"
+          ],
+          "solved": false,
+          "nodes": 4209,
+          "time_ms": 164.254,
+          "tt_hits": 75
+        },
+        {
+          "id": "WAC.034",
+          "found_move": "d4g1",
+          "expected_moves": [
+            "d4g1"
+          ],
+          "solved": true,
+          "nodes": 4683,
+          "time_ms": 191.574,
+          "tt_hits": 47
+        },
+        {
+          "id": "WAC.035",
+          "found_move": "c7c2",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": false,
+          "nodes": 6473,
+          "time_ms": 267.529,
+          "tt_hits": 92
+        },
+        {
+          "id": "WAC.036",
+          "found_move": "e7e1",
+          "expected_moves": [
+            "e7e1"
+          ],
+          "solved": true,
+          "nodes": 2359,
+          "time_ms": 86.798,
+          "tt_hits": 37
+        },
+        {
+          "id": "WAC.037",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 2997,
+          "time_ms": 122.136,
+          "tt_hits": 35
+        },
+        {
+          "id": "WAC.038",
+          "found_move": "d2d8",
+          "expected_moves": [
+            "c3d3",
+            "d2d8"
+          ],
+          "solved": true,
+          "nodes": 2342,
+          "time_ms": 89.008,
+          "tt_hits": 39
+        },
+        {
+          "id": "WAC.039",
+          "found_move": "c3a4",
+          "expected_moves": [
+            "c3a4"
+          ],
+          "solved": true,
+          "nodes": 4060,
+          "time_ms": 173.386,
+          "tt_hits": 43
+        },
+        {
+          "id": "WAC.040",
+          "found_move": "d8c8",
+          "expected_moves": [
+            "d8c8"
+          ],
+          "solved": true,
+          "nodes": 2753,
+          "time_ms": 107.512,
+          "tt_hits": 36
+        },
+        {
+          "id": "WAC.041",
+          "found_move": "f7f8",
+          "expected_moves": [
+            "b5a5",
+            "b5c5",
+            "b6b7"
+          ],
+          "solved": false,
+          "nodes": 1344,
+          "time_ms": 43.17,
+          "tt_hits": 30
+        },
+        {
+          "id": "WAC.042",
+          "found_move": "f1c1",
+          "expected_moves": [
+            "b4a5"
+          ],
+          "solved": false,
+          "nodes": 6036,
+          "time_ms": 300.224,
+          "tt_hits": 81
+        },
+        {
+          "id": "WAC.043",
+          "found_move": "a3e7",
+          "expected_moves": [
+            "a3e7",
+            "d5a8"
+          ],
+          "solved": true,
+          "nodes": 5172,
+          "time_ms": 211.209,
+          "tt_hits": 48
+        },
+        {
+          "id": "WAC.044",
+          "found_move": "d5c4",
+          "expected_moves": [
+            "d5c4"
+          ],
+          "solved": true,
+          "nodes": 4662,
+          "time_ms": 176.672,
+          "tt_hits": 48
+        },
+        {
+          "id": "WAC.045",
+          "found_move": "f1a1",
+          "expected_moves": [
+            "f1a1"
+          ],
+          "solved": true,
+          "nodes": 3863,
+          "time_ms": 147.888,
+          "tt_hits": 130
+        },
+        {
+          "id": "WAC.046",
+          "found_move": "f1d3",
+          "expected_moves": [
+            "c3b5"
+          ],
+          "solved": false,
+          "nodes": 5979,
+          "time_ms": 293.216,
+          "tt_hits": 49
+        },
+        {
+          "id": "WAC.047",
+          "found_move": "c6d4",
+          "expected_moves": [
+            "c6d4"
+          ],
+          "solved": true,
+          "nodes": 4055,
+          "time_ms": 164.616,
+          "tt_hits": 45
+        },
+        {
+          "id": "WAC.048",
+          "found_move": "b8b4",
+          "expected_moves": [
+            "b8b4"
+          ],
+          "solved": true,
+          "nodes": 4532,
+          "time_ms": 194.041,
+          "tt_hits": 46
+        },
+        {
+          "id": "WAC.049",
+          "found_move": "g5g2",
+          "expected_moves": [
+            "h5h7"
+          ],
+          "solved": false,
+          "nodes": 2913,
+          "time_ms": 148.732,
+          "tt_hits": 67
+        },
+        {
+          "id": "WAC.050",
+          "found_move": "b7b6",
+          "expected_moves": [
+            "b7b6"
+          ],
+          "solved": true,
+          "nodes": 2115,
+          "time_ms": 89.518,
+          "tt_hits": 58
+        }
+      ]
+    },
+    {
+      "name": "Depth_4",
+      "description": "Config_E (Cấp 3 hoàn chỉnh) ở độ sâu d=4",
+      "depth": 4,
+      "flags": {
+        "alpha_beta": true,
+        "move_ordering": true,
+        "transposition_table": true,
+        "quiescence": true,
+        "pvs": true,
+        "aspiration_windows": true
+      },
+      "total_positions": 50,
+      "solved_count": 43,
+      "tactical_accuracy": 0.86,
+      "wilson_ci_95": [
+        0.7381,
+        0.9305
+      ],
+      "total_nodes": 608519,
+      "avg_nodes": 12170.38,
+      "avg_tt_hits": 431.26,
+      "avg_latency_ms": 613.884,
+      "p95_latency_ms": 1417.774,
+      "positions": [
+        {
+          "id": "WAC.001",
+          "found_move": "g3g6",
+          "expected_moves": [
+            "g3g6"
+          ],
+          "solved": true,
+          "nodes": 10632,
+          "time_ms": 582.963,
+          "tt_hits": 303
+        },
+        {
+          "id": "WAC.002",
+          "found_move": "c4c3",
+          "expected_moves": [
+            "b3b2"
+          ],
+          "solved": false,
+          "nodes": 1789,
+          "time_ms": 95.717,
+          "tt_hits": 124
+        },
+        {
+          "id": "WAC.003",
+          "found_move": "e3g3",
+          "expected_moves": [
+            "e3g3"
+          ],
+          "solved": true,
+          "nodes": 10590,
+          "time_ms": 610.377,
+          "tt_hits": 444
+        },
+        {
+          "id": "WAC.004",
+          "found_move": "h6h7",
+          "expected_moves": [
+            "h6h7"
+          ],
+          "solved": true,
+          "nodes": 121,
+          "time_ms": 5.539,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.005",
+          "found_move": "c6c4",
+          "expected_moves": [
+            "c6c4"
+          ],
+          "solved": true,
+          "nodes": 79,
+          "time_ms": 3.038,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.006",
+          "found_move": "b6b7",
+          "expected_moves": [
+            "b6b7"
+          ],
+          "solved": true,
+          "nodes": 1288,
+          "time_ms": 51.326,
+          "tt_hits": 210
+        },
+        {
+          "id": "WAC.007",
+          "found_move": "g4e3",
+          "expected_moves": [
+            "g4e3"
+          ],
+          "solved": true,
+          "nodes": 7620,
+          "time_ms": 397.376,
+          "tt_hits": 456
+        },
+        {
+          "id": "WAC.008",
+          "found_move": "e7f7",
+          "expected_moves": [
+            "e7f7"
+          ],
+          "solved": true,
+          "nodes": 7935,
+          "time_ms": 399.713,
+          "tt_hits": 527
+        },
+        {
+          "id": "WAC.009",
+          "found_move": "d6h2",
+          "expected_moves": [
+            "d6h2"
+          ],
+          "solved": true,
+          "nodes": 14898,
+          "time_ms": 795.075,
+          "tt_hits": 320
+        },
+        {
+          "id": "WAC.010",
+          "found_move": "h4h7",
+          "expected_moves": [
+            "h4h7"
+          ],
+          "solved": true,
+          "nodes": 11247,
+          "time_ms": 595.356,
+          "tt_hits": 840
+        },
+        {
+          "id": "WAC.011",
+          "found_move": "f3c6",
+          "expected_moves": [
+            "f3c6"
+          ],
+          "solved": true,
+          "nodes": 11795,
+          "time_ms": 635.623,
+          "tt_hits": 493
+        },
+        {
+          "id": "WAC.012",
+          "found_move": "g4f3",
+          "expected_moves": [
+            "g4f3"
+          ],
+          "solved": true,
+          "nodes": 2531,
+          "time_ms": 107.698,
+          "tt_hits": 51
+        },
+        {
+          "id": "WAC.013",
+          "found_move": "f1f8",
+          "expected_moves": [
+            "f1f8"
+          ],
+          "solved": true,
+          "nodes": 5530,
+          "time_ms": 284.006,
+          "tt_hits": 158
+        },
+        {
+          "id": "WAC.014",
+          "found_move": "b3b4",
+          "expected_moves": [
+            "h3h7"
+          ],
+          "solved": false,
+          "nodes": 21783,
+          "time_ms": 1248.399,
+          "tt_hits": 497
+        },
+        {
+          "id": "WAC.015",
+          "found_move": "b8b7",
+          "expected_moves": [
+            "b8b7"
+          ],
+          "solved": true,
+          "nodes": 4369,
+          "time_ms": 215.132,
+          "tt_hits": 236
+        },
+        {
+          "id": "WAC.016",
+          "found_move": "e2c3",
+          "expected_moves": [
+            "e2c3"
+          ],
+          "solved": true,
+          "nodes": 20491,
+          "time_ms": 922.982,
+          "tt_hits": 679
+        },
+        {
+          "id": "WAC.017",
+          "found_move": "c4e5",
+          "expected_moves": [
+            "c4e5"
+          ],
+          "solved": true,
+          "nodes": 21545,
+          "time_ms": 1161.717,
+          "tt_hits": 460
+        },
+        {
+          "id": "WAC.018",
+          "found_move": "g1f1",
+          "expected_moves": [
+            "a8h8"
+          ],
+          "solved": false,
+          "nodes": 1952,
+          "time_ms": 63.626,
+          "tt_hits": 64
+        },
+        {
+          "id": "WAC.019",
+          "found_move": "c5c6",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": true,
+          "nodes": 25291,
+          "time_ms": 1340.848,
+          "tt_hits": 516
+        },
+        {
+          "id": "WAC.020",
+          "found_move": "d7b5",
+          "expected_moves": [
+            "d7b5"
+          ],
+          "solved": true,
+          "nodes": 12156,
+          "time_ms": 652.502,
+          "tt_hits": 1779
+        },
+        {
+          "id": "WAC.021",
+          "found_move": "d2c3",
+          "expected_moves": [
+            "d2h6"
+          ],
+          "solved": false,
+          "nodes": 10099,
+          "time_ms": 448.948,
+          "tt_hits": 702
+        },
+        {
+          "id": "WAC.022",
+          "found_move": "g5f7",
+          "expected_moves": [
+            "c4a2",
+            "g5f7"
+          ],
+          "solved": true,
+          "nodes": 11751,
+          "time_ms": 635.192,
+          "tt_hits": 483
+        },
+        {
+          "id": "WAC.023",
+          "found_move": "g2g4",
+          "expected_moves": [
+            "g2g4"
+          ],
+          "solved": true,
+          "nodes": 42035,
+          "time_ms": 2162.549,
+          "tt_hits": 1073
+        },
+        {
+          "id": "WAC.024",
+          "found_move": "g7d4",
+          "expected_moves": [
+            "g7d4"
+          ],
+          "solved": true,
+          "nodes": 8100,
+          "time_ms": 420.044,
+          "tt_hits": 474
+        },
+        {
+          "id": "WAC.025",
+          "found_move": "g4h4",
+          "expected_moves": [
+            "g4h4"
+          ],
+          "solved": true,
+          "nodes": 983,
+          "time_ms": 53.075,
+          "tt_hits": 68
+        },
+        {
+          "id": "WAC.026",
+          "found_move": "d7f5",
+          "expected_moves": [
+            "d7f5"
+          ],
+          "solved": true,
+          "nodes": 14251,
+          "time_ms": 717.465,
+          "tt_hits": 281
+        },
+        {
+          "id": "WAC.027",
+          "found_move": "a3f8",
+          "expected_moves": [
+            "a3f8"
+          ],
+          "solved": true,
+          "nodes": 159,
+          "time_ms": 7.537,
+          "tt_hits": 0
+        },
+        {
+          "id": "WAC.028",
+          "found_move": "b4e1",
+          "expected_moves": [
+            "b4e1"
+          ],
+          "solved": true,
+          "nodes": 8563,
+          "time_ms": 449.665,
+          "tt_hits": 535
+        },
+        {
+          "id": "WAC.029",
+          "found_move": "c5c6",
+          "expected_moves": [
+            "c5c6"
+          ],
+          "solved": true,
+          "nodes": 21839,
+          "time_ms": 1223.62,
+          "tt_hits": 538
         },
         {
           "id": "WAC.030",
@@ -4448,9 +5051,9 @@
             "e4d6"
           ],
           "solved": true,
-          "nodes": 25788,
-          "time_ms": 1124.953,
-          "tt_hits": 288
+          "nodes": 20451,
+          "time_ms": 996.268,
+          "tt_hits": 454
         },
         {
           "id": "WAC.031",
@@ -4462,9 +5065,9 @@
             "g2g3"
           ],
           "solved": true,
-          "nodes": 12086,
-          "time_ms": 496.18,
-          "tt_hits": 330
+          "nodes": 7174,
+          "time_ms": 322.963,
+          "tt_hits": 244
         },
         {
           "id": "WAC.032",
@@ -4473,9 +5076,9 @@
             "d1d8"
           ],
           "solved": true,
-          "nodes": 7526,
-          "time_ms": 310.465,
-          "tt_hits": 219
+          "nodes": 6578,
+          "time_ms": 319.633,
+          "tt_hits": 183
         },
         {
           "id": "WAC.033",
@@ -4485,9 +5088,9 @@
             "e4f4"
           ],
           "solved": true,
-          "nodes": 16883,
-          "time_ms": 630.839,
-          "tt_hits": 403
+          "nodes": 15922,
+          "time_ms": 702.182,
+          "tt_hits": 598
         },
         {
           "id": "WAC.034",
@@ -4496,9 +5099,9 @@
             "d4g1"
           ],
           "solved": true,
-          "nodes": 20096,
-          "time_ms": 827.413,
-          "tt_hits": 442
+          "nodes": 13702,
+          "time_ms": 688.726,
+          "tt_hits": 427
         },
         {
           "id": "WAC.035",
@@ -4507,9 +5110,9 @@
             "h4h7"
           ],
           "solved": false,
-          "nodes": 32088,
-          "time_ms": 1241.074,
-          "tt_hits": 462
+          "nodes": 41934,
+          "time_ms": 1785.649,
+          "tt_hits": 1287
         },
         {
           "id": "WAC.036",
@@ -4518,8 +5121,8 @@
             "e7e1"
           ],
           "solved": true,
-          "nodes": 7688,
-          "time_ms": 297.151,
+          "nodes": 6608,
+          "time_ms": 310.03,
           "tt_hits": 361
         },
         {
@@ -4529,8 +5132,8 @@
             "c6d4"
           ],
           "solved": true,
-          "nodes": 16117,
-          "time_ms": 663.677,
+          "nodes": 9255,
+          "time_ms": 467.112,
           "tt_hits": 449
         },
         {
@@ -4541,9 +5144,9 @@
             "d2d8"
           ],
           "solved": true,
-          "nodes": 7632,
-          "time_ms": 305.833,
-          "tt_hits": 245
+          "nodes": 6279,
+          "time_ms": 297.413,
+          "tt_hits": 221
         },
         {
           "id": "WAC.039",
@@ -4552,8 +5155,8 @@
             "c3a4"
           ],
           "solved": true,
-          "nodes": 17385,
-          "time_ms": 772.9,
+          "nodes": 14272,
+          "time_ms": 735.21,
           "tt_hits": 365
         },
         {
@@ -4563,9 +5166,9 @@
             "d8c8"
           ],
           "solved": true,
-          "nodes": 8602,
-          "time_ms": 340.107,
-          "tt_hits": 204
+          "nodes": 7847,
+          "time_ms": 351.636,
+          "tt_hits": 217
         },
         {
           "id": "WAC.041",
@@ -4576,9 +5179,9 @@
             "b6b7"
           ],
           "solved": true,
-          "nodes": 2975,
-          "time_ms": 98.383,
-          "tt_hits": 137
+          "nodes": 2992,
+          "time_ms": 101.847,
+          "tt_hits": 170
         },
         {
           "id": "WAC.042",
@@ -4587,9 +5190,9 @@
             "b4a5"
           ],
           "solved": true,
-          "nodes": 35007,
-          "time_ms": 1668.099,
-          "tt_hits": 385
+          "nodes": 30035,
+          "time_ms": 1480.714,
+          "tt_hits": 739
         },
         {
           "id": "WAC.043",
@@ -4599,9 +5202,9 @@
             "d5a8"
           ],
           "solved": true,
-          "nodes": 28511,
-          "time_ms": 1224.464,
-          "tt_hits": 729
+          "nodes": 17724,
+          "time_ms": 854.828,
+          "tt_hits": 719
         },
         {
           "id": "WAC.044",
@@ -4610,9 +5213,9 @@
             "d5c4"
           ],
           "solved": true,
-          "nodes": 23645,
-          "time_ms": 1011.434,
-          "tt_hits": 470
+          "nodes": 18062,
+          "time_ms": 921.698,
+          "tt_hits": 432
         },
         {
           "id": "WAC.045",
@@ -4621,9 +5224,9 @@
             "f1a1"
           ],
           "solved": true,
-          "nodes": 9274,
-          "time_ms": 348.075,
-          "tt_hits": 480
+          "nodes": 8798,
+          "time_ms": 403.414,
+          "tt_hits": 658
         },
         {
           "id": "WAC.046",
@@ -4632,9 +5235,9 @@
             "c3b5"
           ],
           "solved": false,
-          "nodes": 51084,
-          "time_ms": 2443.269,
-          "tt_hits": 306
+          "nodes": 22089,
+          "time_ms": 1225.123,
+          "tt_hits": 384
         },
         {
           "id": "WAC.047",
@@ -4643,9 +5246,9 @@
             "c6d4"
           ],
           "solved": true,
-          "nodes": 15952,
-          "time_ms": 760.963,
-          "tt_hits": 447
+          "nodes": 12011,
+          "time_ms": 715.204,
+          "tt_hits": 428
         },
         {
           "id": "WAC.048",
@@ -4654,9 +5257,9 @@
             "b8b4"
           ],
           "solved": true,
-          "nodes": 42612,
-          "time_ms": 1915.246,
-          "tt_hits": 353
+          "nodes": 24776,
+          "time_ms": 1187.351,
+          "tt_hits": 642
         },
         {
           "id": "WAC.049",
@@ -4665,9 +5268,9 @@
             "h5h7"
           ],
           "solved": false,
-          "nodes": 23392,
-          "time_ms": 989.712,
-          "tt_hits": 178
+          "nodes": 8473,
+          "time_ms": 451.282,
+          "tt_hits": 216
         },
         {
           "id": "WAC.050",
@@ -4676,9 +5279,9 @@
             "b7b6"
           ],
           "solved": true,
-          "nodes": 2056,
-          "time_ms": 69.175,
-          "tt_hits": 34
+          "nodes": 2115,
+          "time_ms": 88.822,
+          "tt_hits": 58
         }
       ]
     }
