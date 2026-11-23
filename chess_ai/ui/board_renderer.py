@@ -20,6 +20,7 @@ _MOVE_HIGHLIGHT = (186, 203, 68)
 _BAD_HIGHLIGHT = (220, 85, 85)
 _SQUARE_ACCENT = (246, 210, 82)
 _ARROW_GOOD = (34, 160, 85)
+_ARROW_CANDIDATE = (59, 130, 246)
 _ARROW_BAD = (210, 50, 50)
 _COORD_LIGHT = (118, 150, 86)
 _COORD_DARK = (238, 238, 210)
@@ -108,6 +109,7 @@ def _draw_arrow(
 def render_board_image(
     board: chess.Board,
     move: Optional[chess.Move] = None,
+    moves: Optional[Iterable[chess.Move]] = None,
     bad_move: Optional[chess.Move] = None,
     highlight_squares: Optional[Iterable[int]] = None,
     board_size: int = 384,
@@ -124,6 +126,7 @@ def render_board_image(
     surface = pygame.Surface((actual_size, actual_size))
 
     hl_set = set(highlight_squares) if highlight_squares is not None else set()
+    candidate_moves = list(moves) if moves is not None else []
     move_sqs = {move.from_square, move.to_square} if move is not None else set()
     bad_sqs = {bad_move.from_square, bad_move.to_square} if bad_move is not None else set()
 
@@ -165,8 +168,20 @@ def render_board_image(
                     py = rect.y + (sq_size - sprite.get_height()) // 2
                     surface.blit(sprite, (px, py))
 
-    # Vẽ mũi tên nước đi (nước bị loại vẽ trước màu đỏ, nước được chọn vẽ màu xanh)
+    # Vẽ mũi tên nước đi (ứng viên xanh dương -> nước bị loại đỏ -> nước được chọn xanh lá)
     arrow_w = max(3, sq_size // 10)
+    cand_w = max(2, sq_size // 14)
+    for cm in candidate_moves:
+        if move is not None and cm == move:
+            continue
+        _draw_arrow(
+            pygame,
+            surface,
+            _square_center(cm.from_square, sq_size, flipped),
+            _square_center(cm.to_square, sq_size, flipped),
+            _ARROW_CANDIDATE,
+            cand_w,
+        )
     if bad_move is not None:
         _draw_arrow(
             pygame,
