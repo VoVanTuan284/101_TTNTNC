@@ -7,6 +7,7 @@ Kiểm thử logic điều khiển của giao diện Pygame (không mở cửa s
 
 import chess
 
+from chess_ai.ui.board_renderer import render_board_image
 from chess_ai.ui.desktop_pygame import ChessPygameApp
 
 
@@ -133,3 +134,15 @@ def test_ui_panel_click_and_mode_toggle() -> None:
             app._draw(surface, pygame)
     finally:
         app.executor.shutdown(wait=False, cancel_futures=True)
+
+
+def test_board_renderer_headless() -> None:
+    board = chess.Board()
+    img = render_board_image(
+        board,
+        move=chess.Move.from_uci("e2e4"),
+        highlight_squares=(chess.D4, chess.D5, chess.E4, chess.E5),
+        board_size=256,
+    )
+    assert img.shape == (256, 256, 3)
+    assert img.dtype.name == "uint8"

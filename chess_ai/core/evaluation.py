@@ -6,7 +6,7 @@ Phụ trách: TV1 (Core, Classical Search, UCT & RL Lead)
 """
 
 import math
-from typing import Dict, List
+from typing import Dict, List, Tuple
 import chess
 from chess_ai.config import load_yaml_config
 
@@ -71,6 +71,88 @@ _MOBILITY_WEIGHTS: Dict[int, int] = {
     chess.ROOK: 2,
     chess.QUEEN: 1,
 }
+
+_BISHOP_PAIR_BONUS: int = 35
+_DOUBLED_PAWN_PENALTY: int = 15
+_ISOLATED_PAWN_PENALTY: int = 15
+_PASSED_PAWN_BONUS: Tuple[int, ...] = (0, 10, 15, 25, 40, 65, 95, 0)
+_ROOK_OPEN_FILE_BONUS: int = 20
+_ROOK_SEMI_OPEN_FILE_BONUS: int = 10
+
+_ADJACENT_FILES: Tuple[int, ...] = tuple(
+    (chess.BB_FILES[f - 1] if f > 0 else 0) | (chess.BB_FILES[f + 1] if f < 7 else 0)
+    for f in range(8)
+)
+
+# Mặt nạ các cột (f-1, f, f+1) ở phía trước ô sq để kiểm tra Tốt thông
+_WHITE_PASSED_MASKS: Tuple[int, ...] = tuple(
+    (chess.BB_FILES[f] | _ADJACENT_FILES[f])
+    & sum((chess.BB_RANKS[rr] for rr in range(r + 1, 8)), 0)
+    for sq in range(64)
+    for r, f in [(chess.square_rank(sq), chess.square_file(sq))]
+)
+_BLACK_PASSED_MASKS: Tuple[int, ...] = tuple(
+    (chess.BB_FILES[f] | _ADJACENT_FILES[f])
+    & sum((chess.BB_RANKS[rr] for rr in range(0, r)), 0)
+    for sq in range(64)
+    for r, f in [(chess.square_rank(sq), chess.square_file(sq))]
+)
+
+
+def pawn_structure_score(board: chess.Board, color: chess.Color) -> int:
+    """Đánh giá cấu trúc Tốt (Tốt thông, Tốt chồng, Tốt cô lập) cho `color` (centipawns)."""
+    own_pawns = board.pieces_mask(chess.PAWN, color)
+    if not own_pawns:
+        return 0
+    opp_pawns = board.pieces_mask(chess.PAWN, not color)
+    passed_masks = _WHITE_PASSED_MASKS if color == chess.WHITE else _BLACK_PASSED_MASKS
+
+    score = 0
+    # 1. Tốt chồng theo từng cột
+    for f in range(8):
+        cnt = (own_pawns & chess.BB_FILES[f]).bit_count()
+        if cnt > 1:
+            score -= (cnt - 1) * _DOUBLED_PAWN_PENALTY
+
+    # 2. Tốt cô lập & Tốt thông cho từng quân Tốt
+    bb = own_pawns
+    while bb:
+        lsb = bb & -bb
+        sq = lsb.bit_length() - 1
+        f = chess.square_file(sq)
+        if (own_pawns & _ADJACENT_FILES[f]) == 0:
+            score -= _ISOLATED_PAWN_PENALTY
+        if (opp_pawns & passed_masks[sq]) == 0:
+            rel_rank = chess.square_rank(sq) if color == chess.WHITE else 7 - chess.square_rank(sq)
+            score += _PASSED_PAWN_BONUS[rel_rank]
+        bb ^= lsb
+
+    return score
+
+
+def rook_file_score(board: chess.Board, color: chess.Color) -> int:
+    """Thưởng Xe đứng trên cột mở (không Tốt) hoặc cột nửa mở (không Tốt ta)."""
+    rooks = board.pieces_mask(chess.ROOK, color)
+    if not rooks:
+        return 0
+    own_pawns = board.pieces_mask(chess.PAWN, color)
+    opp_pawns = board.pieces_mask(chess.PAWN, not color)
+
+    score = 0
+    bb = rooks
+    while bb:
+        lsb = bb & -bb
+        sq = lsb.bit_length() - 1
+        file_bb = chess.BB_FILES[chess.square_file(sq)]
+        if (own_pawns & file_bb) == 0:
+            score += _ROOK_OPEN_FILE_BONUS if (opp_pawns & file_bb) == 0 else _ROOK_SEMI_OPEN_FILE_BONUS
+        bb ^= lsb
+    return score
+
+
+def bishop_pair_score(board: chess.Board, color: chess.Color) -> int:
+    """Thưởng Cặp Tượng (+35 cp) khi sở hữu >= 2 quân Tượng."""
+    return _BISHOP_PAIR_BONUS if board.pieces_mask(chess.BISHOP, color).bit_count() >= 2 else 0
 
 
 def _king_safety_score(board: chess.Board, color: bool, pawns_mask: int) -> int:
@@ -172,7 +254,17 @@ def evaluate_board(board: chess.Board) -> float:
         black_pawns = board.pieces_mask(chess.PAWN, chess.BLACK)
         black_score += phase * _king_safety_score(board, chess.BLACK, black_pawns)
 
-    diff_white = white_score - black_score
+    diff_white = (
+        white_score
+        + pawn_structure_score(board, chess.WHITE)
+        + rook_file_score(board, chess.WHITE)
+        + bishop_pair_score(board, chess.WHITE)
+    ) - (
+        black_score
+        + pawn_structure_score(board, chess.BLACK)
+        + rook_file_score(board, chess.BLACK)
+        + bishop_pair_score(board, chess.BLACK)
+    )
     return diff_white if board.turn == chess.WHITE else -diff_white
 
 

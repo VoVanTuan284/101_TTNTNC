@@ -8,11 +8,18 @@ import chess
 import pytest
 
 from chess_ai.agents.level1_random import Level1RandomAgent
-from chess_ai.agents.level2_heuristic import Level2HeuristicAgent
+from chess_ai.agents.level2_heuristic import Level2HeuristicAgent, center_control_score, see_capture
 from chess_ai.agents.level3_alphabeta import Level3AlphaBetaAgent
 from chess_ai.agents.level4_mcts import Level4MCTSAgent
 from chess_ai.core.chess_env import ChessEnv
-from chess_ai.core.evaluation import MATE_VALUE, evaluate_board, evaluate_board_tanh
+from chess_ai.core.evaluation import (
+    MATE_VALUE,
+    bishop_pair_score,
+    evaluate_board,
+    evaluate_board_tanh,
+    pawn_structure_score,
+    rook_file_score,
+)
 from chess_ai.core.zobrist import compute_zobrist_hash
 from chess_ai.search.alphabeta import search_alphabeta
 from chess_ai.search.transposition import EXACT, TranspositionTable, TTEntry
@@ -157,3 +164,52 @@ def test_level4_subtree_reuse() -> None:
     assert m2 in env.legal_actions()
     agent.reset()
     assert agent._root is None
+
+
+def test_level2_see_anti_stalemate_and_conflict_stats() -> None:
+    # 1. SEE: Hậu Trắng ăn Tốt đen có Tốt khác bảo vệ -> SEE âm (100 - 900 = -800)
+    see_board = chess.Board("4k3/8/4p3/3p4/8/8/8/3QK3 w - - 0 1")
+    bad_cap = chess.Move.from_uci("d1d5")
+    assert see_capture(see_board, bad_cap) == -800
+
+    # 2. Anti-Stalemate & Rule Conflict logging: Trắng hơn Hậu + Xe, không được đi nước gây hòa Pat
+    # Vua Đen tại a8, Trắng có Hậu tại b6 và Vua tại c6 -> Qb7# (Mate-in-1) hoặc tránh Qa6 (pat)
+    anti_pat_fen = "k7/8/1Q6/2K5/8/8/8/8 w - - 0 1"
+    env_pat = ChessEnv(fen=anti_pat_fen)
+    l2 = Level2HeuristicAgent(seed=42)
+    move = l2.select_move(env_pat)
+    env_pat.step(move)
+    assert not env_pat.board.is_stalemate()
+    assert "selected_rule" in l2.last_search_stats
+    assert "selected_tier" in l2.last_search_stats
+    assert "conflicts_detected" in l2.last_search_stats
+
+    # 3. Center control score
+    b_center = chess.Board("4k3/8/8/8/3PP3/8/8/4K3 w - - 0 1")
+    assert center_control_score(b_center, chess.WHITE) > 0
+
+    # 4. Safe Promotion (Tier 2) ưu tiên phong Hậu an toàn hơn ăn Tốt lẻ
+    env_promo = ChessEnv(fen="4k3/P7/8/8/4p3/4R3/8/4K3 w - - 0 1")
+    promo_move = l2.select_move(env_promo)
+    assert promo_move == chess.Move.from_uci("a7a8q")
+    assert l2.last_search_stats["selected_tier"] == 2
+    assert l2.last_search_stats["selected_rule"] == "RULE_T2_SAFE_PROMOTION"
+
+
+def test_evaluation_pawn_structure_rook_file_and_bishop_pair() -> None:
+    # Tốt thông hàng 6 (e6) vs Tốt chồng + cô lập bên Đen (a7, a6)
+    b_pawns = chess.Board("4k3/p7/p3P3/8/8/8/8/4K3 w - - 0 1")
+    assert pawn_structure_score(b_pawns, chess.WHITE) > 0
+    assert pawn_structure_score(b_pawns, chess.BLACK) < 0
+
+    # Xe Trắng cột mở (e1), Xe Đen cột nửa mở (d8 có Tốt Trắng d2)
+    b_rooks = chess.Board("3rk3/8/8/8/8/8/3P4/4RK2 w - - 0 1")
+    assert rook_file_score(b_rooks, chess.WHITE) == 20
+    assert rook_file_score(b_rooks, chess.BLACK) == 10
+
+    # Cặp Tượng Trắng (2 Tượng) vs Đen (1 Tượng)
+    b_bishops = chess.Board("4k3/8/8/8/8/8/8/2B1KB2 w - - 0 1")
+    assert bishop_pair_score(b_bishops, chess.WHITE) == 35
+    assert bishop_pair_score(b_bishops, chess.BLACK) == 0
+
+

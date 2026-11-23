@@ -88,14 +88,14 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
 
 ### Cấp 2: Heuristic / Rule-based [BẮT BUỘC]
 
-- **Mục tiêu & Bản chất:** Tác tử 1-ply kết hợp hệ thống luật ưu tiên phân cấp 3 tầng (Think 1–3) nhằm giải quyết rõ thứ tự ưu tiên và triệt tiêu xung đột luật:
-  - _Tầng 1 (Think 1 - Quyết định thắng ngay):_ Duyệt toàn bộ `legal_actions()`, nếu có nước cờ dẫn tới chiếu hết đối thủ (`is_checkmate()`) thì thực hiện ngay lập tức.
-  - _Tầng 2 (Think 2 - Phòng thủ sống còn & Bắt quân có lợi):_
-    - Kiểm tra nếu đối thủ có nước đe dọa chiếu hết hoặc bắt quân lớn không có bảo vệ, ưu tiên phòng thủ/chạy quân.
-    - Thực hiện các nước bắt quân có lợi thực sự (Static Exchange / MVV-LVA dương).
-  - _Tầng 3 (Think 3 - Định vị vị trí & Thế trận):_ Tính điểm lượng giá trạng thái tĩnh sau 1 nước đi theo hàm mục tiêu tổng hợp:
-    $$\text{Score} = w_{\text{mat}} \cdot \Delta \text{Material} + w_{\text{pst}} \cdot \Delta \text{PST} + w_{\text{safe}} \cdot \Delta \text{KingSafety} + w_{\text{mob}} \cdot \Delta \text{Mobility} - \text{RepetitionPenalty}$$
-- **Hệ số trọng số (Centipawns - khai báo tại `configs/search_params.yaml`):** Tốt = $100$, Mã = $320$, Tượng = $330$, Xe = $500$, Hậu = $900$, Vua = $20000$. Bổ sung phạt nhẹ khi lặp lại thế cờ khi đang có ưu thế chất để tránh hòa vô nghĩa trước Cấp 1.
+- **Mục tiêu & Bản chất:** Tác tử 1-ply kết hợp hệ thống luật ưu tiên phân tầng tường minh **6 Tiers** (`Tier 1` $\to$ `Tier 6`) để giải quyết rõ thứ tự ưu tiên và ghi nhận xung đột luật vào `last_search_stats`:
+  - _Tier 1 (`RULE_T1_MATE_IN_1`):_ Chiếu hết ngay trong 1 nước (`is_checkmate()`), trả về ngay lập tức.
+  - _Tier 2 (`RULE_T2_SAFE_PROMOTION` / `RULE_T2_WINNING_CAPTURE_SEE`):_ Phong Hậu an toàn (`opp_see_threat < 800`) hoặc bắt quân lời ròng theo **Static Exchange Evaluation (`see_capture`)** (`move_see > 0` và `opp_see_threat < move_see`), không vi phạm các tầng phạt bên dưới.
+  - _Tier 3 (`RULE_T3_SAFE_CHECK` / `RULE_T3_POSITIONAL`):_ Kiểm soát vị trí 1-ply (`evaluate_board` gồm Material, PST Michniewski, King Safety, Mobility, Cấu trúc Tốt, Xe cột mở, Cặp Tượng + `center_control_score` 4 ô `d4, d5, e4, e5`) trừ `see_hanging_weight * opp_see_threat` + thưởng `safe_check_bonus` khi chiếu an toàn.
+  - _Tier 4 (`RULE_T4_AVOID_REPETITION_2/3`):_ Nước gây lặp thế cờ khi `static_eval >= 0.0` (chỉ chọn nếu hết nước ở `Tier 1–3`).
+  - _Tier 5 (`RULE_T5_AVOID_STALEMATE`):_ Phạt nặng (`-stalemate_penalty = -5000.0`) nếu nước đi dẫn tới hòa Pat hoặc thiếu lực lượng khi đang ưu thế (`root_eval >= 100.0`).
+  - _Tier 6 (`RULE_T6_AVOID_MATE_IN_1`):_ Phạt tuyệt đối (`-MATE_VALUE + 100.0`) nếu nước đi để đối thủ chiếu hết ngay ở lượt kế tiếp.
+- **Tham số cấu hình (`configs/search_params.yaml` — mục `heuristic_level2` & `evaluation`):** Tốt = $100$, Mã = $320$, Tượng = $330$, Xe = $500$, Hậu = $900$, Vua = $20000$; cùng `repetition_penalty: 180.0`, `stalemate_penalty: 5000.0`, `safe_check_bonus: 30.0`, `center_control_weight: 8.0`, `see_hanging_weight: 0.90`. Ghi nhận `selected_tier`, `selected_rule`, `conflicts_detected`, `conflict_examples` vào `last_search_stats`.
 
 ### Cấp 3: Iterative Deepening Minimax & Alpha-Beta Search [BẮT BUỘC]
 
