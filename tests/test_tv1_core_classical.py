@@ -232,6 +232,16 @@ def test_level3_see_pruning_in_quiescence_and_history_repetition() -> None:
     assert st_pvs["nodes"] <= st_base["nodes"]
 
 
+def test_level4_avoids_threefold_repetition_from_history() -> None:
+    env_rep = ChessEnv(fen="4k3/8/8/8/8/8/3Q4/4K3 w - - 0 1")
+    for uci in ("d2c2", "e8f8", "c2d2", "f8e8", "d2c2", "e8f8", "c2d2", "f8e8"):
+        env_rep.step(chess.Move.from_uci(uci))
+    l4 = Level4MCTSAgent(simulations=120, seed=42)
+    chosen = l4.select_move(env_rep)
+    assert chosen in env_rep.legal_actions()
+    assert l4.last_search_stats["simulations"] == 120.0
+
+
 
 def test_evaluation_pawn_structure_rook_file_and_bishop_pair() -> None:
     # Tốt thông hàng 6 (e6) vs Tốt chồng + cô lập bên Đen (a7, a6)

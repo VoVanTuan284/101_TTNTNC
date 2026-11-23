@@ -112,8 +112,8 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
   1. _Selection:_ Duyệt từ nút gốc xuống nút lá bằng công thức UCB1 (UCT):
      $$\text{UCT}(s, a) = Q(s, a) + c_{\text{uct}} \cdot \sqrt{\frac{\ln N(s)}{N(s, a)}} \quad \text{với } c_{\text{uct}} = 1.414$$
   2. _Expansion:_ Mở rộng một nút con hợp lệ chưa được khám phá.
-  3. _Simulation (Cut-off Rollout):_ Mô phỏng nhanh (ưu tiên nhẹ nước bắt quân/ngẫu nhiên) tối đa tới độ sâu cắt `max_rollout_depth = 60` plies. Nếu ván cờ chưa kết thúc tại ngưỡng cắt, ước lượng giá trị lá bằng hàm lượng giá tĩnh chuẩn hóa $\tanh(\text{eval}_{\text{cp}} / 600.0) \in [-1, 1]$.
-  4. _Backpropagation:_ Cập nhật số lần thăm $N$ và giá trị trung bình $Q$ (đảo dấu theo lượt đi Negamax) ngược lên gốc.
+  3. _Simulation (Cut-off Rollout):_ Mô phỏng nhanh (70% ưu tiên nước bắt quân không lỗ `see_capture >= 0` hoặc phong Hậu) tối đa tới độ sâu cắt `max_rollout_depth = 60` plies. Nếu ván cờ chưa kết thúc tại ngưỡng cắt, ước lượng giá trị lá bằng hàm lượng giá tĩnh chuẩn hóa $\tanh(\text{eval}_{\text{cp}} / 600.0) \in [-1, 1]$.
+  4. _Backpropagation & Lặp 3 lần:_ Cập nhật số lần thăm $N$ và giá trị trung bình $Q$ (đảo dấu theo lượt đi Negamax) ngược lên gốc; kết hợp `_build_history_zobrist_counts()` phát hiện hòa lặp 3 lần từ lịch sử `move_stack` và trong cây tìm kiếm.
 - **Tái sử dụng cây con (`subtree_reuse`):** Giữ gốc cây theo ván đấu trong `Level4MCTSAgent`, đối chiếu khóa Zobrist 64-bit qua các nút con/cháu để tái sử dụng thống kê từ nước trước và xóa khi gọi `agent.reset()`.
 - **Khảo sát bắt buộc theo đề bài:** Thực hiện khảo sát độ nhạy theo ngân sách mô phỏng $N_{\text{sim}} \in \{50, 100, 200, 400, 800, 1000\}$.
 

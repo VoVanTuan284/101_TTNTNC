@@ -17,7 +17,7 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
 | **Cấp 1** | `Level1_Random`     | Bắt buộc  | Chọn ngẫu nhiên đồng đều từ `legal_actions()`, làm mốc đối chứng sàn (Baseline).                                                                         |
 | **Cấp 2** | `Level2_Heuristic`  | Bắt buộc  | Luật ưu tiên **6 Tiers** (Mate-in-1 $\to$ Phong Hậu/SEE $\to$ Vị trí & 4 ô trung tâm + Safe Check $\to$ Chống lặp/Pat/Mate) + ghi nhận xung đột luật. |
 | **Cấp 3** | `Level3_AlphaBeta`  | Bắt buộc  | Iterative Deepening Negamax $\alpha$-$\beta$ + PVS + Aspiration Windows + Move Ordering + Zobrist TT + Quiescence/SEE. |
-| **Cấp 4** | `Level4_MCTS_UCT`   | Bắt buộc  | Vanilla MCTS (UCB1/UCT) với mô phỏng cắt ngưỡng (`max_rollout_depth: 60`) và định giá tĩnh.                                                              |
+| **Cấp 4** | `Level4_MCTS_UCT`   | Bắt buộc  | Vanilla MCTS (UCB1/UCT) với mô phỏng cắt ngưỡng (`max_rollout_depth: 60`, rollout ưu tiên `see_capture >= 0`), phát hiện lặp 3 lần và định giá tĩnh. |
 | **Cấp 5** | `Level5_Supervised` | Bắt buộc  | Mạng Dual-Head ResNet (6 blocks, 64 filters) đầu vào Tensor `(18, 8, 8)` góc nhìn bên đi, huấn luyện từ **Lichess Elite Database** có khử trùng Zobrist. |
 | **Cấp 6** | `Level6_RL_KRK`     |  Mở rộng  | Học tăng cường Tabular Q-Learning & Policy Gradient (REINFORCE) trên cờ tàn chuẩn FIDE **KRK**.                                                          |
 | **Cấp 7** | `Level7_GuidedMCTS` |  Mở rộng  | AlphaGo-inspired Guided MCTS (PUCT) tích hợp Policy Prior $P(s, a)$ và Value Head $V(s)$ của Cấp 5.                                                      |

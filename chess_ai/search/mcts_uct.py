@@ -10,9 +10,27 @@ import random
 import time
 from typing import Dict, Optional, Tuple
 import chess
-from chess_ai.core.evaluation import evaluate_board_tanh
+from chess_ai.core.evaluation import evaluate_board_tanh, see_capture
 from chess_ai.core.zobrist import compute_zobrist_hash
 from chess_ai.search.mcts_node import MCTSNode
+
+
+def _build_history_zobrist_counts(board: chess.Board) -> Dict[int, int]:
+    """Đếm số lần xuất hiện khóa Zobrist từ lịch sử move_stack (trong phạm vi halfmove_clock)."""
+    counts: Dict[int, int] = {}
+    root_key = compute_zobrist_hash(board)
+    counts[root_key] = 1
+
+    if not board.move_stack or board.halfmove_clock == 0:
+        return counts
+
+    tmp = board.copy(stack=True)
+    steps_back = min(len(tmp.move_stack), board.halfmove_clock)
+    for _ in range(steps_back):
+        tmp.pop()
+        k = compute_zobrist_hash(tmp)
+        counts[k] = counts.get(k, 0) + 1
+    return counts
 
 
 def _is_fast_terminal(board: chess.Board) -> Optional[float]:
@@ -78,10 +96,14 @@ def _rollout(
         if not legal_moves:
             return 0.0
 
-        # Ưu tiên nhẹ các nước bắt quân (70%) để rollout có tín hiệu chiến thuật tốt hơn
+        # Ưu tiên nhẹ các nước bắt quân không lỗ (SEE >= 0) hoặc phong Hậu (70%) để giảm nhiễu rollout
         if rng.random() < 0.7:
-            captures = list(sim_board.generate_legal_captures())
-            move = rng.choice(captures) if captures else rng.choice(legal_moves)
+            good_tactical = [
+                m
+                for m in legal_moves
+                if m.promotion == chess.QUEEN or (sim_board.is_capture(m) and see_capture(sim_board, m) >= 0)
+            ]
+            move = rng.choice(good_tactical) if good_tactical else rng.choice(legal_moves)
         else:
             move = rng.choice(legal_moves)
 
@@ -138,6 +160,7 @@ def run_uct_search(
 
     completed_sims = 0
     max_sims = simulations if simulations > 0 else 1
+    base_history_counts = _build_history_zobrist_counts(board)
 
     while completed_sims < max_sims:
         if deadline is not None and completed_sims > 0 and time.perf_counter() >= deadline:
@@ -145,6 +168,8 @@ def run_uct_search(
 
         node = root
         work_board = board.copy(stack=False)
+        sim_counts = dict(base_history_counts)
+        rep_draw = False
 
         # 1. Selection
         while node.is_expanded():
@@ -152,12 +177,17 @@ def run_uct_search(
             work_board.push(move)
             if child.zobrist_key is None:
                 child.zobrist_key = compute_zobrist_hash(work_board)
+            k = child.zobrist_key
+            sim_counts[k] = sim_counts.get(k, 0) + 1
             node = child
+            if sim_counts[k] >= 3:
+                rep_draw = True
+                break
             if node.visit_count == 0:
                 break
 
         # 2. Expansion (nếu nút lá đã được thăm trước đó và chưa kết thúc)
-        term_val = _is_fast_terminal(work_board)
+        term_val: Optional[float] = 0.0 if rep_draw else _is_fast_terminal(work_board)
         if term_val is None and node.visit_count > 0 and not node.is_expanded():
             node_moves = list(work_board.legal_moves)
             if node_moves:
@@ -166,8 +196,10 @@ def run_uct_search(
                 work_board.push(move)
                 if child.zobrist_key is None:
                     child.zobrist_key = compute_zobrist_hash(work_board)
+                k = child.zobrist_key
+                sim_counts[k] = sim_counts.get(k, 0) + 1
                 node = child
-                term_val = _is_fast_terminal(work_board)
+                term_val = 0.0 if sim_counts[k] >= 3 else _is_fast_terminal(work_board)
 
         # 3. Simulation (Rollout cắt ngưỡng)
         if term_val is not None:
