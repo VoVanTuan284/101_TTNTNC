@@ -1,11 +1,14 @@
 """
 chess_ai/agents/level7_guided_mcts.py
 Cấp 7 [MỞ RỘNG]: Tác tử AlphaGo-inspired Guided MCTS (PUCT)
-tích hợp Policy Prior P(s, a) và Value Head V(s) từ mạng Dual-Head ResNet.
+tích hợp Policy Prior P(s, a) và Value Head V(s) từ mạng Dual-Head ResNet,
+FPU Reduction, phát hiện lặp nước 3 lần, Zobrist Eval Cache và Batched Virtual Loss.
 Phụ trách: TV2 (DL, ETL, PUCT & Self-Play Lead)
 """
 
+from collections import OrderedDict
 from pathlib import Path
+import time
 from typing import Any, Dict, Optional
 import chess
 import numpy as np
@@ -18,7 +21,7 @@ from chess_ai.core.chess_env import ChessEnv
 from chess_ai.core.zobrist import compute_zobrist_hash
 from chess_ai.models.dual_resnet import DualHeadResNet
 from chess_ai.search.mcts_node import MCTSNode
-from chess_ai.search.mcts_puct import run_puct_search
+from chess_ai.search.mcts_puct import EvalCache, run_puct_search
 
 
 _PUCT_CFG = load_yaml_config("search_params.yaml")["guided_mcts"]
@@ -37,6 +40,9 @@ class Level7GuidedMCTSAgent(BaseAgent):
         allow_untrained_fallback: bool = True,
         device: Optional[str] = None,
         seed: Optional[int] = 42,
+        fpu_reduction: float = float(_PUCT_CFG.get("fpu_reduction", 0.2)),
+        eval_cache_size: int = int(_PUCT_CFG.get("eval_cache_size", 8192)),
+        batch_size: Optional[int] = None,
     ) -> None:
         super().__init__(name="Level7_GuidedMCTS")
         self.checkpoint_path = checkpoint_path or "checkpoints/best_model.pt"
@@ -46,13 +52,21 @@ class Level7GuidedMCTSAgent(BaseAgent):
         self.subtree_reuse = subtree_reuse
         self.allow_untrained_fallback = allow_untrained_fallback
         self.seed = seed
+        self.fpu_reduction = fpu_reduction
+        self.eval_cache_size = eval_cache_size
         self._rng = np.random.default_rng(seed)
         self._root: Optional[MCTSNode] = None
+        self._eval_cache: EvalCache = OrderedDict()
 
         if device is None:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         else:
             self.device = torch.device(device)
+
+        if batch_size is None:
+            self.batch_size = 8 if self.device.type == "cuda" else 1
+        else:
+            self.batch_size = max(1, int(batch_size))
 
         self.model: Optional[DualHeadResNet] = None
         self.checkpoint_loaded: bool = False
@@ -65,9 +79,10 @@ class Level7GuidedMCTSAgent(BaseAgent):
             return
 
         candidates = [self.checkpoint_path] if self.checkpoint_path else []
-        for fallback in ("checkpoints/best_model.pt", "checkpoints/l5_supervised_best.pt", "checkpoints/latest.pt"):
-            if fallback not in candidates:
-                candidates.append(fallback)
+        if self.allow_untrained_fallback:
+            for fallback in ("checkpoints/best_model.pt", "checkpoints/l5_supervised_best.pt", "checkpoints/latest.pt"):
+                if fallback not in candidates:
+                    candidates.append(fallback)
 
         loaded_file: Optional[Path] = None
         for cand in candidates:
@@ -95,6 +110,12 @@ class Level7GuidedMCTSAgent(BaseAgent):
                     if k in payload
                 }
         else:
+            if not self.allow_untrained_fallback:
+                raise FileNotFoundError(
+                    f"Không tìm thấy checkpoint cho Level7GuidedMCTSAgent tại: {self.checkpoint_path}"
+                )
+            if self.seed is not None:
+                torch.manual_seed(self.seed)
             self.model = build_resnet_from_config()
             self.checkpoint_loaded = False
 
@@ -102,9 +123,10 @@ class Level7GuidedMCTSAgent(BaseAgent):
         self.model.eval()
 
     def reset(self) -> None:
-        """Xóa cây MCTS lưu trữ và khởi tạo lại bộ sinh số ngẫu nhiên khi sang ván mới."""
+        """Xóa cây MCTS lưu trữ, xóa NN eval cache và khởi tạo lại RNG khi sang ván mới."""
         super().reset()
         self._root = None
+        self._eval_cache.clear()
         self._rng = np.random.default_rng(self.seed)
 
     def select_move(
@@ -114,8 +136,39 @@ class Level7GuidedMCTSAgent(BaseAgent):
         max_workload: Optional[int] = None,
     ) -> chess.Move:
         """Thực thi tìm kiếm PUCT dẫn hướng bởi mạng Dual-Head ResNet."""
+        t0 = time.perf_counter()
         self._ensure_model_loaded()
         assert self.model is not None
+
+        legal_moves = list(env.board.legal_moves)
+        if not legal_moves:
+            raise ValueError(f"Không có nước đi hợp lệ tại thế cờ: {env.board.fen()}")
+
+        # Forced move shortcut: chỉ có 1 nước hợp lệ -> trả về ngay, tiết kiệm thời gian
+        if len(legal_moves) == 1:
+            forced_move = legal_moves[0]
+            if self.subtree_reuse and self._root is not None:
+                target_key = compute_zobrist_hash(env.board)
+                reusable = self._root.find_reusable_root(target_key)
+                if reusable is not None and forced_move in reusable.children:
+                    child = reusable.children[forced_move]
+                    child.parent = None
+                    self._root = child
+                else:
+                    self._root = None
+            else:
+                self._root = None
+
+            self.last_search_stats = {
+                "nodes": 1.0,
+                "simulations": 0.0,
+                "depth": 1.0,
+                "eval": 0.0,
+                "root_value": 0.0,
+                "cache_hits": 0.0,
+                "time_sec": time.perf_counter() - t0,
+            }
+            return forced_move
 
         if max_workload is not None:
             sims = int(max_workload)
@@ -145,6 +198,10 @@ class Level7GuidedMCTSAgent(BaseAgent):
             root=reusable_root,
             device=self.device,
             rng=self._rng,
+            fpu_reduction=self.fpu_reduction,
+            eval_cache=self._eval_cache if self.eval_cache_size > 0 else None,
+            max_cache_size=self.eval_cache_size,
+            batch_size=self.batch_size,
         )
         self._root = new_root if self.subtree_reuse else None
         self.last_search_stats = {
@@ -153,6 +210,7 @@ class Level7GuidedMCTSAgent(BaseAgent):
             "depth": float(stats["depth"]),
             "eval": float(stats["eval"]),
             "root_value": float(stats.get("root_value", 0.0)),
+            "cache_hits": float(stats.get("cache_hits", 0.0)),
             "time_sec": float(stats["time_sec"]),
         }
         return best_move
