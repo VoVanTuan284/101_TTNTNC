@@ -257,3 +257,125 @@ def test_level7_guided_mcts_puct_and_backprop(tmp_path: Path) -> None:
     m2 = agent7.select_move(env, max_workload=8)
     assert m2 in env.legal_actions()
 
+
+def test_level8_alphazero_replay_buffer_selfplay_and_gating(tmp_path: Path) -> None:
+    import torch
+    from chess_ai.agents.level8_alphazero import Level8AlphaZeroAgent
+    from chess_ai.core.chess_env import ChessEnv
+    from chess_ai.models.dual_resnet import DualHeadResNet
+    from chess_ai.training.replay_buffer import SelfPlayReplayBuffer
+    from chess_ai.training.selfplay import (
+        play_selfplay_game,
+        run_selfplay_pipeline,
+        should_promote_challenger,
+        train_challenger_on_buffer,
+    )
+
+    # 1. Kiểm tra SelfPlayReplayBuffer (push_game_samples, cơ chế vòng FIFO, sample_batch)
+    buf = SelfPlayReplayBuffer(capacity=10, seed=42)
+    s_dummy = np.ones((6, 18, 8, 8), dtype=np.float32)
+    p_dummy = np.full((6, 4096), 1.0 / 4096.0, dtype=np.float32)
+    v_dummy = np.array([1.0, -1.0, 1.0, -1.0, 0.0, 0.0], dtype=np.float32)
+    buf.push_game_samples(s_dummy, p_dummy, v_dummy)
+    assert len(buf) == 6
+
+    # Đẩy thêm 6 mẫu nữa -> tổng 12 mẫu, vượt capacity=10 nên giữ 10 mẫu mới nhất (FIFO)
+    buf.push_game_samples(s_dummy * 2.0, p_dummy, v_dummy)
+    assert len(buf) == 10
+    assert buf.total_pushed == 12
+
+    b_s, b_p, b_v = buf.sample_batch(batch_size=4)
+    assert b_s.shape == (4, 18, 8, 8)
+    assert b_p.shape == (4, 4096)
+    assert b_v.shape == (4,)
+
+    # 2. TC54: Kiểm tra logic ngưỡng Arena Gating >= 55%
+    promoted_55, rate_55 = should_promote_challenger(wins=22, draws=0, total_games=40, threshold=0.55)
+    assert promoted_55 is True and rate_55 == pytest.approx(0.55)
+    promoted_52, rate_52 = should_promote_challenger(wins=21, draws=0, total_games=40, threshold=0.55)
+    assert promoted_52 is False and rate_52 == pytest.approx(0.525)
+
+    # 3. TC46: Kiểm tra play_selfplay_game (bật Dirichlet noise, hạ nhiệt độ, thu thập (s, pi, z))
+    small_model = DualHeadResNet(num_res_blocks=2, filters=16)
+    small_model.eval()
+    s_game, p_game, v_game, g_info = play_selfplay_game(
+        model=small_model,
+        mcts_sims=4,
+        max_plies=6,
+        temp_decay_plies=2,
+    )
+    assert s_game.shape == (g_info["samples"], 18, 8, 8)
+    assert p_game.shape == (g_info["samples"], 4096)
+    assert v_game.shape == (g_info["samples"],)
+    assert np.all(np.isin(v_game, [-1.0, 0.0, 1.0]))
+
+    # 4. Kiểm tra train_challenger_on_buffer với Soft Cross-Entropy + MSE
+    buf.push_game_samples(s_game, p_game, v_game)
+    t_stats = train_challenger_on_buffer(
+        challenger_model=small_model,
+        replay_buffer=buf,
+        batch_size=4,
+        train_steps=2,
+    )
+    assert t_stats["total_loss"] > 0.0
+
+    # 5. Kiểm tra toàn bộ vòng lặp run_selfplay_pipeline (1 iteration nhỏ + resume lên iteration 2)
+    warm_ckpt = tmp_path / "warm_l5.pt"
+    torch.save(
+        {
+            "model_state_dict": small_model.state_dict(),
+            "model_config": {"network": {"num_res_blocks": 2, "filters": 16}},
+        },
+        warm_ckpt,
+    )
+    ckpt_dir = tmp_path / "l8_ckpts"
+    out_dir = tmp_path / "l8_out"
+
+    rep1 = run_selfplay_pipeline(
+        warm_start_checkpoint=str(warm_ckpt),
+        output_dir=str(out_dir),
+        checkpoint_dir=str(ckpt_dir),
+        iterations=1,
+        selfplay_games_override=1,
+        mcts_sims_override=4,
+        arena_games_override=2,
+        train_steps_per_iter=2,
+        batch_size=4,
+        max_plies=4,
+        verbose=False,
+    )
+    assert rep1["iterations_completed"] == 1
+    assert (ckpt_dir / "l8_alphazero_best.pt").exists()
+    assert (ckpt_dir / "l8_alphazero_latest.pt").exists()
+    assert (out_dir / "selfplay_metrics.json").exists()
+
+    # Resume từ l8_alphazero_latest.pt sang iteration 2
+    rep2 = run_selfplay_pipeline(
+        warm_start_checkpoint=str(warm_ckpt),
+        output_dir=str(out_dir),
+        checkpoint_dir=str(ckpt_dir),
+        iterations=2,
+        selfplay_games_override=1,
+        mcts_sims_override=4,
+        arena_games_override=2,
+        train_steps_per_iter=2,
+        batch_size=4,
+        max_plies=4,
+        resume_path=str(ckpt_dir / "l8_alphazero_latest.pt"),
+        verbose=False,
+    )
+    assert rep2["iterations_completed"] == 2
+    assert len(rep2["history"]) == 2
+
+    # 6. Kiểm tra Level8AlphaZeroAgent nạp l8_alphazero_best.pt và chọn nước đi hợp lệ
+    agent8 = Level8AlphaZeroAgent(
+        checkpoint_path=str(ckpt_dir / "l8_alphazero_best.pt"),
+        simulations=6,
+    )
+    assert agent8.checkpoint_loaded is True
+    env = ChessEnv()
+    move8 = agent8.select_move(env, max_workload=6)
+    assert move8 in env.legal_actions()
+    assert agent8.last_search_stats["simulations"] == 6.0
+
+

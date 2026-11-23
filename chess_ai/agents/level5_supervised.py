@@ -48,9 +48,13 @@ class Level5SupervisedAgent(BaseAgent):
         self,
         checkpoint_path: Optional[str] = "checkpoints/best_model.pt",
         device: Optional[str] = None,
+        allow_untrained_fallback: bool = True,
+        seed: Optional[int] = 42,
     ) -> None:
         super().__init__(name="Level5_Supervised")
         self.checkpoint_path = checkpoint_path or "checkpoints/best_model.pt"
+        self.allow_untrained_fallback = allow_untrained_fallback
+        self.seed = seed
         if device is None:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         else:

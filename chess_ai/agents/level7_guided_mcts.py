@@ -34,6 +34,7 @@ class Level7GuidedMCTSAgent(BaseAgent):
         c_puct: float = float(_PUCT_CFG.get("c_puct", 1.414)),
         eval_mode: bool = True,
         subtree_reuse: bool = bool(_PUCT_CFG.get("subtree_reuse", True)),
+        allow_untrained_fallback: bool = True,
         device: Optional[str] = None,
         seed: Optional[int] = 42,
     ) -> None:
@@ -43,6 +44,7 @@ class Level7GuidedMCTSAgent(BaseAgent):
         self.c_puct = c_puct
         self.eval_mode = eval_mode
         self.subtree_reuse = subtree_reuse
+        self.allow_untrained_fallback = allow_untrained_fallback
         self.seed = seed
         self._rng = np.random.default_rng(seed)
         self._root: Optional[MCTSNode] = None
