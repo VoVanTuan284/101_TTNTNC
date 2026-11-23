@@ -241,6 +241,12 @@ def test_level4_avoids_threefold_repetition_from_history() -> None:
     assert chosen in env_rep.legal_actions()
     assert l4.last_search_stats["simulations"] == 120.0
 
+    # Kiểm tra rollout_mode="uniform" và bác bỏ giá trị không hợp lệ
+    l4_uni = Level4MCTSAgent(simulations=30, seed=42, rollout_mode="uniform")
+    assert l4_uni.select_move(ChessEnv()) in ChessEnv().legal_actions()
+    with pytest.raises(ValueError):
+        Level4MCTSAgent(rollout_mode="invalid_mode")
+
 
 
 def test_evaluation_pawn_structure_rook_file_and_bishop_pair() -> None:

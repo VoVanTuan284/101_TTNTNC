@@ -78,11 +78,12 @@ def _rollout(
     board: chess.Board,
     max_rollout_depth: int,
     rng: random.Random,
+    rollout_mode: str = "see_tactical",
 ) -> float:
     """
-    Mô phỏng nhanh (Cut-off Rollout) tối đa max_rollout_depth plies,
-    ưu tiên nhẹ nước bắt quân và cắt ngưỡng bằng evaluate_board_tanh().
-    Trả về giá trị từ góc nhìn bên tới lượt đi tại trạng thái xuất phát của rollout.
+    Mô phỏng nhanh (Cut-off Rollout) tối đa max_rollout_depth plies:
+    - 'see_tactical': 70% ưu tiên bắt quân không lỗ (SEE >= 0) hoặc phong Hậu.
+    - 'uniform': Chọn ngẫu nhiên đồng đều hoàn toàn trong legal_moves.
     """
     sim_board = board.copy(stack=False)
     plies = 0
@@ -97,7 +98,7 @@ def _rollout(
             return 0.0
 
         # Ưu tiên nhẹ các nước bắt quân không lỗ (SEE >= 0) hoặc phong Hậu (70%) để giảm nhiễu rollout
-        if rng.random() < 0.7:
+        if rollout_mode == "see_tactical" and rng.random() < 0.7:
             good_tactical = [
                 m
                 for m in legal_moves
@@ -137,8 +138,11 @@ def run_uct_search(
     max_rollout_depth: int = 60,
     root: Optional[MCTSNode] = None,
     rng: Optional[random.Random] = None,
+    rollout_mode: str = "see_tactical",
 ) -> Tuple[chess.Move, Dict[str, float], MCTSNode]:
     """Thực thi tìm kiếm Vanilla MCTS (UCT) và trả về (best_move, stats, root)."""
+    if rollout_mode not in ("see_tactical", "uniform"):
+        raise ValueError(f"rollout_mode không hợp lệ: '{rollout_mode}'. Hợp lệ: 'see_tactical', 'uniform'.")
     t0 = time.perf_counter()
     deadline = (t0 + time_limit) if time_limit is not None else None
     local_rng = rng if rng is not None else random.Random()
@@ -205,7 +209,7 @@ def run_uct_search(
         if term_val is not None:
             leaf_value = term_val
         else:
-            leaf_value = _rollout(work_board, max_rollout_depth, local_rng)
+            leaf_value = _rollout(work_board, max_rollout_depth, local_rng, rollout_mode=rollout_mode)
 
         # 4. Backpropagation
         _backpropagate(node, leaf_value)
@@ -233,6 +237,7 @@ def search_uct(
     time_limit: Optional[float] = None,
     c_uct: float = 1.414,
     max_rollout_depth: int = 60,
+    rollout_mode: str = "see_tactical",
 ) -> Tuple[chess.Move, Dict[str, float]]:
     """Thực thi tìm kiếm Vanilla MCTS (UCT) và trả về (best_move, stats)."""
     best_move, stats, _ = run_uct_search(
@@ -241,5 +246,6 @@ def search_uct(
         time_limit=time_limit,
         c_uct=c_uct,
         max_rollout_depth=max_rollout_depth,
+        rollout_mode=rollout_mode,
     )
     return best_move, stats
