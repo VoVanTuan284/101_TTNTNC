@@ -14,10 +14,17 @@ import torch.nn.functional as F
 class DualHeadLoss(nn.Module):
     """Hàm mất mát kết hợp cho Dual-Head ResNet."""
 
-    def __init__(self, policy_weight: float = 1.0, value_weight: float = 1.0) -> None:
+    def __init__(
+        self,
+        policy_weight: float = 1.0,
+        value_weight: float = 1.0,
+        label_smoothing: float = 0.0,
+    ) -> None:
         super().__init__()
         self.policy_weight = float(policy_weight)
         self.value_weight = float(value_weight)
+        # Chỉ áp dụng cho nhãn cứng 1D (học có giám sát); self-play dùng phân phối pi mềm nên không cần
+        self.label_smoothing = float(label_smoothing)
 
     def forward(
         self,
@@ -32,7 +39,11 @@ class DualHeadLoss(nn.Module):
         - target_values: Tensor (B,) hoặc (B, 1) trong [-1, 1].
         """
         if target_actions.dim() == 1:
-            policy_loss = F.cross_entropy(policy_logits, target_actions.long())
+            policy_loss = F.cross_entropy(
+                policy_logits,
+                target_actions.long(),
+                label_smoothing=self.label_smoothing,
+            )
         else:
             log_probs = F.log_softmax(policy_logits, dim=-1)
             policy_loss = -(target_actions * log_probs).sum(dim=-1).mean()

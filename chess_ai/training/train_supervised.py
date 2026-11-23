@@ -146,12 +146,16 @@ def train_supervised(
     use_amp = bool(hw_cfg.get("use_amp", True))
     num_workers = int(num_workers_override if num_workers_override is not None else hw_cfg.get("num_workers", 0))
     pin_memory = bool(hw_cfg.get("pin_memory", True)) and torch.cuda.is_available()
+    label_smoothing = float(loss_cfg.get("label_smoothing", 0.0))
+    augment_mirror = bool(train_cfg.get("augment_mirror", False))
+    patience = int(train_cfg.get("early_stopping_patience", 0))
+    grad_clip_norm = float(train_cfg.get("grad_clip_norm", 0.0))
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     amp_enabled = use_amp and device.type == "cuda"
 
-    # 1. Nạp Dataset từ np.memmap
-    train_ds_full = ChessMemmapDataset(data_dir=data_dir, split="train")
+    # 1. Nạp Dataset từ np.memmap (chỉ tập train được tăng cường lật gương)
+    train_ds_full = ChessMemmapDataset(data_dir=data_dir, split="train", augment_mirror=augment_mirror)
     val_ds_full = ChessMemmapDataset(data_dir=data_dir, split="val")
     test_ds_full = ChessMemmapDataset(data_dir=data_dir, split="test")
 
@@ -198,6 +202,12 @@ def train_supervised(
     criterion = DualHeadLoss(
         policy_weight=float(loss_cfg.get("policy_weight", 1.0)),
         value_weight=float(loss_cfg.get("value_weight", 1.0)),
+        label_smoothing=label_smoothing,
+    )
+    # Đánh giá val/test dùng loss không làm mượt nhãn để số liệu so sánh được với các lần train trước
+    eval_criterion = DualHeadLoss(
+        policy_weight=float(loss_cfg.get("policy_weight", 1.0)),
+        value_weight=float(loss_cfg.get("value_weight", 1.0)),
     )
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(1, epochs), eta_min=eta_min)
@@ -207,6 +217,9 @@ def train_supervised(
     global_step = 0
     best_val_loss = float("inf")
     history: List[Dict[str, Any]] = []
+    epochs_without_improve = 0
+    early_stopped = False
+    last_epoch_run = 0
 
     ckpt_dir = Path(checkpoint_dir)
     ckpt_dir.mkdir(parents=True, exist_ok=True)
@@ -271,6 +284,9 @@ def train_supervised(
                 loss, parts = criterion(policy_logits, value_pred, actions, values)
 
             scaler.scale(loss).backward()
+            if grad_clip_norm > 0.0:
+                scaler.unscale_(optimizer)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip_norm)
             scaler.step(optimizer)
             scaler.update()
 
@@ -295,11 +311,15 @@ def train_supervised(
         train_p_loss_ep = running_policy / max(1, seen)
         train_v_loss_ep = running_value / max(1, seen)
 
-        val_stats = evaluate_supervised_split(model, val_loader, criterion, device, use_amp=amp_enabled)
+        val_stats = evaluate_supervised_split(model, val_loader, eval_criterion, device, use_amp=amp_enabled)
         val_loss = val_stats["total_loss"]
         is_best = val_loss < best_val_loss
         if is_best:
             best_val_loss = val_loss
+            epochs_without_improve = 0
+        else:
+            epochs_without_improve += 1
+        last_epoch_run = epoch
 
         # Lưu latest.pt sau mỗi epoch để có thể dừng và --resume bất cứ lúc nào
         save_checkpoint(
@@ -379,11 +399,20 @@ def train_supervised(
         }
         metrics_path.write_text(json.dumps(partial_report, ensure_ascii=False, indent=2), encoding="utf-8")
 
+        if patience > 0 and epochs_without_improve >= patience:
+            early_stopped = True
+            if verbose:
+                print(
+                    f"  [Early Stopping] Val loss không cải thiện sau {patience} epoch liên tiếp -> dừng ở epoch {epoch}.",
+                    flush=True,
+                )
+            break
+
     # 3. Đánh giá trên tập Test độc lập bằng best_model.pt
     if best_ckpt_path.exists():
         best_payload = torch.load(best_ckpt_path, map_location=device, weights_only=False)
         model.load_state_dict(best_payload["model_state_dict"])
-    test_stats = evaluate_supervised_split(model, test_loader, criterion, device, use_amp=amp_enabled)
+    test_stats = evaluate_supervised_split(model, test_loader, eval_criterion, device, use_amp=amp_enabled)
 
     final_report = {
         "experiment": "Level5_Supervised_DualHeadResNet",
@@ -393,7 +422,10 @@ def train_supervised(
         "val_samples": len(val_ds),
         "test_samples": len(test_ds),
         "batch_size": batch_size,
-        "epochs_completed": epochs,
+        "epochs_completed": last_epoch_run if last_epoch_run > 0 else epochs,
+        "early_stopped": early_stopped,
+        "label_smoothing": label_smoothing,
+        "augment_mirror": augment_mirror,
         "best_val_loss": round(best_val_loss, 5),
         "best_checkpoint": str(best_ckpt_path),
         "latest_checkpoint": str(latest_ckpt_path),

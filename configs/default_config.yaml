@@ -35,8 +35,10 @@ data_etl:
   subsample_k_max: 4
   deduplicate_zobrist: true     # Khử trùng lặp thế cờ xuyên suốt các tập bằng khóa Zobrist 64-bit
   drop_underpromotions: true    # Bỏ các mẫu phong cấp dưới hiếm gặp (< 0.5%) khi huấn luyện
-  target_games: 50000
-  target_samples: 1000000
+  value_label_mix: 0.8          # Nhãn value = 0.8 * kết cục ván + 0.2 * tanh(static_eval / 600); đặt 1.0 để dùng nhãn thuần kết cục
+  value_eval_scale: 600.0
+  target_games: 150000          # Tăng dữ liệu để giảm overfit (trước đây 50000 ván / 1M mẫu)
+  target_samples: 3000000
   split_ratios:
     train: 0.80
     val: 0.10

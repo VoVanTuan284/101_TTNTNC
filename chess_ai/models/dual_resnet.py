@@ -42,8 +42,10 @@ class DualHeadResNet(nn.Module):
         value_conv_filters: int = 1,
         value_hidden_units: int = 64,
         action_space: int = 4096,
+        value_dropout: float = 0.0,
     ) -> None:
         super().__init__()
+        self.value_dropout_p = float(value_dropout)
         self.in_channels = in_channels
         self.num_res_blocks = num_res_blocks
         self.filters = filters
@@ -68,6 +70,7 @@ class DualHeadResNet(nn.Module):
         self.value_conv = nn.Conv2d(filters, value_conv_filters, kernel_size=1, bias=False)
         self.value_bn = nn.BatchNorm2d(value_conv_filters)
         self.value_fc1 = nn.Linear(value_conv_filters * 8 * 8, value_hidden_units)
+        self.value_dropout = nn.Dropout(p=self.value_dropout_p)
         self.value_fc2 = nn.Linear(value_hidden_units, 1)
 
     def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -85,6 +88,7 @@ class DualHeadResNet(nn.Module):
         v = F.relu(self.value_bn(self.value_conv(out)), inplace=True)
         v = v.view(v.size(0), -1)
         v = F.relu(self.value_fc1(v), inplace=True)
+        v = self.value_dropout(v)
         value = torch.tanh(self.value_fc2(v))
 
         return policy_logits, value
