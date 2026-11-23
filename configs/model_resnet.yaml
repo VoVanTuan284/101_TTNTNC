@@ -28,26 +28,31 @@ network:
     linear_out: 4096
 
   value_head:
-    conv_filters: 1             # Conv 1x1 (1 filter) -> BN -> ReLU -> Linear(64 -> 64) -> ReLU -> Linear(64 -> 1) -> Tanh
+    conv_filters: 4             # Conv 1x1 (4 filters) -> BN -> ReLU -> Linear(256 -> 128) -> ReLU -> Dropout -> Linear(128 -> 1) -> Tanh
     kernel_size: 1
     batch_norm: true
     activation: relu
-    hidden_units: 64
+    hidden_units: 128
+    dropout: 0.2
     linear_out: 1
     output_activation: tanh
 
 training:
   batch_size: 256
-  epochs: 20
+  epochs: 30
   optimizer: adamw              # Sử dụng AdamW với decoupled weight decay chuẩn
   learning_rate: 0.001
-  weight_decay: 1.0e-4          # Đảm nhiệm điều chuẩn L2; KHÔNG cộng lặp L2 vào hàm loss
+  weight_decay: 5.0e-4
+  grad_clip_norm: 1.0
+  early_stopping_patience: 5    # Dừng khi val loss không cải thiện 5 epoch liên tiếp
+  augment_mirror: true          # Lật gương a<->h cho mẫu train khi không còn quyền nhập thành
   lr_scheduler:
     type: cosine_annealing
     eta_min: 1.0e-5
   loss:
     policy_weight: 1.0
-    value_weight: 1.0
+    value_weight: 2.0           # Value head quyết định sức mạnh của Level 7/8 (không dùng rollout)
+    label_smoothing: 0.05       # Chỉ áp cho nhãn policy cứng (học có giám sát)
     l2_weight: 0.0              # Đặt bằng 0.0 vì đã dùng weight_decay của AdamW (tránh tính phạt L2 hai lần)
 
 checkpoint_schema:

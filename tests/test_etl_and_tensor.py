@@ -99,7 +99,7 @@ def test_etl_helpers_and_pipeline(tmp_path: Path) -> None:
     s, a, v = ds[0]
     assert s.shape == (18, 8, 8)
     assert 0 <= int(a) < 4096
-    assert float(v) in (-1.0, 0.0, 1.0)
+    assert -1.0 <= float(v) <= 1.0  # nhãn có thể được pha trộn với static eval (value_label_mix)
 
 
 def test_level5_dual_resnet_loss_agent_and_resume(tmp_path: Path) -> None:

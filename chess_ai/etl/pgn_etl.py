@@ -23,6 +23,7 @@ import numpy as np
 
 from chess_ai.config import load_yaml_config
 from chess_ai.core.board_tensor import board_to_uint8_planes, move_to_action_index
+from chess_ai.core.evaluation import evaluate_board_tanh
 from chess_ai.core.zobrist import compute_zobrist_hash
 
 
@@ -245,6 +246,10 @@ def run_etl_pipeline(
     k_max = int(etl_cfg.get("subsample_k_max", 4))
     dedup_zobrist = bool(etl_cfg.get("deduplicate_zobrist", True))
     drop_underpromo = bool(etl_cfg.get("drop_underpromotions", True))
+    # Pha trộn nhãn value: z_mix = mix * kết_cục_ván + (1 - mix) * tanh(static_eval / scale)
+    # mix = 1.0 giữ nguyên nhãn thuần theo kết cục ván (hành vi cũ). mix < 1.0 giảm nhiễu nhãn.
+    value_label_mix = float(etl_cfg.get("value_label_mix", 1.0))
+    value_eval_scale = float(etl_cfg.get("value_eval_scale", 600.0))
     target_games = max_games if max_games is not None else int(etl_cfg.get("target_games", 50000))
     target_samples = max_samples if max_samples is not None else int(etl_cfg.get("target_samples", 1000000))
 
@@ -337,7 +342,10 @@ def run_etl_pipeline(
                                 state = board_to_uint8_planes(board)
                                 action_idx = move_to_action_index(mv, board.turn)
                                 rel_val = abs_val if board.turn == chess.WHITE else -abs_val
-                                writer.append(state, action_idx, rel_val)
+                                if value_label_mix < 1.0:
+                                    static_val = evaluate_board_tanh(board, scale=value_eval_scale)
+                                    rel_val = value_label_mix * rel_val + (1.0 - value_label_mix) * static_val
+                                writer.append(state, action_idx, float(rel_val))
                                 total_samples += 1
 
                         next_sample_ply = ply_idx + rng.randint(k_min, k_max)
@@ -358,6 +366,8 @@ def run_etl_pipeline(
         "zobrist_duplicates_skipped": zobrist_dups_skipped,
         "underpromotions_skipped": underpromo_skipped,
         "result_distribution": result_counts,
+        "value_label_mix": value_label_mix,
+        "value_eval_scale": value_eval_scale,
         "splits": {
             split: {
                 "games": split_games[split],

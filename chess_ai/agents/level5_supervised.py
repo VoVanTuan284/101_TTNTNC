@@ -38,6 +38,7 @@ def build_resnet_from_config(model_cfg: Optional[Dict[str, Any]] = None) -> Dual
         value_conv_filters=int(v_head.get("conv_filters", 1)),
         value_hidden_units=int(v_head.get("hidden_units", 64)),
         action_space=int(p_head.get("linear_out", 4096)),
+        value_dropout=float(v_head.get("dropout", 0.0)),
     )
 
 
