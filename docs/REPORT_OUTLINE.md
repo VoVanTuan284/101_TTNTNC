@@ -111,7 +111,7 @@ XÂY DỰNG VÀ ĐÁNH GIÁ HỆ THỐNG GAME AI CỜ VUA ĐA CẤP ĐỘ (8x8 F
 * **4.4. Đánh giá Chi phí Tính toán & Phân tích Đánh đổi (Trade-off Analysis):**
   * Bảng đối chiếu tốc độ duyệt (NPS/SPS), thời gian trung bình một nước, độ trễ $p95$, và mức tiêu thụ RAM/VRAM.
 * **4.5. Kết quả Bài Ablation 1 (Tầng Tìm kiếm Cổ điển & Độ nhạy Độ sâu trên WAC-50):**
-  * Bảng và biểu đồ so sánh 5 cấu hình lũy tiến (`Config_A` $\to$ `Config_D`) trên bộ `resources/benchmark_positions.epd` (`WAC.001` – `WAC.050`).
+  * Bảng và biểu đồ so sánh 6 cấu hình lũy tiến (`Config_A` $\to$ `Config_E`) trên bộ `resources/benchmark_positions.epd` (`WAC.001` – `WAC.050`).
   * Phân tích độ nhạy theo độ sâu tìm kiếm $d \in \{2, 3, 4\}$.
 * **4.6. Kết quả Bài Ablation 2 (Độ nhạy $N_{\text{sim}}$ của Cấp 4 & Cấp 7; Bóc tách Policy vs Value):**
   * Đường cong hiệu năng theo $N_{\text{sim}} \in \{50, 100, 200, 400, 800, 1000\}$ của cả **Cấp 4 (UCT)** và **Cấp 7 (PUCT)**.

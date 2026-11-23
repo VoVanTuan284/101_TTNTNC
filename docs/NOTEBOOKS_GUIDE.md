@@ -19,7 +19,8 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
 | 04 | [`04_deep_learning_agents_l5_l7_l8.ipynb`](../notebooks/04_deep_learning_agents_l5_l7_l8.ipynb) | Tác tử Học sâu (`Level 5`, `Level 7`, `Level 8`) | Theo dõi quá trình hội tụ `DualHeadResNet`, so sánh UCT vs PUCT (kèm FPU, Zobrist Cache, Batched Virtual Loss) và chu trình Self-Play / Arena Gating. |
 | 05 | [`05_ablation_studies.ipynb`](../notebooks/05_ablation_studies.ipynb) | Nghiên cứu Cắt bỏ (*Ablation Studies*) | Phân tích định lượng **Ablation 1** (chiến thuật `WAC-50`, `RQ2`) và **Ablation 2** (độ nhạy $N_{\text{sim}}$ của UCT `Level 4` & PUCT `Level 7`, bóc tách thành phần, `RQ1`, `RQ3`). |
 | 06 | [`06_arena_tournament_and_style_rq4.ipynb`](../notebooks/06_arena_tournament_and_style_rq4.ipynb) | Giải đấu Round-Robin & Phong cách (`RQ4`) | Tổng hợp Elo, ma trận thắng/hòa/thua với khoảng tin cậy Wilson/Bootstrap 95%, độ trễ nước đi và đặc trưng phong cách chơi. |
-| — | [`level2_heuristic_principles.ipynb`](../notebooks/level2_heuristic_principles.ipynb) | Nguyên tắc chơi `Level 2` | Minh họa trực quan phân tầng ưu tiên (`Tier 1–4`), `SEE`, kiểm soát trung tâm và thống kê xung đột luật của `Level2HeuristicAgent`. |
+| — | [`level2_heuristic_principles.ipynb`](../notebooks/level2_heuristic_principles.ipynb) | Nguyên tắc chơi `Level 2` | Minh họa trực quan phân tầng ưu tiên **6 Tiers (`Tier 1–6`)**, `SEE`, kiểm soát trung tâm và thống kê xung đột luật của `Level2HeuristicAgent`. |
+| — | [`ve_anh_custom.ipynb`](../notebooks/ve_anh_custom.ipynb) | Vẽ ảnh bàn cờ tùy chỉnh | Tái sử dụng `render_board_image()` để vẽ thế cờ bất kỳ, toàn bộ nước đi hợp lệ của `Level 1` và so sánh các tác tử. |
 | — | [`train_level8_alphazero.ipynb`](../notebooks/train_level8_alphazero.ipynb) | Huấn luyện `Level 8` AlphaZero | Thực thi vòng lặp Self-Play $\rightarrow$ Replay Buffer Refinement $\rightarrow$ Arena Gating ($\ge 55\%$) khởi tạo ấm từ `Level 5`, tự động thích ứng GPU/CPU. |
 | — | [`analysis.ipynb`](../notebooks/analysis.ipynb) | Notebook Tổng hợp (*Executive Summary*) | Tóm tắt nhanh các bảng kết quả chính từ toàn bộ pipeline để đối chiếu nhanh khi thuyết trình. |
 
@@ -35,7 +36,7 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
 - **Đầu ra kỳ vọng:** Thống kê phân bố Elo/kết quả ván đấu, tỷ lệ lọc 5 tiêu chí, xác minh không trùng lặp Zobrist giữa tập train/val/test, trực quan hóa 18 mặt phẳng đặc trưng bàn cờ (`results/figures/`).
 
 ### 2.2. `02_classical_agents_and_search.ipynb` — Tác tử Cổ điển (`Level 1`–`Level 4`)
-- **Mục tiêu:** Phân tích sự tiến hóa hiệu năng từ `Level 1` (Random) → `Level 2` (Heuristic phân tầng 1-ply + SEE + Anti-Stalemate + Center Control + ghi nhận xung đột luật) → `Level 3` (Iterative Deepening Alpha-Beta + Move Ordering + Zobrist TT + Quiescence Search) → `Level 4` (Vanilla MCTS UCT).
+- **Mục tiêu:** Phân tích sự tiến hóa hiệu năng từ `Level 1` (Random) → `Level 2` (Heuristic phân tầng **6 Tiers** + SEE + Anti-Stalemate + Center Control + ghi nhận xung đột luật) → `Level 3` (Iterative Deepening Alpha-Beta + PVS + Aspiration Windows + Move Ordering + Zobrist TT + Quiescence/SEE) → `Level 4` (Vanilla MCTS UCT).
 - **Đầu vào chính:**
   - `chess_ai/agents/level1_random.py` .. `level4_mcts.py`, `chess_ai/search/`
   - Log thống kê tìm kiếm / benchmark tốc độ (NPS, số nút duyệt, tỷ lệ cắt tỉa nhánh, độ sâu đạt được trong giới hạn thời gian).

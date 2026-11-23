@@ -65,9 +65,9 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
   - Đọc/ghi cấu trúc chuỗi thế cờ FEN/EPD và biên bản ván cờ PGN.
 - **Tự thiết kế và cài đặt $100\%$ ($100\%$ Self-implemented)**:
   - Lớp bọc môi trường chuẩn hoá `GameEnv` và bộ chuyển đổi `ChessEnv` tuân thủ đầy đủ API đề bài (`reset`, `legal_actions`, `step`, `is_terminal`, `result`, `render`, `clone`, `undo`, `current_player`).
-  - Toàn bộ thuật toán lượng giá tĩnh: Cân bằng lực lượng (Material Balance), Bảng vị trí quân (Piece-Square Tables Michniewski), An toàn Vua (King Safety), và Tính cơ động (Mobility).
+  - Toàn bộ thuật toán lượng giá tĩnh: Cân bằng lực lượng (Material Balance), Bảng vị trí quân (Piece-Square Tables Michniewski), An toàn Vua (King Safety), Tính cơ động (Mobility), Cấu trúc Tốt (Thông/Chồng/Cô lập), Xe cột mở/nửa mở, Cặp Tượng, Kiểm soát 4 ô trung tâm và Static Exchange Evaluation (`see_capture`).
   - Bảng băm Zobrist ($64$-bit keys) và bộ nhớ chuyển vị Transposition Table độc lập.
-  - Tầng tìm kiếm cổ điển: Iterative Deepening Minimax, Cắt tỉa Alpha-Beta, Chiến lược sắp xếp nước đi Move Ordering (PV-move, MVV-LVA, Killer Moves, History), và Quiescence Search kèm Delta Pruning.
+  - Tầng tìm kiếm cổ điển: Iterative Deepening Negamax, Cắt tỉa Alpha-Beta, Principal Variation Search (PVS), Aspiration Windows, Phát hiện hòa lặp 3 lần từ lịch sử `move_stack`, Chiến lược sắp xếp nước đi Move Ordering (PV-move, MVV-LVA, Killer Moves, History), và Quiescence Search kèm Delta Pruning + SEE Pruning.
   - Tầng tìm kiếm ngẫu nhiên: Vanilla MCTS (UCT) với cơ chế Rollout cắt ngưỡng có định giá tĩnh.
   - Tầng học sâu: Biểu diễn trạng thái Tensor $\mathbb{R}^{18 \times 8 \times 8}$ chuẩn hóa góc nhìn bên đi (Canonical Side-to-Move), Kiến trúc mạng Dual-Head ResNet, hàm mất mát đa nhiệm và trình quản lý checkpoint.
   - Tầng học tăng cường & lai: Tác tử RL Cấp 6 trên cờ tàn KRK, Tác tử Guided MCTS (PUCT tích hợp Policy/Value) Cấp 7, và Vòng lặp Self-play Cấp 8.
@@ -99,8 +99,9 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
 
 ### Cấp 3: Iterative Deepening Minimax & Alpha-Beta Search [BẮT BUỘC]
 
-- **Mục tiêu & Bản chất:** Thuật toán duyệt cây đối kháng theo khuôn mẫu Negamax kết hợp cắt tỉa Alpha-Beta ($\alpha$-$\beta$ pruning) và sâu dần lặp (**Iterative Deepening**):
-  - _Iterative Deepening (ID) & Quản lý thời gian hợp tác:_ Duyệt tuần tự độ sâu $d = 1, 2, \dots, d_{\max}$. Kiểm tra ngân sách thời gian/nút định kỳ mỗi $256$ nút; nếu hết giờ, trả về ngay nước đi tốt nhất từ độ sâu hoàn tất gần nhất. Khi có `max_workload` hoặc `time_limit`, trần độ sâu mở lên `20` để tận dụng hết ngân sách; ngược lại dùng `default_depth = 4`.
+- **Mục tiêu & Bản chất:** Thuật toán duyệt cây đối kháng theo khuôn mẫu Negamax kết hợp cắt tỉa Alpha-Beta ($\alpha$-$\beta$ pruning), **Principal Variation Search (PVS)**, **Aspiration Windows** và sâu dần lặp (**Iterative Deepening**):
+  - _Iterative Deepening (ID), Aspiration Windows & Quản lý thời gian hợp tác:_ Duyệt tuần tự độ sâu $d = 1, 2, \dots, d_{\max}$; từ $d \ge 3$ thu hẹp cửa sổ tìm kiếm quanh điểm độ sâu trước (`[v - 50, v + 50]`, tự động nới rộng khi fail-high/low). Kiểm tra ngân sách thời gian/nút định kỳ mỗi $256$ nút; nếu hết giờ, trả về ngay nước đi tốt nhất từ độ sâu hoàn tất gần nhất. Khi có `max_workload` hoặc `time_limit`, trần độ sâu mở lên `20` để tận dụng hết ngân sách; ngược lại dùng `default_depth = 4`.
+  - _Principal Variation Search (PVS) & Lịch sử hòa lặp 3 lần:_ Duyệt nước đầu tiên (PV-move) với cửa sổ đầy đủ `(-beta, -alpha)`, các nước sau dùng null-window `(-alpha - 1, -alpha)` và re-search khi cần; kết hợp `_build_history_zobrist_counts()` phát hiện hòa lặp 3 lần xuyên suốt lịch sử `move_stack` trước gốc và đường đi trong cây.
   - _Transposition Table (TT):_ Bảng băm Zobrist 64-bit lưu trữ trạng thái đã duyệt, cờ đánh dấu (`EXACT`, `LOWERBOUND`, `UPPERBOUND`), nước đi tốt nhất (`best_move`) và độ sâu tìm kiếm; được tái sử dụng xuyên suốt trong một ván và xóa khi `agent.reset()`.
   - _Move Ordering:_ Sắp xếp thứ tự duyệt nước đi tại mỗi nút: ưu tiên PV-move từ TT $\rightarrow$ các nước bắt quân theo MVV-LVA $\rightarrow$ Killer Moves (2 slots/ply) $\rightarrow$ History Heuristic. Giúp hệ số phân nhánh hiệu dụng tiến gần trường hợp tốt nhất lý thuyết $\mathcal{O}(b^{d/2})$.
   - _Quiescence Search (Tìm kiếm tĩnh):_ Tại các nút lá ($d=0$), tiếp tục mở rộng giới hạn (`max_plies: 8`) cho các chuỗi bắt quân và thoát chiếu (kèm Delta Pruning) nhằm giảm thiểu đáng kể hiện tượng mù chân trời (Horizon Effect).
@@ -400,5 +401,5 @@ Chi tiết đầy đủ được quy định tại `docs/EXPERIMENT_PROTOCOL.md`
 2. **Kiểm định Thống kê Kép:**
    - Tính điểm chuẩn hóa $S = \frac{W + 0.5 \times D}{N}$ kèm **Khoảng tin cậy Wilson Score 95%** và **Khoảng tin cậy Bootstrap 95% theo cặp khai cuộc** ($10.000$ resamples).
 3. **Hai Bài Ablation / Sensitivity Studies Trọng Tâm:**
-   - _Ablation 1 (Tầng Cổ điển trên bộ WAC-50 chuẩn):_ Đánh giá 5 cấu hình lũy tiến (`Minimax` $\rightarrow$ `Alpha-Beta` $\rightarrow$ `+Move Ordering` $\rightarrow$ `+Transposition Table` $\rightarrow$ `+Quiescence Search`) và khảo sát độ nhạy theo độ sâu $d \in \{2, 3, 4\}$.
+   - _Ablation 1 (Tầng Cổ điển trên bộ WAC-50 chuẩn):_ Đánh giá 6 cấu hình lũy tiến (`Minimax` $\rightarrow$ `Alpha-Beta` $\rightarrow$ `+Move Ordering` $\rightarrow$ `+Transposition Table` $\rightarrow$ `+Quiescence Search/SEE` $\rightarrow$ `+PVS/Aspiration Windows`) và khảo sát độ nhạy theo độ sâu $d \in \{2, 3, 4\}$.
    - _Ablation 2 (Tầng MCTS & Học sâu):_ Khảo sát độ nhạy số lượt mô phỏng $N_{\text{sim}} \in \{50, 100, 200, 400, 800, 1000\}$ cho **cả Cấp 4 (UCT) và Cấp 7 (PUCT)**; đồng thời so sánh đối đầu trực tiếp giữa Policy-only (Cấp 5), Value-guided MCTS, và Full Guided MCTS (Cấp 7).

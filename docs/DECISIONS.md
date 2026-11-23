@@ -91,8 +91,9 @@ Tài liệu này ghi nhận toàn bộ các quyết định kiến trúc và thi
   1. **`ChessEnv.clone()` và Kiểm tra Kết thúc Nhanh:**
      * `ChessEnv.clone()` sao chép đầy đủ ngăn xếp lịch sử (`self.board.copy(stack=True)`) để bảo toàn khả năng `undo()` và phát hiện hòa lặp 3 lần (Threefold Repetition).
      * Cung cấp thêm phương thức `is_terminal_fast()` trong tìm kiếm nội bộ (kiểm tra chiếu hết, hòa pat, thiếu lực lượng, 50 nước mà không quét lại toàn bộ lịch sử lặp 3 lần tại mọi nút lá) kết hợp kiểm tra lặp khóa Zobrist trên đường đi hiện tại của cây tìm kiếm.
-  2. **Iterative Deepening (ID), Quản lý Thời gian Hợp tác & Bảng chuyển vị (TT):**
-     * Tác tử Cấp 3 (`chess_ai/search/alphabeta.py`) bắt buộc triển khai **Iterative Deepening** ($d = 1, 2, \dots, d_{\max}$) kết hợp kiểm tra đồng hồ hợp tác (Cooperative Time Check mỗi $256$ nút duyệt). Khi chạm ngưỡng thời gian, thuật toán dừng ngay và trả về nước đi tốt nhất từ độ sâu hoàn chỉnh gần nhất.
+  2. **Iterative Deepening (ID), PVS, Aspiration Windows, Quản lý Thời gian Hợp tác & Bảng chuyển vị (TT):**
+     * Tác tử Cấp 3 (`chess_ai/search/alphabeta.py`) triển khai **Iterative Deepening** ($d = 1, 2, \dots, d_{\max}$) kết hợp **Principal Variation Search (PVS)**, **Aspiration Windows** (`50 cp` từ $d \ge 3$), phát hiện hòa lặp 3 lần từ lịch sử `move_stack` (`_build_history_zobrist_counts`), và kiểm tra đồng hồ hợp tác (Cooperative Time Check mỗi $256$ nút duyệt). Khi chạm ngưỡng thời gian, thuật toán dừng ngay và trả về nước đi tốt nhất từ độ sâu hoàn chỉnh gần nhất.
+     * `chess_ai/search/quiescence.py` tích hợp cả **Delta Pruning** và **SEE Pruning** (`see_capture(board, move) < 0` trong `chess_ai/core/evaluation.py`) để giảm bùng nổ nhánh tại nút lá.
      * **Quy tắc độ sâu theo ngân sách (`Level3AlphaBetaAgent`):** Khi truyền `max_workload` hoặc `time_limit`, mở trần độ sâu (`max_depth = 20`) để tận dụng tối đa ngân sách nút/thời gian; khi không truyền cả hai, dùng `default_depth` từ cấu hình (`4`).
      * **Vòng đời Transposition Table:** Bảng `TranspositionTable` được giữ theo instance của `Level3AlphaBetaAgent` xuyên suốt một ván đấu để tái sử dụng kết quả giữa các nước, và xóa sạch khi gọi `agent.reset()`.
   3. **Tách biệt Module MCTS & Tái sử dụng Cây con (`subtree_reuse`):**
@@ -110,14 +111,15 @@ Tài liệu này ghi nhận toàn bộ các quyết định kiến trúc và thi
 * **Quyết định:**
   1. Thay thế toàn bộ tệp `resources/benchmark_positions.epd` bằng **50 thế cờ chiến thuật chuẩn `WAC.001` – `WAC.050`** trích từ bộ *Win At Chess* gốc (Arasan `wacnew.epd`), đã kiểm định $100\%$ bằng `python-chess`.
   2. **Mở rộng Ablation 1 (Tầng Tìm kiếm Cổ điển):**
-     * Tách thành **5 cấu hình lũy tiến** để cô lập rõ đóng góp của Transposition Table (TT):
+     * Tách thành **6 cấu hình lũy tiến** để cô lập rõ đóng góp của từng kỹ thuật:
        1. `Config_A`: Minimax thuần ($d=3$).
        2. `Config_B`: Minimax + Alpha-Beta ($d=3$).
-       3. `Config_C1`: Alpha-Beta + Move Ordering (MVV-LVA, Killer).
+       3. `Config_C1`: Alpha-Beta + Move Ordering (MVV-LVA, Killer, History).
        4. `Config_C2`: Alpha-Beta + Move Ordering + Zobrist Transposition Table (kiểm chứng trực tiếp `TC41`).
-       5. `Config_D`: Cấu hình Cấp 3 đầy đủ (`Config_C2` + Quiescence Search).
+       5. `Config_D`: `Config_C2` + Quiescence Search (kèm Delta Pruning & SEE Pruning).
+       6. `Config_E`: Cấu hình Cấp 3 hoàn chỉnh (`Config_D` + PVS + Aspiration Windows).
      * Bổ sung khảo sát độ nhạy theo độ sâu tìm kiếm $d \in \{2, 3, 4\}$ theo đúng yêu cầu Mục 3.5 của đề bài.
-     * Lưu ý học thuật rõ ràng: `Config_A`, `Config_B`, `Config_C1`, `Config_C2` ở cùng độ sâu cố định trả về cùng giá trị minimax (chỉ khác biệt đột biến về số nút duyệt và độ trễ), trong khi `Config_D` (Quiescence Search) mới tạo ra bước nhảy về độ chính xác giải thế cờ chiến thuật nhờ giảm thiểu hiện tượng mù chân trời (Horizon Effect).
+     * Lưu ý học thuật rõ ràng: `Config_A`, `Config_B`, `Config_C1`, `Config_C2` ở cùng độ sâu cố định trả về cùng giá trị minimax (chỉ khác biệt đột biến về số nút duyệt và độ trễ), trong khi `Config_D` / `Config_E` (Quiescence Search) mới tạo ra bước nhảy về độ chính xác giải thế cờ chiến thuật nhờ giảm thiểu hiện tượng mù chân trời (Horizon Effect).
   3. **Mở rộng Ablation 2 (Tầng MCTS & Học sâu):**
      * **Phần A:** Khảo sát độ nhạy số lượt mô phỏng $N_{\text{sim}} \in \{50, 100, 200, 400, 800, 1000\}$ cho **cả Cấp 4 (Vanilla MCTS UCT) lẫn Cấp 7 (Guided MCTS PUCT)** để đáp ứng trọn vẹn yêu cầu khảo sát số mô phỏng của Cấp 4 trong đề bài.
      * **Phần B:** So sánh bóc tách thành phần dẫn hướng nơ-ron (100 ván/cặp): Cấp 5 (Policy-only Greedy) vs Guided MCTS chỉ dùng Value Head (Uniform Prior + Value) vs Cấp 7 đầy đủ (Policy Prior + Value Head).

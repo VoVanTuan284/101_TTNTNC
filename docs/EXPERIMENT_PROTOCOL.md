@@ -108,15 +108,16 @@ Theo khuyến nghị tại Mục 3.5 của đề bài (*"khoảng tin cậy (khu
 
 ### 5.1. Ablation 1: Tầng Tìm Kiếm Cổ Điển, Độ Nhạy Độ Sâu & Giảm Thiểu Horizon Effect
 * **Tập dữ liệu kiểm định chuẩn:** Bộ 50 thế cờ chiến thuật chuẩn Win At Chess (`resources/benchmark_positions.epd`, từ `WAC.001` đến `WAC.050`, đã xác thực $100\%$ bằng `python-chess`).
-* **Phần 1A — So sánh 5 cấu hình lũy tiến ở cùng độ sâu cơ sở $d = 3$:**
+* **Phần 1A — So sánh 6 cấu hình lũy tiến ở cùng độ sâu cơ sở $d = 3$:**
   1. `Config_A (Minimax thuần)`: Duyệt cây vét cạn Negamax ở độ sâu cố định $d = 3$.
   2. `Config_B (Alpha-Beta)`: Tích hợp cắt tỉa $\alpha$-$\beta$ với thứ tự nước đi mặc định.
   3. `Config_C1 (Alpha-Beta + Move Ordering)`: Bổ sung sắp xếp nước đi MVV-LVA, Killer Moves và History Heuristic.
   4. `Config_C2 (Alpha-Beta + Move Ordering + Zobrist TT)`: Tích hợp thêm bảng chuyển vị Zobrist Transposition Table kèm Iterative Deepening ($d = 1 \to 3$), cô lập riêng mức giảm số nút duyệt của TT (kiểm chứng `TC41`).
-  5. `Config_D (Cấp 3 Hoàn chỉnh: Config_C2 + Quiescence Search)`: Mở rộng tìm kiếm tĩnh chuỗi bắt quân và thoát chiếu (`max_plies: 8`, kèm Delta Pruning) tại các nút lá.
-  > **Kỳ vọng lý thuyết & Kiểm chứng:** `Config_A` $\to$ `Config_C2` bảo toàn giá trị minimax ở độ sâu $d=3$ nên có tỷ lệ giải đúng tương đương nhau nhưng cắt giảm mạnh mẽ số nút duyệt và độ trễ; trong khi `Config_D` tạo ra bước nhảy vọt về **Tactical Accuracy (%)** nhờ hóa giải các bẫy trì hoãn vượt quá chân trời $d=3$.
+  5. `Config_D (Config_C2 + Quiescence Search)`: Mở rộng tìm kiếm tĩnh chuỗi bắt quân và thoát chiếu (`max_plies: 8`, kèm Delta Pruning và SEE Pruning) tại các nút lá.
+  6. `Config_E (Cấp 3 Hoàn chỉnh: Config_D + PVS + Aspiration Windows)`: Tích hợp thu hẹp cửa sổ tìm kiếm ở gốc (Aspiration Windows) và các nút trong (Principal Variation Search).
+  > **Kỳ vọng lý thuyết & Kiểm chứng:** `Config_A` $\to$ `Config_C2` bảo toàn giá trị minimax ở độ sâu $d=3$ nên có tỷ lệ giải đúng tương đương nhau (`50.0%` trên WAC-50) nhưng cắt giảm mạnh mẽ số nút duyệt và độ trễ; trong khi `Config_D` / `Config_E` tạo ra bước nhảy vọt về **Tactical Accuracy (%)** (`72.0%` ở $d=3$, `86.0%` ở $d=4$) nhờ hóa giải các bẫy trì hoãn vượt quá chân trời.
 * **Phần 1B — Khảo sát độ nhạy theo độ sâu tìm kiếm ($d \in \{2, 3, 4\}$):**
-  * Đo lường sự thay đổi của Tactical Accuracy (%), số nút duyệt trung bình và độ trễ $p95$ của Cấp 3 khi tăng độ sâu $d = 2 \to 3 \to 4$.
+  * Đo lường sự thay đổi của Tactical Accuracy (%), số nút duyệt trung bình và độ trễ $p95$ của Cấp 3 (`Config_E`) khi tăng độ sâu $d = 2 \to 3 \to 4$.
 
 ### 5.2. Ablation 2: Tầng MCTS (Cấp 4 & Cấp 7) và Vai Trò Dẫn Hướng Của Mạng Nơ-ron
 Gồm 2 phần khảo sát liên hoàn:
