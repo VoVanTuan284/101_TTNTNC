@@ -18,23 +18,37 @@ import torch
 from chess_ai.agents.level5_supervised import build_resnet_from_config
 from chess_ai.config import load_yaml_config
 from chess_ai.core.board_tensor import board_to_tensor
+from chess_ai.core.evaluation import evaluate_board
 from chess_ai.core.zobrist import compute_zobrist_hash
 from chess_ai.models.dual_resnet import DualHeadResNet
 from chess_ai.models.loss import DualHeadLoss
 from chess_ai.search.mcts_node import MCTSNode
 from chess_ai.search.mcts_puct import run_puct_search
 from chess_ai.training.replay_buffer import SelfPlayReplayBuffer
+from chess_ai.utils.epd import load_epd_file
 
 
-def _resolve_game_outcome_white(board: chess.Board) -> float:
+def _resolve_game_outcome_white(board: chess.Board, adjudicate_cp_threshold: float = 500.0) -> float:
     """
     Trả về kết quả ván cờ theo góc nhìn quân Trắng:
     +1.0 nếu Trắng thắng, -1.0 nếu Đen thắng, 0.0 nếu Hòa.
+    Nếu ván đấu bị cắt sớm do chạm trần max_plies (chưa is_game_over), phân xử thắng/thua
+    nếu một bên đang có ưu thế lượng giá áp đảo >= adjudicate_cp_threshold (mặc định 500 cp ~ 1 Xe).
     """
-    outcome = board.outcome(claim_draw=True)
-    if outcome is None or outcome.winner is None:
-        return 0.0
-    return 1.0 if outcome.winner == chess.WHITE else -1.0
+    if board.is_game_over(claim_draw=True):
+        outcome = board.outcome(claim_draw=True)
+        if outcome is None or outcome.winner is None:
+            return 0.0
+        return 1.0 if outcome.winner == chess.WHITE else -1.0
+
+    if adjudicate_cp_threshold > 0.0:
+        rel_cp = evaluate_board(board)
+        white_cp = rel_cp if board.turn == chess.WHITE else -rel_cp
+        if white_cp >= adjudicate_cp_threshold:
+            return 1.0
+        if white_cp <= -adjudicate_cp_threshold:
+            return -1.0
+    return 0.0
 
 
 def play_selfplay_game(
@@ -233,6 +247,8 @@ def evaluate_arena_gating(
     max_plies: int = 160,
     initial_fens: Optional[List[str]] = None,
     device: Optional[torch.device] = None,
+    verbose: bool = False,
+    iter_label: str = "",
 ) -> Dict[str, Any]:
     """
     Đấu loại trực tiếp giữa Challenger và Champion (chia đều số ván cầm Trắng / Đen).
@@ -282,6 +298,19 @@ def evaluate_arena_gating(
             losses += 1
         else:
             draws += 1
+
+        if verbose:
+            curr_rate = (wins + 0.5 * draws) / (g_idx + 1)
+            prefix = f"  [{iter_label}] " if iter_label else "  "
+            print(
+                f"\r{prefix}Pha 3 (Arena Gating): Ván {g_idx+1}/{total_games} | "
+                f"W:{wins} D:{draws} L:{losses} (Score: {curr_rate*100:5.1f}%)",
+                end="",
+                flush=True,
+            )
+
+    if verbose:
+        print("", flush=True)
 
     score_rate = float(wins + 0.5 * draws) / float(total_games)
     accepted = bool(score_rate >= float(win_threshold))
@@ -405,6 +434,15 @@ def run_selfplay_pipeline(
             champion_version = int(resume_payload.get("champion_version", 0))
             champion_model.eval()
 
+    if initial_fens is None:
+        for cand_epd in (Path("resources/openings_50.epd"), Path("../resources/openings_50.epd")):
+            if cand_epd.exists():
+                try:
+                    initial_fens = [rec.fen for rec in load_epd_file(str(cand_epd))]
+                    break
+                except Exception:
+                    initial_fens = None
+
     ckpt_dir_path = Path(checkpoint_dir)
     ckpt_dir_path.mkdir(parents=True, exist_ok=True)
     best_ckpt_path = ckpt_dir_path / "l8_alphazero_best.pt"
@@ -414,7 +452,6 @@ def run_selfplay_pipeline(
     out_dir_path.mkdir(parents=True, exist_ok=True)
     metrics_path = out_dir_path / "selfplay_metrics.json"
 
-    # Lưu bản Champion khởi điểm nếu chưa có file best
     if not best_ckpt_path.exists():
         torch.save(
             {
@@ -427,14 +464,28 @@ def run_selfplay_pipeline(
             best_ckpt_path,
         )
 
+    if verbose:
+        print(
+            f"Bắt đầu huấn luyện Cấp 8 (AlphaZero Self-Play) trên thiết bị: {device} | "
+            f"Warm-start L5: {warm_started} ({warm_start_checkpoint}) | "
+            f"Iterations: {start_iter}->{iterations} | "
+            f"Self-Play: {games_per_iter} ván/iter ({mcts_sims} sims/nước, max_plies={max_plies}) | "
+            f"Arena Gating: {arena_games} ván (ngưỡng >= {win_threshold*100:.0f}%)",
+            flush=True,
+        )
+
     for it in range(start_iter, int(iterations) + 1):
         it_t0 = time.perf_counter()
         sp_games_stats: List[Dict[str, Any]] = []
         samples_added = 0
+        iter_tag = f"Iter {it}/{iterations}"
 
         # Pha 1: Self-Play sinh dữ liệu
         for g in range(games_per_iter):
-            fen = initial_fens[g % len(initial_fens)] if initial_fens else None
+            if initial_fens and g > 0:
+                fen = initial_fens[((it - 1) * games_per_iter + g) % len(initial_fens)]
+            else:
+                fen = None
             s_arr, p_arr, v_arr, g_info = play_selfplay_game(
                 model=champion_model,
                 mcts_sims=mcts_sims,
@@ -452,6 +503,16 @@ def run_selfplay_pipeline(
             replay_buffer.push_game_samples(s_arr, p_arr, v_arr)
             samples_added += int(s_arr.shape[0])
             sp_games_stats.append(g_info)
+            if verbose:
+                print(
+                    f"\r  [{iter_tag}] Pha 1 (Self-Play): Ván {g+1}/{games_per_iter} "
+                    f"({g_info['plies']} plies, kq={g_info['white_outcome']:+.0f}) | "
+                    f"Buffer: {len(replay_buffer):,} mẫu",
+                    end="",
+                    flush=True,
+                )
+        if verbose:
+            print("", flush=True)
 
         # Pha 2: Cập nhật mạng Challenger trên Replay Buffer
         challenger_model = copy.deepcopy(champion_model).to(device)
@@ -463,8 +524,20 @@ def run_selfplay_pipeline(
             learning_rate=learning_rate,
             device=device,
         )
+        if verbose:
+            print(
+                f"  [{iter_tag}] Pha 2 (Refinement): {int(train_stats['steps'])} steps | "
+                f"Loss: {train_stats['total_loss']:.4f} "
+                f"(Policy: {train_stats['policy_loss']:.4f}, Value: {train_stats['value_loss']:.4f})",
+                flush=True,
+            )
 
         # Pha 3: Đấu loại Arena Gating (>= 55%)
+        arena_fens = (
+            [initial_fens[((it - 1) * max(1, arena_games // 2) + k) % len(initial_fens)] for k in range(len(initial_fens))]
+            if initial_fens
+            else None
+        )
         arena_stats = evaluate_arena_gating(
             challenger_model=challenger_model,
             champion_model=champion_model,
@@ -473,8 +546,10 @@ def run_selfplay_pipeline(
             c_puct=c_puct,
             win_threshold=win_threshold,
             max_plies=max_plies,
-            initial_fens=initial_fens,
+            initial_fens=arena_fens,
             device=device,
+            verbose=verbose,
+            iter_label=iter_tag,
         )
 
         if arena_stats["accepted"]:
@@ -498,16 +573,15 @@ def run_selfplay_pipeline(
             "selfplay_games": int(games_per_iter),
             "samples_added": int(samples_added),
             "buffer_size": int(len(replay_buffer)),
-            "train_total_loss": float(train_stats["total_loss"]),
-            "train_policy_loss": float(train_stats["policy_loss"]),
-            "train_value_loss": float(train_stats["value_loss"]),
+            "train_total_loss": round(float(train_stats["total_loss"]), 5),
+            "train_policy_loss": round(float(train_stats["policy_loss"]), 5),
+            "train_value_loss": round(float(train_stats["value_loss"]), 5),
             "arena": arena_stats,
             "champion_version": int(champion_version),
-            "elapsed_sec": float(time.perf_counter() - it_t0),
+            "elapsed_sec": round(float(time.perf_counter() - it_t0), 2),
         }
         history.append(iter_record)
 
-        # Lưu checkpoint tạm thời kèm Replay Buffer để có thể --resume bất cứ lúc nào
         torch.save(
             {
                 "iteration": int(it),
@@ -522,6 +596,7 @@ def run_selfplay_pipeline(
         )
 
         report_payload: Dict[str, Any] = {
+            "experiment": "Level8_AlphaZero_SelfPlay_Gating",
             "device": str(device),
             "warm_started": warm_started,
             "warm_start_checkpoint": str(warm_start_checkpoint),
@@ -535,14 +610,12 @@ def run_selfplay_pipeline(
         metrics_path.write_text(json.dumps(report_payload, indent=2, ensure_ascii=False), encoding="utf-8")
 
         if verbose:
+            status_tag = "★ ACCEPTED (Cập nhật Champion mới)" if arena_stats["accepted"] else "REJECTED (Giữ nguyên Champion)"
             print(
-                f"[Self-Play Iter {it}/{iterations}] "
-                f"buffer={len(replay_buffer)} | "
-                f"loss={train_stats['total_loss']:.4f} "
-                f"(pi={train_stats['policy_loss']:.4f}, v={train_stats['value_loss']:.4f}) | "
-                f"arena_score={arena_stats['score_rate']*100:.1f}% "
-                f"({'ACCEPTED' if arena_stats['accepted'] else 'REJECTED'}) | "
-                f"time={iter_record['elapsed_sec']:.1f}s"
+                f"  ==> [{iter_tag} Hoàn tất] Arena Score: {arena_stats['score_rate']*100:.1f}% "
+                f"(W:{arena_stats['wins']} D:{arena_stats['draws']} L:{arena_stats['losses']}) -> {status_tag} | "
+                f"Champion v{champion_version} | {iter_record['elapsed_sec']:.1f}s\n",
+                flush=True,
             )
 
     return {

@@ -1,0 +1,173 @@
+{
+  "experiment": "Level8_AlphaZero_SelfPlay_Gating",
+  "device": "cuda",
+  "warm_started": true,
+  "warm_start_checkpoint": "d:\\Projects\\TTNTNC_local\\101_chess_agent\\101_TTNTNC\\checkpoints\\best_model.pt",
+  "iterations_completed": 8,
+  "champion_version": 4,
+  "best_checkpoint": "d:\\Projects\\TTNTNC_local\\101_chess_agent\\101_TTNTNC\\checkpoints\\l8_alphazero_best.pt",
+  "latest_checkpoint": "d:\\Projects\\TTNTNC_local\\101_chess_agent\\101_TTNTNC\\checkpoints\\l8_alphazero_latest.pt",
+  "buffer_size": 6459,
+  "history": [
+    {
+      "iteration": 1,
+      "selfplay_games": 10,
+      "samples_added": 833,
+      "buffer_size": 833,
+      "train_total_loss": 2.48792,
+      "train_policy_loss": 2.09759,
+      "train_value_loss": 0.39033,
+      "arena": {
+        "games": 10,
+        "wins": 3,
+        "draws": 2,
+        "losses": 5,
+        "score_rate": 0.4,
+        "win_threshold": 0.55,
+        "accepted": false
+      },
+      "champion_version": 0,
+      "elapsed_sec": 196.86
+    },
+    {
+      "iteration": 2,
+      "selfplay_games": 10,
+      "samples_added": 735,
+      "buffer_size": 1568,
+      "train_total_loss": 2.55177,
+      "train_policy_loss": 2.20402,
+      "train_value_loss": 0.34774,
+      "arena": {
+        "games": 10,
+        "wins": 4,
+        "draws": 2,
+        "losses": 4,
+        "score_rate": 0.5,
+        "win_threshold": 0.55,
+        "accepted": false
+      },
+      "champion_version": 0,
+      "elapsed_sec": 187.89
+    },
+    {
+      "iteration": 3,
+      "selfplay_games": 10,
+      "samples_added": 795,
+      "buffer_size": 2363,
+      "train_total_loss": 2.57745,
+      "train_policy_loss": 2.22676,
+      "train_value_loss": 0.35068,
+      "arena": {
+        "games": 10,
+        "wins": 0,
+        "draws": 4,
+        "losses": 6,
+        "score_rate": 0.2,
+        "win_threshold": 0.55,
+        "accepted": false
+      },
+      "champion_version": 0,
+      "elapsed_sec": 198.91
+    },
+    {
+      "iteration": 4,
+      "selfplay_games": 10,
+      "samples_added": 794,
+      "buffer_size": 3157,
+      "train_total_loss": 2.63048,
+      "train_policy_loss": 2.24572,
+      "train_value_loss": 0.38476,
+      "arena": {
+        "games": 10,
+        "wins": 2,
+        "draws": 4,
+        "losses": 4,
+        "score_rate": 0.4,
+        "win_threshold": 0.55,
+        "accepted": false
+      },
+      "champion_version": 0,
+      "elapsed_sec": 205.78
+    },
+    {
+      "iteration": 5,
+      "selfplay_games": 10,
+      "samples_added": 806,
+      "buffer_size": 3963,
+      "train_total_loss": 2.64087,
+      "train_policy_loss": 2.24032,
+      "train_value_loss": 0.40054,
+      "arena": {
+        "games": 10,
+        "wins": 4,
+        "draws": 3,
+        "losses": 3,
+        "score_rate": 0.55,
+        "win_threshold": 0.55,
+        "accepted": true
+      },
+      "champion_version": 1,
+      "elapsed_sec": 187.31
+    },
+    {
+      "iteration": 6,
+      "selfplay_games": 10,
+      "samples_added": 891,
+      "buffer_size": 4854,
+      "train_total_loss": 2.48033,
+      "train_policy_loss": 2.14192,
+      "train_value_loss": 0.33841,
+      "arena": {
+        "games": 10,
+        "wins": 5,
+        "draws": 4,
+        "losses": 1,
+        "score_rate": 0.7,
+        "win_threshold": 0.55,
+        "accepted": true
+      },
+      "champion_version": 2,
+      "elapsed_sec": 211.29
+    },
+    {
+      "iteration": 7,
+      "selfplay_games": 10,
+      "samples_added": 781,
+      "buffer_size": 5635,
+      "train_total_loss": 2.42458,
+      "train_policy_loss": 2.10954,
+      "train_value_loss": 0.31504,
+      "arena": {
+        "games": 10,
+        "wins": 4,
+        "draws": 3,
+        "losses": 3,
+        "score_rate": 0.55,
+        "win_threshold": 0.55,
+        "accepted": true
+      },
+      "champion_version": 3,
+      "elapsed_sec": 187.03
+    },
+    {
+      "iteration": 8,
+      "selfplay_games": 10,
+      "samples_added": 824,
+      "buffer_size": 6459,
+      "train_total_loss": 2.38496,
+      "train_policy_loss": 2.09447,
+      "train_value_loss": 0.29048,
+      "arena": {
+        "games": 10,
+        "wins": 5,
+        "draws": 1,
+        "losses": 4,
+        "score_rate": 0.55,
+        "win_threshold": 0.55,
+        "accepted": true
+      },
+      "champion_version": 4,
+      "elapsed_sec": 208.85
+    }
+  ]
+}
