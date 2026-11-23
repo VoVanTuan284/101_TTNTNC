@@ -43,8 +43,8 @@ Hệ thống được thiết kế theo nguyên lý kiến trúc sạch (Clean A
 ├── results/                                 # Kết quả thực nghiệm & biểu đồ nộp bài (round_robin, ablation1/2, training, figures)
 ├── logs/                                    # Nhật ký debug lúc chạy (chess.log - gitignored)
 ├── scripts/                                 # Kịch bản tái lập tự động (reproduce_experiment.py)
-├── notebooks/                               # Notebook phân tích & tạo bảng/hình (analysis.ipynb)
-├── tests/                                   # Bộ 61+ kịch bản kiểm thử tự động (conftest, fixtures/, 4 tệp test_*)
+├── notebooks/                               # Bộ 6 notebook chuyên đề, train_level8_alphazero & analysis.ipynb
+├── tests/                                   # Bộ 36 kịch bản kiểm thử tự động (7 tệp test_* + conftest + fixtures/)
 ├── docs/                                    # Tài liệu đặc tả, đề bài, DECISIONS.md & CONTRIBUTIONS.md
 └── report/                                  # Báo cáo 5 chương, Slide, Poster & Link Video Demo nộp bài
 ```
@@ -126,16 +126,17 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
 
 ### Cấp 6: Reinforcement Learning [MỞ RỘNG]
 
-- **Mục tiêu & Bản chất:** Học tăng cường trực tiếp từ tương tác môi trường và tín hiệu phần thưởng trên bài toán cờ tàn chuẩn FIDE **KRK (Vua + Xe Trắng đấu Vua Đen)**:
-  - _Phương pháp:_ Cài đặt Tabular Q-Learning (trên không gian trạng thái rút gọn quy chiếu đối xứng 8 lần của bộ 3 quân $K_W, R_W, K_B$) và Policy Gradient (REINFORCE), chạy trực tiếp trên `ChessEnv` khởi tạo từ FEN KRK.
-  - _Cấu trúc hàm thưởng:_ Chiếu hết đối thủ: $+1.0$; để mất Xe hoặc hòa pat/50 nước: $-0.2$; phạt mỗi bước đi: $-0.01$ (với hệ số chiết khấu $\gamma = 0.99$) nhằm buộc tác tử học đường chiếu hết ngắn nhất.
-  - _Sản phẩm thực nghiệm:_ Xuất đường cong học tập (Learning Curve: tỷ lệ chiếu hết thành công & độ dài ván trung bình theo số episode huấn luyện).
+- **Mục tiêu & Bản chất:** Học tăng cường trực tiếp từ tương tác môi trường và tín hiệu phần thưởng trên các bài toán cờ tàn 3 quân chuẩn FIDE **KRK, KQK, KPK** (`chess_ai/agents/level6_reinforcement.py`, `chess_ai/training/train_rl_krk.py`):
+  - _Phương pháp:_ Cài đặt **Afterstate Value Learning $V(s_{\text{after}})$ với Backward $\text{TD}(\lambda)$ & Staged Curriculum** trên không gian trạng thái quy chiếu đối xứng D4 + chuẩn hóa màu ($\sim 35.000$ trạng thái), Tabular Q-Learning, và **Policy Gradient Batch REINFORCE** (18 đặc trưng hình học & chiến thuật trên KRK), chạy trực tiếp trên `ChessEnv`.
+  - _Cấu trúc hàm thưởng:_ Chiếu hết đối thủ: $+1.0$; để mất quân hoặc hòa pat/50 nước: $-0.2$; phạt mỗi bước đi: $-0.005$ (với $\gamma = 0.99$) nhằm buộc tác tử học đường chiếu hết ngắn nhất.
+  - _Sản phẩm thực nghiệm:_ Lưu bảng giá trị & trọng số REINFORCE vào `checkpoints/l6_krk_qtable.pkl` và xuất đường cong học tập ra `results/training/krk_learning_curve.json`.
 
 ### Cấp 7: Guided MCTS (AlphaGo-inspired / PUCT) [MỞ RỘNG]
 
 - **Mục tiêu & Bản chất:** Kết hợp mạng Dual-Head ResNet (đã huấn luyện có giám sát ở Cấp 5) với cây tìm kiếm MCTS theo công thức PUCT (`chess_ai/search/mcts_puct.py`):
   - _Selection theo công thức PUCT:_
     $$a_t = \arg\max_{a \in \text{legal}(s)} \left[ Q(s, a) + c_{\text{puct}} \cdot P(s, a) \cdot \frac{\sqrt{\sum_b N(s, b)}}{1 + N(s, a)} \right]$$
+  - _Tối ưu hóa tìm kiếm PUCT:_ Tích hợp **FPU Reduction** (`fpu_reduction: 0.2`) cho nút chưa thăm, **phát hiện hòa lặp lại 3 lần (Threefold Repetition)** ngay trong cây tìm kiếm qua bảng đếm Zobrist, **Zobrist NN Evaluation Cache** (`eval_cache_size: 8192`), và **Batched Leaf Evaluation kèm Virtual Loss** (`batch_size=8` trên CUDA, `1` trên CPU).
   - _Evaluation tại lá:_ Đánh giá trực tiếp trạng thái lá bằng Value Head $V(s) \in [-1, 1]$ (thay cho rollout ngẫu nhiên).
   - _Tách biệt Chế độ Thi đấu (`eval_mode`) và Tự chơi (`selfplay_mode`):_ Khi thi đấu giải (`eval_mode`), tắt nhiễu Dirichlet ($\epsilon = 0$) và chọn nước đi theo $\arg\max_a N(s, a)$ để tối đa hóa sức cờ ổn định.
 - **Bảng đối chiếu các thành phần Đã hiện thực / Chưa hiện thực so với AlphaGo nguyên bản (theo yêu cầu Mục 3.2 đề bài):**
@@ -146,7 +147,7 @@ Theo quy định tại Mục 2 và Mục 5 của đề bài môn học, nhóm ph
 | **Value Network**               | Huấn luyện riêng trên dữ liệu tự chơi của RL Policy                              | **Đã hiện thực (Hợp nhất)** (Nhánh Value chung thân ResNet huấn luyện đa nhiệm)    | Tiết kiệm $50\%$ chi phí suy luận GPU nhờ kiến trúc Dual-Head                    |
 | **RL Policy Network**           | Tinh chỉnh SL Policy bằng REINFORCE self-play                                    | **Giản lược ở Cấp 7** (Chuyển sang khảo sát ở Cấp 6 & Cấp 8)                       | Cấp 7 dùng trực tiếp trọng số SL để cô lập tác động của cây PUCT                 |
 | **Fast Rollout Policy**         | Trộn $\lambda \cdot V(s_L) + (1-\lambda) \cdot z_L$ với rollout tuyến tính nhanh | **Không dùng Rollout ($\lambda = 1.0$)**                                           | Định giá lá thuần túy bằng Value Head $V(s)$ theo chuẩn AlphaGo Zero / AlphaZero |
-| **Asynchronous Multi-GPU MCTS** | Duyệt cây bất đồng bộ kèm Virtual Loss trên cụm phân tán                         | **Đơn luồng / Subtree Reuse** trên 1 GPU/CPU cá nhân                               | Phù hợp với ngân sách phần cứng máy trạm sinh viên                               |
+| **Asynchronous Multi-GPU MCTS** | Duyệt cây bất đồng bộ kèm Virtual Loss trên cụm phân tán                         | **Batched Leaf Eval + Virtual Loss + Zobrist Eval Cache + Subtree Reuse**          | Gom batch trên 1 GPU (`batch_size=8` CUDA) + cache Zobrist tối ưu máy trạm đơn   |
 
 ### Cấp 8: AlphaZero-inspired [MỞ RỘNG]
 

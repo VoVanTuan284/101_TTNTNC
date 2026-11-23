@@ -122,10 +122,10 @@ Theo **ADR-02** (`docs/DECISIONS.md`) và `configs/model_resnet.yaml`, mọi tr�
 
 | Tệp Dữ Liệu | Kích Thước Chiều (Shape) | Dtype Trên Đĩa | Dung Lượng ($N = 10^6$ Mẫu) | Cơ Chế Chuyển Đổi Trong PyTorch |
 | :--- | :--- | :--- | :--- | :--- |
-| **States** | $(N, 18, 8, 8)$ | `np.uint8` | $\approx 1.152\text{ MB}$ | Chuyển sang `float32`; riêng kênh 17 chia `100.0` |
+| **States** | $(N, 18, 8, 8)$ | `np.uint8` | $\approx 1.152\text{ GB}$ | Chuyển sang `float32`; riêng kênh 17 chia `100.0` |
 | **Actions** | $(N,)$ | `np.int16` | $\approx 2.0\text{ MB}$ | Chuyển sang `torch.int64` cho `CrossEntropyLoss` |
 | **Values** | $(N,)$ | `np.float32` | $\approx 4.0\text{ MB}$ | Giữ nguyên `torch.float32` cho `MSELoss` |
-| **Tổng Cộng** | — | — | **$\approx 1.158\text{ MB}$** | **RAM hệ thống luôn duy trì $< 1.5\text{ GB}$** |
+| **Tổng Cộng** | — | — | **$\approx 1.158\text{ GB}$** | **RAM hệ thống luôn duy trì $< 1.5\text{ GB}$** |
 
 ---
 
@@ -139,7 +139,7 @@ Theo `configs/model_resnet.yaml`:
 
 ### 6.2. Khai Thác Hỗn Hợp Độ Chính Xác (AMP) & Ghi Nhận Tài Nguyên
 * Sử dụng cú pháp PyTorch 2.x chuẩn: `torch.amp.autocast("cuda", dtype=torch.float16)` kết hợp `torch.amp.GradScaler("cuda")`.
-* Script `chess_ai/training/train_supervised.py` tự động ghi nhận vào `results/training/training_metrics.json`:
+* Script `chess_ai/training/train_supervised.py` tự động ghi nhận vào `results/training/sl_training_metrics.json`:
   * Cấu hình thiết bị thực tế (Tên CPU, số luồng, tên GPU, tổng VRAM).
   * Thời gian huấn luyện mỗi epoch và tổng thời gian huấn luyện (phút/giờ).
   * Đỉnh RAM và đỉnh VRAM tiêu thụ (`torch.cuda.max_memory_allocated()`).
@@ -188,18 +188,18 @@ checkpoint_payload = {
 
 ### Bước 1: Trích Xuất Dữ Liệu Từ Lichess Elite Database
 ```bash
-python -m chess_ai.etl.pgn_etl \
-    --config configs/default_config.yaml \
-    --input_path data/raw/lichess_elite_2025.pgn.zst \
+chess-etl --config configs/default_config.yaml \
+    --input_path data/raw/lichess_elite_2025-11.pgn \
     --output_dir data/processed
+# (hoặc: python -m chess_ai.etl.pgn_etl --config configs/default_config.yaml --input_path data/raw/lichess_elite_2025-11.pgn --output_dir data/processed)
 ```
 
 ### Bước 2: Huấn Luyện Mạng Dual-Head ResNet Cấp 5 (Hỗ trợ `--resume`)
 ```bash
-python -m chess_ai.training.train_supervised \
-    --config configs/model_resnet.yaml \
+chess-train-sl --config configs/model_resnet.yaml \
     --data_dir data/processed \
     --checkpoint_dir checkpoints
+# (hoặc: python -m chess_ai.training.train_supervised --config configs/model_resnet.yaml --data_dir data/processed --checkpoint_dir checkpoints)
 ```
 Để khôi phục phiên huấn luyện khi bị gián đoạn:
 ```bash
