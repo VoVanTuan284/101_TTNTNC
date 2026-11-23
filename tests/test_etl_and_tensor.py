@@ -186,3 +186,74 @@ def test_level5_dual_resnet_loss_agent_and_resume(tmp_path: Path) -> None:
     move = agent.select_move(env)
     assert move in env.legal_actions()
     assert -1.0 <= agent.last_search_stats["eval"] <= 1.0
+
+
+def test_level7_guided_mcts_puct_and_backprop(tmp_path: Path) -> None:
+    import torch
+    from chess_ai.agents.level7_guided_mcts import Level7GuidedMCTSAgent
+    from chess_ai.core.chess_env import ChessEnv
+    from chess_ai.models.dual_resnet import DualHeadResNet
+    from chess_ai.search.mcts_node import MCTSNode
+    from chess_ai.search.mcts_puct import _backpropagate, run_puct_search, search_puct
+
+    # 1. TC35: Kiểm tra đảo dấu Negamax khi lan truyền ngược từ nút lá lên gốc
+    root = MCTSNode()
+    child = MCTSNode(parent=root)
+    grandchild = MCTSNode(parent=child)
+    # Giả sử tại grandchild, bên tới lượt tại grandchild nhận định thế cờ có giá trị +0.6
+    _backpropagate(grandchild, 0.6)
+    assert grandchild.visit_count == 1
+    assert grandchild.q_value == pytest.approx(-0.6)  # góc nhìn của child (đối thủ của grandchild)
+    assert child.q_value == pytest.approx(+0.6)       # góc nhìn của root (cùng phe với grandchild)
+    assert root.visit_count == 1
+
+    # 2. TC52 & TC53: Kiểm tra search_puct ở cả eval_mode=True và eval_mode=False (selfplay_mode)
+    model = DualHeadResNet(num_res_blocks=2, filters=16)
+    model.eval()
+    ckpt_path = tmp_path / "l5_mock.pt"
+    torch.save(
+        {
+            "model_state_dict": model.state_dict(),
+            "model_config": {"network": {"num_res_blocks": 2, "filters": 16}},
+        },
+        ckpt_path,
+    )
+
+    board = chess.Board()
+    move_eval, stats_eval = search_puct(board, model, simulations=12, eval_mode=True)
+    assert move_eval in board.legal_moves
+    assert stats_eval["simulations"] == 12.0
+    assert stats_eval["pi"].shape == (4096,)
+    assert float(np.sum(stats_eval["pi"])) == pytest.approx(1.0, abs=1e-5)
+
+    # TC52: eval_mode=True phải chọn đúng nước có số lượt thăm cao nhất (argmax N(s, a))
+    max_visits = max(stats_eval["visit_counts"].values())
+    assert stats_eval["visit_counts"][move_eval.uci()] == max_visits
+
+    # TC53: eval_mode=False bật Dirichlet noise tại nút gốc
+    move_sp, stats_sp, root_sp = run_puct_search(
+        board,
+        model,
+        simulations=10,
+        eval_mode=False,
+        temperature=1.0,
+    )
+    assert move_sp in board.legal_moves
+    assert float(np.sum(stats_sp["pi"])) == pytest.approx(1.0, abs=1e-5)
+    assert sum(c.prior for c in root_sp.children.values()) == pytest.approx(1.0, abs=1e-4)
+
+    # 3. Kiểm tra Level7GuidedMCTSAgent nạp checkpoint Level 5 và tái sử dụng cây con (Subtree Reuse)
+    agent7 = Level7GuidedMCTSAgent(
+        checkpoint_path=str(ckpt_path),
+        simulations=10,
+        subtree_reuse=True,
+    )
+    assert agent7.checkpoint_loaded is True
+    env = ChessEnv()
+    m1 = agent7.select_move(env, max_workload=8)
+    assert m1 in env.legal_actions()
+    assert agent7.last_search_stats["simulations"] == 8.0
+    env.step(m1)
+    m2 = agent7.select_move(env, max_workload=8)
+    assert m2 in env.legal_actions()
+

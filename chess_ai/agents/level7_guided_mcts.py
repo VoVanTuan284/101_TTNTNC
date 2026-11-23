@@ -5,10 +5,23 @@ tích hợp Policy Prior P(s, a) và Value Head V(s) từ mạng Dual-Head ResNe
 Phụ trách: TV2 (DL, ETL, PUCT & Self-Play Lead)
 """
 
-from typing import Optional
+from pathlib import Path
+from typing import Any, Dict, Optional
 import chess
+import numpy as np
+import torch
+
 from chess_ai.agents.base_agent import BaseAgent
+from chess_ai.agents.level5_supervised import build_resnet_from_config
+from chess_ai.config import load_yaml_config
 from chess_ai.core.chess_env import ChessEnv
+from chess_ai.core.zobrist import compute_zobrist_hash
+from chess_ai.models.dual_resnet import DualHeadResNet
+from chess_ai.search.mcts_node import MCTSNode
+from chess_ai.search.mcts_puct import run_puct_search
+
+
+_PUCT_CFG = load_yaml_config("search_params.yaml")["guided_mcts"]
 
 
 class Level7GuidedMCTSAgent(BaseAgent):
@@ -16,16 +29,81 @@ class Level7GuidedMCTSAgent(BaseAgent):
 
     def __init__(
         self,
-        checkpoint_path: Optional[str] = None,
-        simulations: int = 400,
-        c_puct: float = 1.414,
+        checkpoint_path: Optional[str] = "checkpoints/best_model.pt",
+        simulations: int = int(_PUCT_CFG.get("default_simulations", 400)),
+        c_puct: float = float(_PUCT_CFG.get("c_puct", 1.414)),
         eval_mode: bool = True,
+        subtree_reuse: bool = bool(_PUCT_CFG.get("subtree_reuse", True)),
+        device: Optional[str] = None,
+        seed: Optional[int] = 42,
     ) -> None:
         super().__init__(name="Level7_GuidedMCTS")
-        self.checkpoint_path = checkpoint_path
+        self.checkpoint_path = checkpoint_path or "checkpoints/best_model.pt"
         self.simulations = simulations
         self.c_puct = c_puct
         self.eval_mode = eval_mode
+        self.subtree_reuse = subtree_reuse
+        self.seed = seed
+        self._rng = np.random.default_rng(seed)
+        self._root: Optional[MCTSNode] = None
+
+        if device is None:
+            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        else:
+            self.device = torch.device(device)
+
+        self.model: Optional[DualHeadResNet] = None
+        self.checkpoint_loaded: bool = False
+        self.checkpoint_meta: Dict[str, Any] = {}
+        self._ensure_model_loaded()
+
+    def _ensure_model_loaded(self) -> None:
+        """Nạp trọng số DualHeadResNet từ checkpoint_path (ưu tiên best_model.pt của Level 5)."""
+        if self.model is not None:
+            return
+
+        candidates = [self.checkpoint_path] if self.checkpoint_path else []
+        for fallback in ("checkpoints/best_model.pt", "checkpoints/l5_supervised_best.pt", "checkpoints/latest.pt"):
+            if fallback not in candidates:
+                candidates.append(fallback)
+
+        loaded_file: Optional[Path] = None
+        for cand in candidates:
+            p = Path(cand)
+            if p.exists():
+                loaded_file = p
+                break
+
+        if loaded_file is not None:
+            payload = torch.load(loaded_file, map_location=self.device, weights_only=False)
+            model_cfg = payload.get("model_config") if isinstance(payload, dict) else None
+            self.model = build_resnet_from_config(model_cfg)
+            state_dict = (
+                payload["model_state_dict"]
+                if isinstance(payload, dict) and "model_state_dict" in payload
+                else payload
+            )
+            self.model.load_state_dict(state_dict)
+            self.checkpoint_loaded = True
+            self.checkpoint_path = str(loaded_file)
+            if isinstance(payload, dict):
+                self.checkpoint_meta = {
+                    k: payload.get(k)
+                    for k in ("epoch", "global_step", "val_policy_acc", "val_value_mse", "best_val_loss")
+                    if k in payload
+                }
+        else:
+            self.model = build_resnet_from_config()
+            self.checkpoint_loaded = False
+
+        self.model.to(self.device)
+        self.model.eval()
+
+    def reset(self) -> None:
+        """Xóa cây MCTS lưu trữ và khởi tạo lại bộ sinh số ngẫu nhiên khi sang ván mới."""
+        super().reset()
+        self._root = None
+        self._rng = np.random.default_rng(self.seed)
 
     def select_move(
         self,
@@ -34,5 +112,45 @@ class Level7GuidedMCTSAgent(BaseAgent):
         max_workload: Optional[int] = None,
     ) -> chess.Move:
         """Thực thi tìm kiếm PUCT dẫn hướng bởi mạng Dual-Head ResNet."""
-        raise NotImplementedError
+        self._ensure_model_loaded()
+        assert self.model is not None
 
+        if max_workload is not None:
+            sims = int(max_workload)
+        elif time_limit is not None:
+            sims = 100_000
+        else:
+            sims = self.simulations
+
+        reusable_root: Optional[MCTSNode] = None
+        if self.subtree_reuse and self._root is not None:
+            target_key = compute_zobrist_hash(env.board)
+            reusable_root = self._root.find_reusable_root(target_key)
+
+        selfplay_cfg = _PUCT_CFG.get("selfplay_mode", {})
+        dir_alpha = float(selfplay_cfg.get("dirichlet_alpha", 0.3))
+        dir_eps = float(selfplay_cfg.get("dirichlet_epsilon", 0.25))
+
+        best_move, stats, new_root = run_puct_search(
+            board=env.board,
+            model=self.model,
+            simulations=sims,
+            time_limit=time_limit,
+            c_puct=self.c_puct,
+            eval_mode=self.eval_mode,
+            dirichlet_alpha=dir_alpha,
+            dirichlet_epsilon=dir_eps,
+            root=reusable_root,
+            device=self.device,
+            rng=self._rng,
+        )
+        self._root = new_root if self.subtree_reuse else None
+        self.last_search_stats = {
+            "nodes": float(stats["nodes"]),
+            "simulations": float(stats["simulations"]),
+            "depth": float(stats["depth"]),
+            "eval": float(stats["eval"]),
+            "root_value": float(stats.get("root_value", 0.0)),
+            "time_sec": float(stats["time_sec"]),
+        }
+        return best_move
