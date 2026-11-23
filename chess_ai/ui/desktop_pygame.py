@@ -143,6 +143,7 @@ class ChessPygameApp:
         self.modal_base = 600.0
         self.modal_increment = 0.0
         self.active_tab = "play"
+        self.lab_tab_locked = True
         self.promotion_pending: Optional[Any] = None
         self.piece_images: dict[str, Any] = {}
         self.resign_result: Optional[float] = None
@@ -535,7 +536,10 @@ class ChessPygameApp:
             if 0 <= x < 350:
                 self.active_tab = "play"
             elif 350 <= x < 700:
-                self.active_tab = "lab"
+                if not self.lab_tab_locked:
+                    self.active_tab = "lab"
+                else:
+                    self.message = "Tab Nghiên cứu đang tạm khóa"
             return
         if self.modal_open:
             self._handle_modal_click(x, y, pygame_mod)
@@ -1220,7 +1224,7 @@ class ChessPygameApp:
         pygame.draw.line(screen, self.BORDER, (0, 43), (1280, 43), 1)
         tabs = [
             ("play", "♟  Thi đấu & Phân tích"),
-            ("lab", "📊  Nghiên cứu & Thực nghiệm"),
+            ("lab", "🔒  Nghiên cứu & Thực nghiệm (Tạm khóa)" if self.lab_tab_locked else "📊  Nghiên cứu & Thực nghiệm"),
         ]
         for index, (key, label) in enumerate(tabs):
             rect = pygame.Rect(index * 350, 0, 350, 44)
@@ -1228,9 +1232,12 @@ class ChessPygameApp:
             pygame.draw.rect(screen, color, rect)
             if self.active_tab == key:
                 pygame.draw.rect(screen, self.ACCENT, pygame.Rect(rect.x, 41, rect.width, 3))
-            font = pygame.font.SysFont("segoeui", 17, bold=True)
-            muted = self.ACCENT if self.active_tab == key else self.MUTED
-            screen.blit(font.render(label, True, muted), (rect.x + 18, 11))
+            font = pygame.font.SysFont("segoeui", 17 if not (key == "lab" and self.lab_tab_locked) else 14, bold=True)
+            if key == "lab" and self.lab_tab_locked:
+                muted = (95, 105, 122)
+            else:
+                muted = self.ACCENT if self.active_tab == key else self.MUTED
+            screen.blit(font.render(label, True, muted), (rect.x + 18, 11 if not (key == "lab" and self.lab_tab_locked) else 13))
 
     def _draw_play_tab(self, screen: Any, pygame: Any) -> None:
         self._draw_config(screen, pygame)

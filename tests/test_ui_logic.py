@@ -117,21 +117,11 @@ def test_ui_panel_click_and_mode_toggle() -> None:
         app._handle_click((cx - 210 + 50, cy - 125 + 195), pygame)
         assert app.game_over_dismissed is True
 
-        # Kiểm tra Tab 2: Nghiên cứu & Thực nghiệm (Setup tham số & Render các sub-views)
-        app._handle_click((450, 20), pygame)  # Chuyển sang tab "lab"
-        assert app.active_tab == "lab"
-        # Chọn số ván Arena = 50 (nút thứ 4: idx=3 -> x = 18 + 3*61 + 10)
-        app._handle_click((18 + 3 * 61 + 10, 365), pygame)
-        assert app.lab_num_games == 50
-        # Chuyển kịch bản sang Ablation 1 và chọn 25 FEN
-        app._handle_click((100, 140), pygame)
-        assert app.lab_scenario == "ablation1"
-        app._handle_click((18 + 2 * 76 + 10, 315), pygame)
-        assert app.lab_ab1_positions == 25
-        # Kiểm tra vẽ toàn bộ 6 sub-tabs của Research Lab không lỗi
-        for sub_idx in range(6):
-            app._handle_click((354 + sub_idx * 152 + 20, 65), pygame)
-            app._draw(surface, pygame)
+        # Kiểm tra Tab 2 đang tạm khóa: click vào tab "lab" vẫn giữ ở "play"
+        app._handle_click((450, 20), pygame)
+        assert app.active_tab == "play"
+        assert "tạm khóa" in app.message
+        app._draw(surface, pygame)
     finally:
         app.executor.shutdown(wait=False, cancel_futures=True)
 
