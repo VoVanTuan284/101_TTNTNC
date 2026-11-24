@@ -1,0 +1,24 @@
+{
+  "agent_a": "Level4_UCT_SEE_Tactical",
+  "agent_b": "Level4_UCT_Uniform",
+  "budget_mode": "workload_control",
+  "games": 4,
+  "reused_games": 0,
+  "newly_played_games": 4,
+  "wins": 2,
+  "draws": 1,
+  "losses": 1,
+  "score": 0.625,
+  "white_score": 0.25,
+  "black_score": 1.0,
+  "wilson_ci_95": [
+    0.2194,
+    0.9081
+  ],
+  "bootstrap_ci_95": [
+    0.5,
+    0.75
+  ],
+  "agent_a_avg_latency_ms": 181.707,
+  "agent_b_avg_latency_ms": 180.089
+}
