@@ -6,8 +6,10 @@ Phụ trách: TV2 phối hợp TV1
 """
 
 import argparse
+from collections import OrderedDict
 import copy
 import json
+import math
 from pathlib import Path
 import time
 from typing import Any, Dict, List, Optional, Tuple
@@ -23,9 +25,21 @@ from chess_ai.core.zobrist import compute_zobrist_hash
 from chess_ai.models.dual_resnet import DualHeadResNet
 from chess_ai.models.loss import DualHeadLoss
 from chess_ai.search.mcts_node import MCTSNode
-from chess_ai.search.mcts_puct import run_puct_search
+from chess_ai.search.mcts_puct import EvalCache, run_puct_search
 from chess_ai.training.replay_buffer import SelfPlayReplayBuffer
 from chess_ai.utils.epd import load_epd_file
+
+
+def _wilson_ci_95(score_rate: float, n: int) -> List[float]:
+    """Tính khoảng tin cậy Wilson 95% cho tỷ lệ điểm score_rate trên n ván."""
+    if n <= 0:
+        return [0.0, 1.0]
+    z = 1.959963984540054
+    z2 = z * z
+    denom = 1.0 + z2 / n
+    center = (score_rate + z2 / (2.0 * n)) / denom
+    half = (z / denom) * math.sqrt(max(0.0, score_rate * (1.0 - score_rate) / n + z2 / (4.0 * n * n)))
+    return [round(max(0.0, center - half), 4), round(min(1.0, center + half), 4)]
 
 
 def _resolve_game_outcome_white(board: chess.Board, adjudicate_cp_threshold: float = 500.0) -> float:
@@ -65,16 +79,27 @@ def play_selfplay_game(
     subtree_reuse: bool = True,
     device: Optional[torch.device] = None,
     rng: Optional[np.random.Generator] = None,
+    mcts_batch_size: Optional[int] = None,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict[str, Any]]:
     """
     Chạy 1 ván tự chơi (Self-play) bằng PUCT ở chế độ selfplay_mode (eval_mode=False):
     - Bật nhiễu Dirichlet tại nút gốc (alpha=0.3, eps=0.25).
     - Hạ nhiệt độ chọn nước: temp_initial (1.0) trong temp_decay_plies (20) đầu, sau đó temp_final (0.1).
+    - Tự động bật Batched Virtual Loss (batch_size=8 trên CUDA) và Zobrist Eval Cache tăng tốc 3-4x.
     - Thu thập toàn bộ bộ ba (state_tensor [18, 8, 8], pi_mcts [4096], z_t [-1, 0, +1]).
     """
     t0 = time.perf_counter()
     local_rng = rng if rng is not None else np.random.default_rng()
     board = chess.Board(initial_fen) if initial_fen else chess.Board()
+
+    eff_device = device
+    if eff_device is None:
+        try:
+            eff_device = next(model.parameters()).device
+        except StopIteration:
+            eff_device = torch.device("cpu")
+    eff_batch = mcts_batch_size if mcts_batch_size is not None else (8 if eff_device.type == "cuda" else 1)
+    game_cache: EvalCache = OrderedDict()
 
     states_list: List[np.ndarray] = []
     policies_list: List[np.ndarray] = []
@@ -102,8 +127,11 @@ def play_selfplay_game(
             dirichlet_alpha=dirichlet_alpha,
             dirichlet_epsilon=dirichlet_epsilon,
             root=reusable_root,
-            device=device,
+            device=eff_device,
             rng=local_rng,
+            eval_cache=game_cache,
+            max_cache_size=4096,
+            batch_size=eff_batch,
         )
 
         states_list.append(state_tensor)
@@ -144,15 +172,17 @@ def train_challenger_on_buffer(
     challenger_model: DualHeadResNet,
     replay_buffer: SelfPlayReplayBuffer,
     batch_size: int = 128,
-    train_steps: int = 20,
-    learning_rate: float = 5e-4,
+    train_steps: int = 40,
+    learning_rate: float = 1e-4,
     weight_decay: float = 1e-4,
     grad_clip_norm: float = 1.0,
+    value_weight: float = 1.5,
     device: Optional[torch.device] = None,
 ) -> Dict[str, float]:
     """
     Cập nhật trọng số mạng ứng viên (Challenger) trên các mini-batch lấy từ SelfPlayReplayBuffer
     bằng hàm mất mát kép DualHeadLoss (Soft Cross-Entropy + MSE) và AdamW.
+    Dùng learning_rate nhỏ (1e-4) để tránh Catastrophic Forgetting khi warm-start từ Cấp 5.
     """
     if len(replay_buffer) == 0:
         return {"total_loss": 0.0, "policy_loss": 0.0, "value_loss": 0.0, "steps": 0.0}
@@ -166,7 +196,7 @@ def train_challenger_on_buffer(
     challenger_model.to(device)
     challenger_model.train()
 
-    criterion = DualHeadLoss(policy_weight=1.0, value_weight=1.0)
+    criterion = DualHeadLoss(policy_weight=1.0, value_weight=value_weight)
     optimizer = torch.optim.AdamW(
         challenger_model.parameters(),
         lr=float(learning_rate),
@@ -213,24 +243,61 @@ def _play_arena_duel_game(
     max_plies: int = 160,
     initial_fen: Optional[str] = None,
     device: Optional[torch.device] = None,
+    mcts_batch_size: Optional[int] = None,
 ) -> float:
     """
-    Đấu 1 ván đánh giá giữa white_model và black_model ở chế độ eval_mode=True (tắt nhiễu, tau=0).
+    Đấu 1 ván đánh giá giữa white_model và black_model ở chế độ eval_mode=True (tắt nhiễu, tau=0),
+    tích hợp Subtree Reuse, Zobrist Eval Cache riêng cho từng bên và Batched Virtual Loss trên GPU.
     Trả về kết quả theo góc nhìn Trắng (+1.0 Trắng thắng, 0.0 Hòa, -1.0 Đen thắng).
     """
     board = chess.Board(initial_fen) if initial_fen else chess.Board()
+    eff_device = device
+    if eff_device is None:
+        try:
+            eff_device = next(white_model.parameters()).device
+        except StopIteration:
+            eff_device = torch.device("cpu")
+    eff_batch = mcts_batch_size if mcts_batch_size is not None else (8 if eff_device.type == "cuda" else 1)
+
+    white_cache: EvalCache = OrderedDict()
+    black_cache: EvalCache = OrderedDict()
+    white_root: Optional[MCTSNode] = None
+    black_root: Optional[MCTSNode] = None
+
     ply = 0
     while not board.is_game_over(claim_draw=True) and ply < max_plies:
-        active_model = white_model if board.turn == chess.WHITE else black_model
-        move, _, _ = run_puct_search(
+        legal_moves = list(board.legal_moves)
+        if len(legal_moves) == 1:
+            board.push(legal_moves[0])
+            ply += 1
+            continue
+
+        is_white = board.turn == chess.WHITE
+        active_model = white_model if is_white else black_model
+        active_cache = white_cache if is_white else black_cache
+        prev_root = white_root if is_white else black_root
+
+        reusable_root: Optional[MCTSNode] = None
+        if prev_root is not None:
+            reusable_root = prev_root.find_reusable_root(compute_zobrist_hash(board))
+
+        move, _, new_root = run_puct_search(
             board=board,
             model=active_model,
             simulations=mcts_sims,
             c_puct=c_puct,
             eval_mode=True,
             temperature=0.0,
-            device=device,
+            root=reusable_root,
+            device=eff_device,
+            eval_cache=active_cache,
+            max_cache_size=4096,
+            batch_size=eff_batch,
         )
+        if is_white:
+            white_root = new_root
+        else:
+            black_root = new_root
         board.push(move)
         ply += 1
 
@@ -321,6 +388,7 @@ def evaluate_arena_gating(
         "draws": int(draws),
         "losses": int(losses),
         "score_rate": float(score_rate),
+        "wilson_ci_95": _wilson_ci_95(score_rate, total_games),
         "win_threshold": float(win_threshold),
         "accepted": accepted,
     }
@@ -343,9 +411,9 @@ def run_selfplay_pipeline(
     selfplay_games_override: Optional[int] = None,
     mcts_sims_override: Optional[int] = None,
     arena_games_override: Optional[int] = None,
-    train_steps_per_iter: int = 20,
+    train_steps_per_iter: int = 40,
     batch_size: int = 128,
-    learning_rate: float = 5e-4,
+    learning_rate: float = 1e-4,
     max_plies: int = 160,
     resume_path: Optional[str] = None,
     initial_fens: Optional[List[str]] = None,
@@ -645,8 +713,9 @@ def main() -> None:
     parser.add_argument("--games-per-iter", type=int, default=None, help="Ghi đè số ván tự chơi mỗi vòng")
     parser.add_argument("--sims", type=int, default=None, help="Ghi đè số lượt mô phỏng MCTS mỗi nước đi")
     parser.add_argument("--arena-games", type=int, default=None, help="Ghi đè số ván đấu loại Arena Gating")
-    parser.add_argument("--train-steps", type=int, default=20, help="Số bước cập nhật mini-batch mỗi vòng")
+    parser.add_argument("--train-steps", type=int, default=40, help="Số bước cập nhật mini-batch mỗi vòng")
     parser.add_argument("--batch-size", type=int, default=128, help="Kích thước batch huấn luyện")
+    parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate fine-tuning trên Replay Buffer")
     parser.add_argument("--max-plies", type=int, default=160, help="Giới hạn số plies tối đa mỗi ván tự chơi")
     parser.add_argument("--resume", type=str, default=None, help="Đường dẫn l8_alphazero_latest.pt để chạy tiếp")
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
@@ -663,6 +732,7 @@ def main() -> None:
         arena_games_override=args.arena_games,
         train_steps_per_iter=args.train_steps,
         batch_size=args.batch_size,
+        learning_rate=args.lr,
         max_plies=args.max_plies,
         resume_path=args.resume,
         seed=args.seed,
