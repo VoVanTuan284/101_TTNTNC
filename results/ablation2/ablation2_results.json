@@ -8,155 +8,342 @@
     800,
     1000
   ],
-  "games_per_budget_2a": 50,
+  "games_per_budget_2a": 20,
   "opponent_2a": "Level2_Heuristic",
   "part_2a_uct_level4": [
     {
       "agent_a": "Level4_MCTS_UCT",
       "agent_b": "Level2_Heuristic",
       "budget_mode": "workload_control",
-      "games": 50,
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
       "wins": 0,
       "draws": 0,
-      "losses": 50,
+      "losses": 20,
       "score": 0.0,
       "white_score": 0.0,
       "black_score": 0.0,
       "wilson_ci_95": [
         0.0,
-        0.0714
+        0.1611
       ],
       "bootstrap_ci_95": [
         0.0,
         0.0
       ],
-      "agent_a_avg_latency_ms": 171.792,
-      "agent_b_avg_latency_ms": 9.786,
+      "agent_a_avg_latency_ms": 284.081,
+      "agent_b_avg_latency_ms": 21.665,
       "simulations": 50
     },
     {
       "agent_a": "Level4_MCTS_UCT",
       "agent_b": "Level2_Heuristic",
       "budget_mode": "workload_control",
-      "games": 50,
-      "wins": 1,
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
+      "wins": 0,
       "draws": 0,
-      "losses": 49,
-      "score": 0.02,
+      "losses": 20,
+      "score": 0.0,
       "white_score": 0.0,
-      "black_score": 0.04,
+      "black_score": 0.0,
       "wilson_ci_95": [
-        0.0035,
-        0.105
+        0.0,
+        0.1611
       ],
       "bootstrap_ci_95": [
         0.0,
-        0.06
+        0.0
       ],
-      "agent_a_avg_latency_ms": 335.278,
-      "agent_b_avg_latency_ms": 9.315,
+      "agent_a_avg_latency_ms": 635.969,
+      "agent_b_avg_latency_ms": 23.298,
       "simulations": 100
     },
     {
       "agent_a": "Level4_MCTS_UCT",
       "agent_b": "Level2_Heuristic",
       "budget_mode": "workload_control",
-      "games": 50,
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
       "wins": 0,
       "draws": 0,
-      "losses": 50,
+      "losses": 20,
       "score": 0.0,
       "white_score": 0.0,
       "black_score": 0.0,
       "wilson_ci_95": [
         0.0,
-        0.0714
+        0.1611
       ],
       "bootstrap_ci_95": [
         0.0,
         0.0
       ],
-      "agent_a_avg_latency_ms": 681.305,
-      "agent_b_avg_latency_ms": 9.913,
+      "agent_a_avg_latency_ms": 1161.72,
+      "agent_b_avg_latency_ms": 22.31,
       "simulations": 200
     },
     {
       "agent_a": "Level4_MCTS_UCT",
       "agent_b": "Level2_Heuristic",
       "budget_mode": "workload_control",
-      "games": 50,
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
       "wins": 0,
-      "draws": 1,
-      "losses": 49,
-      "score": 0.01,
+      "draws": 0,
+      "losses": 20,
+      "score": 0.0,
       "white_score": 0.0,
-      "black_score": 0.02,
+      "black_score": 0.0,
       "wilson_ci_95": [
-        0.001,
-        0.0889
+        0.0,
+        0.1611
       ],
       "bootstrap_ci_95": [
         0.0,
-        0.03
+        0.0
       ],
-      "agent_a_avg_latency_ms": 1487.208,
-      "agent_b_avg_latency_ms": 11.275,
+      "agent_a_avg_latency_ms": 2263.356,
+      "agent_b_avg_latency_ms": 21.806,
       "simulations": 400
     },
     {
       "agent_a": "Level4_MCTS_UCT",
       "agent_b": "Level2_Heuristic",
       "budget_mode": "workload_control",
-      "games": 50,
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
       "wins": 0,
-      "draws": 1,
-      "losses": 49,
-      "score": 0.01,
+      "draws": 0,
+      "losses": 20,
+      "score": 0.0,
       "white_score": 0.0,
-      "black_score": 0.02,
+      "black_score": 0.0,
       "wilson_ci_95": [
-        0.001,
-        0.0889
+        0.0,
+        0.1611
       ],
       "bootstrap_ci_95": [
         0.0,
-        0.03
+        0.0
       ],
-      "agent_a_avg_latency_ms": 3152.675,
-      "agent_b_avg_latency_ms": 12.003,
+      "agent_a_avg_latency_ms": 5133.18,
+      "agent_b_avg_latency_ms": 24.492,
       "simulations": 800
     },
     {
       "agent_a": "Level4_MCTS_UCT",
       "agent_b": "Level2_Heuristic",
       "budget_mode": "workload_control",
-      "games": 50,
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
       "wins": 0,
       "draws": 1,
-      "losses": 49,
-      "score": 0.01,
+      "losses": 19,
+      "score": 0.025,
       "white_score": 0.0,
-      "black_score": 0.02,
+      "black_score": 0.05,
       "wilson_ci_95": [
-        0.001,
-        0.0889
+        0.0026,
+        0.2005
       ],
       "bootstrap_ci_95": [
         0.0,
-        0.03
+        0.075
       ],
-      "agent_a_avg_latency_ms": 3648.703,
-      "agent_b_avg_latency_ms": 10.612,
+      "agent_a_avg_latency_ms": 6119.642,
+      "agent_b_avg_latency_ms": 23.582,
       "simulations": 1000
     }
   ],
   "part_2a_puct_level7": {
-    "status": "pending_tv2_level7",
-    "reason": "Level7GuidedMCTSAgent hoặc checkpoint chưa sẵn sàng.",
-    "curve": []
+    "status": "completed",
+    "curve": [
+      {
+        "agent_a": "Level7_GuidedMCTS",
+        "agent_b": "Level2_Heuristic",
+        "budget_mode": "workload_control",
+        "games": 20,
+        "reused_games": 0,
+        "newly_played_games": 20,
+        "wins": 11,
+        "draws": 4,
+        "losses": 5,
+        "score": 0.65,
+        "white_score": 0.75,
+        "black_score": 0.55,
+        "wilson_ci_95": [
+          0.4329,
+          0.8188
+        ],
+        "bootstrap_ci_95": [
+          0.45,
+          0.85
+        ],
+        "agent_a_avg_latency_ms": 55.22,
+        "agent_b_avg_latency_ms": 16.417,
+        "simulations": 50
+      },
+      {
+        "agent_a": "Level7_GuidedMCTS",
+        "agent_b": "Level2_Heuristic",
+        "budget_mode": "workload_control",
+        "games": 20,
+        "reused_games": 0,
+        "newly_played_games": 20,
+        "wins": 18,
+        "draws": 2,
+        "losses": 0,
+        "score": 0.95,
+        "white_score": 0.95,
+        "black_score": 0.95,
+        "wilson_ci_95": [
+          0.7639,
+          0.9911
+        ],
+        "bootstrap_ci_95": [
+          0.85,
+          1.0
+        ],
+        "agent_a_avg_latency_ms": 94.755,
+        "agent_b_avg_latency_ms": 14.005,
+        "simulations": 100
+      },
+      {
+        "agent_a": "Level7_GuidedMCTS",
+        "agent_b": "Level2_Heuristic",
+        "budget_mode": "workload_control",
+        "games": 20,
+        "reused_games": 0,
+        "newly_played_games": 20,
+        "wins": 15,
+        "draws": 3,
+        "losses": 2,
+        "score": 0.825,
+        "white_score": 0.9,
+        "black_score": 0.75,
+        "wilson_ci_95": [
+          0.6114,
+          0.9339
+        ],
+        "bootstrap_ci_95": [
+          0.7,
+          0.95
+        ],
+        "agent_a_avg_latency_ms": 179.451,
+        "agent_b_avg_latency_ms": 12.966,
+        "simulations": 200
+      },
+      {
+        "agent_a": "Level7_GuidedMCTS",
+        "agent_b": "Level2_Heuristic",
+        "budget_mode": "workload_control",
+        "games": 20,
+        "reused_games": 0,
+        "newly_played_games": 20,
+        "wins": 18,
+        "draws": 1,
+        "losses": 1,
+        "score": 0.925,
+        "white_score": 0.85,
+        "black_score": 1.0,
+        "wilson_ci_95": [
+          0.7306,
+          0.9825
+        ],
+        "bootstrap_ci_95": [
+          0.825,
+          1.0
+        ],
+        "agent_a_avg_latency_ms": 378.913,
+        "agent_b_avg_latency_ms": 15.177,
+        "simulations": 400
+      },
+      {
+        "agent_a": "Level7_GuidedMCTS",
+        "agent_b": "Level2_Heuristic",
+        "budget_mode": "workload_control",
+        "games": 20,
+        "reused_games": 0,
+        "newly_played_games": 20,
+        "wins": 18,
+        "draws": 2,
+        "losses": 0,
+        "score": 0.95,
+        "white_score": 0.95,
+        "black_score": 0.95,
+        "wilson_ci_95": [
+          0.7639,
+          0.9911
+        ],
+        "bootstrap_ci_95": [
+          0.875,
+          1.0
+        ],
+        "agent_a_avg_latency_ms": 771.075,
+        "agent_b_avg_latency_ms": 14.276,
+        "simulations": 800
+      },
+      {
+        "agent_a": "Level7_GuidedMCTS",
+        "agent_b": "Level2_Heuristic",
+        "budget_mode": "workload_control",
+        "games": 20,
+        "reused_games": 0,
+        "newly_played_games": 20,
+        "wins": 20,
+        "draws": 0,
+        "losses": 0,
+        "score": 1.0,
+        "white_score": 1.0,
+        "black_score": 1.0,
+        "wilson_ci_95": [
+          0.8389,
+          1.0
+        ],
+        "bootstrap_ci_95": [
+          1.0,
+          1.0
+        ],
+        "agent_a_avg_latency_ms": 1003.062,
+        "agent_b_avg_latency_ms": 16.205,
+        "simulations": 1000
+      }
+    ]
   },
   "part_2b_guidance_ablation": {
-    "status": "pending_tv2_level5_level7",
-    "matchups": []
+    "status": "completed",
+    "matchups": [
+      {
+        "agent_a": "Level7_GuidedMCTS",
+        "agent_b": "Level5_Supervised",
+        "budget_mode": "workload_control",
+        "games": 40,
+        "reused_games": 0,
+        "newly_played_games": 40,
+        "wins": 40,
+        "draws": 0,
+        "losses": 0,
+        "score": 1.0,
+        "white_score": 1.0,
+        "black_score": 1.0,
+        "wilson_ci_95": [
+          0.9124,
+          1.0
+        ],
+        "bootstrap_ci_95": [
+          1.0,
+          1.0
+        ],
+        "agent_a_avg_latency_ms": 400.902,
+        "agent_b_avg_latency_ms": 4.128
+      }
+    ]
   }
 }
