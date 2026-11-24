@@ -162,7 +162,35 @@ def run_uct_search(
     if not root.is_expanded():
         root.expand(legal_moves)
 
+    # Shortcut 1: Forced Move (chỉ có duy nhất 1 nước hợp lệ)
+    if len(legal_moves) == 1:
+        only_move = legal_moves[0]
+        child_q = root.children[only_move].q_value if only_move in root.children else 0.0
+        return only_move, {
+            "nodes": 1.0,
+            "simulations": 0.0,
+            "depth": 1.0,
+            "eval": float(child_q),
+            "time_sec": float(time.perf_counter() - t0),
+        }, root
+
+    # Shortcut 2: Mate-in-1 tại nút gốc
+    mate_probe = board.copy(stack=False)
+    for m in legal_moves:
+        if mate_probe.gives_check(m):
+            mate_probe.push(m)
+            if mate_probe.is_checkmate():
+                return m, {
+                    "nodes": 1.0,
+                    "simulations": 0.0,
+                    "depth": 1.0,
+                    "eval": 1.0,
+                    "time_sec": float(time.perf_counter() - t0),
+                }, root
+            mate_probe.pop()
+
     completed_sims = 0
+    max_tree_depth = 1
     max_sims = simulations if simulations > 0 else 1
     base_history_counts = _build_history_zobrist_counts(board)
 
@@ -174,11 +202,13 @@ def run_uct_search(
         work_board = board.copy(stack=False)
         sim_counts = dict(base_history_counts)
         rep_draw = False
+        tree_depth = 0
 
         # 1. Selection
         while node.is_expanded():
             move, child = _select_uct_child(node, c_uct, local_rng)
             work_board.push(move)
+            tree_depth += 1
             if child.zobrist_key is None:
                 child.zobrist_key = compute_zobrist_hash(work_board)
             k = child.zobrist_key
@@ -198,12 +228,16 @@ def run_uct_search(
                 node.expand(node_moves)
                 move, child = _select_uct_child(node, c_uct, local_rng)
                 work_board.push(move)
+                tree_depth += 1
                 if child.zobrist_key is None:
                     child.zobrist_key = compute_zobrist_hash(work_board)
                 k = child.zobrist_key
                 sim_counts[k] = sim_counts.get(k, 0) + 1
                 node = child
                 term_val = 0.0 if sim_counts[k] >= 3 else _is_fast_terminal(work_board)
+
+        if tree_depth > max_tree_depth:
+            max_tree_depth = tree_depth
 
         # 3. Simulation (Rollout cắt ngưỡng)
         if term_val is not None:
@@ -224,7 +258,7 @@ def run_uct_search(
     stats: Dict[str, float] = {
         "nodes": float(completed_sims),
         "simulations": float(completed_sims),
-        "depth": float(max_rollout_depth),
+        "depth": float(max(1, max_tree_depth)),
         "eval": float(best_child.q_value),
         "time_sec": float(elapsed),
     }
