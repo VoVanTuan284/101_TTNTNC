@@ -51,6 +51,15 @@ class ChessPygameApp:
     LIGHT = (238, 238, 210)
     DARK = (118, 150, 86)
     BG = (15, 19, 28)
+    TAB_BAR = (11, 15, 23)
+    TAB_INACTIVE = (14, 19, 28)
+    SIDEBAR = (20, 25, 36)
+    LAB_BG = (16, 21, 30)
+    CARD_DARK = (15, 21, 31)
+    CLOCK_BG = (10, 15, 23)
+    SELECTED_BG = (34, 67, 112)
+    ACCENT_TEXT = (10, 22, 38)
+    ROW_ALT = (18, 24, 35)
     PANEL = (24, 30, 42)
     PANEL_2 = (33, 42, 56)
     PANEL_3 = (42, 54, 72)
@@ -65,6 +74,75 @@ class ChessPygameApp:
     ORANGE = (245, 158, 11)
     HIGHLIGHT = (246, 210, 82)
     LAST_MOVE = (186, 203, 68)
+
+    UI_THEMES = {
+        "dark": {
+            "BG": (15, 19, 28),
+            "TAB_BAR": (11, 15, 23),
+            "TAB_INACTIVE": (14, 19, 28),
+            "SIDEBAR": (20, 25, 36),
+            "LAB_BG": (16, 21, 30),
+            "CARD_DARK": (15, 21, 31),
+            "CLOCK_BG": (10, 15, 23),
+            "SELECTED_BG": (34, 67, 112),
+            "ACCENT_TEXT": (10, 22, 38),
+            "ROW_ALT": (18, 24, 35),
+            "PANEL": (24, 30, 42),
+            "PANEL_2": (33, 42, 56),
+            "PANEL_3": (42, 54, 72),
+            "BORDER": (60, 72, 92),
+            "BORDER_STRONG": (76, 92, 116),
+            "SURFACE": (28, 35, 48),
+            "SURFACE_HOVER": (38, 48, 64),
+            "TEXT": (235, 239, 244),
+            "MUTED": (165, 174, 188),
+            "ACCENT": (86, 166, 255),
+            "GREEN": (74, 222, 128),
+            "ORANGE": (245, 158, 11),
+        },
+        "light": {
+            "BG": (243, 245, 249),
+            "TAB_BAR": (232, 236, 243),
+            "TAB_INACTIVE": (225, 230, 238),
+            "SIDEBAR": (237, 240, 246),
+            "LAB_BG": (243, 245, 249),
+            "CARD_DARK": (232, 236, 244),
+            "CLOCK_BG": (224, 229, 238),
+            "SELECTED_BG": (219, 233, 252),
+            "ACCENT_TEXT": (255, 255, 255),
+            "ROW_ALT": (245, 247, 251),
+            "PANEL": (252, 253, 255),
+            "PANEL_2": (235, 239, 246),
+            "PANEL_3": (222, 228, 238),
+            "BORDER": (190, 200, 216),
+            "BORDER_STRONG": (152, 166, 188),
+            "SURFACE": (255, 255, 255),
+            "SURFACE_HOVER": (240, 245, 253),
+            "TEXT": (18, 24, 36),
+            "MUTED": (68, 79, 98),
+            "ACCENT": (45, 108, 210),
+            "GREEN": (21, 128, 61),
+            "ORANGE": (180, 83, 9),
+        },
+    }
+
+    ACCENT_THEMES = [
+        ("blue", "Xanh Dương", (86, 166, 255), (45, 108, 210)),
+        ("teal", "Ngọc Lam", (45, 212, 191), (13, 148, 136)),
+        ("purple", "Tím", (167, 139, 250), (109, 40, 217)),
+        ("emerald", "Xanh Lá", (74, 222, 128), (21, 128, 61)),
+        ("amber", "Cam Ấm", (251, 191, 36), (180, 83, 9)),
+        ("rose", "San Hô", (251, 113, 133), (190, 18, 60)),
+    ]
+
+    BOARD_THEMES = [
+        ("classic_green", "Xanh Cổ Điển", (238, 238, 210), (118, 150, 86)),
+        ("wood", "Gỗ Ấm", (240, 217, 181), (181, 136, 99)),
+        ("slate_blue", "Xanh Xám", (222, 227, 230), (140, 162, 173)),
+        ("purple", "Tím Hiện Đại", (235, 230, 245), (132, 118, 186)),
+        ("emerald", "Ngọc Bích", (234, 242, 234), (82, 138, 108)),
+        ("walnut", "Óc Chó", (226, 209, 179), (138, 103, 74)),
+    ]
 
     BTN_COLS = 2
     BTN_W = 165
@@ -187,6 +265,35 @@ class ChessPygameApp:
         self.lab_selected_figure_idx = 0
         self.lab_figures_dir = Path("results/ui_sandbox/figures")
         self.lab_stop_event = threading.Event()
+        self.lab_live_games: list[dict[str, Any]] = []
+        self.lab_games_scroll = 0
+        self.lab_live_lock = threading.Lock()
+        self._mini_piece_cache: dict[tuple[str, int], dict[str, Any]] = {}
+        self._mini_board_cache: dict[tuple[Any, ...], Any] = {}
+        self._icon_cache: dict[tuple[str, int, tuple[int, int, int]], Any] = {}
+        self.ui_theme = "dark"
+        self.accent_theme = "blue"
+        self.board_theme = "classic_green"
+        self.settings_open = False
+        self.settings_tab = "appearance"
+        self.settings_piece_scroll = 0
+        default_bg = self._default_background_path()
+        self.bg_image_path: Optional[str] = str(default_bg) if default_bg is not None else None
+        self.bg_image_surface: Optional[Any] = None
+        self.bg_image_scroll = 0
+        self.music_path: Optional[str] = None
+        self.music_scroll = 0
+        self.sfx_volume = 0.8
+        self.music_volume = 0.15
+        self.mouse_pos: tuple[int, int] = (-1, -1)
+        self.sound_enabled = True
+        self.sound_pack = "standard"
+        self._sound_cache: dict[tuple[str, str], Any] = {}
+        self._mixer_ready: Optional[bool] = None
+        self._piece_preview_cache: dict[str, Any] = {}
+        self.available_piece_sets = self._discover_piece_sets()
+        self._apply_theme("dark")
+        self._apply_board_theme("classic_green")
         self._load_existing_lab_results()
 
     def run(self) -> None:
@@ -198,6 +305,7 @@ class ChessPygameApp:
         canvas = pygame.Surface(self.WINDOW_SIZE)
         clock = pygame.time.Clock()
         self._load_piece_images(pygame)
+        self._preload_sounds()
         running = True
         try:
             while running:
@@ -209,18 +317,34 @@ class ChessPygameApp:
                         self._handle_click(position, pygame)
                     elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                         self.dragging_slider = None
+                    elif event.type == pygame.MOUSEWHEEL and self.settings_open:
+                        if self.settings_tab == "board":
+                            total_rows = (len(self.available_piece_sets) + 1) // 2
+                            max_scroll = max(0, total_rows - 4)
+                            self.settings_piece_scroll = max(0, min(max_scroll, self.settings_piece_scroll - event.y))
+                        elif self.settings_tab == "appearance":
+                            max_scroll = max(0, len(self._list_background_images()) - 4)
+                            self.bg_image_scroll = max(0, min(max_scroll, self.bg_image_scroll - event.y))
+                        elif self.settings_tab == "audio":
+                            max_scroll = max(0, len(self._list_music_files()) - 4)
+                            self.music_scroll = max(0, min(max_scroll, self.music_scroll - event.y))
                     elif event.type == pygame.MOUSEWHEEL and self.modal_open and self.modal_dropdown_open is not None:
                         max_scroll = max(0, (1 + len(list_full_board_agents())) - 5)
                         self.modal_dropdown_scroll = max(0, min(max_scroll, self.modal_dropdown_scroll - event.y))
                     elif event.type == pygame.MOUSEWHEEL and self.active_tab == "lab" and self.lab_dropdown_open is not None:
                         max_scroll = max(0, len(self.lab_agents) - 5)
                         self.lab_dropdown_scroll = max(0, min(max_scroll, self.lab_dropdown_scroll - event.y))
-                    elif event.type == pygame.MOUSEMOTION and self.dragging_slider is not None:
-                        if pygame.mouse.get_pressed()[0]:
-                            position = self._fit_window_position(event.pos, screen, pygame)
-                            self._update_slider_from_mouse(position[0])
-                        else:
-                            self.dragging_slider = None
+                    elif event.type == pygame.MOUSEWHEEL and self.active_tab == "lab" and self.lab_view == "arena" and self.lab_live_games:
+                        total_rows = (len(self.lab_live_games) + 2) // 3
+                        max_scroll = max(0, total_rows - 2)
+                        self.lab_games_scroll = max(0, min(max_scroll, self.lab_games_scroll - event.y))
+                    elif event.type == pygame.MOUSEMOTION:
+                        self.mouse_pos = self._fit_window_position(event.pos, screen, pygame)
+                        if self.dragging_slider is not None:
+                            if pygame.mouse.get_pressed()[0]:
+                                self._update_slider_from_mouse(self.mouse_pos[0])
+                            else:
+                                self.dragging_slider = None
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_F11 or (
                             event.key == pygame.K_RETURN
@@ -251,6 +375,7 @@ class ChessPygameApp:
             pg.quit()
 
     def _load_piece_images(self, pygame: Any) -> None:
+        self.piece_images.clear()
         piece_dir = (
             Path(__file__).resolve().parent
             / "assets"
@@ -261,18 +386,122 @@ class ChessPygameApp:
             "K": "wK", "Q": "wQ", "R": "wR", "B": "wB", "N": "wN", "P": "wP",
             "k": "bK", "q": "bQ", "r": "bR", "b": "bB", "n": "bN", "p": "bP",
         }
+        has_display = pygame.display.get_surface() is not None
         for symbol, filename in names.items():
             for suffix in (".png", ".svg"):
                 path = piece_dir / f"{filename}{suffix}"
                 if path.exists():
                     try:
-                        image = pygame.image.load(str(path)).convert_alpha()
+                        image = pygame.image.load(str(path))
+                        if has_display:
+                            image = image.convert_alpha()
                         self.piece_images[symbol] = pygame.transform.smoothscale(
                             image, (60, 60)
                         )
                         break
                     except Exception:
                         continue
+
+    _PRELOAD_SOUNDS = (
+        "Move",
+        "Capture",
+        "Check",
+        "OutOfBound",
+        "GenericNotify",
+        "Victory",
+        "Defeat",
+        "Draw",
+    )
+
+    def _ensure_mixer(self) -> bool:
+        try:
+            if not pygame.get_init():
+                return False
+            if self._mixer_ready is None:
+                if not pygame.mixer.get_init():
+                    pygame.mixer.init()
+                self._mixer_ready = bool(pygame.mixer.get_init())
+        except Exception:
+            self._mixer_ready = False
+        return bool(self._mixer_ready)
+
+    def _load_sound(self, name: str) -> Any:
+        key = (self.sound_pack, name)
+        if key in self._sound_cache:
+            return self._sound_cache[key]
+
+        sound_root = Path(__file__).resolve().parent / "assets" / "sound"
+        candidates: list[Path] = [
+            sound_root / self.sound_pack / f"{name}.mp3",
+        ]
+        if name == "OutOfBound":
+            candidates.append(sound_root / self.sound_pack / "Error.mp3")
+        # Fallback sang bộ piano nếu file ở bộ standard là symlink chưa checkout hoặc lỗi định dạng
+        for fallback_pack in ("piano", "standard"):
+            if fallback_pack != self.sound_pack:
+                candidates.append(sound_root / fallback_pack / f"{name}.mp3")
+
+        snd = None
+        for path in candidates:
+            if not path.exists():
+                continue
+            try:
+                if path.stat().st_size < 256:
+                    target = path.read_text(encoding="utf-8", errors="ignore").strip()
+                    resolved = (path.parent / target).resolve()
+                    if resolved.exists() and resolved.is_file() and resolved.stat().st_size >= 256 and "Silence" not in resolved.name:
+                        path = resolved
+                    else:
+                        continue
+                snd = pygame.mixer.Sound(str(path))
+                break
+            except Exception:
+                continue
+
+        self._sound_cache[key] = snd
+        return snd
+
+    def _preload_sounds(self) -> None:
+        """Tải trước toàn bộ 9 file âm thanh vào RAM ngay khi khởi động."""
+        if not self._ensure_mixer():
+            return
+        for name in self._PRELOAD_SOUNDS:
+            self._load_sound(name)
+
+    def _play_sound(self, name: str) -> None:
+        if not self.sound_enabled or not self._ensure_mixer():
+            return
+        snd = self._load_sound(name)
+        if snd is not None:
+            try:
+                snd.set_volume(self.sfx_volume)
+                snd.play()
+            except Exception:
+                pass
+
+    def _play_move_sound(self, san: str, is_terminal: bool, result: Optional[float]) -> None:
+        """Phát đúng 1 âm thanh theo thứ tự ưu tiên: Victory/Defeat/Draw -> Check -> Capture -> Move."""
+        if is_terminal:
+            self._play_game_over_sound(result)
+        elif "+" in san or "#" in san:
+            self._play_sound("Check")
+        elif "x" in san:
+            self._play_sound("Capture")
+        else:
+            self._play_sound("Move")
+
+    def _play_game_over_sound(self, result: Optional[float]) -> None:
+        if result is None or result == 0.0:
+            self._play_sound("Draw")
+            return
+        if self.game_mode == "human_ai":
+            human_won = (
+                (result == 1.0 and self.player_color == "white")
+                or (result == -1.0 and self.player_color == "black")
+            )
+            self._play_sound("Victory" if human_won else "Defeat")
+        else:
+            self._play_sound("Victory")
 
     def _is_game_over(self) -> bool:
         return self.env.is_terminal() or self.resign_result is not None
@@ -287,13 +516,15 @@ class ChessPygameApp:
         self.last_clock_tick = now
         if not self.modal_open and not self.paused and self.clock_running and not self._is_game_over():
             side = self._side_to_move()
-            (self.white_clock if side == "white" else self.black_clock).tick(elapsed)
-            if (self.white_clock if side == "white" else self.black_clock).seconds <= 0:
+            clk = self.white_clock if side == "white" else self.black_clock
+            clk.tick(elapsed)
+            if clk.seconds <= 0:
                 self.resign_result = -1.0 if side == "white" else 1.0
                 self.resign_reason = "Hết thời gian (Flag)"
                 self.message = f"Hết giờ - {'Đen' if side == 'white' else 'Trắng'} thắng"
                 self.clock_running = False
                 self._trigger_game_over_popup()
+                self._play_game_over_sound(self.resign_result)
 
     def _new_game(self) -> None:
         if self.modal_open:
@@ -379,6 +610,7 @@ class ChessPygameApp:
         self.game_over_dismissed = False
         self.paused = False
         self.message = "Lượt Trắng"
+        self._play_sound("GenericNotify")
 
     def _undo(self) -> None:
         if self.ai_future is not None and not self.ai_future.done():
@@ -469,6 +701,10 @@ class ChessPygameApp:
         )
 
     def _handle_key(self, key: int, pygame: Any) -> bool:
+        if self.settings_open:
+            if key == pygame.K_ESCAPE:
+                self.settings_open = False
+            return True
         if self.modal_open:
             if key == pygame.K_ESCAPE:
                 if self.modal_dropdown_open is not None:
@@ -538,13 +774,33 @@ class ChessPygameApp:
     def _handle_click(self, position: tuple[int, int], pygame_mod: Any = None) -> None:
         x, y = position
         if y < self.TAB_HEIGHT:
-            if 0 <= x < 350:
+            if 1104 <= x <= 1138 and 6 <= y <= 38:
+                self.sound_enabled = not self.sound_enabled
+                try:
+                    if pygame.get_init() and pygame.mixer.get_init():
+                        pygame.mixer.music.set_volume(self.music_volume if self.sound_enabled else 0.0)
+                except Exception:
+                    pass
+                return
+            if 1146 <= x <= 1268 and 6 <= y <= 38:
+                self.settings_open = not self.settings_open
+                if self.settings_open:
+                    self.modal_open = False
+                    self.modal_dropdown_open = None
+                    self.lab_dropdown_open = None
+                return
+            if 12 <= x <= 230 and 6 <= y <= 38:
+                self.settings_open = False
                 self.active_tab = "play"
-            elif 350 <= x < 700:
+            elif 240 <= x <= 480 and 6 <= y <= 38:
+                self.settings_open = False
                 if not self.lab_tab_locked:
                     self.active_tab = "lab"
                 else:
                     self.message = "Tab Nghiên cứu đang tạm khóa"
+            return
+        if self.settings_open:
+            self._handle_settings_click(x, y, pygame_mod)
             return
         if self.modal_open:
             self._handle_modal_click(x, y, pygame_mod)
@@ -610,6 +866,18 @@ class ChessPygameApp:
             else:
                 idx = round(ratio * (len(self.WORKLOAD_STEPS) - 1))
                 self.modal_workload = self.WORKLOAD_STEPS[idx]
+        elif self.dragging_slider == "settings_sfx":
+            mx = 300
+            track_x = mx + 220
+            track_w = 414
+            ratio = max(0.0, min(1.0, (mouse_x - track_x) / float(track_w)))
+            self._set_sfx_volume(ratio)
+        elif self.dragging_slider == "settings_music":
+            mx = 300
+            track_x = mx + 220
+            track_w = 414
+            ratio = max(0.0, min(1.0, (mouse_x - track_x) / float(track_w)))
+            self._set_music_volume(ratio * 0.24)
         elif self.dragging_slider == "lab_slider":
             ratio = max(0.0, min(1.0, (mouse_x - 30) / 280.0))
             if self.lab_budget_mode == "time":
@@ -620,44 +888,19 @@ class ChessPygameApp:
                 self.lab_workload = self.WORKLOAD_STEPS[idx]
 
     def _handle_left_click(self, x: int, y: int, pygame: Any = None) -> None:
-        ids = list_full_board_agents()
-        agent_index = next(
-            (
-                index
-                for index in range(len(ids))
-                if 76 + index * 27 <= y < 101 + index * 27
-            ),
-            None,
-        )
-        if agent_index is not None:
-            agent_id = ids[agent_index]
-            self.agent_id = agent_id
-            if self.game_mode == "human_ai":
-                ai_id = self.agent_id
-                self.agent = create_agent(ai_id)
-                if self.player_color == "white":
-                    self.black_agent = self.agent
-                    self.modal_black_side = ai_id
-                else:
-                    self.white_agent = self.agent
-                    self.modal_white_side = ai_id
-            elif self.game_mode == "ai_ai":
-                self.black_agent = create_agent(agent_id)
-                self.modal_black_side = agent_id
-            self.message = f"Đã chọn {self.agent_id}"
-        elif 296 <= y <= 336:
+        if 84 <= y <= 124:
             self.dragging_slider = "left_time"
             self._update_slider_from_mouse(x)
-        elif 344 <= y <= 384:
+        elif 132 <= y <= 172:
             self.dragging_slider = "left_workload"
             self._update_slider_from_mouse(x)
-        elif 420 <= y <= 452:
+        elif 216 <= y <= 248:
             self.flipped = not self.flipped
-        elif 458 <= y <= 490:
+        elif 254 <= y <= 286:
             self._undo()
-        elif 496 <= y <= 528:
+        elif 292 <= y <= 324:
             self._resign()
-        elif 534 <= y <= 566:
+        elif 330 <= y <= 362:
             self._offer_draw()
         elif 628 <= y <= 676:
             self._new_game()
@@ -692,6 +935,8 @@ class ChessPygameApp:
             return
         action = self._find_action(self.selected_square, square)
         if action is None:
+            if square != self.selected_square and not self._legal_from(square):
+                self._play_sound("OutOfBound")
             self.selected_square = square if self._legal_from(square) else None
             return
         promotion_moves = [
@@ -774,20 +1019,20 @@ class ChessPygameApp:
             self.lab_dropdown_open = None
             return
 
-        # 2. Chọn kịch bản thí nghiệm ở cột trái (y: 86..244)
-        if 18 <= x <= 322:
-            scenarios = [
-                ("arena", 86),
-                ("ablation1", 126),
-                ("ablation2", 166),
-                ("rl_krk", 206),
-            ]
-            for key, top in scenarios:
-                if top <= y <= top + 34:
-                    self.lab_scenario = key
-                    if self.lab_view not in ("figures", "logs"):
-                        self.lab_view = key
-                    return
+        # Thanh cuộn danh sách bàn cờ trực tiếp ở Tab Arena
+        if self.lab_view == "arena" and self.lab_live_games and 1228 <= x <= 1252 and 332 <= y <= 732:
+            total_rows = (len(self.lab_live_games) + 2) // 3
+            max_scroll = max(0, total_rows - 2)
+            if max_scroll > 0:
+                ratio = max(0.0, min(1.0, (y - 332) / 400.0))
+                self.lab_games_scroll = round(ratio * max_scroll)
+            return
+
+        # 2. Kịch bản thí nghiệm mặc định ở cột trái (Đấu Cặp / Giải Đấu Arena)
+        if 18 <= x <= 322 and 86 <= y <= 120:
+            self.lab_scenario = "arena"
+            self.lab_view = "arena"
+            return
 
         # 3. Các nút điều chỉnh tham số Setup theo kịch bản đang chọn (y: 275..535)
         if 18 <= x <= 322:
@@ -905,10 +1150,10 @@ class ChessPygameApp:
 
         # 5. Thanh Sub-tab chuyển đổi chế độ xem ở khung bên phải (y: 48..84)
         if 340 <= x <= 1280 and 46 <= y <= 86:
-            views = ["arena", "ablation1", "ablation2", "rl_krk", "figures", "logs"]
+            views = ["figures", "logs"]
             for index, key in enumerate(views):
-                bx = 354 + index * 152
-                if bx <= x <= bx + 144:
+                bx = 354 + index * 190
+                if bx <= x <= bx + 180:
                     self.lab_view = key
                     return
 
@@ -1069,6 +1314,7 @@ class ChessPygameApp:
         if self.env.is_terminal():
             self.clock_running = False
             self._trigger_game_over_popup()
+        self._play_move_sound(san, self.env.is_terminal(), self.env.result() if self.env.is_terminal() else None)
 
     def _agent_for_side(self, side: str) -> Optional[Any]:
         if side == "white":
@@ -1153,6 +1399,7 @@ class ChessPygameApp:
         self.message = "Trắng thắng do Đen đầu hàng" if side == "black" else "Đen thắng do Trắng đầu hàng"
         self.clock_running = False
         self._trigger_game_over_popup()
+        self._play_game_over_sound(self.resign_result)
 
     def _offer_draw(self) -> None:
         if self.game_mode == "ai_ai" or self._is_game_over():
@@ -1165,6 +1412,7 @@ class ChessPygameApp:
                 self.message = "Hai bên đồng ý hòa"
                 self.clock_running = False
                 self._trigger_game_over_popup()
+                self._play_sound("Draw")
             else:
                 self.draw_offer_pending = True
                 self.message = "Đề nghị hòa: bấm [D] lần nữa để đồng ý"
@@ -1178,6 +1426,7 @@ class ChessPygameApp:
             self.message = "AI đồng ý hòa"
             self.clock_running = False
             self._trigger_game_over_popup()
+            self._play_sound("Draw")
         else:
             self.message = "AI từ chối hòa"
 
@@ -1214,6 +1463,595 @@ class ChessPygameApp:
         seconds = int(max(0, clock.seconds))
         return f"{seconds // 60:02d}:{seconds % 60:02d}"
 
+    def _get_icon(
+        self,
+        pygame: Any,
+        name: str,
+        size: int,
+        color: tuple[int, int, int],
+    ) -> Any:
+        key = (name, size, color)
+        if key in self._icon_cache:
+            return self._icon_cache[key]
+        path = Path(__file__).resolve().parent / "assets" / "icon" / f"{name}.png"
+        if not path.exists():
+            self._icon_cache[key] = None
+            return None
+        try:
+            raw = pygame.image.load(str(path))
+            if pygame.display.get_surface() is not None:
+                raw = raw.convert_alpha()
+            scaled = pygame.transform.smoothscale(raw, (size, size))
+            tinted = scaled.copy()
+            tinted.fill((0, 0, 0, 255), special_flags=pygame.BLEND_RGBA_MIN)
+            tinted.fill((color[0], color[1], color[2], 0), special_flags=pygame.BLEND_RGBA_ADD)
+            self._icon_cache[key] = tinted
+            return tinted
+        except Exception:
+            self._icon_cache[key] = None
+            return None
+
+    def _blit_icon_text(
+        self,
+        screen: Any,
+        pygame: Any,
+        icon_name: str,
+        icon_size: int,
+        color: tuple[int, int, int],
+        text_surf: Any,
+        pos: Optional[tuple[int, int]] = None,
+        center_rect: Any = None,
+        gap: int = 7,
+    ) -> None:
+        icon = self._get_icon(pygame, icon_name, icon_size, color)
+        if center_rect is not None:
+            if icon is None:
+                screen.blit(text_surf, text_surf.get_rect(center=center_rect.center))
+                return
+            total_w = icon.get_width() + gap + text_surf.get_width()
+            start_x = center_rect.centerx - total_w // 2
+            icon_y = center_rect.centery - icon.get_height() // 2
+            text_y = center_rect.centery - text_surf.get_height() // 2
+            screen.blit(icon, (start_x, icon_y))
+            screen.blit(text_surf, (start_x + icon.get_width() + gap, text_y))
+            return
+        if pos is None:
+            return
+        x, y = pos
+        if icon is None:
+            screen.blit(text_surf, (x, y))
+            return
+        row_h = max(icon.get_height(), text_surf.get_height())
+        icon_y = y + (row_h - icon.get_height()) // 2
+        text_y = y + (row_h - text_surf.get_height()) // 2
+        screen.blit(icon, (x, icon_y))
+        screen.blit(text_surf, (x + icon.get_width() + gap, text_y))
+
+    @staticmethod
+    def _discover_piece_sets() -> list[str]:
+        piece_root = Path(__file__).resolve().parent / "assets" / "piece"
+        if not piece_root.exists():
+            return ["cburnett"]
+        found = sorted(p.name for p in piece_root.iterdir() if p.is_dir())
+        preferred = ["cburnett", "merida", "alpha", "cardinal", "california", "staunty", "maestro", "fresca"]
+        ordered = [name for name in preferred if name in found]
+        ordered.extend(name for name in found if name not in ordered)
+        return ordered or ["cburnett"]
+
+    def _apply_theme(self, theme_name: str) -> None:
+        palette = self.UI_THEMES.get(theme_name, self.UI_THEMES["dark"])
+        self.ui_theme = theme_name if theme_name in self.UI_THEMES else "dark"
+        for attr, val in palette.items():
+            setattr(self, attr, val)
+        self._apply_accent_theme(self.accent_theme)
+
+    def _apply_accent_theme(self, accent_id: str) -> None:
+        for aid, _, dark_c, light_c in self.ACCENT_THEMES:
+            if aid == accent_id:
+                self.accent_theme = aid
+                self.ACCENT = light_c if self.ui_theme == "light" else dark_c
+                return
+
+    @staticmethod
+    def _default_background_path() -> Optional[Path]:
+        p = Path(__file__).resolve().parent / "assets" / "image" / "background" / "Nitro_Wallpaper_05_3840x2400.jpg"
+        return p if p.exists() else None
+
+    @staticmethod
+    def _list_background_images() -> list[Path]:
+        bg_dir = Path(__file__).resolve().parent / "assets" / "image" / "background"
+        if not bg_dir.exists():
+            return []
+        exts = {".png", ".jpg", ".jpeg", ".webp", ".bmp"}
+        return sorted(p for p in bg_dir.iterdir() if p.is_file() and p.suffix.lower() in exts)
+
+    @staticmethod
+    def _list_music_files() -> list[Path]:
+        music_dir = Path(__file__).resolve().parent / "assets" / "music"
+        if not music_dir.exists():
+            return []
+        exts = {".mp3", ".wav", ".ogg", ".flac"}
+        return sorted(p for p in music_dir.iterdir() if p.is_file() and p.suffix.lower() in exts)
+
+    def _set_background_image(self, path: Optional[Path], pygame_mod: Any = None) -> None:
+        if path is None:
+            self.bg_image_path = None
+            self.bg_image_surface = None
+            return
+        pg = pygame_mod or pygame
+        try:
+            img = pg.image.load(str(path))
+            if pg.display.get_surface() is not None:
+                img = img.convert()
+            iw, ih = img.get_size()
+            tw, th = self.WINDOW_SIZE
+            scale = max(tw / float(max(1, iw)), th / float(max(1, ih)))
+            sw, sh = max(1, int(iw * scale)), max(1, int(ih * scale))
+            scaled = pg.transform.smoothscale(img, (sw, sh))
+            surface = pg.Surface(self.WINDOW_SIZE)
+            surface.blit(scaled, ((tw - sw) // 2, (th - sh) // 2))
+            self.bg_image_path = str(path)
+            self.bg_image_surface = surface
+        except Exception:
+            pass
+
+    def _set_background_music(self, path: Optional[Path]) -> None:
+        if path is None:
+            self.music_path = None
+            try:
+                if pygame.get_init() and pygame.mixer.get_init():
+                    pygame.mixer.music.stop()
+            except Exception:
+                pass
+            return
+        if not self._ensure_mixer():
+            self.music_path = str(path)
+            return
+        try:
+            pygame.mixer.music.load(str(path))
+            pygame.mixer.music.set_volume(self.music_volume if self.sound_enabled else 0.0)
+            pygame.mixer.music.play(-1)
+            self.music_path = str(path)
+        except Exception:
+            pass
+
+    def _set_sfx_volume(self, value: float) -> None:
+        self.sfx_volume = max(0.0, min(1.0, float(value)))
+        for snd in self._sound_cache.values():
+            if snd is not None:
+                try:
+                    snd.set_volume(self.sfx_volume)
+                except Exception:
+                    pass
+
+    def _set_music_volume(self, value: float) -> None:
+        self.music_volume = max(0.0, min(0.24, float(value)))
+        try:
+            if pygame.get_init() and pygame.mixer.get_init():
+                pygame.mixer.music.set_volume(self.music_volume if self.sound_enabled else 0.0)
+        except Exception:
+            pass
+
+    @staticmethod
+    def _browse_local_file(title: str, filetypes: list[tuple[str, str]]) -> Optional[Path]:
+        try:
+            import tkinter as tk
+            from tkinter import filedialog
+
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)
+            selected = filedialog.askopenfilename(title=title, filetypes=filetypes)
+            root.destroy()
+            if selected:
+                return Path(selected)
+        except Exception:
+            pass
+        return None
+
+    def _draw_background_layer(self, screen: Any, pygame: Any, area_rect: Any) -> None:
+        if self.bg_image_surface is None and self.bg_image_path is not None:
+            self._set_background_image(Path(self.bg_image_path), pygame)
+        if self.bg_image_surface is None:
+            pygame.draw.rect(screen, self.BG, area_rect)
+            return
+        screen.blit(self.bg_image_surface, area_rect.topleft, area_rect)
+        tint = pygame.Surface(area_rect.size, pygame.SRCALPHA)
+        if self.ui_theme == "light":
+            tint.fill((243, 245, 249, 130))
+        else:
+            tint.fill((15, 19, 28, 135))
+        screen.blit(tint, area_rect.topleft)
+
+    def _apply_board_theme(self, board_theme_id: str) -> None:
+        for tid, _, light, dark in self.BOARD_THEMES:
+            if tid == board_theme_id:
+                self.board_theme = tid
+                self.LIGHT = light
+                self.DARK = dark
+                return
+
+    def _get_piece_preview(self, pygame: Any, piece_set: str) -> Any:
+        if piece_set in self._piece_preview_cache:
+            return self._piece_preview_cache[piece_set]
+        piece_dir = Path(__file__).resolve().parent / "assets" / "piece" / piece_set
+        has_display = pygame.display.get_surface() is not None
+        for fname in ("wN", "wQ", "wK"):
+            for suffix in (".png", ".svg"):
+                p = piece_dir / f"{fname}{suffix}"
+                if p.exists():
+                    try:
+                        img = pygame.image.load(str(p))
+                        if has_display:
+                            img = img.convert_alpha()
+                        scaled = pygame.transform.smoothscale(img, (26, 26))
+                        self._piece_preview_cache[piece_set] = scaled
+                        return scaled
+                    except Exception:
+                        continue
+        self._piece_preview_cache[piece_set] = None
+        return None
+
+    def _handle_settings_click(self, x: int, y: int, pygame_mod: Any) -> None:
+        mx, my, w, h = 300, 85, 680, 580
+        if not (mx <= x <= mx + w and my <= y <= my + h):
+            self.settings_open = False
+            return
+        lx, ly = x - mx, y - my
+        # Nút đóng (X)
+        if w - 46 <= lx <= w - 14 and 14 <= ly <= 46:
+            self.settings_open = False
+            return
+        # Sub-tabs trong Settings (Giao diện | Bàn cờ & Quân | Âm thanh)
+        if 56 <= ly <= 90:
+            for idx, tab_key in enumerate(("appearance", "board", "audio")):
+                tx = 24 + idx * 214
+                if tx <= lx <= tx + 204:
+                    self.settings_tab = tab_key
+                    return
+
+        if self.settings_tab == "appearance":
+            # 1. Chế độ Sáng / Tối
+            if 132 <= ly <= 170:
+                if 24 <= lx <= 330:
+                    self._apply_theme("dark")
+                    return
+                if 350 <= lx <= 656:
+                    self._apply_theme("light")
+                    return
+            # 2. Tông màu chủ đạo (6 ô trên 1 hàng hoặc 3x2)
+            for idx, (aid, _, _, _) in enumerate(self.ACCENT_THEMES):
+                col, row = idx % 3, idx // 3
+                bx = 24 + col * 214
+                by = 212 + row * 44
+                if bx <= lx <= bx + 204 and by <= ly <= by + 36:
+                    self._apply_accent_theme(aid)
+                    return
+            # 3. Hình nền (Nút tải từ máy / Xóa nền + danh sách background)
+            if 316 <= ly <= 346:
+                if 416 <= lx <= 564:
+                    chosen = self._browse_local_file(
+                        "Chọn hình nền",
+                        [("Hình ảnh", "*.png *.jpg *.jpeg *.webp *.bmp"), ("Tất cả tệp", "*.*")],
+                    )
+                    if chosen is not None:
+                        self._set_background_image(chosen, pygame_mod)
+                    return
+                if 574 <= lx <= 656:
+                    self._set_background_image(None)
+                    return
+            bg_files = self._list_background_images()
+            list_x, list_y, list_w, list_h = 24, 354, 616, 152
+            max_scroll = max(0, len(bg_files) - 4)
+            if list_x + list_w + 4 <= lx <= list_x + list_w + 18 and list_y <= ly <= list_y + list_h and max_scroll > 0:
+                ratio = max(0.0, min(1.0, (ly - list_y) / float(list_h)))
+                self.bg_image_scroll = round(ratio * max_scroll)
+                return
+            if list_x <= lx <= list_x + list_w and list_y <= ly <= list_y + list_h:
+                row_idx = (ly - list_y) // 38
+                item_idx = self.bg_image_scroll + row_idx
+                if 0 <= item_idx < len(bg_files):
+                    self._set_background_image(bg_files[item_idx], pygame_mod)
+                return
+
+        elif self.settings_tab == "board":
+            # 1. Màu sắc bàn cờ (3x2 grid)
+            for idx, (tid, _, _, _) in enumerate(self.BOARD_THEMES):
+                col, row = idx % 3, idx // 3
+                bx = 24 + col * 214
+                by = 132 + row * 48
+                if bx <= lx <= bx + 204 and by <= ly <= by + 40:
+                    self._apply_board_theme(tid)
+                    return
+            # 2. Kiểu dáng quân cờ (scrollable 2-column grid)
+            list_x, list_y, list_w, list_h = 24, 272, 616, 232
+            total_rows = (len(self.available_piece_sets) + 1) // 2
+            max_scroll = max(0, total_rows - 5)
+            if list_x + list_w + 4 <= lx <= list_x + list_w + 18 and list_y <= ly <= list_y + list_h and max_scroll > 0:
+                ratio = max(0.0, min(1.0, (ly - list_y) / float(list_h)))
+                self.settings_piece_scroll = round(ratio * max_scroll)
+                return
+            if list_x <= lx <= list_x + list_w and list_y <= ly <= list_y + list_h:
+                rel_row = (ly - list_y) // 46
+                col = 0 if lx < list_x + 308 else 1
+                item_idx = (self.settings_piece_scroll + rel_row) * 2 + col
+                if 0 <= item_idx < len(self.available_piece_sets):
+                    chosen = self.available_piece_sets[item_idx]
+                    if chosen != self.piece_set:
+                        self.piece_set = chosen
+                        if pygame_mod is not None:
+                            self._load_piece_images(pygame_mod)
+                return
+
+        elif self.settings_tab == "audio":
+            # 1. Thanh trượt Âm lượng SFX & Nhạc nền
+            if 132 <= ly <= 174 and 210 <= lx <= 644:
+                self.dragging_slider = "settings_sfx"
+                self._update_slider_from_mouse(x)
+                return
+            if 184 <= ly <= 226 and 210 <= lx <= 644:
+                self.dragging_slider = "settings_music"
+                self._update_slider_from_mouse(x)
+                return
+            # 2. Nút Tải nhạc từ máy / Tắt nhạc
+            if 246 <= ly <= 276:
+                if 416 <= lx <= 564:
+                    chosen = self._browse_local_file(
+                        "Chọn nhạc nền",
+                        [("Âm thanh", "*.mp3 *.wav *.ogg *.flac"), ("Tất cả tệp", "*.*")],
+                    )
+                    if chosen is not None:
+                        self._set_background_music(chosen)
+                    return
+                if 574 <= lx <= 656:
+                    self._set_background_music(None)
+                    return
+            music_files = self._list_music_files()
+            list_x, list_y, list_w, list_h = 24, 286, 616, 218
+            max_scroll = max(0, len(music_files) - 5)
+            if list_x + list_w + 4 <= lx <= list_x + list_w + 18 and list_y <= ly <= list_y + list_h and max_scroll > 0:
+                ratio = max(0.0, min(1.0, (ly - list_y) / float(list_h)))
+                self.music_scroll = round(ratio * max_scroll)
+                return
+            if list_x <= lx <= list_x + list_w and list_y <= ly <= list_y + list_h:
+                row_idx = (ly - list_y) // 42
+                item_idx = self.music_scroll + row_idx
+                if 0 <= item_idx < len(music_files):
+                    self._set_background_music(music_files[item_idx])
+                return
+
+        # Nút Mặc định & Xong
+        if 524 <= ly <= 560:
+            if 24 <= lx <= 164:
+                self.accent_theme = "blue"
+                self._apply_theme("dark")
+                self._apply_board_theme("classic_green")
+                self._set_background_image(self._default_background_path(), pygame_mod)
+                self._set_background_music(None)
+                self._set_sfx_volume(0.8)
+                self._set_music_volume(0.15)
+                if self.piece_set != "cburnett":
+                    self.piece_set = "cburnett"
+                    if pygame_mod is not None:
+                        self._load_piece_images(pygame_mod)
+                self.settings_piece_scroll = 0
+                return
+            if 516 <= lx <= 656:
+                self.settings_open = False
+                return
+
+    def _draw_settings_modal(self, screen: Any, pygame: Any) -> None:
+        overlay = pygame.Surface(self.WINDOW_SIZE, pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 165))
+        screen.blit(overlay, (0, 0))
+        mx, my, w, h = 300, 85, 680, 580
+        rect = pygame.Rect(mx, my, w, h)
+        pygame.draw.rect(screen, self.PANEL, rect, border_radius=12)
+        pygame.draw.rect(screen, self.BORDER_STRONG, rect, 2, border_radius=12)
+
+        font = pygame.font.SysFont("segoeui", 19, bold=True)
+        sec_font = pygame.font.SysFont("segoeui", 14, bold=True)
+        small = pygame.font.SysFont("segoeui", 13)
+        mono = pygame.font.SysFont("consolas", 12, bold=True)
+
+        self._blit_icon_text(
+            screen, pygame, "settings", 20, self.ACCENT,
+            font.render("CÀI ĐẶT HỆ THỐNG", True, self.TEXT),
+            pos=(mx + 24, my + 16), gap=9,
+        )
+        close_btn = pygame.Rect(mx + w - 44, my + 14, 28, 28)
+        pygame.draw.rect(screen, self.PANEL_2, close_btn, border_radius=6)
+        pygame.draw.rect(screen, self.BORDER, close_btn, 1, border_radius=6)
+        x_lbl = sec_font.render("X", True, self.MUTED)
+        screen.blit(x_lbl, x_lbl.get_rect(center=close_btn.center))
+
+        # Thanh sub-tabs trong Settings
+        s_tabs = [
+            ("appearance", "palette", "Giao diện & Nền"),
+            ("board", "trophy", "Bàn cờ & Quân cờ"),
+            ("audio", "sixteenth-notes", "Âm thanh & Nhạc"),
+        ]
+        for idx, (t_key, t_icon, t_label) in enumerate(s_tabs):
+            t_rect = pygame.Rect(mx + 24 + idx * 214, my + 56, 204, 34)
+            sel = self.settings_tab == t_key
+            pygame.draw.rect(screen, self.SELECTED_BG if sel else self.PANEL_2, t_rect, border_radius=7)
+            pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, t_rect, 2 if sel else 1, border_radius=7)
+            t_color = self.ACCENT if sel else self.TEXT
+            self._blit_icon_text(
+                screen, pygame, t_icon, 14, self.ACCENT if sel else self.MUTED,
+                sec_font.render(t_label, True, t_color),
+                center_rect=t_rect, gap=7,
+            )
+
+        if self.settings_tab == "appearance":
+            screen.blit(sec_font.render("1. Chế độ hiển thị:", True, self.MUTED), (mx + 24, my + 104))
+            for key, icon_name, label, bx in (
+                ("dark", "eclipse", "Chế độ Tối (Dark)", mx + 24),
+                ("light", "palette", "Chế độ Sáng (Light)", mx + 350),
+            ):
+                btn = pygame.Rect(bx, my + 132, 306, 38)
+                sel = self.ui_theme == key
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.PANEL_2, btn, border_radius=8)
+                pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 2 if sel else 1, border_radius=8)
+                self._blit_icon_text(
+                    screen, pygame, icon_name, 16, self.ACCENT if sel else self.MUTED,
+                    sec_font.render(label, True, self.TEXT if sel else self.MUTED),
+                    center_rect=btn, gap=8,
+                )
+
+            screen.blit(sec_font.render("2. Tông màu chủ đạo:", True, self.MUTED), (mx + 24, my + 184))
+            for idx, (aid, title, dark_c, light_c) in enumerate(self.ACCENT_THEMES):
+                col, row = idx % 3, idx // 3
+                btn = pygame.Rect(mx + 24 + col * 214, my + 212 + row * 44, 204, 36)
+                sel = self.accent_theme == aid
+                swatch = light_c if self.ui_theme == "light" else dark_c
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.PANEL_2, btn, border_radius=7)
+                pygame.draw.rect(screen, swatch if sel else self.BORDER, btn, 2 if sel else 1, border_radius=7)
+                pygame.draw.circle(screen, swatch, (btn.x + 20, btn.centery), 8)
+                screen.blit(small.render(title, True, self.TEXT if sel else self.MUTED), (btn.x + 36, btn.y + 9))
+
+            curr_bg = Path(self.bg_image_path).name if self.bg_image_path else "Mặc định (Không)"
+            screen.blit(sec_font.render(f"3. Hình nền ({curr_bg[:26]}):", True, self.MUTED), (mx + 24, my + 320))
+            up_btn = pygame.Rect(mx + 416, my + 316, 148, 30)
+            clr_btn = pygame.Rect(mx + 574, my + 316, 82, 30)
+            pygame.draw.rect(screen, self.PANEL_2, up_btn, border_radius=6)
+            pygame.draw.rect(screen, self.BORDER, up_btn, 1, border_radius=6)
+            self._blit_icon_text(
+                screen, pygame, "upload", 13, self.ACCENT,
+                small.render("Tải từ máy...", True, self.ACCENT),
+                center_rect=up_btn, gap=5,
+            )
+            pygame.draw.rect(screen, self.PANEL_2, clr_btn, border_radius=6)
+            pygame.draw.rect(screen, self.BORDER, clr_btn, 1, border_radius=6)
+            c_txt = small.render("Xóa nền", True, self.TEXT)
+            screen.blit(c_txt, c_txt.get_rect(center=clr_btn.center))
+
+            bg_files = self._list_background_images()
+            list_rect = pygame.Rect(mx + 24, my + 354, 616, 152)
+            pygame.draw.rect(screen, self.CARD_DARK, list_rect, border_radius=8)
+            pygame.draw.rect(screen, self.BORDER, list_rect, 1, border_radius=8)
+            if not bg_files:
+                hint = small.render("Thư mục assets/image/background/ chưa có ảnh. Hãy bấm 'Tải từ máy...'!", True, self.MUTED)
+                screen.blit(hint, hint.get_rect(center=list_rect.center))
+            else:
+                for r_i, p in enumerate(bg_files[self.bg_image_scroll : self.bg_image_scroll + 4]):
+                    item_rect = pygame.Rect(mx + 30, my + 360 + r_i * 36, 604, 32)
+                    sel = self.bg_image_path == str(p)
+                    pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, item_rect, border_radius=6)
+                    pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, item_rect, 2 if sel else 1, border_radius=6)
+                    screen.blit(small.render(p.name, True, self.TEXT if sel else self.MUTED), (item_rect.x + 12, item_rect.y + 7))
+
+        elif self.settings_tab == "board":
+            screen.blit(sec_font.render("1. Màu sắc bàn cờ:", True, self.MUTED), (mx + 24, my + 104))
+            for idx, (tid, title, light_c, dark_c) in enumerate(self.BOARD_THEMES):
+                col, row = idx % 3, idx // 3
+                btn = pygame.Rect(mx + 24 + col * 214, my + 132 + row * 48, 204, 40)
+                sel = self.board_theme == tid
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.PANEL_2, btn, border_radius=7)
+                pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 2 if sel else 1, border_radius=7)
+                pygame.draw.rect(screen, light_c, pygame.Rect(btn.x + 10, btn.y + 10, 18, 20), border_radius=3)
+                pygame.draw.rect(screen, dark_c, pygame.Rect(btn.x + 28, btn.y + 10, 18, 20), border_radius=3)
+                pygame.draw.rect(screen, self.BORDER, pygame.Rect(btn.x + 10, btn.y + 10, 36, 20), 1, border_radius=3)
+                screen.blit(small.render(title, True, self.TEXT if sel else self.MUTED), (btn.x + 54, btn.y + 11))
+
+            screen.blit(sec_font.render(f"2. Kiểu dáng quân cờ ({self.piece_set}):", True, self.MUTED), (mx + 24, my + 244))
+            list_rect = pygame.Rect(mx + 24, my + 272, 616, 232)
+            pygame.draw.rect(screen, self.CARD_DARK, list_rect, border_radius=8)
+            pygame.draw.rect(screen, self.BORDER, list_rect, 1, border_radius=8)
+
+            total_rows = (len(self.available_piece_sets) + 1) // 2
+            visible_rows = 5
+            for r_i in range(visible_rows):
+                actual_row = self.settings_piece_scroll + r_i
+                for col in range(2):
+                    item_idx = actual_row * 2 + col
+                    if item_idx >= len(self.available_piece_sets):
+                        continue
+                    pset = self.available_piece_sets[item_idx]
+                    item_rect = pygame.Rect(mx + 30 + col * 304, my + 278 + r_i * 45, 296, 38)
+                    sel = pset == self.piece_set
+                    pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, item_rect, border_radius=6)
+                    pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, item_rect, 2 if sel else 1, border_radius=6)
+                    preview = self._get_piece_preview(pygame, pset)
+                    if preview is not None:
+                        screen.blit(preview, (item_rect.x + 8, item_rect.y + 6))
+                    screen.blit(small.render(pset, True, self.TEXT if sel else self.MUTED), (item_rect.x + 42, item_rect.y + 10))
+
+            max_sc = max(1, total_rows - visible_rows)
+            sb = pygame.Rect(mx + 646, my + 272, 8, 232)
+            pygame.draw.rect(screen, self.TAB_BAR, sb, border_radius=4)
+            th_h = max(24, int(sb.height * (visible_rows / float(max(1, total_rows)))))
+            th_y = sb.y + int((sb.height - th_h) * (self.settings_piece_scroll / float(max_sc)))
+            pygame.draw.rect(screen, self.ACCENT, pygame.Rect(sb.x, th_y, 8, th_h), border_radius=4)
+
+        elif self.settings_tab == "audio":
+            screen.blit(sec_font.render("1. Điều chỉnh âm lượng:", True, self.MUTED), (mx + 24, my + 104))
+            for row_y, label, val, max_v in (
+                (my + 132, "Âm lượng Hiệu ứng (SFX):", self.sfx_volume, 1.0),
+                (my + 184, "Âm lượng Nhạc nền:", self.music_volume, 0.24),
+            ):
+                box = pygame.Rect(mx + 24, row_y, 632, 42)
+                pygame.draw.rect(screen, self.SURFACE, box, border_radius=8)
+                pygame.draw.rect(screen, self.BORDER, box, 1, border_radius=8)
+                screen.blit(small.render(label, True, self.TEXT), (box.x + 14, box.y + 12))
+                track_x, track_w, track_y = mx + 220, 414, box.centery
+                pygame.draw.rect(screen, self.CLOCK_BG, pygame.Rect(track_x, track_y - 3, track_w, 6), border_radius=3)
+                fill_w = int(track_w * min(1.0, val / max_v))
+                if fill_w > 0:
+                    pygame.draw.rect(screen, self.ACCENT, pygame.Rect(track_x, track_y - 3, fill_w, 6), border_radius=3)
+                knob_x = track_x + fill_w
+                pygame.draw.circle(screen, self.SURFACE, (knob_x, track_y), 7)
+                pygame.draw.circle(screen, self.ACCENT, (knob_x, track_y), 7, 2)
+
+            curr_mus = Path(self.music_path).name if self.music_path else "Chưa chọn nhạc nền"
+            screen.blit(sec_font.render(f"2. Nhạc nền ({curr_mus[:28]}):", True, self.MUTED), (mx + 24, my + 248))
+            up_btn = pygame.Rect(mx + 416, my + 244, 148, 30)
+            stop_btn = pygame.Rect(mx + 574, my + 244, 82, 30)
+            pygame.draw.rect(screen, self.PANEL_2, up_btn, border_radius=6)
+            pygame.draw.rect(screen, self.BORDER, up_btn, 1, border_radius=6)
+            self._blit_icon_text(
+                screen, pygame, "upload", 13, self.ACCENT,
+                small.render("Tải từ máy...", True, self.ACCENT),
+                center_rect=up_btn, gap=5,
+            )
+            pygame.draw.rect(screen, self.PANEL_2, stop_btn, border_radius=6)
+            pygame.draw.rect(screen, self.BORDER, stop_btn, 1, border_radius=6)
+            st_txt = small.render("Tắt nhạc", True, self.TEXT)
+            screen.blit(st_txt, st_txt.get_rect(center=stop_btn.center))
+
+            music_files = self._list_music_files()
+            list_rect = pygame.Rect(mx + 24, my + 286, 616, 218)
+            pygame.draw.rect(screen, self.CARD_DARK, list_rect, border_radius=8)
+            pygame.draw.rect(screen, self.BORDER, list_rect, 1, border_radius=8)
+            if not music_files:
+                hint = small.render("Thư mục assets/music/ chưa có nhạc. Hãy bấm 'Tải từ máy...'!", True, self.MUTED)
+                screen.blit(hint, hint.get_rect(center=list_rect.center))
+            else:
+                for r_i, p in enumerate(music_files[self.music_scroll : self.music_scroll + 5]):
+                    item_rect = pygame.Rect(mx + 30, my + 292 + r_i * 41, 604, 36)
+                    sel = self.music_path == str(p)
+                    pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, item_rect, border_radius=6)
+                    pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, item_rect, 2 if sel else 1, border_radius=6)
+                    self._blit_icon_text(
+                        screen, pygame, "sixteenth-notes", 14, self.ACCENT if sel else self.MUTED,
+                        small.render(p.name, True, self.TEXT if sel else self.MUTED),
+                        pos=(item_rect.x + 12, item_rect.y + 8), gap=8,
+                    )
+
+        # Nút Mặc định & Xong
+        reset_btn = pygame.Rect(mx + 24, my + 524, 140, 36)
+        done_btn = pygame.Rect(mx + 516, my + 524, 140, 36)
+        pygame.draw.rect(screen, self.PANEL_2, reset_btn, border_radius=7)
+        pygame.draw.rect(screen, self.BORDER, reset_btn, 1, border_radius=7)
+        self._blit_icon_text(
+            screen, pygame, "refresh-cw", 14, self.MUTED,
+            sec_font.render("Mặc định", True, self.TEXT),
+            center_rect=reset_btn, gap=6,
+        )
+        pygame.draw.rect(screen, self.ACCENT, done_btn, border_radius=7)
+        done_lbl = sec_font.render("Xong", True, self.ACCENT_TEXT)
+        screen.blit(done_lbl, done_lbl.get_rect(center=done_btn.center))
+
     def _draw(self, screen: Any, pygame: Any) -> None:
         screen.fill(self.BG)
         self._draw_tabs(screen, pygame)
@@ -1223,26 +2061,108 @@ class ChessPygameApp:
             self._draw_lab_tab(screen, pygame)
         if self.modal_open:
             self._draw_modal(screen, pygame)
+        if self.settings_open:
+            self._draw_settings_modal(screen, pygame)
 
     def _draw_tabs(self, screen: Any, pygame: Any) -> None:
-        pygame.draw.rect(screen, (11, 15, 23), pygame.Rect(0, 0, 1280, 44))
+        pygame.draw.rect(screen, self.TAB_BAR, pygame.Rect(0, 0, 1280, 44))
         pygame.draw.line(screen, self.BORDER, (0, 43), (1280, 43), 1)
         tabs = [
-            ("play", "♟  Thi đấu & Phân tích"),
-            ("lab", "🔒  Nghiên cứu & Thực nghiệm (Tạm khóa)" if self.lab_tab_locked else "📊  Nghiên cứu & Thực nghiệm"),
+            ("play", "play", "Play", pygame.Rect(12, 6, 218, 32)),
+            (
+                "lab",
+                "settings",
+                "Experiment (Tạm khóa)" if self.lab_tab_locked else "Experiment",
+                pygame.Rect(240, 6, 240, 32),
+            ),
         ]
-        for index, (key, label) in enumerate(tabs):
-            rect = pygame.Rect(index * 350, 0, 350, 44)
-            color = self.SURFACE if self.active_tab == key else (14, 19, 28)
-            pygame.draw.rect(screen, color, rect)
-            if self.active_tab == key:
-                pygame.draw.rect(screen, self.ACCENT, pygame.Rect(rect.x, 41, rect.width, 3))
-            font = pygame.font.SysFont("segoeui", 17 if not (key == "lab" and self.lab_tab_locked) else 14, bold=True)
+        for key, icon_name, label, rect in tabs:
+            is_active = self.active_tab == key
+            pygame.draw.rect(
+                screen,
+                self.SELECTED_BG if is_active else self.SURFACE,
+                rect,
+                border_radius=7,
+            )
+            pygame.draw.rect(
+                screen,
+                self.ACCENT if is_active else self.BORDER,
+                rect,
+                2 if is_active else 1,
+                border_radius=7,
+            )
+            font = pygame.font.SysFont("segoeui", 13 if not (key == "lab" and self.lab_tab_locked) else 12, bold=True)
             if key == "lab" and self.lab_tab_locked:
-                muted = (95, 105, 122)
+                muted = self.MUTED
             else:
-                muted = self.ACCENT if self.active_tab == key else self.MUTED
-            screen.blit(font.render(label, True, muted), (rect.x + 18, 11 if not (key == "lab" and self.lab_tab_locked) else 13))
+                muted = self.ACCENT if is_active else self.TEXT
+            text_surf = font.render(label, True, muted)
+            self._blit_icon_text(
+                screen,
+                pygame,
+                icon_name,
+                15,
+                muted,
+                text_surf,
+                center_rect=rect,
+                gap=7,
+            )
+
+        # Nút Bật/Tắt âm thanh & Cài đặt giao diện ở góc trên cùng bên phải
+        sound_btn = pygame.Rect(1104, 6, 34, 32)
+        pygame.draw.rect(
+            screen,
+            self.SELECTED_BG if self.sound_enabled else self.SURFACE,
+            sound_btn,
+            border_radius=7,
+        )
+        pygame.draw.rect(
+            screen,
+            self.ACCENT if self.sound_enabled else self.BORDER,
+            sound_btn,
+            1,
+            border_radius=7,
+        )
+        snd_icon = self._get_icon(
+            pygame, "sixteenth-notes", 16, self.ACCENT if self.sound_enabled else self.MUTED
+        )
+        if snd_icon is not None:
+            screen.blit(snd_icon, snd_icon.get_rect(center=sound_btn.center))
+        if not self.sound_enabled:
+            pygame.draw.line(
+                screen,
+                (235, 85, 85),
+                (sound_btn.x + 7, sound_btn.bottom - 7),
+                (sound_btn.right - 7, sound_btn.y + 7),
+                2,
+            )
+
+        settings_btn = pygame.Rect(1146, 6, 122, 32)
+        pygame.draw.rect(
+            screen,
+            self.SELECTED_BG if self.settings_open else self.SURFACE,
+            settings_btn,
+            border_radius=7,
+        )
+        pygame.draw.rect(
+            screen,
+            self.ACCENT if self.settings_open else self.BORDER,
+            settings_btn,
+            2 if self.settings_open else 1,
+            border_radius=7,
+        )
+        s_font = pygame.font.SysFont("segoeui", 13, bold=True)
+        s_color = self.ACCENT if self.settings_open else self.TEXT
+        self._blit_icon_text(
+            screen,
+            pygame,
+            "settings",
+            15,
+            s_color,
+            s_font.render("Cài đặt", True, s_color),
+            center_rect=settings_btn,
+            gap=7,
+        )
 
     def _draw_play_tab(self, screen: Any, pygame: Any) -> None:
         self._draw_config(screen, pygame)
@@ -1251,53 +2171,23 @@ class ChessPygameApp:
 
     def _draw_config(self, screen: Any, pygame: Any) -> None:
         rect = pygame.Rect(0, self.TAB_HEIGHT, self.LEFT_WIDTH, 716)
-        pygame.draw.rect(screen, (20, 25, 36), rect)
+        pygame.draw.rect(screen, self.SIDEBAR, rect)
         pygame.draw.line(screen, self.BORDER, (269, 44), (269, 760), 1)
         font = pygame.font.SysFont("segoeui", 15, bold=True)
         small = pygame.font.SysFont("segoeui", 13)
         mono = pygame.font.SysFont("consolas", 12)
 
-        screen.blit(font.render("AGENT SELECTION", True, self.MUTED), (16, 58))
-        ids = list_full_board_agents()
-        names = {
-            "level1": ("Random", "L1"),
-            "level2": ("Heuristic", "L2"),
-            "level3": ("Alpha-Beta", "L3"),
-            "level4": ("MCTS UCT", "L4"),
-            "level5": ("ResNet", "L5"),
-            "level7": ("PUCT", "L7"),
-            "level8": ("AlphaZero", "L8"),
-        }
-        for index, agent_id in enumerate(ids):
-            y = 76 + index * 27
-            item = pygame.Rect(12, y, 246, 25)
-            selected = agent_id == self.agent_id
-            pygame.draw.rect(
-                screen,
-                (34, 67, 112) if selected else self.SURFACE,
-                item,
-                border_radius=7,
-            )
-            if selected:
-                pygame.draw.rect(screen, self.ACCENT, item, 2, border_radius=7)
-            label, badge = names.get(agent_id, (agent_id, ""))
-            screen.blit(small.render(f"{agent_id.replace('level', 'L')}", True,
-                                     self.ACCENT if selected else self.MUTED),
-                        (20, y + 5))
-            screen.blit(small.render(label, True, self.TEXT), (54, y + 5))
-            if badge:
-                badge_rect = pygame.Rect(216, y + 4, 34, 17)
-                pygame.draw.rect(screen, self.PANEL_3, badge_rect, border_radius=4)
-                screen.blit(mono.render(badge, True, self.MUTED),
-                            badge_rect.move(7, 1))
-
-        screen.blit(font.render("BUDGET & SEARCH", True, self.MUTED), (16, 272))
+        self._blit_icon_text(
+            screen, pygame, "eclipse", 15, self.MUTED,
+            font.render("BUDGET & SEARCH", True, self.MUTED),
+            pos=(16, 56), gap=7,
+        )
         is_time_mode = self.time_limit is not None
 
         curr_time = self.time_limit if self.time_limit is not None else self.modal_time
         self._draw_slider_control(
             screen, pygame, small, mono,
-            x=12, y=296, width=246,
+            x=12, y=84, width=246,
             title="Thời gian / nước",
             value_text=f"{curr_time:.1f}s",
             steps=self.TIME_STEPS,
@@ -1308,7 +2198,7 @@ class ChessPygameApp:
         curr_work = self.max_workload if self.max_workload is not None else self.modal_workload
         self._draw_slider_control(
             screen, pygame, small, mono,
-            x=12, y=344, width=246,
+            x=12, y=132, width=246,
             title="Số Nodes / Sims",
             value_text=f"{curr_work}",
             steps=self.WORKLOAD_STEPS,
@@ -1316,29 +2206,44 @@ class ChessPygameApp:
             active=not is_time_mode,
         )
 
-        screen.blit(font.render("CONTROLS", True, self.MUTED), (16, 396))
+        self._blit_icon_text(
+            screen, pygame, "settings", 15, self.MUTED,
+            font.render("CONTROLS", True, self.MUTED),
+            pos=(16, 188), gap=7,
+        )
         buttons = [
-            ("Đảo bàn", "F", 420),
-            ("Undo", "U", 458),
-            ("Đầu hàng", "R", 496),
-            ("Cầu hòa", "D", 534),
+            ("Đảo bàn", "F", 216, "refresh-cw"),
+            ("Undo", "U", 254, "rotate-ccw"),
+            ("Đầu hàng", "R", 292, "power"),
+            ("Cầu hòa", "D", 330, "flag"),
         ]
-        for label, key, y in buttons:
+        for label, key, y, icon_name in buttons:
             rect = pygame.Rect(12, y, 246, 32)
             visible = label != "Cầu hòa" or self.game_mode != "ai_ai"
             if visible:
                 pygame.draw.rect(screen, self.SURFACE, rect, border_radius=7)
                 pygame.draw.rect(screen, self.BORDER, rect, 1, border_radius=7)
-                screen.blit(small.render(label, True, self.TEXT), (20, y + 7))
+                lbl_surf = small.render(label, True, self.TEXT)
+                if icon_name is not None:
+                    self._blit_icon_text(
+                        screen, pygame, icon_name, 14, self.MUTED,
+                        lbl_surf, pos=(20, y + 7), gap=7,
+                    )
+                else:
+                    screen.blit(lbl_surf, (20, y + 7))
                 key_rect = pygame.Rect(208, y + 5, 42, 22)
                 pygame.draw.rect(screen, self.PANEL_3, key_rect, border_radius=5)
                 key_text = mono.render(key, True, self.MUTED)
                 screen.blit(key_text, key_text.get_rect(center=key_rect.center))
         new_rect = pygame.Rect(12, 628, 246, 48)
         pygame.draw.rect(screen, self.ACCENT, new_rect, border_radius=7)
-        pygame.draw.rect(screen, (132, 190, 255), new_rect, 1, border_radius=7)
-        screen.blit(font.render("VÁN MỚI", True, (10, 22, 38)), (64, 641))
-        key_text = mono.render("[N]", True, (24, 48, 72))
+        pygame.draw.rect(screen, self.BORDER_STRONG, new_rect, 1, border_radius=7)
+        self._blit_icon_text(
+            screen, pygame, "play", 16, self.ACCENT_TEXT,
+            font.render("VÁN MỚI", True, self.ACCENT_TEXT),
+            pos=(54, 641), gap=8,
+        )
+        key_text = mono.render("[N]", True, self.ACCENT_TEXT)
         screen.blit(key_text, (174, 645))
 
     def _draw_slider_control(
@@ -1357,7 +2262,7 @@ class ChessPygameApp:
         active: bool,
     ) -> None:
         card = pygame.Rect(x, y, width, 36)
-        pygame.draw.rect(screen, self.SURFACE if active else (21, 27, 38), card, border_radius=7)
+        pygame.draw.rect(screen, self.SURFACE if active else self.PANEL_2, card, border_radius=7)
         pygame.draw.rect(screen, self.ACCENT if active else self.BORDER, card, 1, border_radius=7)
         screen.blit(small.render(title, True, self.TEXT if active else self.MUTED), (x + 10, y + 3))
         val_surf = mono.render(value_text, True, self.ACCENT if active else self.MUTED)
@@ -1366,25 +2271,25 @@ class ChessPygameApp:
         track_x = x + 12
         track_w = width - 24
         track_y = y + 26
-        pygame.draw.rect(screen, (12, 16, 24), pygame.Rect(track_x, track_y - 3, track_w, 6), border_radius=3)
+        pygame.draw.rect(screen, self.CLOCK_BG, pygame.Rect(track_x, track_y - 3, track_w, 6), border_radius=3)
 
         best_idx = min(range(len(steps)), key=lambda i: abs(float(steps[i]) - float(current_val)))
         ratio = best_idx / float(max(1, len(steps) - 1))
         fill_w = int(track_w * ratio)
-        fill_color = self.ACCENT if active else (75, 88, 108)
+        fill_color = self.ACCENT if active else self.MUTED
         if fill_w > 0:
             pygame.draw.rect(screen, fill_color, pygame.Rect(track_x, track_y - 3, fill_w, 6), border_radius=3)
         for i in range(len(steps)):
             tx = track_x + int(track_w * (i / float(max(1, len(steps) - 1))))
-            pygame.draw.circle(screen, fill_color if i <= best_idx else (52, 64, 82), (tx, track_y), 3)
+            pygame.draw.circle(screen, fill_color if i <= best_idx else self.BORDER_STRONG, (tx, track_y), 3)
         knob_x = track_x + fill_w
-        pygame.draw.circle(screen, (240, 246, 255) if active else self.MUTED, (knob_x, track_y), 6)
+        pygame.draw.circle(screen, self.SURFACE if active else self.MUTED, (knob_x, track_y), 6)
         pygame.draw.circle(screen, fill_color, (knob_x, track_y), 6, 2)
 
     def _draw_arena(self, screen: Any, pygame: Any) -> None:
         arena_x = self.LEFT_WIDTH
         rect = pygame.Rect(arena_x, self.TAB_HEIGHT, self.Arena_width if hasattr(self, "Arena_width") else self.ARENA_WIDTH, 716)
-        pygame.draw.rect(screen, (18, 23, 33), rect)
+        self._draw_background_layer(screen, pygame, rect)
         board_x = arena_x + (self.ARENA_WIDTH - self.BOARD_SIZE) // 2
         board_y = self.TAB_HEIGHT + 48
         top = "Đen" if not self.flipped else "Trắng"
@@ -1395,7 +2300,7 @@ class ChessPygameApp:
         self._draw_board(screen, pygame, board_x, board_y)
         self._draw_player_bar(screen, pygame, arena_x + 63, self.TAB_HEIGHT + 592, 544, bottom, bottom_clock)
         footer = pygame.Rect(arena_x + 63, self.TAB_HEIGHT + 640, 544, 34)
-        pygame.draw.rect(screen, (15, 21, 31), footer, border_radius=7)
+        pygame.draw.rect(screen, self.CARD_DARK, footer, border_radius=7)
         pygame.draw.rect(screen, self.BORDER, footer, 1, border_radius=7)
         fen = self.env.render("fen")
         small = pygame.font.SysFont("consolas", 11)
@@ -1411,23 +2316,34 @@ class ChessPygameApp:
             (side == "Trắng" and self._side_to_move() == "white")
             or (side == "Đen" and self._side_to_move() == "black")
         )
-        pygame.draw.rect(screen, (30, 48, 72) if is_turn else self.SURFACE, rect, border_radius=8)
+        pygame.draw.rect(screen, self.SELECTED_BG if is_turn else self.SURFACE, rect, border_radius=8)
         if is_turn:
             pygame.draw.rect(screen, self.ACCENT, rect, 2, border_radius=8)
         font = pygame.font.SysFont("segoeui", 15, bold=True)
         mono = pygame.font.SysFont("consolas", 17, bold=True)
-        name = "Người chơi" if (
+        is_human = (
             (side == "Trắng" and self.player_color == "white")
             or (side == "Đen" and self.player_color == "black")
-        ) else (
+            or self.game_mode == "human_human"
+        )
+        name = "Người chơi" if is_human else (
             getattr(self._agent_for_side("white" if side == "Trắng" else "black"), "name", "AI")
         )
-        role = "♙" if side == "Trắng" else "♟"
-        screen.blit(font.render(f"{role}  {side}  ·  {name}", True, self.TEXT), (x + 12, y + 9))
+        icon_name = "user" if is_human else "bot"
+        self._blit_icon_text(
+            screen,
+            pygame,
+            icon_name,
+            16,
+            self.ACCENT if is_turn else self.MUTED,
+            font.render(f"{side}  ·  {name}", True, self.TEXT),
+            pos=(x + 12, y + 9),
+            gap=8,
+        )
         clock_text = self._format_clock(clock)
         clock_surface = mono.render(clock_text, True, self.ORANGE if is_turn else self.TEXT)
         clock_box = pygame.Rect(x + width - 94, y + 6, 82, 28)
-        pygame.draw.rect(screen, (10, 15, 23), clock_box, border_radius=6)
+        pygame.draw.rect(screen, self.CLOCK_BG, clock_box, border_radius=6)
         screen.blit(clock_surface, clock_surface.get_rect(center=clock_box.center))
 
     def _check_squares(self) -> tuple[Optional[int], set[int]]:
@@ -1447,8 +2363,8 @@ class ChessPygameApp:
     def _draw_board(self, screen: Any, pygame: Any, board_x: int, board_y: int) -> None:
         tile = self.BOARD_SIZE // 8
         board_rect = pygame.Rect(board_x - 3, board_y - 3, self.BOARD_SIZE + 6, self.BOARD_SIZE + 6)
-        pygame.draw.rect(screen, (9, 12, 18), board_rect, border_radius=4)
-        pygame.draw.rect(screen, (82, 94, 112), board_rect, 2, border_radius=4)
+        pygame.draw.rect(screen, self.CARD_DARK, board_rect, border_radius=4)
+        pygame.draw.rect(screen, self.BORDER_STRONG, board_rect, 2, border_radius=4)
         pieces = self._pieces()
         checked_king_sq, checker_squares = self._check_squares()
         legal_targets = {move.to_square for move in self._legal_from(self.selected_square)} if self.selected_square is not None else set()
@@ -1514,17 +2430,22 @@ class ChessPygameApp:
         files = "abcdefgh" if not self.flipped else "hgfedcba"
         ranks = "12345678" if self.flipped else "87654321"
         for i, file_name in enumerate(files):
-            label = small.render(file_name, True, self.TEXT)
+            is_light_sq = (i + 7) % 2 == 0
+            coord_color = self.DARK if is_light_sq else self.LIGHT
+            label = small.render(file_name, True, coord_color)
             label_rect = label.get_rect(center=(board_x + i * tile + tile // 2, board_y + self.BOARD_SIZE - 11))
             screen.blit(label, label_rect)
         for i, rank_name in enumerate(ranks):
-            label = small.render(rank_name, True, self.TEXT)
+            is_light_sq = i % 2 == 0
+            coord_color = self.DARK if is_light_sq else self.LIGHT
+            label = small.render(rank_name, True, coord_color)
             label_rect = label.get_rect(center=(board_x + 10, board_y + i * tile + 12))
             screen.blit(label, label_rect)
 
         if self.promotion_pending is not None:
             cx, cy = board_x + 150, board_y + 220
-            pygame.draw.rect(screen, (20, 24, 32), pygame.Rect(cx - 10, cy - 10, 236, 70), border_radius=8)
+            pygame.draw.rect(screen, self.PANEL, pygame.Rect(cx - 10, cy - 10, 236, 70), border_radius=8)
+            pygame.draw.rect(screen, self.BORDER_STRONG, pygame.Rect(cx - 10, cy - 10, 236, 70), 1, border_radius=8)
             for index, (symbol, glyph) in enumerate((("q", "♕"), ("r", "♖"), ("b", "♗"), ("n", "♘"))):
                 rect = pygame.Rect(cx + index * 54, cy, 50, 50)
                 pygame.draw.rect(screen, self.PANEL_2, rect, border_radius=5)
@@ -1547,19 +2468,19 @@ class ChessPygameApp:
             title = "CHIẾN THẮNG CHO BÊN TRẮNG!"
             score_str = "1 - 0"
             accent = self.GREEN
-            badge_bg = (22, 78, 52)
+            badge_bg = (220, 245, 230) if self.ui_theme == "light" else (22, 78, 52)
             icon_glyph = "♔"
         elif result == -1.0:
             title = "CHIẾN THẮNG CHO BÊN ĐEN!"
             score_str = "0 - 1"
-            accent = (86, 166, 255)
-            badge_bg = (24, 58, 104)
+            accent = self.ACCENT
+            badge_bg = (219, 234, 254) if self.ui_theme == "light" else (24, 58, 104)
             icon_glyph = "♚"
         else:
             title = "VÁN ĐẤU KẾT THÚC HÒA!"
             score_str = "½ - ½"
             accent = self.ORANGE
-            badge_bg = (92, 64, 18)
+            badge_bg = (254, 243, 199) if self.ui_theme == "light" else (92, 64, 18)
             icon_glyph = "⚖"
 
         reason = (
@@ -1593,7 +2514,7 @@ class ChessPygameApp:
         )
         screen.blit(glow_surface, (card_rect.x - 12, card_rect.y - 12))
 
-        pygame.draw.rect(screen, (20, 27, 39), card_rect, border_radius=14)
+        pygame.draw.rect(screen, self.PANEL, card_rect, border_radius=14)
         pygame.draw.rect(screen, accent, card_rect, 2, border_radius=14)
 
         # Huy hiệu tỷ số ở đỉnh
@@ -1633,12 +2554,12 @@ class ChessPygameApp:
         screen.blit(rev_text, rev_text.get_rect(center=review_btn.center))
 
         pygame.draw.rect(screen, self.ACCENT, new_btn, border_radius=8)
-        new_text = btn_font.render("Ván mới [N]", True, (10, 22, 38))
+        new_text = btn_font.render("Ván mới [N]", True, self.ACCENT_TEXT)
         screen.blit(new_text, new_text.get_rect(center=new_btn.center))
 
     def _draw_telemetry(self, screen: Any, pygame: Any) -> None:
         rect = pygame.Rect(self.LEFT_WIDTH + self.ARENA_WIDTH, self.TAB_HEIGHT, self.RIGHT_WIDTH, 716)
-        pygame.draw.rect(screen, (20, 25, 36), rect)
+        pygame.draw.rect(screen, self.SIDEBAR, rect)
         pygame.draw.line(screen, self.BORDER, (940, 44), (940, 760), 1)
         font = pygame.font.SysFont("segoeui", 14, bold=True)
         small = pygame.font.SysFont("segoeui", 12)
@@ -1677,7 +2598,7 @@ class ChessPygameApp:
         summary_card = pygame.Rect(952, 82, 316, 132)
         pygame.draw.rect(screen, self.SURFACE, summary_card, border_radius=9)
         pygame.draw.rect(screen, self.BORDER, summary_card, 1, border_radius=9)
-        pygame.draw.rect(screen, (12, 17, 25), pygame.Rect(968, 94, 18, 106), border_radius=5)
+        pygame.draw.rect(screen, self.CLOCK_BG, pygame.Rect(968, 94, 18, 106), border_radius=5)
         fill = int(106 * ((cp_equiv + 1000.0) / 2000.0))
         fill = max(4, min(106, fill))
         bar_y = 200 - fill
@@ -1688,7 +2609,7 @@ class ChessPygameApp:
         screen.blit(small.render("EVALUATION", True, self.MUTED), (998, 132))
         screen.blit(pygame.font.SysFont("consolas", 10).render(unit_label, True, self.ACCENT), (998, 152))
         gauge = pygame.Rect(1138, 94, 112, 112)
-        pygame.draw.circle(screen, (12, 17, 25), gauge.center, 48)
+        pygame.draw.circle(screen, self.CLOCK_BG, gauge.center, 48)
         pygame.draw.circle(screen, self.BORDER_STRONG, gauge.center, 48, 7)
         arc_angle = int(360 * max(0.0, min(1.0, win_probability / 100.0)))
         for angle in range(-90, -90 + arc_angle, 8):
@@ -1729,7 +2650,7 @@ class ChessPygameApp:
             if i + 1 < len(self.records):
                 item += f"  {self.records[i + 1].san}"
             history.append(item)
-        pygame.draw.rect(screen, (15, 21, 31), pygame.Rect(952, 468, 316, 184), border_radius=9)
+        pygame.draw.rect(screen, self.CARD_DARK, pygame.Rect(952, 468, 316, 184), border_radius=9)
         pygame.draw.rect(screen, self.BORDER, pygame.Rect(952, 468, 316, 184), 1, border_radius=9)
         y = 480
         for index, line in enumerate(history[-7:]):
@@ -1746,7 +2667,7 @@ class ChessPygameApp:
             rect = pygame.Rect(952 + index * 64, replay_y, 58, 34)
             is_pause_btn = index == 2
             bg_color = (
-                (34, 67, 112)
+                self.SELECTED_BG
                 if (is_pause_btn and self.paused)
                 else self.SURFACE
             )
@@ -1758,8 +2679,16 @@ class ChessPygameApp:
             pygame.draw.rect(screen, bg_color, rect, border_radius=7)
             pygame.draw.rect(screen, border_color, rect, 2 if (is_pause_btn and self.paused) else 1, border_radius=7)
             text_color = self.ORANGE if (is_pause_btn and self.paused) else self.TEXT
-            label_surface = mono.render(label, True, text_color)
-            screen.blit(label_surface, label_surface.get_rect(center=rect.center))
+            if is_pause_btn:
+                icon = self._get_icon(pygame, "play" if self.paused else "square-pause", 16, text_color)
+                if icon is not None:
+                    screen.blit(icon, icon.get_rect(center=rect.center))
+                else:
+                    label_surface = mono.render(label, True, text_color)
+                    screen.blit(label_surface, label_surface.get_rect(center=rect.center))
+            else:
+                label_surface = mono.render(label, True, text_color)
+                screen.blit(label_surface, label_surface.get_rect(center=rect.center))
 
     def _draw_modal(self, screen: Any, pygame: Any) -> None:
         overlay = pygame.Surface(self.WINDOW_SIZE, pygame.SRCALPHA)
@@ -1774,18 +2703,25 @@ class ChessPygameApp:
         small = pygame.font.SysFont("segoeui", 13)
         mono = pygame.font.SysFont("consolas", 12, bold=True)
 
-        screen.blit(font.render("THIẾT LẬP VÁN ĐẤU MỚI", True, self.TEXT), (mx + 24, my + 18))
+        self._blit_icon_text(
+            screen, pygame, "settings", 20, self.ACCENT,
+            font.render("THIẾT LẬP VÁN ĐẤU MỚI", True, self.TEXT),
+            pos=(mx + 24, my + 18), gap=9,
+        )
 
         # Nút Đổi bên Trắng <-> Đen nhanh
         swap_btn = pygame.Rect(mx + 445, my + 18, 130, 28)
         pygame.draw.rect(screen, self.PANEL_2, swap_btn, border_radius=6)
         pygame.draw.rect(screen, self.BORDER, swap_btn, 1, border_radius=6)
-        swap_lbl = small.render("⇄ Đổi Trắng/Đen", True, self.ACCENT)
-        screen.blit(swap_lbl, swap_lbl.get_rect(center=swap_btn.center))
+        swap_lbl = small.render("Đổi Trắng/Đen", True, self.ACCENT)
+        self._blit_icon_text(
+            screen, pygame, "refresh-cw", 13, self.ACCENT,
+            swap_lbl, center_rect=swap_btn, gap=6,
+        )
 
         participants = ["human"] + list_full_board_agents()
         short_names = {
-            "human": "👤 Người chơi",
+            "human": "Người chơi",
             "level1": "L1 · Random",
             "level2": "L2 · Heuristic",
             "level3": "L3 · Alpha-Beta",
@@ -1805,18 +2741,26 @@ class ChessPygameApp:
         ):
             is_open = self.modal_dropdown_open == side_key
             box_rect = pygame.Rect(box_x, my + 88, 260, 40)
-            pygame.draw.rect(screen, (34, 67, 112) if is_open else self.PANEL_2, box_rect, border_radius=7)
+            is_hover = box_rect.collidepoint(self.mouse_pos)
+            box_bg = self.SELECTED_BG if is_open else (self.SURFACE_HOVER if is_hover else self.PANEL_2)
+            box_border = self.ACCENT if (is_open or is_hover) else self.BORDER_STRONG
+            pygame.draw.rect(screen, box_bg, box_rect, border_radius=7)
             pygame.draw.rect(
                 screen,
-                self.ACCENT if is_open else self.BORDER_STRONG,
+                box_border,
                 box_rect,
                 2 if is_open else 1,
                 border_radius=7,
             )
             label_str = short_names.get(current_pid, current_pid)
-            screen.blit(sec_font.render(label_str, True, self.TEXT), (box_x + 14, my + 98))
+            p_icon = "user" if current_pid == "human" else "bot"
+            self._blit_icon_text(
+                screen, pygame, p_icon, 15, self.ACCENT if (is_open or is_hover) else self.MUTED,
+                sec_font.render(label_str, True, self.TEXT),
+                pos=(box_x + 14, my + 98), gap=7,
+            )
             arrow = "▲" if is_open else "▼"
-            screen.blit(small.render(arrow, True, self.ACCENT if is_open else self.MUTED), (box_x + 236, my + 100))
+            screen.blit(small.render(arrow, True, self.ACCENT if (is_open or is_hover) else self.MUTED), (box_x + 236, my + 100))
 
         # 3. Đồng hồ thi đấu
         screen.blit(sec_font.render("3. Đồng hồ ván đấu (Phút + Giây cộng thêm):", True, self.MUTED), (mx + 24, my + 160))
@@ -1825,7 +2769,7 @@ class ChessPygameApp:
             col, row = index % 4, index // 4
             button = pygame.Rect(mx + 24 + col * 140, my + 186 + row * 36, 132, 30)
             selected = self.modal_base == base and self.modal_increment == inc
-            pygame.draw.rect(screen, (34, 67, 112) if selected else self.PANEL_2, button, border_radius=6)
+            pygame.draw.rect(screen, self.SELECTED_BG if selected else self.PANEL_2, button, border_radius=6)
             pygame.draw.rect(screen, self.ACCENT if selected else self.BORDER, button, 2 if selected else 1, border_radius=6)
             label = "Không giới hạn (∞)" if base == 0 else f"{base // 60}p + {inc}s"
             lbl_surf = small.render(label, True, self.TEXT if selected else self.MUTED)
@@ -1836,9 +2780,9 @@ class ChessPygameApp:
         time_btn = pygame.Rect(mx + 24, my + 298, 260, 32)
         work_btn = pygame.Rect(mx + 304, my + 298, 272, 32)
         is_time = self.modal_budget == "time"
-        pygame.draw.rect(screen, (34, 67, 112) if is_time else self.PANEL_2, time_btn, border_radius=6)
+        pygame.draw.rect(screen, self.SELECTED_BG if is_time else self.PANEL_2, time_btn, border_radius=6)
         pygame.draw.rect(screen, self.ACCENT if is_time else self.BORDER, time_btn, 2 if is_time else 1, border_radius=6)
-        pygame.draw.rect(screen, (34, 67, 112) if not is_time else self.PANEL_2, work_btn, border_radius=6)
+        pygame.draw.rect(screen, self.SELECTED_BG if not is_time else self.PANEL_2, work_btn, border_radius=6)
         pygame.draw.rect(screen, self.ACCENT if not is_time else self.BORDER, work_btn, 2 if not is_time else 1, border_radius=6)
         t_lbl = small.render(f"Giới hạn Thời gian ({self.modal_time:.1f}s / nước)", True, self.TEXT if is_time else self.MUTED)
         w_lbl = small.render(f"Giới hạn Số nước duyệt ({self.modal_workload} Nodes/Sims)", True, self.TEXT if not is_time else self.MUTED)
@@ -1858,7 +2802,7 @@ class ChessPygameApp:
         track_x = mx + 170
         track_w = 395
         track_y = my + 362
-        pygame.draw.rect(screen, (12, 16, 24), pygame.Rect(track_x, track_y - 3, track_w, 6), border_radius=3)
+        pygame.draw.rect(screen, self.CLOCK_BG, pygame.Rect(track_x, track_y - 3, track_w, 6), border_radius=3)
         best_idx = min(range(len(steps)), key=lambda i: abs(float(steps[i]) - float(curr_val)))
         ratio = best_idx / float(max(1, len(steps) - 1))
         fill_w = int(track_w * ratio)
@@ -1866,12 +2810,12 @@ class ChessPygameApp:
             pygame.draw.rect(screen, self.ACCENT, pygame.Rect(track_x, track_y - 3, fill_w, 6), border_radius=3)
         for i, step_v in enumerate(steps):
             tx = track_x + int(track_w * (i / float(max(1, len(steps) - 1))))
-            pygame.draw.circle(screen, self.ACCENT if i <= best_idx else (58, 70, 88), (tx, track_y), 4)
+            pygame.draw.circle(screen, self.ACCENT if i <= best_idx else self.BORDER_STRONG, (tx, track_y), 4)
             step_str = f"{step_v:g}s" if is_time else (f"{step_v // 1000}k" if step_v >= 1000 and step_v % 1000 == 0 else str(step_v))
             s_lbl = pygame.font.SysFont("consolas", 10).render(step_str, True, self.ACCENT if i == best_idx else self.MUTED)
             screen.blit(s_lbl, s_lbl.get_rect(center=(tx, track_y + 14)))
         knob_x = track_x + fill_w
-        pygame.draw.circle(screen, (240, 246, 255), (knob_x, track_y), 7)
+        pygame.draw.circle(screen, self.SURFACE, (knob_x, track_y), 7)
         pygame.draw.circle(screen, self.ACCENT, (knob_x, track_y), 7, 2)
 
         cancel = pygame.Rect(mx + 60, my + 426, 180, 44)
@@ -1880,7 +2824,7 @@ class ChessPygameApp:
         pygame.draw.rect(screen, self.BORDER, cancel, 1, border_radius=8)
         pygame.draw.rect(screen, self.ACCENT, start, border_radius=8)
         c_lbl = sec_font.render("Hủy [Esc]", True, self.TEXT)
-        s_lbl = sec_font.render("Bắt đầu ván đấu", True, (10, 22, 38))
+        s_lbl = sec_font.render("Bắt đầu ván đấu", True, self.ACCENT_TEXT)
         screen.blit(c_lbl, c_lbl.get_rect(center=cancel.center))
         screen.blit(s_lbl, s_lbl.get_rect(center=start.center))
 
@@ -1894,22 +2838,31 @@ class ChessPygameApp:
             current_pid = self.modal_white_side if self.modal_dropdown_open == "white" else self.modal_black_side
 
             drop_rect = pygame.Rect(drop_x, drop_y, 260, list_h)
-            pygame.draw.rect(screen, (16, 22, 32), drop_rect, border_radius=8)
+            pygame.draw.rect(screen, self.CARD_DARK, drop_rect, border_radius=8)
             pygame.draw.rect(screen, self.ACCENT, drop_rect, 2, border_radius=8)
 
             visible_slice = participants[self.modal_dropdown_scroll : self.modal_dropdown_scroll + visible_rows]
             for r_idx, pid in enumerate(visible_slice):
                 item_rect = pygame.Rect(drop_x + 4, drop_y + r_idx * row_h + 3, 238, row_h - 6)
                 is_sel = pid == current_pid
+                is_hover = item_rect.collidepoint(self.mouse_pos)
                 if is_sel:
-                    pygame.draw.rect(screen, (34, 67, 112), item_rect, border_radius=6)
-                lbl = small.render(short_names.get(pid, pid), True, self.ACCENT if is_sel else self.TEXT)
-                screen.blit(lbl, (item_rect.x + 10, item_rect.y + 5))
+                    pygame.draw.rect(screen, self.SELECTED_BG, item_rect, border_radius=6)
+                elif is_hover:
+                    pygame.draw.rect(screen, self.SURFACE_HOVER, item_rect, border_radius=6)
+                    pygame.draw.rect(screen, self.ACCENT, item_rect, 1, border_radius=6)
+                p_icon = "user" if pid == "human" else "bot"
+                txt_color = self.ACCENT if (is_sel or is_hover) else self.TEXT
+                lbl = small.render(short_names.get(pid, pid), True, txt_color)
+                self._blit_icon_text(
+                    screen, pygame, p_icon, 13, txt_color if (is_sel or is_hover) else self.MUTED,
+                    lbl, pos=(item_rect.x + 10, item_rect.y + 5), gap=7,
+                )
 
             # Thanh cuộn (Scrollbar) bên phải hộp thoại trượt
             max_scroll = max(1, len(participants) - visible_rows)
             sb_track = pygame.Rect(drop_x + 246, drop_y + 6, 8, list_h - 12)
-            pygame.draw.rect(screen, (10, 14, 20), sb_track, border_radius=4)
+            pygame.draw.rect(screen, self.CLOCK_BG, sb_track, border_radius=4)
             thumb_h = max(24, int(sb_track.height * (visible_rows / float(len(participants)))))
             thumb_y = sb_track.y + int((sb_track.height - thumb_h) * (self.modal_dropdown_scroll / float(max_scroll)))
             pygame.draw.rect(screen, self.ACCENT, pygame.Rect(sb_track.x, thumb_y, 8, thumb_h), border_radius=4)
@@ -2014,29 +2967,26 @@ class ChessPygameApp:
             self._append_lab_log(f"Đã nạp dữ liệu & vẽ biểu đồ Matplotlib: {', '.join(loaded)}")
 
     def _draw_lab_tab(self, screen: Any, pygame: Any) -> None:
-        pygame.draw.rect(screen, (16, 21, 30), pygame.Rect(0, 44, 1280, 716))
-        pygame.draw.rect(screen, (20, 25, 36), pygame.Rect(0, 44, 340, 716))
+        self._draw_background_layer(screen, pygame, pygame.Rect(340, 44, 940, 716))
+        pygame.draw.rect(screen, self.SIDEBAR, pygame.Rect(0, 44, 340, 716))
         pygame.draw.line(screen, self.BORDER, (339, 44), (339, 760), 1)
         font = pygame.font.SysFont("segoeui", 15, bold=True)
         sec_font = pygame.font.SysFont("segoeui", 13, bold=True)
         small = pygame.font.SysFont("segoeui", 12)
         mono = pygame.font.SysFont("consolas", 12)
 
-        # --- CỘT TRÁI: 1. CHỌN KỊCH BẢN THÍ NGHIỆM ---
-        screen.blit(font.render("1. CHỌN KỊCH BẢN THÍ NGHIỆM", True, self.MUTED), (18, 56))
+        # --- CỘT TRÁI: 1. KỊCH BẢN THÍ NGHIỆM ---
+        screen.blit(font.render("1. KỊCH BẢN THÍ NGHIỆM", True, self.MUTED), (18, 56))
         scenarios = [
-            ("arena", "⚔  Đấu Cặp / Giải Đấu (Arena)"),
-            ("ablation1", "🔍  Ablation 1: Alpha-Beta (WAC-50)"),
-            ("ablation2", "🌲  Ablation 2: MCTS (Độ nhạy N_sim)"),
-            ("rl_krk", "🧠  Cấp 6 RL: Cờ tàn KQK / KRK / KPK"),
+            ("arena", "trophy", "Đấu Cặp / Giải Đấu (Arena)"),
         ]
-        for index, (key, label) in enumerate(scenarios):
+        for index, (key, icon_name, label) in enumerate(scenarios):
             y = 86 + index * 40
             selected = self.lab_scenario == key
             card = pygame.Rect(18, y, 304, 34)
             pygame.draw.rect(
                 screen,
-                (34, 67, 112) if selected else self.SURFACE,
+                self.SELECTED_BG if selected else self.SURFACE,
                 card,
                 border_radius=7,
             )
@@ -2047,7 +2997,12 @@ class ChessPygameApp:
                 2 if selected else 1,
                 border_radius=7,
             )
-            screen.blit(sec_font.render(label, True, self.TEXT if selected else self.MUTED), (28, y + 8))
+            txt_color = self.TEXT if selected else self.MUTED
+            self._blit_icon_text(
+                screen, pygame, icon_name, 15, self.ACCENT if selected else self.MUTED,
+                sec_font.render(label, True, txt_color),
+                pos=(28, y + 8), gap=8,
+            )
             if selected:
                 pygame.draw.rect(
                     screen,
@@ -2059,7 +3014,7 @@ class ChessPygameApp:
         # --- CỘT TRÁI: 2. THIẾT LẬP THAM SỐ (SETUP PANEL) ---
         screen.blit(font.render("2. THIẾT LẬP THAM SỐ (SETUP)", True, self.MUTED), (18, 252))
         setup_card = pygame.Rect(14, 276, 312, 266)
-        pygame.draw.rect(screen, (15, 20, 29), setup_card, border_radius=9)
+        pygame.draw.rect(screen, self.CARD_DARK, setup_card, border_radius=9)
         pygame.draw.rect(screen, self.BORDER, setup_card, 1, border_radius=9)
 
         short_names = {
@@ -2078,7 +3033,7 @@ class ChessPygameApp:
             for key_ab, bx, aid in (("a", 18, self.lab_agent_a), ("b", 176, self.lab_agent_b)):
                 is_open = self.lab_dropdown_open == key_ab
                 d_rect = pygame.Rect(bx, 296, 146, 30)
-                pygame.draw.rect(screen, (34, 67, 112) if is_open else self.SURFACE, d_rect, border_radius=6)
+                pygame.draw.rect(screen, self.SELECTED_BG if is_open else self.SURFACE, d_rect, border_radius=6)
                 pygame.draw.rect(screen, self.ACCENT if is_open else self.BORDER, d_rect, 1, border_radius=6)
                 screen.blit(small.render(short_names.get(aid, aid), True, self.TEXT), (bx + 8, 303))
                 screen.blit(small.render("▲" if is_open else "▼", True, self.ACCENT), (bx + 128, 303))
@@ -2088,7 +3043,7 @@ class ChessPygameApp:
             for idx, g_num in enumerate(game_opts):
                 btn = pygame.Rect(18 + idx * 61, 356, 57, 28)
                 sel = self.lab_num_games == g_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=5)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=5)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=5)
                 lbl = mono.render(str(g_num), True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2097,7 +3052,7 @@ class ChessPygameApp:
             for b_mode, b_lbl, bx in (("workload", "Workload (Nodes/Sims)", 18), ("time", "Time Limit (s)", 176)):
                 sel = self.lab_budget_mode == b_mode
                 btn = pygame.Rect(bx, 412, 146, 26)
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=5)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=5)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=5)
                 lbl = small.render(b_lbl, True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2117,7 +3072,7 @@ class ChessPygameApp:
             for idx, w_num in enumerate((1, 2, 4)):
                 btn = pygame.Rect(110 + idx * 70, 506, 62, 28)
                 sel = self.lab_workers == w_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=5)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=5)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=5)
                 lbl = mono.render(f"{w_num} CPU", True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2127,7 +3082,7 @@ class ChessPygameApp:
             for idx, p_num in enumerate((5, 10, 25, 50)):
                 btn = pygame.Rect(18 + idx * 76, 300, 70, 30)
                 sel = self.lab_ab1_positions == p_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=6)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                 lbl = mono.render(f"{p_num} FEN", True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2136,7 +3091,7 @@ class ChessPygameApp:
             for idx, d_num in enumerate((2, 3, 4)):
                 btn = pygame.Rect(18 + idx * 102, 362, 96, 30)
                 sel = self.lab_ab1_depth == d_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=6)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                 lbl = mono.render(f"Depth d = {d_num}", True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2144,7 +3099,7 @@ class ChessPygameApp:
             chk_rect = pygame.Rect(18, 418, 304, 32)
             pygame.draw.rect(
                 screen,
-                (34, 67, 112) if self.lab_ab1_skip_minimax else self.SURFACE,
+                self.SELECTED_BG if self.lab_ab1_skip_minimax else self.SURFACE,
                 chk_rect,
                 border_radius=6,
             )
@@ -2159,7 +3114,7 @@ class ChessPygameApp:
             for idx, op_num in enumerate((2, 5, 10, 25)):
                 btn = pygame.Rect(18 + idx * 76, 300, 70, 30)
                 sel = self.lab_ab2_openings == op_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=6)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                 lbl = mono.render(f"{op_num * 2} ván", True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2168,7 +3123,7 @@ class ChessPygameApp:
             for p_key, p_lbl, bx in (("fast", "Nhanh [50, 100, 200]", 18), ("full", "Đầy đủ [50..1000]", 176)):
                 sel = self.lab_ab2_Preset == p_key
                 btn = pygame.Rect(bx, 362, 146, 30)
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=6)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                 lbl = small.render(p_lbl, True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2177,7 +3132,7 @@ class ChessPygameApp:
             for idx, w_num in enumerate((1, 2, 4)):
                 btn = pygame.Rect(110 + idx * 70, 424, 62, 28)
                 sel = self.lab_workers == w_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=5)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=5)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=5)
                 lbl = mono.render(f"{w_num} CPU", True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2188,7 +3143,7 @@ class ChessPygameApp:
             for idx, ep_num in enumerate((500, 1000, 2500, 5000)):
                 btn = pygame.Rect(18 + idx * 76, 300, 70, 30)
                 sel = self.lab_rl_episodes == ep_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=6)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                 lbl = mono.render(str(ep_num), True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2197,7 +3152,7 @@ class ChessPygameApp:
             for idx, rf_num in enumerate((100, 500, 1000, 3000)):
                 btn = pygame.Rect(18 + idx * 76, 362, 70, 30)
                 sel = self.lab_rl_reinforce == rf_num
-                pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=6)
+                pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                 pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                 lbl = mono.render(str(rf_num), True, self.TEXT if sel else self.MUTED)
                 screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2208,7 +3163,7 @@ class ChessPygameApp:
 
         # --- CỘT TRÁI: 3. TIẾN ĐỘ & NÚT ĐIỀU KHIỂN ---
         progress_width = int(304 * max(0.0, min(1.0, self.lab_progress)))
-        pygame.draw.rect(screen, (10, 15, 23), pygame.Rect(18, 554, 304, 18), border_radius=9)
+        pygame.draw.rect(screen, self.CLOCK_BG, pygame.Rect(18, 554, 304, 18), border_radius=9)
         pygame.draw.rect(screen, self.BORDER, pygame.Rect(18, 554, 304, 18), 1, border_radius=9)
         if progress_width > 0:
             pygame.draw.rect(
@@ -2229,12 +3184,21 @@ class ChessPygameApp:
         pygame.draw.rect(screen, self.SURFACE, load_btn, border_radius=7)
         pygame.draw.rect(screen, self.BORDER_STRONG, load_btn, 1, border_radius=7)
 
-        r_txt = sec_font.render("Đang chạy..." if self.lab_running else "▶ Chạy thực nghiệm", True, (10, 22, 38))
-        s_txt = sec_font.render("■ Dừng", True, self.TEXT)
-        l_txt = small.render("📂 Nạp lại kết quả có sẵn từ results/", True, self.ACCENT)
-        screen.blit(r_txt, r_txt.get_rect(center=run_btn.center))
-        screen.blit(s_txt, s_txt.get_rect(center=stop_btn.center))
-        screen.blit(l_txt, l_txt.get_rect(center=load_btn.center))
+        r_txt = sec_font.render("Đang chạy..." if self.lab_running else "Chạy thực nghiệm", True, self.ACCENT_TEXT)
+        s_txt = sec_font.render("Dừng", True, (255, 255, 255))
+        l_txt = small.render("Nạp lại kết quả có sẵn từ results/", True, self.ACCENT)
+        self._blit_icon_text(
+            screen, pygame, "refresh-cw" if self.lab_running else "play", 15, self.ACCENT_TEXT,
+            r_txt, center_rect=run_btn, gap=7,
+        )
+        self._blit_icon_text(
+            screen, pygame, "power", 14, (255, 255, 255),
+            s_txt, center_rect=stop_btn, gap=6,
+        )
+        self._blit_icon_text(
+            screen, pygame, "upload", 14, self.ACCENT,
+            l_txt, center_rect=load_btn, gap=7,
+        )
 
         # --- Vẽ Dropdown chọn Agent A / B nếu đang mở ---
         if self.lab_dropdown_open is not None and self.lab_scenario == "arena":
@@ -2245,40 +3209,36 @@ class ChessPygameApp:
             list_h = visible_rows * row_h
             curr_aid = self.lab_agent_a if self.lab_dropdown_open == "a" else self.lab_agent_b
             d_box = pygame.Rect(drop_x, drop_y, 146, list_h)
-            pygame.draw.rect(screen, (14, 19, 28), d_box, border_radius=7)
+            pygame.draw.rect(screen, self.TAB_INACTIVE, d_box, border_radius=7)
             pygame.draw.rect(screen, self.ACCENT, d_box, 2, border_radius=7)
             vis_agents = self.lab_agents[self.lab_dropdown_scroll : self.lab_dropdown_scroll + visible_rows]
             for r_i, aid in enumerate(vis_agents):
                 row_rect = pygame.Rect(drop_x + 3, drop_y + r_i * row_h + 2, 130, row_h - 4)
                 if aid == curr_aid:
-                    pygame.draw.rect(screen, (34, 67, 112), row_rect, border_radius=5)
+                    pygame.draw.rect(screen, self.SELECTED_BG, row_rect, border_radius=5)
                 screen.blit(
                     small.render(short_names.get(aid, aid), True, self.ACCENT if aid == curr_aid else self.TEXT),
                     (row_rect.x + 6, row_rect.y + 4),
                 )
             max_sc = max(1, len(self.lab_agents) - visible_rows)
             sb = pygame.Rect(drop_x + 136, drop_y + 4, 6, list_h - 8)
-            pygame.draw.rect(screen, (10, 14, 20), sb, border_radius=3)
+            pygame.draw.rect(screen, self.CLOCK_BG, sb, border_radius=3)
             th_h = max(18, int(sb.height * (visible_rows / float(len(self.lab_agents)))))
             th_y = sb.y + int((sb.height - th_h) * (self.lab_dropdown_scroll / float(max_sc)))
             pygame.draw.rect(screen, self.ACCENT, pygame.Rect(sb.x, th_y, 6, th_h), border_radius=3)
 
         # --- KHUNG PHẢI: THANH SUB-TABS & BẢNG KẾT QUẢ / BIỂU ĐỒ ---
-        pygame.draw.rect(screen, (20, 25, 36), pygame.Rect(340, 44, 940, 44))
+        pygame.draw.rect(screen, self.SIDEBAR, pygame.Rect(340, 44, 940, 44))
         view_tabs = [
-            ("arena", "⚔ Arena"),
-            ("ablation1", "🔍 Ablation 1"),
-            ("ablation2", "🌲 Ablation 2"),
-            ("rl_krk", "🧠 Cấp 6 RL"),
-            ("figures", "📈 Biểu đồ PNG"),
-            ("logs", "📝 Nhật ký"),
+            ("figures", "palette", "Biểu đồ"),
+            ("logs", "database", "Nhật ký"),
         ]
-        for index, (key, title_v) in enumerate(view_tabs):
-            rect = pygame.Rect(354 + index * 152, 50, 144, 32)
+        for index, (key, icon_name, title_v) in enumerate(view_tabs):
+            rect = pygame.Rect(354 + index * 190, 50, 180, 32)
             selected = self.lab_view == key
             pygame.draw.rect(
                 screen,
-                (34, 67, 112) if selected else self.SURFACE,
+                self.SELECTED_BG if selected else self.SURFACE,
                 rect,
                 border_radius=7,
             )
@@ -2289,25 +3249,101 @@ class ChessPygameApp:
                 2 if selected else 1,
                 border_radius=7,
             )
-            lbl_v = small.render(title_v, True, self.TEXT if selected else self.MUTED)
-            screen.blit(lbl_v, lbl_v.get_rect(center=rect.center))
+            txt_color = self.TEXT if selected else self.MUTED
+            lbl_v = small.render(title_v, True, txt_color)
+            self._blit_icon_text(
+                screen, pygame, icon_name, 14, self.ACCENT if selected else self.MUTED,
+                lbl_v, center_rect=rect, gap=6,
+            )
 
         self._draw_lab_right_content(screen, pygame, font, sec_font, small, mono)
+
+    def _get_mini_pieces(self, pygame: Any, target_px: int) -> dict[str, Any]:
+        cache_key = (self.piece_set, target_px)
+        if cache_key in self._mini_piece_cache:
+            return self._mini_piece_cache[cache_key]
+        piece_dir = Path(__file__).resolve().parent / "assets" / "piece" / self.piece_set
+        names = {
+            "K": "wK", "Q": "wQ", "R": "wR", "B": "wB", "N": "wN", "P": "wP",
+            "k": "bK", "q": "bQ", "r": "bR", "b": "bB", "n": "bN", "p": "bP",
+        }
+        has_display = pygame.display.get_surface() is not None
+        images: dict[str, Any] = {}
+        for symbol, fname in names.items():
+            for suffix in (".png", ".svg"):
+                p = piece_dir / f"{fname}{suffix}"
+                if p.exists():
+                    try:
+                        img = pygame.image.load(str(p))
+                        if has_display:
+                            img = img.convert_alpha()
+                        images[symbol] = pygame.transform.smoothscale(img, (target_px, target_px))
+                        break
+                    except Exception:
+                        continue
+        self._mini_piece_cache[cache_key] = images
+        return images
+
+    def _render_mini_board(
+        self,
+        pygame: Any,
+        fen: str,
+        last_move_uci: Optional[str],
+        board_px: int = 136,
+    ) -> Any:
+        key = (fen, last_move_uci, self.LIGHT, self.DARK, self.piece_set, board_px)
+        if key in self._mini_board_cache:
+            return self._mini_board_cache[key]
+        import chess
+
+        tile = board_px // 8
+        actual = tile * 8
+        surf = pygame.Surface((actual, actual))
+        board = chess.Board(fen)
+        last_sqs: set[int] = set()
+        if last_move_uci:
+            try:
+                mv = chess.Move.from_uci(last_move_uci)
+                last_sqs = {mv.from_square, mv.to_square}
+            except Exception:
+                pass
+        pieces = self._get_mini_pieces(pygame, max(10, tile - 2))
+        for sq in range(64):
+            f_idx = chess.square_file(sq)
+            r_idx = chess.square_rank(sq)
+            col, row = f_idx, 7 - r_idx
+            rect = pygame.Rect(col * tile, row * tile, tile, tile)
+            color = self.LIGHT if (f_idx + r_idx) % 2 == 1 else self.DARK
+            if sq in last_sqs:
+                color = self.LAST_MOVE
+            pygame.draw.rect(surf, color, rect)
+            pc = board.piece_at(sq)
+            if pc is not None:
+                sp = pieces.get(pc.symbol())
+                if sp is not None:
+                    surf.blit(sp, sp.get_rect(center=rect.center))
+        if len(self._mini_board_cache) > 96:
+            self._mini_board_cache.clear()
+        self._mini_board_cache[key] = surf
+        return surf
 
     def _draw_lab_right_content(
         self, screen: Any, pygame: Any, font: Any, sec_font: Any, small: Any, mono: Any
     ) -> None:
         panel_rect = pygame.Rect(356, 98, 906, 646)
-        pygame.draw.rect(screen, (12, 17, 25), panel_rect, border_radius=10)
+        pygame.draw.rect(screen, self.CLOCK_BG, panel_rect, border_radius=10)
         pygame.draw.rect(screen, self.BORDER, panel_rect, 1, border_radius=10)
 
         if self.lab_view == "arena":
             screen.blit(font.render("KẾT QUẢ ĐẤU CẶP ĐỐI XỨNG (ARENA PAIRED MATCHUP)", True, self.ACCENT), (376, 114))
-            data = self.lab_results.get("arena")
+            with self.lab_live_lock:
+                data = dict(self.lab_results["arena"]) if isinstance(self.lab_results.get("arena"), dict) else None
+                live_games = [dict(g) for g in self.lab_live_games]
             if isinstance(data, dict) and "agent_a" in data:
                 a_name = data.get("agent_a", "Agent A")
                 b_name = data.get("agent_b", "Agent B")
                 games = int(data.get("games", 0))
+                total_g = int(data.get("total_games", games) or games)
                 wins = int(data.get("wins", 0))
                 draws = int(data.get("draws", 0))
                 losses = int(data.get("losses", 0))
@@ -2315,40 +3351,106 @@ class ChessPygameApp:
                 w_ci = data.get("wilson_ci_95", [0.0, 0.0])
                 b_ci = data.get("bootstrap_ci_95", [0.0, 0.0])
 
-                screen.blit(sec_font.render(f"Cặp đấu:  {a_name}   vs   {b_name}   ({games} ván đối xứng 2 màu)", True, self.TEXT), (376, 150))
+                screen.blit(
+                    sec_font.render(
+                        f"Cặp đấu:  {a_name}   vs   {b_name}   ({games}/{total_g} ván đối xứng 2 màu)",
+                        True,
+                        self.TEXT,
+                    ),
+                    (376, 146),
+                )
 
                 # Thanh tỷ lệ Thắng / Hòa / Thua trực quan
-                bar_rect = pygame.Rect(376, 184, 860, 32)
-                pygame.draw.rect(screen, self.SURFACE, bar_rect, border_radius=8)
+                bar_rect = pygame.Rect(376, 174, 860, 24)
+                pygame.draw.rect(screen, self.SURFACE, bar_rect, border_radius=6)
                 if games > 0:
                     w_w = int(860 * (wins / games))
                     d_w = int(860 * (draws / games))
                     l_w = 860 - w_w - d_w
                     if w_w > 0:
-                        pygame.draw.rect(screen, self.GREEN, pygame.Rect(376, 184, w_w, 32), border_radius=6)
+                        pygame.draw.rect(screen, self.GREEN, pygame.Rect(376, 174, w_w, 24), border_radius=5)
                     if d_w > 0:
-                        pygame.draw.rect(screen, self.ORANGE, pygame.Rect(376 + w_w, 184, d_w, 32))
+                        pygame.draw.rect(screen, self.ORANGE, pygame.Rect(376 + w_w, 174, d_w, 24))
                     if l_w > 0:
-                        pygame.draw.rect(screen, (239, 68, 68), pygame.Rect(376 + w_w + d_w, 184, l_w, 32), border_radius=6)
+                        pygame.draw.rect(screen, (239, 68, 68), pygame.Rect(376 + w_w + d_w, 174, l_w, 24), border_radius=5)
 
-                # Các thẻ chỉ số thống kê rút gọn ở trên + Biểu đồ Matplotlib ở dưới
+                # 4 thẻ chỉ số thống kê trực tiếp
                 cards = [
                     ("Thắng / Hòa / Thua (A)", f"+{wins}  = {draws}  -{losses}  ({games} ván)"),
                     ("Điểm chuẩn hóa (S)", f"{score:.3f}  (W: {data.get('white_score', 0):.2f} | B: {data.get('black_score', 0):.2f})"),
                     ("Wilson / Bootstrap 95% CI", f"W:[{w_ci[0]:.3f}, {w_ci[1]:.3f}]  B:[{b_ci[0]:.3f}, {b_ci[1]:.3f}]"),
-                    ("Độ trễ TB / p95 (A vs B)", f"A: {data.get('agent_a_avg_latency_ms', 0):.1f}ms  |  B: {data.get('agent_b_avg_latency_ms', 0):.1f}ms"),
+                    ("Độ trễ TB (A vs B)", f"A: {data.get('agent_a_avg_latency_ms', 0):.1f}ms  |  B: {data.get('agent_b_avg_latency_ms', 0):.1f}ms"),
                 ]
                 for idx, (k_lbl, v_lbl) in enumerate(cards):
                     col, row = idx % 2, idx // 2
-                    c_rect = pygame.Rect(376 + col * 436, 224 + row * 56, 420, 48)
+                    c_rect = pygame.Rect(376 + col * 436, 206 + row * 48, 420, 42)
                     pygame.draw.rect(screen, self.SURFACE, c_rect, border_radius=8)
                     pygame.draw.rect(screen, self.BORDER, c_rect, 1, border_radius=8)
-                    screen.blit(small.render(k_lbl, True, self.MUTED), (c_rect.x + 12, c_rect.y + 4))
-                    screen.blit(mono.render(v_lbl, True, self.TEXT), (c_rect.x + 12, c_rect.y + 24))
+                    screen.blit(small.render(k_lbl, True, self.MUTED), (c_rect.x + 12, c_rect.y + 3))
+                    screen.blit(mono.render(v_lbl, True, self.TEXT), (c_rect.x + 12, c_rect.y + 21))
 
-                chart_surf = self._get_matplotlib_surface("arena_matchup.png", pygame, max_w=856, max_h=380)
-                if chart_surf is not None:
-                    screen.blit(chart_surf, chart_surf.get_rect(center=(809, 535)))
+                if live_games:
+                    screen.blit(
+                        sec_font.render(
+                            f"DIỄN BIẾN CÁC VÁN ĐẤU ({games}/{total_g} hoàn tất · Cuộn chuột để xem tất cả)",
+                            True,
+                            self.ACCENT,
+                        ),
+                        (376, 308),
+                    )
+                    total_rows = (len(live_games) + 2) // 3
+                    visible_rows = 2
+                    max_sc = max(0, total_rows - visible_rows)
+                    self.lab_games_scroll = max(0, min(max_sc, self.lab_games_scroll))
+
+                    for r_i in range(visible_rows):
+                        row_idx = self.lab_games_scroll + r_i
+                        for col in range(3):
+                            g_idx = row_idx * 3 + col
+                            if g_idx >= len(live_games):
+                                continue
+                            g = live_games[g_idx]
+                            cx = 376 + col * 284
+                            cy = 332 + r_i * 202
+                            card = pygame.Rect(cx, cy, 274, 192)
+                            st = g.get("status", "waiting")
+                            border_c = self.ACCENT if st == "playing" else (self.GREEN if st == "done" else self.BORDER)
+                            pygame.draw.rect(screen, self.SURFACE, card, border_radius=8)
+                            pygame.draw.rect(screen, border_c, card, 2 if st == "playing" else 1, border_radius=8)
+
+                            w_lbl = "A" if g.get("a_is_white") else "B"
+                            b_lbl = "B" if g.get("a_is_white") else "A"
+                            title_g = f"#{g_idx + 1} · Trắng:{w_lbl} vs Đen:{b_lbl}"
+                            screen.blit(small.render(title_g, True, self.TEXT), (cx + 10, cy + 6))
+
+                            res_txt = g.get("result") or ("Đang đấu" if st == "playing" else "Chờ")
+                            res_col = self.ACCENT if st == "playing" else (self.GREEN if g.get("result") == "1-0" else (self.ORANGE if g.get("result") == "1/2-1/2" else self.MUTED))
+                            r_surf = mono.render(str(res_txt), True, res_col)
+                            screen.blit(r_surf, (card.right - r_surf.get_width() - 8, cy + 7))
+
+                            mini_surf = self._render_mini_board(
+                                pygame,
+                                str(g.get("fen", "")),
+                                g.get("last_move"),
+                                board_px=136,
+                            )
+                            screen.blit(mini_surf, (cx + (274 - mini_surf.get_width()) // 2, cy + 28))
+
+                            plies_v = int(g.get("plies", 0))
+                            foot = mono.render(f"Ply: {plies_v}  |  {g.get('opening_id', '')}", True, self.MUTED)
+                            screen.blit(foot, (cx + 10, cy + 170))
+
+                    # Thanh cuộn (Scrollbar) bên phải khu vực bàn cờ
+                    sb = pygame.Rect(1234, 332, 10, 394)
+                    pygame.draw.rect(screen, self.PANEL_2, sb, border_radius=5)
+                    if max_sc > 0:
+                        th_h = max(36, int(sb.height * (visible_rows / float(total_rows))))
+                        th_y = sb.y + int((sb.height - th_h) * (self.lab_games_scroll / float(max_sc)))
+                        pygame.draw.rect(screen, self.ACCENT, pygame.Rect(sb.x, th_y, 10, th_h), border_radius=5)
+                else:
+                    chart_surf = self._get_matplotlib_surface("arena_matchup.png", pygame, max_w=856, max_h=380)
+                    if chart_surf is not None:
+                        screen.blit(chart_surf, chart_surf.get_rect(center=(809, 535)))
             elif isinstance(data, dict) and "matchups" in data:
                 matchups = data.get("matchups", [])
                 headers = ["Cặp đấu (Agent A vs Agent B)", "Số ván", "W / D / L (A)", "Điểm S (A)", "Wilson 95% CI", "Bootstrap 95% CI", "Trễ TB A / B"]
@@ -2360,7 +3462,7 @@ class ChessPygameApp:
                 for idx, m in enumerate(matchups[:6]):
                     ry = 178 + idx * 30
                     row_rect = pygame.Rect(370, ry, 876, 27)
-                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else (18, 24, 35), row_rect, border_radius=5)
+                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else self.ROW_ALT, row_rect, border_radius=5)
                     w_ci = m.get("wilson_ci_95", [0, 0])
                     b_ci = m.get("bootstrap_ci_95", [0, 0])
                     a_short = str(m.get("agent_a", "")).replace("Level", "L")
@@ -2397,7 +3499,7 @@ class ChessPygameApp:
                 for idx, cfg in enumerate(configs):
                     ry = 178 + idx * 32
                     row_rect = pygame.Rect(370, ry, 876, 29)
-                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else (18, 24, 35), row_rect, border_radius=5)
+                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else self.ROW_ALT, row_rect, border_radius=5)
                     ci = cfg.get("wilson_ci_95", [0, 0])
                     red = cfg.get("node_reduction_vs_minimax_pct", 0.0)
                     vals = [
@@ -2434,7 +3536,7 @@ class ChessPygameApp:
                 for idx, row in enumerate(curve):
                     ry = 178 + idx * 30
                     row_rect = pygame.Rect(370, ry, 876, 27)
-                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else (18, 24, 35), row_rect, border_radius=5)
+                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else self.ROW_ALT, row_rect, border_radius=5)
                     w_ci = row.get("wilson_ci_95", [0, 0])
                     b_ci = row.get("bootstrap_ci_95", [0, 0])
                     vals = [
@@ -2470,7 +3572,7 @@ class ChessPygameApp:
                 for idx, (stage_key, info) in enumerate(summary.items()):
                     ry = 178 + idx * 32
                     row_rect = pygame.Rect(370, ry, 876, 29)
-                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else (18, 24, 35), row_rect, border_radius=5)
+                    pygame.draw.rect(screen, self.SURFACE if idx % 2 == 0 else self.ROW_ALT, row_rect, border_radius=5)
                     vals = [
                         stage_key,
                         f"{int(info.get('q_states', 0)):,}" if "q_states" in info else "Policy Net",
@@ -2496,7 +3598,7 @@ class ChessPygameApp:
                 for idx, (f_title, _) in enumerate(fig_files[:5]):
                     btn = pygame.Rect(376 + idx * 174, 108, 168, 30)
                     sel = idx == self.lab_selected_figure_idx
-                    pygame.draw.rect(screen, (34, 67, 112) if sel else self.SURFACE, btn, border_radius=6)
+                    pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                     pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                     lbl = small.render(f_title, True, self.TEXT if sel else self.MUTED)
                     screen.blit(lbl, lbl.get_rect(center=btn.center))
@@ -2575,36 +3677,214 @@ class ChessPygameApp:
                 self._append_lab_log("Hoàn tất Ablation 2 (Lưu tại results/ui_sandbox/ablation2_results.json).")
 
             elif self.lab_scenario == "arena":
-                from chess_ai.arena.tournament import run_paired_matchup
+                import chess
+                from chess_ai.arena.match import play_single_match
+                from chess_ai.arena.metrics import (
+                    compute_normalized_score,
+                    paired_bootstrap_confidence_interval,
+                    wilson_confidence_interval,
+                )
+                from chess_ai.arena.pgn_exporter import append_pgn_file, export_game_to_pgn
+                from chess_ai.arena.tournament import append_match_jsonl
                 from chess_ai.utils.epd import load_epd_file
 
-                agent_a = create_agent(self.lab_agent_a)
-                agent_b = create_agent(self.lab_agent_b)
                 num_openings = max(1, self.lab_num_games // 2)
                 openings = load_epd_file("resources/openings_50.epd")[:num_openings]
+                total_games = len(openings) * 2
                 b_mode = "time_control" if self.lab_budget_mode == "time" else "workload_control"
-                self.lab_message = f"Đang đấu {self.lab_agent_a} vs {self.lab_agent_b} ({num_openings * 2} ván)..."
+                t_lim = self.lab_time_limit if self.lab_budget_mode == "time" else None
+                w_lim = self.lab_workload if self.lab_budget_mode == "workload" else None
+
+                sample_a = create_agent(self.lab_agent_a)
+                sample_b = create_agent(self.lab_agent_b)
+                a_name, b_name = sample_a.name, sample_b.name
+
+                with self.lab_live_lock:
+                    self.lab_games_scroll = 0
+                    self.lab_live_games = []
+                    for o_idx, rec in enumerate(openings):
+                        for a_is_w in (True, False):
+                            self.lab_live_games.append(
+                                {
+                                    "idx": len(self.lab_live_games),
+                                    "opening_id": rec.record_id,
+                                    "opening_fen": rec.fen,
+                                    "a_is_white": a_is_w,
+                                    "fen": rec.fen,
+                                    "last_move": None,
+                                    "plies": 0,
+                                    "status": "waiting",
+                                    "result": None,
+                                }
+                            )
+                    self.lab_results["arena"] = {
+                        "agent_a": a_name,
+                        "agent_b": b_name,
+                        "games": 0,
+                        "total_games": total_games,
+                        "wins": 0,
+                        "draws": 0,
+                        "losses": 0,
+                        "score": 0.0,
+                        "white_score": 0.0,
+                        "black_score": 0.0,
+                        "wilson_ci_95": [0.0, 0.0],
+                        "bootstrap_ci_95": [0.0, 0.0],
+                        "agent_a_avg_latency_ms": 0.0,
+                        "agent_b_avg_latency_ms": 0.0,
+                    }
+
+                self.lab_message = f"Đang đấu {self.lab_agent_a} vs {self.lab_agent_b} ({total_games} ván)..."
                 self._append_lab_log(
-                    f"[UI Sandbox] Bắt đầu Arena: {self.lab_agent_a} vs {self.lab_agent_b} | {num_openings * 2} ván | mode={b_mode} | workers={self.lab_workers}"
+                    f"[UI Sandbox] Bắt đầu Arena trực tiếp: {self.lab_agent_a} vs {self.lab_agent_b} | {total_games} ván | mode={b_mode} | workers={self.lab_workers}"
                 )
-                self.lab_progress = 0.25
-                res = run_paired_matchup(
-                    agent_a,
-                    agent_b,
-                    openings,
-                    seeds=[42],
-                    budget_mode=b_mode,
-                    time_limit_sec=self.lab_time_limit if self.lab_budget_mode == "time" else None,
-                    workload_a=self.lab_workload if self.lab_budget_mode == "workload" else None,
-                    workload_b=self.lab_workload if self.lab_budget_mode == "workload" else None,
-                    jsonl_path=str(sandbox_root / "matches.jsonl"),
-                    pgn_path=str(sandbox_root / "games.pgn"),
-                    workers=self.lab_workers,
-                )
+
+                pair_scores_map: dict[int, dict[bool, float]] = {}
+                a_lats: list[float] = []
+                b_lats: list[float] = []
+                stats_acc = {"wins": 0, "draws": 0, "losses": 0, "games": 0, "w_pts": 0.0, "b_pts": 0.0}
+
+                def _run_one_game(g_idx: int, rec: Any, a_is_w: bool, seed: int) -> dict[str, Any]:
+                    ag_w = create_agent(self.lab_agent_a if a_is_w else self.lab_agent_b)
+                    ag_b = create_agent(self.lab_agent_b if a_is_w else self.lab_agent_a)
+                    last_push = [0.0]
+
+                    def _on_move(fen: str, mv_uci: str, plies: int) -> None:
+                        now = time.perf_counter()
+                        if now - last_push[0] < 0.08:
+                            return
+                        last_push[0] = now
+                        with self.lab_live_lock:
+                            if g_idx < len(self.lab_live_games):
+                                item = self.lab_live_games[g_idx]
+                                item["fen"] = fen
+                                item["last_move"] = mv_uci
+                                item["plies"] = plies
+                                item["status"] = "playing"
+
+                    with self.lab_live_lock:
+                        self.lab_live_games[g_idx]["status"] = "playing"
+
+                    g = play_single_match(
+                        white_agent=ag_w,
+                        black_agent=ag_b,
+                        initial_fen=rec.fen,
+                        time_limit_sec=t_lim,
+                        max_plies=400,
+                        seed=seed,
+                        white_workload=w_lim,
+                        black_workload=w_lim,
+                        on_move=_on_move,
+                        stop_event=self.lab_stop_event,
+                    )
+                    g["opening_id"] = rec.record_id
+                    g["budget_mode"] = b_mode
+                    g["match_id"] = f"{a_name}_vs_{b_name}_{rec.record_id}_{'w' if a_is_w else 'b'}"
+                    return g
+
+                with ThreadPoolExecutor(max_workers=max(1, self.lab_workers)) as pool:
+                    fut_map = {}
+                    for o_idx, rec in enumerate(openings):
+                        seed = 42 + (o_idx // 5)
+                        for sub_i, a_is_w in enumerate((True, False)):
+                            g_idx = o_idx * 2 + sub_i
+                            fut = pool.submit(_run_one_game, g_idx, rec, a_is_w, seed)
+                            fut_map[fut] = (g_idx, o_idx, a_is_w)
+
+                    for fut in fut_map:
+                        if self.lab_stop_event.is_set():
+                            break
+                        g_idx, o_idx, a_is_w = fut_map[fut]
+                        g = fut.result()
+                        s_a = float(g["white_score"] if a_is_w else g["black_score"])
+                        append_match_jsonl(str(sandbox_root / "matches.jsonl"), g)
+                        moves = [chess.Move.from_uci(u) for u in g["moves_uci"]]
+                        pgn_txt = export_game_to_pgn(
+                            moves=moves,
+                            headers={
+                                "Event": f"101_TTNTNC Arena ({b_mode})",
+                                "Site": g["opening_id"],
+                                "White": g["white"],
+                                "Black": g["black"],
+                                "Result": g["result"],
+                            },
+                            initial_fen=g["opening_fen"],
+                        )
+                        append_pgn_file(str(sandbox_root / "games.pgn"), pgn_txt)
+
+                        with self.lab_live_lock:
+                            item = self.lab_live_games[g_idx]
+                            item["status"] = "done"
+                            item["result"] = g["result"]
+                            item["plies"] = int(g.get("plies", item["plies"]))
+                            if g["moves_uci"]:
+                                item["last_move"] = g["moves_uci"][-1]
+                            try:
+                                b_end = chess.Board(g["opening_fen"])
+                                for u in g["moves_uci"]:
+                                    b_end.push_uci(u)
+                                item["fen"] = b_end.fen()
+                            except Exception:
+                                pass
+
+                            stats_acc["games"] += 1
+                            if s_a == 1.0:
+                                stats_acc["wins"] += 1
+                            elif s_a == 0.5:
+                                stats_acc["draws"] += 1
+                            else:
+                                stats_acc["losses"] += 1
+                            if a_is_w:
+                                stats_acc["w_pts"] += s_a
+                                a_lats.append(float(g["white_avg_latency_ms"]))
+                                b_lats.append(float(g["black_avg_latency_ms"]))
+                            else:
+                                stats_acc["b_pts"] += s_a
+                                a_lats.append(float(g["black_avg_latency_ms"]))
+                                b_lats.append(float(g["white_avg_latency_ms"]))
+                            pair_scores_map.setdefault(o_idx, {})[a_is_w] = s_a
+
+                            done_g = stats_acc["games"]
+                            w_cnt = stats_acc["wins"]
+                            d_cnt = stats_acc["draws"]
+                            l_cnt = stats_acc["losses"]
+                            sc = compute_normalized_score(w_cnt, d_cnt, l_cnt)
+                            w_ci = wilson_confidence_interval(sc, done_g)
+                            completed_pairs = [
+                                (ps[True] + ps[False]) / 2.0
+                                for ps in pair_scores_map.values()
+                                if True in ps and False in ps
+                            ]
+                            b_ci = (
+                                paired_bootstrap_confidence_interval(completed_pairs, num_resamples=1000)
+                                if completed_pairs
+                                else (0.0, 0.0)
+                            )
+                            w_games = sum(1 for ps in pair_scores_map.values() if True in ps)
+                            b_games = sum(1 for ps in pair_scores_map.values() if False in ps)
+                            res_live = {
+                                "agent_a": a_name,
+                                "agent_b": b_name,
+                                "games": done_g,
+                                "total_games": total_games,
+                                "wins": w_cnt,
+                                "draws": d_cnt,
+                                "losses": l_cnt,
+                                "score": sc,
+                                "white_score": stats_acc["w_pts"] / max(1, w_games),
+                                "black_score": stats_acc["b_pts"] / max(1, b_games),
+                                "wilson_ci_95": [w_ci[0], w_ci[1]],
+                                "bootstrap_ci_95": [b_ci[0], b_ci[1]],
+                                "agent_a_avg_latency_ms": sum(a_lats) / max(1, len(a_lats)),
+                                "agent_b_avg_latency_ms": sum(b_lats) / max(1, len(b_lats)),
+                            }
+                            self.lab_results["arena"] = res_live
+                            self.lab_progress = 0.05 + 0.95 * (done_g / float(max(1, total_games)))
+
+                res = self.lab_results["arena"]
                 (sandbox_root / "arena_matchup.json").write_text(
                     json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8"
                 )
-                self.lab_results["arena"] = res
                 self._append_lab_log(
                     f"Hoàn tất Arena: {res.get('agent_a')} đạt S={res.get('score'):.3f} (+{res.get('wins')}/={res.get('draws')}/-{res.get('losses')})"
                 )

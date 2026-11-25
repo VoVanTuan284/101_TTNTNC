@@ -47,6 +47,8 @@ def play_single_match(
     seed: int = 42,
     white_workload: Optional[int] = None,
     black_workload: Optional[int] = None,
+    on_move: Optional[Any] = None,
+    stop_event: Optional[Any] = None,
 ) -> Dict[str, Any]:
     """
     Điều phối một ván đấu hoàn chỉnh từ initial_fen đến khi kết thúc hoặc chạm max_plies.
@@ -71,6 +73,8 @@ def play_single_match(
 
     plies = 0
     while not env.is_terminal() and plies < max_plies:
+        if stop_event is not None and stop_event.is_set():
+            break
         is_white_turn = env.board.turn == chess.WHITE
         agent = white_agent if is_white_turn else black_agent
         workload = w_wl if is_white_turn else b_wl
@@ -82,6 +86,8 @@ def play_single_match(
         env.step(move)
         moves_uci.append(move.uci())
         plies += 1
+        if on_move is not None:
+            on_move(env.board.fen(), move.uci(), plies)
 
         stats = agent.last_search_stats or {}
         nodes = float(stats.get("nodes", 0.0))
