@@ -66,11 +66,11 @@ def test_ui_panel_click_and_mode_toggle() -> None:
         app._handle_click((300, 100), pygame)
 
         # Kiểm tra thanh trượt (Time Limit & Workload) trên panel trái
-        app._handle_click((240, 315), pygame)  # Kéo thanh trượt Time tới mức cuối
+        app._handle_click((240, 100), pygame)  # Kéo thanh trượt Time tới mức cuối
         assert app.time_limit == app.TIME_STEPS[-1]
         assert app.max_workload is None
 
-        app._handle_click((180, 360), pygame)  # Click thanh trượt Workload
+        app._handle_click((180, 150), pygame)  # Click thanh trượt Workload
         assert app.time_limit is None
         assert app.max_workload in app.WORKLOAD_STEPS
 
