@@ -117,10 +117,18 @@ def test_ui_panel_click_and_mode_toggle() -> None:
         app._handle_click((cx - 210 + 50, cy - 125 + 195), pygame)
         assert app.game_over_dismissed is True
 
-        # Kiểm tra Tab 2 đang tạm khóa: click vào tab "lab" vẫn giữ ở "play"
+        # Kiểm tra chuyển sang Tab 2 (Nghiên cứu & Thực nghiệm đã mở khóa) và vẽ không lỗi
+        app._handle_click((450, 20), pygame)
+        assert app.active_tab == "lab"
+        app._draw(surface, pygame)
+        # Quay lại Tab 1 (Đấu trường) và kiểm tra thêm khóa bảo vệ nếu bật lab_tab_locked
+        app._handle_click((120, 20), pygame)
+        assert app.active_tab == "play"
+        app.lab_tab_locked = True
         app._handle_click((450, 20), pygame)
         assert app.active_tab == "play"
         assert "tạm khóa" in app.message
+        app.lab_tab_locked = False
         app._draw(surface, pygame)
     finally:
         app.executor.shutdown(wait=False, cancel_futures=True)

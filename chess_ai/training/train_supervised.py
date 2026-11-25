@@ -306,7 +306,8 @@ def train_supervised(
                     flush=True,
                 )
 
-        scheduler.step()
+        if seen > 0 and getattr(optimizer, "_step_count", 0) > 0:
+            scheduler.step()
         train_loss_ep = running_total / max(1, seen)
         train_p_loss_ep = running_policy / max(1, seen)
         train_v_loss_ep = running_value / max(1, seen)

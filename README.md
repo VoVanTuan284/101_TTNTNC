@@ -18,10 +18,10 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
 | **Cấp 2** | `Level2_Heuristic`  | Bắt buộc  | Luật ưu tiên **6 Tiers** (Mate-in-1 $\to$ Phong Hậu/SEE $\to$ Vị trí & 4 ô trung tâm + Safe Check $\to$ Chống lặp/Pat/Mate) + ghi nhận xung đột luật. |
 | **Cấp 3** | `Level3_AlphaBeta`  | Bắt buộc  | Iterative Deepening Negamax $\alpha$-$\beta$ + PVS + Aspiration Windows + Move Ordering + Zobrist TT + Quiescence/SEE. |
 | **Cấp 4** | `Level4_MCTS_UCT`   | Bắt buộc  | Vanilla MCTS (UCB1/UCT) với mô phỏng cắt ngưỡng (`max_rollout_depth: 60`, rollout ưu tiên `see_capture >= 0`), phát hiện lặp 3 lần và định giá tĩnh. |
-| **Cấp 5** | `Level5_Supervised` | Bắt buộc  | Mạng Dual-Head ResNet (6 blocks, 64 filters) đầu vào Tensor `(18, 8, 8)` góc nhìn bên đi, huấn luyện từ **Lichess Elite Database** có khử trùng Zobrist. |
-| **Cấp 6** | `Level6_RL_KRK`     |  Mở rộng  | Học tăng cường Tabular Q-Learning & Policy Gradient (REINFORCE) trên cờ tàn chuẩn FIDE **KRK**.                                                          |
-| **Cấp 7** | `Level7_GuidedMCTS` |  Mở rộng  | AlphaGo-inspired Guided MCTS (PUCT) tích hợp Policy Prior $P(s, a)$ và Value Head $V(s)$ của Cấp 5.                                                      |
-| **Cấp 8** | `Level8_AlphaZero`  |  Mở rộng  | Vòng lặp Self-Play PUCT + Replay Buffer + Checkpoint Arena Gating (ngưỡng thắng $55\%$).                                                                 |
+| **Cấp 5** | `Level5_Supervised` | Bắt buộc  | Mạng Dual-Head ResNet (6 blocks, 64 filters) đầu vào Tensor `(18, 8, 8)` góc nhìn bên đi, huấn luyện từ **1.000.000 mẫu Lichess Elite** (Top-1 `34.41%`, Top-3 `60.74%`). |
+| **Cấp 6** | `Level6_RL_KRK`     |  Mở rộng  | Học tăng cường **Afterstate TD($\lambda$) + đối xứng D4** chuyên biệt trên các cờ tàn ít quân **KQK (`100%`), KRK (`98%`), KPK (`75%`)**, đối chứng Batch REINFORCE. |
+| **Cấp 7** | `Level7_GuidedMCTS` |  Mở rộng  | AlphaGo-inspired Guided MCTS (PUCT + FPU + Tree Reuse + Batched GPU) tích hợp Policy Prior $P(s, a)$ và Value Head $V(s)$ của Cấp 5. |
+| **Cấp 8** | `Level8_AlphaZero`  |  Mở rộng  | Vòng lặp Self-Play PUCT + Circular Replay Buffer + Checkpoint Arena Gating (ngưỡng thắng $\ge 55\%$, bảo toàn Champion chống suy thoái). |
 
 ---
 
@@ -35,8 +35,8 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
   - [`resources/benchmark_positions.epd`](resources/benchmark_positions.epd): Bộ 50 thế cờ chiến thuật chuẩn Win At Chess (`WAC.001` – `WAC.050`).
   - [`resources/openings_50.epd`](resources/openings_50.epd): Bộ 50 thế cờ khai cuộc cân bằng (6–8 plies) phục vụ giải đấu Arena.
 - **Kết quả thực nghiệm & Trọng số nộp bài (`results/`, `checkpoints/`, `report/` — được commit):**
-  - `checkpoints/`: Lưu trữ trực tiếp `best_model.pt` ($\sim 5\text{MB}$) và `l6_krk_qtable.pkl` trên Git.
-  - `results/`: Lưu trữ log thi đấu thô (`round_robin/matches.jsonl`, `round_robin/games.pgn`), kết quả `ablation1/`, `ablation2/`, `training/` và biểu đồ `figures/`.
+  - `checkpoints/`: Lưu trữ trực tiếp `best_model.pt` (Level 5 v2), `l6_krk_qtable.pkl` (Level 6 Afterstate TD($\lambda$)+D4) và `l8_alphazero_best.pt` (Level 8 Champion).
+  - `results/`: Lưu trữ log thi đấu chuẩn hóa 200 ván/cặp (`round_robin_200/`, `dual_mode_200/`), `full_leaderboard/`, `round_robin/`, kết quả `ablation1/`, `ablation2/`, `training/` và biểu đồ `figures/`.
   - `notebooks/`: Bộ 6 notebook phân tích theo chuyên đề (`01`–`06`) và `analysis.ipynb` tổng hợp (chi tiết tại [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md)).
   - `report/`: Chứa báo cáo 5 chương, slide thuyết trình, poster A0 và link video demo.
 - **Tài liệu kỹ thuật (`docs/`):**
@@ -93,7 +93,7 @@ pip install -e .
 Sau khi kích hoạt `.venv`, có thể chạy trực tiếp bằng `python -m ...` hoặc các lệnh CLI đã đăng ký trong [`pyproject.toml`](pyproject.toml):
 
 ```bash
-# 1. Chạy kiểm thử tự động (Core, L1-L4, L6 RL, ETL, Arena & UI: 27 tests pass)
+# 1. Chạy kiểm thử tự động (Core, L1-L8, ETL, Arena & UI: 46+ tests pass)
 pytest -v
 
 # 2. Trích xuất dữ liệu từ Lichess Elite Database ra mảng nhị phân np.memmap
@@ -101,12 +101,12 @@ chess-etl --config configs/default_config.yaml
 # (hoặc: python -m chess_ai.etl.pgn_etl --config configs/default_config.yaml)
 
 # 3. Huấn luyện các cấp độ Học máy / Học sâu:
-#    - Cấp 5 (Supervised Dual-Head ResNet) [chờ TV2 hoàn thiện]:
+#    - Cấp 5 (Supervised Dual-Head ResNet v2 — đã hoàn tất & lưu checkpoints/best_model.pt):
 chess-train-sl --config configs/model_resnet.yaml
-#    - Cấp 6 (RL cờ tàn KQK/KRK/KPK + REINFORCE KRK):
+#    - Cấp 6 (RL cờ tàn Afterstate TD(λ)+D4 KQK/KRK/KPK + REINFORCE KRK):
 chess-train-rl --config configs/search_params.yaml
 #      (chạy nhanh: chess-train-rl --episodes 5000 --reinforce-episodes 1000)
-#    - Cấp 8 (AlphaZero Self-Play) [chờ TV2 hoàn thiện]:
+#    - Cấp 8 (AlphaZero Self-Play & Arena Gating — đã hoàn tất & lưu checkpoints/l8_alphazero_best.pt):
 chess-selfplay
 
 # 4. Vận hành giải đấu đối kháng Round-Robin (100 ván/cặp trên 50 thế cờ khai cuộc cân bằng)

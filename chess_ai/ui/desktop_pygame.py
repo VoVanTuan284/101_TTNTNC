@@ -143,7 +143,7 @@ class ChessPygameApp:
         self.modal_base = 600.0
         self.modal_increment = 0.0
         self.active_tab = "play"
-        self.lab_tab_locked = True
+        self.lab_tab_locked = False
         self.promotion_pending: Optional[Any] = None
         self.piece_images: dict[str, Any] = {}
         self.resign_result: Optional[float] = None
@@ -238,11 +238,12 @@ class ChessPygameApp:
                             screen = self._leave_fullscreen(pygame)
                 self._tick_clocks()
                 self._poll_ai()
-                self._draw(canvas, pygame)
-                screen.fill((0, 0, 0))
-                fitted = self._fit_surface(canvas, screen)
-                screen.blit(fitted, fitted.get_rect(center=screen.get_rect().center))
-                pygame.display.flip()
+                if screen.get_width() > 4 and screen.get_height() > 4:
+                    self._draw(canvas, pygame)
+                    screen.fill((0, 0, 0))
+                    fitted = self._fit_surface(canvas, screen)
+                    screen.blit(fitted, fitted.get_rect(center=screen.get_rect().center))
+                    pygame.display.flip()
                 clock.tick(60)
         finally:
             self.executor.shutdown(wait=False, cancel_futures=True)
@@ -436,15 +437,19 @@ class ChessPygameApp:
     def _fit_surface(self, canvas: Any, screen: Any) -> Any:
         import pygame
 
-        scale = min(
-            screen.get_width() / self.WINDOW_SIZE[0],
-            screen.get_height() / self.WINDOW_SIZE[1],
-        )
+        sw = max(1, min(4096, int(screen.get_width())))
+        sh = max(1, min(4096, int(screen.get_height())))
+        if (sw, sh) == tuple(self.WINDOW_SIZE):
+            return canvas
+        scale = min(sw / self.WINDOW_SIZE[0], sh / self.WINDOW_SIZE[1])
         size = (
             max(1, int(self.WINDOW_SIZE[0] * scale)),
             max(1, int(self.WINDOW_SIZE[1] * scale)),
         )
-        return pygame.transform.smoothscale(canvas, size)
+        try:
+            return pygame.transform.smoothscale(canvas, size)
+        except Exception:
+            return pygame.transform.scale(canvas, size)
 
     def _fit_window_position(
         self, position: tuple[int, int], screen: Any, pygame: Any
@@ -1982,11 +1987,14 @@ class ChessPygameApp:
         return surf if not isinstance(surf, str) else None
 
     def _load_existing_lab_results(self) -> None:
-        arena_path = (
-            Path("results/round_robin/tournament_summary.json")
-            if Path("results/round_robin/tournament_summary.json").exists()
-            else Path("results/tournament_summary.json")
-        )
+        arena_candidates = [
+            Path("results/round_robin_200/summary_7x7_200.json"),
+            Path("results/round_robin_200/summary_6x6_200.json"),
+            Path("results/full_leaderboard/summary.json"),
+            Path("results/round_robin/tournament_summary.json"),
+            Path("results/tournament_summary.json"),
+        ]
+        arena_path = next((p for p in arena_candidates if p.exists()), arena_candidates[-1])
         mapping = {
             "arena": arena_path,
             "ablation1": Path("results/ablation1/ablation1_results.json"),

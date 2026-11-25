@@ -29,6 +29,7 @@ checkpoints/selfplay_iter_*.pt
 !checkpoints/.gitkeep
 !checkpoints/best_model.pt
 !checkpoints/l6_krk_qtable.pkl
+!checkpoints/l8_alphazero_best.pt
 
 # Runtime debug logs & UI sandbox runs (bỏ qua khi commit; kết quả thực nghiệm chính thức nằm ở results/ được commit)
 logs/*.log
@@ -44,3 +45,16 @@ results/ui_sandbox/
 Thumbs.db
 .vscode/
 .idea/
+
+
+# Report, Docs & Pattern Report (không commit / push lên Git)
+report/
+docs/
+scripts/build_report.py
+scripts/report_gen/
+*.docx
+*.doc
+~$*.docx
+~$*.doc
+*.pdf
+*[Pp]attern*[Rr]eport*
