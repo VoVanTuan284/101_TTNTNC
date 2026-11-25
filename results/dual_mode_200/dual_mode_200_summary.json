@@ -1,0 +1,264 @@
+{
+  "experiment": "Dual_Mode_200_Games_Per_Pair_And_Resource_Profile",
+  "games_per_pair": 200,
+  "total_games": 1200,
+  "elapsed_sec": 5497.55,
+  "resource_profile": [
+    {
+      "agent": "Level1_Random",
+      "device": "CPU",
+      "checkpoint_mb": 0.0,
+      "process_rss_mb": 355.0,
+      "delta_ram_mb": 0.0,
+      "vram_peak_mb": 0.0,
+      "load_time_ms": 2.2,
+      "sample_move_ms": 0.1
+    },
+    {
+      "agent": "Level2_Heuristic",
+      "device": "CPU",
+      "checkpoint_mb": 0.0,
+      "process_rss_mb": 356.2,
+      "delta_ram_mb": 1.2,
+      "vram_peak_mb": 0.0,
+      "load_time_ms": 129.9,
+      "sample_move_ms": 19.3
+    },
+    {
+      "agent": "Level3_AlphaBeta",
+      "device": "CPU",
+      "checkpoint_mb": 0.0,
+      "process_rss_mb": 360.4,
+      "delta_ram_mb": 4.2,
+      "vram_peak_mb": 0.0,
+      "load_time_ms": 180.6,
+      "sample_move_ms": 783.4
+    },
+    {
+      "agent": "Level4_MCTS_UCT",
+      "device": "CPU",
+      "checkpoint_mb": 0.0,
+      "process_rss_mb": 356.5,
+      "delta_ram_mb": 0.1,
+      "vram_peak_mb": 0.0,
+      "load_time_ms": 53.6,
+      "sample_move_ms": 1186.4
+    },
+    {
+      "agent": "Level5_Supervised",
+      "device": "CUDA (GTX 1650)",
+      "checkpoint_mb": 53.72,
+      "process_rss_mb": 1097.4,
+      "delta_ram_mb": 740.9,
+      "vram_peak_mb": 71.6,
+      "load_time_ms": 1192.3,
+      "sample_move_ms": 18947.4
+    },
+    {
+      "agent": "Level6_RL_Endgame",
+      "device": "CPU",
+      "checkpoint_mb": 2.19,
+      "process_rss_mb": 1206.5,
+      "delta_ram_mb": 17.7,
+      "vram_peak_mb": 0.0,
+      "load_time_ms": 113.8,
+      "sample_move_ms": 1.7
+    },
+    {
+      "agent": "Level7_GuidedMCTS",
+      "device": "CUDA (GTX 1650)",
+      "checkpoint_mb": 53.72,
+      "process_rss_mb": 1182.5,
+      "delta_ram_mb": 0.0,
+      "vram_peak_mb": 79.7,
+      "load_time_ms": 533.3,
+      "sample_move_ms": 300.1
+    },
+    {
+      "agent": "Level8_AlphaZero",
+      "device": "CUDA (GTX 1650)",
+      "checkpoint_mb": 17.92,
+      "process_rss_mb": 1165.7,
+      "delta_ram_mb": 0.0,
+      "vram_peak_mb": 43.9,
+      "load_time_ms": 212.7,
+      "sample_move_ms": 217.3
+    }
+  ],
+  "matchups": [
+    {
+      "matchup_id": "M1_WL_L3_vs_L2",
+      "agent_a": "Level3_AlphaBeta",
+      "agent_b": "Level2_Heuristic",
+      "mode": "Workload",
+      "budget_desc": "L3 max_nodes=4000 vs L2 1-ply",
+      "games": 200,
+      "wins": 184,
+      "draws": 14,
+      "losses": 2,
+      "score_pct": 95.5,
+      "white_score_pct": 93.5,
+      "black_score_pct": 97.5,
+      "wilson_ci_95": [
+        91.67,
+        97.61
+      ],
+      "bootstrap_ci_95": [
+        93.25,
+        97.5
+      ],
+      "a_mean_latency_ms": 618.5,
+      "a_p95_latency_ms": 1158.3,
+      "b_mean_latency_ms": 32.3,
+      "b_p95_latency_ms": 89.5,
+      "a_avg_nps_or_sps": 6207.5,
+      "b_avg_nps_or_sps": 764.5,
+      "avg_plies": 69.0
+    },
+    {
+      "matchup_id": "M2_WL_L3_vs_L5",
+      "agent_a": "Level3_AlphaBeta",
+      "agent_b": "Level5_Supervised",
+      "mode": "Workload",
+      "budget_desc": "L3 max_nodes=4000 vs L5 Policy-only",
+      "games": 200,
+      "wins": 184,
+      "draws": 16,
+      "losses": 0,
+      "score_pct": 96.0,
+      "white_score_pct": 98.0,
+      "black_score_pct": 94.0,
+      "wilson_ci_95": [
+        92.31,
+        97.96
+      ],
+      "bootstrap_ci_95": [
+        94.25,
+        97.75
+      ],
+      "a_mean_latency_ms": 496.6,
+      "a_p95_latency_ms": 947.8,
+      "b_mean_latency_ms": 8.5,
+      "b_p95_latency_ms": 14.7,
+      "a_avg_nps_or_sps": 7796.3,
+      "b_avg_nps_or_sps": 148.0,
+      "avg_plies": 61.5
+    },
+    {
+      "matchup_id": "M3_WL_L7_vs_L5",
+      "agent_a": "Level7_GuidedMCTS",
+      "agent_b": "Level5_Supervised",
+      "mode": "Workload",
+      "budget_desc": "L7 100 sims vs L5 Policy-only",
+      "games": 200,
+      "wins": 190,
+      "draws": 10,
+      "losses": 0,
+      "score_pct": 97.5,
+      "white_score_pct": 97.0,
+      "black_score_pct": 98.0,
+      "wilson_ci_95": [
+        94.28,
+        98.93
+      ],
+      "bootstrap_ci_95": [
+        96.0,
+        98.75
+      ],
+      "a_mean_latency_ms": 809.4,
+      "a_p95_latency_ms": 1643.2,
+      "b_mean_latency_ms": 8.4,
+      "b_p95_latency_ms": 17.7,
+      "a_avg_nps_or_sps": 126.4,
+      "b_avg_nps_or_sps": 121.9,
+      "avg_plies": 85.3
+    },
+    {
+      "matchup_id": "M4_WL_L3_vs_L7",
+      "agent_a": "Level3_AlphaBeta",
+      "agent_b": "Level7_GuidedMCTS",
+      "mode": "Workload",
+      "budget_desc": "L3 max_nodes=4000 vs L7 100 sims",
+      "games": 200,
+      "wins": 144,
+      "draws": 34,
+      "losses": 22,
+      "score_pct": 80.5,
+      "white_score_pct": 80.0,
+      "black_score_pct": 81.0,
+      "wilson_ci_95": [
+        74.46,
+        85.39
+      ],
+      "bootstrap_ci_95": [
+        75.5,
+        85.0
+      ],
+      "a_mean_latency_ms": 455.5,
+      "a_p95_latency_ms": 718.0,
+      "b_mean_latency_ms": 618.1,
+      "b_p95_latency_ms": 1097.2,
+      "a_avg_nps_or_sps": 8481.5,
+      "b_avg_nps_or_sps": 160.1,
+      "avg_plies": 74.0
+    },
+    {
+      "matchup_id": "M5_TC_L3_vs_L2",
+      "agent_a": "Level3_AlphaBeta",
+      "agent_b": "Level2_Heuristic",
+      "mode": "Time-Control",
+      "budget_desc": "Cùng 0.15s/nước (Time-Control)",
+      "games": 200,
+      "wins": 163,
+      "draws": 35,
+      "losses": 2,
+      "score_pct": 90.25,
+      "white_score_pct": 89.5,
+      "black_score_pct": 91.0,
+      "wilson_ci_95": [
+        85.35,
+        93.63
+      ],
+      "bootstrap_ci_95": [
+        87.0,
+        93.5
+      ],
+      "a_mean_latency_ms": 158.9,
+      "a_p95_latency_ms": 189.2,
+      "b_mean_latency_ms": 20.9,
+      "b_p95_latency_ms": 57.8,
+      "a_avg_nps_or_sps": 8905.5,
+      "b_avg_nps_or_sps": 1105.7,
+      "avg_plies": 76.2
+    },
+    {
+      "matchup_id": "M6_TC_L3_vs_L7",
+      "agent_a": "Level3_AlphaBeta",
+      "agent_b": "Level7_GuidedMCTS",
+      "mode": "Time-Control",
+      "budget_desc": "Cùng 0.15s/nước (Time-Control)",
+      "games": 200,
+      "wins": 153,
+      "draws": 28,
+      "losses": 19,
+      "score_pct": 83.5,
+      "white_score_pct": 87.0,
+      "black_score_pct": 80.0,
+      "wilson_ci_95": [
+        77.73,
+        88.0
+      ],
+      "bootstrap_ci_95": [
+        79.5,
+        87.5
+      ],
+      "a_mean_latency_ms": 158.5,
+      "a_p95_latency_ms": 191.0,
+      "b_mean_latency_ms": 149.5,
+      "b_p95_latency_ms": 163.6,
+      "a_avg_nps_or_sps": 8306.9,
+      "b_avg_nps_or_sps": 145.1,
+      "avg_plies": 68.7
+    }
+  ]
+}

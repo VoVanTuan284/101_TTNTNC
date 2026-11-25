@@ -1,0 +1,361 @@
+{
+  "experiment": "Full_Round_Robin_7x7_200_Games_Per_Pair",
+  "games_per_pair": 200,
+  "total_pairs": 21,
+  "total_games": 4200,
+  "elapsed_sec_l8_addon": 12653.24,
+  "leaderboard": [
+    {
+      "agent": "Level3_AlphaBeta",
+      "games": 1200,
+      "wins": 1055,
+      "draws": 99,
+      "losses": 46,
+      "score_pct": 92.04,
+      "white_score_pct": 91.83,
+      "black_score_pct": 92.25,
+      "wilson_ci_95": [
+        90.37,
+        93.44
+      ],
+      "elo": 1698.9,
+      "mean_latency_ms": 528.0,
+      "p95_latency_ms": 1050.5,
+      "checkmate_rate": 91.8,
+      "castling_rate": 67.3,
+      "avg_plies": 56.5
+    },
+    {
+      "agent": "Level7_GuidedMCTS",
+      "games": 1200,
+      "wins": 789,
+      "draws": 157,
+      "losses": 254,
+      "score_pct": 72.29,
+      "white_score_pct": 73.0,
+      "black_score_pct": 71.58,
+      "wilson_ci_95": [
+        69.69,
+        74.75
+      ],
+      "elo": 1459.0,
+      "mean_latency_ms": 765.7,
+      "p95_latency_ms": 1757.6,
+      "checkmate_rate": 86.9,
+      "castling_rate": 85.8,
+      "avg_plies": 82.6
+    },
+    {
+      "agent": "Level8_AlphaZero",
+      "games": 1200,
+      "wins": 788,
+      "draws": 157,
+      "losses": 255,
+      "score_pct": 72.21,
+      "white_score_pct": 73.0,
+      "black_score_pct": 71.42,
+      "wilson_ci_95": [
+        69.61,
+        74.67
+      ],
+      "elo": 1458.1,
+      "mean_latency_ms": 699.1,
+      "p95_latency_ms": 1295.2,
+      "checkmate_rate": 86.9,
+      "castling_rate": 86.2,
+      "avg_plies": 82.5
+    },
+    {
+      "agent": "Level2_Heuristic",
+      "games": 1200,
+      "wins": 615,
+      "draws": 146,
+      "losses": 439,
+      "score_pct": 57.33,
+      "white_score_pct": 57.92,
+      "black_score_pct": 56.75,
+      "wilson_ci_95": [
+        54.52,
+        60.1
+      ],
+      "elo": 1300.7,
+      "mean_latency_ms": 28.9,
+      "p95_latency_ms": 76.2,
+      "checkmate_rate": 87.8,
+      "castling_rate": 76.1,
+      "avg_plies": 68.8
+    },
+    {
+      "agent": "Level5_Supervised",
+      "games": 1200,
+      "wins": 277,
+      "draws": 211,
+      "losses": 712,
+      "score_pct": 31.87,
+      "white_score_pct": 32.25,
+      "black_score_pct": 31.5,
+      "wilson_ci_95": [
+        29.3,
+        34.57
+      ],
+      "elo": 1007.1,
+      "mean_latency_ms": 8.4,
+      "p95_latency_ms": 17.7,
+      "checkmate_rate": 82.4,
+      "castling_rate": 86.2,
+      "avg_plies": 71.4
+    },
+    {
+      "agent": "Level4_MCTS_UCT",
+      "games": 1200,
+      "wins": 164,
+      "draws": 126,
+      "losses": 910,
+      "score_pct": 18.92,
+      "white_score_pct": 18.58,
+      "black_score_pct": 19.25,
+      "wilson_ci_95": [
+        16.8,
+        21.23
+      ],
+      "elo": 840.8,
+      "mean_latency_ms": 898.3,
+      "p95_latency_ms": 1776.2,
+      "checkmate_rate": 89.5,
+      "castling_rate": 49.8,
+      "avg_plies": 59.2
+    },
+    {
+      "agent": "Level1_Random",
+      "games": 1200,
+      "wins": 1,
+      "draws": 126,
+      "losses": 1073,
+      "score_pct": 5.33,
+      "white_score_pct": 4.83,
+      "black_score_pct": 5.83,
+      "wilson_ci_95": [
+        4.2,
+        6.75
+      ],
+      "elo": 635.4,
+      "mean_latency_ms": 0.1,
+      "p95_latency_ms": 0.3,
+      "checkmate_rate": 89.5,
+      "castling_rate": 45.6,
+      "avg_plies": 55.3
+    }
+  ],
+  "pairwise_wdl": {
+    "Level1_Random__vs__Level8_AlphaZero": [
+      0,
+      12,
+      188
+    ],
+    "Level8_AlphaZero__vs__Level1_Random": [
+      188,
+      12,
+      0
+    ],
+    "Level5_Supervised__vs__Level8_AlphaZero": [
+      0,
+      10,
+      190
+    ],
+    "Level8_AlphaZero__vs__Level5_Supervised": [
+      190,
+      10,
+      0
+    ],
+    "Level2_Heuristic__vs__Level8_AlphaZero": [
+      35,
+      44,
+      121
+    ],
+    "Level8_AlphaZero__vs__Level2_Heuristic": [
+      121,
+      44,
+      35
+    ],
+    "Level3_AlphaBeta__vs__Level8_AlphaZero": [
+      144,
+      34,
+      22
+    ],
+    "Level8_AlphaZero__vs__Level3_AlphaBeta": [
+      22,
+      34,
+      144
+    ],
+    "Level7_GuidedMCTS__vs__Level8_AlphaZero": [
+      74,
+      52,
+      74
+    ],
+    "Level8_AlphaZero__vs__Level7_GuidedMCTS": [
+      74,
+      52,
+      74
+    ],
+    "Level4_MCTS_UCT__vs__Level8_AlphaZero": [
+      2,
+      5,
+      193
+    ],
+    "Level8_AlphaZero__vs__Level4_MCTS_UCT": [
+      193,
+      5,
+      2
+    ],
+    "Level3_AlphaBeta__vs__Level2_Heuristic": [
+      184,
+      14,
+      2
+    ],
+    "Level2_Heuristic__vs__Level3_AlphaBeta": [
+      2,
+      14,
+      184
+    ],
+    "Level3_AlphaBeta__vs__Level5_Supervised": [
+      184,
+      16,
+      0
+    ],
+    "Level5_Supervised__vs__Level3_AlphaBeta": [
+      0,
+      16,
+      184
+    ],
+    "Level7_GuidedMCTS__vs__Level5_Supervised": [
+      190,
+      10,
+      0
+    ],
+    "Level5_Supervised__vs__Level7_GuidedMCTS": [
+      0,
+      10,
+      190
+    ],
+    "Level3_AlphaBeta__vs__Level7_GuidedMCTS": [
+      144,
+      34,
+      22
+    ],
+    "Level7_GuidedMCTS__vs__Level3_AlphaBeta": [
+      22,
+      34,
+      144
+    ],
+    "Level1_Random__vs__Level2_Heuristic": [
+      0,
+      0,
+      200
+    ],
+    "Level2_Heuristic__vs__Level1_Random": [
+      200,
+      0,
+      0
+    ],
+    "Level1_Random__vs__Level5_Supervised": [
+      0,
+      60,
+      140
+    ],
+    "Level5_Supervised__vs__Level1_Random": [
+      140,
+      60,
+      0
+    ],
+    "Level2_Heuristic__vs__Level5_Supervised": [
+      145,
+      47,
+      8
+    ],
+    "Level5_Supervised__vs__Level2_Heuristic": [
+      8,
+      47,
+      145
+    ],
+    "Level1_Random__vs__Level3_AlphaBeta": [
+      0,
+      0,
+      200
+    ],
+    "Level3_AlphaBeta__vs__Level1_Random": [
+      200,
+      0,
+      0
+    ],
+    "Level1_Random__vs__Level7_GuidedMCTS": [
+      0,
+      13,
+      187
+    ],
+    "Level7_GuidedMCTS__vs__Level1_Random": [
+      187,
+      13,
+      0
+    ],
+    "Level2_Heuristic__vs__Level7_GuidedMCTS": [
+      35,
+      39,
+      126
+    ],
+    "Level7_GuidedMCTS__vs__Level2_Heuristic": [
+      126,
+      39,
+      35
+    ],
+    "Level1_Random__vs__Level4_MCTS_UCT": [
+      1,
+      41,
+      158
+    ],
+    "Level4_MCTS_UCT__vs__Level1_Random": [
+      158,
+      41,
+      1
+    ],
+    "Level2_Heuristic__vs__Level4_MCTS_UCT": [
+      198,
+      2,
+      0
+    ],
+    "Level4_MCTS_UCT__vs__Level2_Heuristic": [
+      0,
+      2,
+      198
+    ],
+    "Level5_Supervised__vs__Level4_MCTS_UCT": [
+      129,
+      68,
+      3
+    ],
+    "Level4_MCTS_UCT__vs__Level5_Supervised": [
+      3,
+      68,
+      129
+    ],
+    "Level3_AlphaBeta__vs__Level4_MCTS_UCT": [
+      199,
+      1,
+      0
+    ],
+    "Level4_MCTS_UCT__vs__Level3_AlphaBeta": [
+      0,
+      1,
+      199
+    ],
+    "Level7_GuidedMCTS__vs__Level4_MCTS_UCT": [
+      190,
+      9,
+      1
+    ],
+    "Level4_MCTS_UCT__vs__Level7_GuidedMCTS": [
+      1,
+      9,
+      190
+    ]
+  }
+}

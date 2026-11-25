@@ -1,0 +1,339 @@
+{
+  "experiment": "Full_Round_Robin_Leaderboard_All_FullBoard_Levels",
+  "total_games": 84,
+  "elapsed_sec": 2212.28,
+  "note_level6": "Level 6 (Afterstate TD(λ) + D4) chuyên biệt cờ tàn 3 quân (KQK 100%, KRK 98%, KPK 75%) nên đánh giá riêng ở Mục 4.4.",
+  "leaderboard": [
+    {
+      "agent": "Level3_AlphaBeta",
+      "games": 24,
+      "wins": 20,
+      "draws": 2,
+      "losses": 2,
+      "score_pct": 87.5,
+      "wilson_ci_95": [
+        69.0,
+        95.7
+      ],
+      "elo": 1649.2,
+      "avg_latency_ms": 1276.8,
+      "checkmate_rate": 91.7,
+      "castling_rate": 50.0,
+      "avg_plies": 65.4
+    },
+    {
+      "agent": "Level7_GuidedMCTS",
+      "games": 24,
+      "wins": 17,
+      "draws": 4,
+      "losses": 3,
+      "score_pct": 79.17,
+      "wilson_ci_95": [
+        59.5,
+        90.8
+      ],
+      "elo": 1550.3,
+      "avg_latency_ms": 349.2,
+      "checkmate_rate": 83.3,
+      "castling_rate": 79.2,
+      "avg_plies": 87.3
+    },
+    {
+      "agent": "Level8_AlphaZero",
+      "games": 24,
+      "wins": 17,
+      "draws": 4,
+      "losses": 3,
+      "score_pct": 79.17,
+      "wilson_ci_95": [
+        59.5,
+        90.8
+      ],
+      "elo": 1550.3,
+      "avg_latency_ms": 331.3,
+      "checkmate_rate": 83.3,
+      "castling_rate": 79.2,
+      "avg_plies": 87.3
+    },
+    {
+      "agent": "Level2_Heuristic",
+      "games": 24,
+      "wins": 10,
+      "draws": 4,
+      "losses": 10,
+      "score_pct": 50.0,
+      "wilson_ci_95": [
+        31.4,
+        68.6
+      ],
+      "elo": 1213.2,
+      "avg_latency_ms": 26.8,
+      "checkmate_rate": 83.3,
+      "castling_rate": 62.5,
+      "avg_plies": 80.0
+    },
+    {
+      "agent": "Level5_Supervised",
+      "games": 24,
+      "wins": 5,
+      "draws": 5,
+      "losses": 14,
+      "score_pct": 31.25,
+      "wilson_ci_95": [
+        16.4,
+        51.2
+      ],
+      "elo": 984.3,
+      "avg_latency_ms": 21.0,
+      "checkmate_rate": 79.2,
+      "castling_rate": 70.8,
+      "avg_plies": 71.3
+    },
+    {
+      "agent": "Level4_MCTS_UCT",
+      "games": 24,
+      "wins": 3,
+      "draws": 2,
+      "losses": 19,
+      "score_pct": 16.67,
+      "wilson_ci_95": [
+        6.7,
+        35.9
+      ],
+      "elo": 800.7,
+      "avg_latency_ms": 868.9,
+      "checkmate_rate": 91.7,
+      "castling_rate": 37.5,
+      "avg_plies": 49.9
+    },
+    {
+      "agent": "Level1_Random",
+      "games": 24,
+      "wins": 0,
+      "draws": 3,
+      "losses": 21,
+      "score_pct": 6.25,
+      "wilson_ci_95": [
+        1.5,
+        23.1
+      ],
+      "elo": 652.0,
+      "avg_latency_ms": 0.1,
+      "checkmate_rate": 87.5,
+      "castling_rate": 37.5,
+      "avg_plies": 61.5
+    }
+  ],
+  "pairwise_wdl": {
+    "Level1_Random__vs__Level2_Heuristic": [
+      0,
+      0,
+      4
+    ],
+    "Level2_Heuristic__vs__Level1_Random": [
+      4,
+      0,
+      0
+    ],
+    "Level1_Random__vs__Level3_AlphaBeta": [
+      0,
+      0,
+      4
+    ],
+    "Level3_AlphaBeta__vs__Level1_Random": [
+      4,
+      0,
+      0
+    ],
+    "Level1_Random__vs__Level4_MCTS_UCT": [
+      0,
+      1,
+      3
+    ],
+    "Level4_MCTS_UCT__vs__Level1_Random": [
+      3,
+      1,
+      0
+    ],
+    "Level1_Random__vs__Level5_Supervised": [
+      0,
+      2,
+      2
+    ],
+    "Level5_Supervised__vs__Level1_Random": [
+      2,
+      2,
+      0
+    ],
+    "Level1_Random__vs__Level7_GuidedMCTS": [
+      0,
+      0,
+      4
+    ],
+    "Level7_GuidedMCTS__vs__Level1_Random": [
+      4,
+      0,
+      0
+    ],
+    "Level1_Random__vs__Level8_AlphaZero": [
+      0,
+      0,
+      4
+    ],
+    "Level8_AlphaZero__vs__Level1_Random": [
+      4,
+      0,
+      0
+    ],
+    "Level2_Heuristic__vs__Level3_AlphaBeta": [
+      0,
+      0,
+      4
+    ],
+    "Level3_AlphaBeta__vs__Level2_Heuristic": [
+      4,
+      0,
+      0
+    ],
+    "Level2_Heuristic__vs__Level4_MCTS_UCT": [
+      4,
+      0,
+      0
+    ],
+    "Level4_MCTS_UCT__vs__Level2_Heuristic": [
+      0,
+      0,
+      4
+    ],
+    "Level2_Heuristic__vs__Level5_Supervised": [
+      2,
+      2,
+      0
+    ],
+    "Level5_Supervised__vs__Level2_Heuristic": [
+      0,
+      2,
+      2
+    ],
+    "Level2_Heuristic__vs__Level7_GuidedMCTS": [
+      0,
+      1,
+      3
+    ],
+    "Level7_GuidedMCTS__vs__Level2_Heuristic": [
+      3,
+      1,
+      0
+    ],
+    "Level2_Heuristic__vs__Level8_AlphaZero": [
+      0,
+      1,
+      3
+    ],
+    "Level8_AlphaZero__vs__Level2_Heuristic": [
+      3,
+      1,
+      0
+    ],
+    "Level3_AlphaBeta__vs__Level4_MCTS_UCT": [
+      4,
+      0,
+      0
+    ],
+    "Level4_MCTS_UCT__vs__Level3_AlphaBeta": [
+      0,
+      0,
+      4
+    ],
+    "Level3_AlphaBeta__vs__Level5_Supervised": [
+      4,
+      0,
+      0
+    ],
+    "Level5_Supervised__vs__Level3_AlphaBeta": [
+      0,
+      0,
+      4
+    ],
+    "Level3_AlphaBeta__vs__Level7_GuidedMCTS": [
+      2,
+      1,
+      1
+    ],
+    "Level7_GuidedMCTS__vs__Level3_AlphaBeta": [
+      1,
+      1,
+      2
+    ],
+    "Level3_AlphaBeta__vs__Level8_AlphaZero": [
+      2,
+      1,
+      1
+    ],
+    "Level8_AlphaZero__vs__Level3_AlphaBeta": [
+      1,
+      1,
+      2
+    ],
+    "Level4_MCTS_UCT__vs__Level5_Supervised": [
+      0,
+      1,
+      3
+    ],
+    "Level5_Supervised__vs__Level4_MCTS_UCT": [
+      3,
+      1,
+      0
+    ],
+    "Level4_MCTS_UCT__vs__Level7_GuidedMCTS": [
+      0,
+      0,
+      4
+    ],
+    "Level7_GuidedMCTS__vs__Level4_MCTS_UCT": [
+      4,
+      0,
+      0
+    ],
+    "Level4_MCTS_UCT__vs__Level8_AlphaZero": [
+      0,
+      0,
+      4
+    ],
+    "Level8_AlphaZero__vs__Level4_MCTS_UCT": [
+      4,
+      0,
+      0
+    ],
+    "Level5_Supervised__vs__Level7_GuidedMCTS": [
+      0,
+      0,
+      4
+    ],
+    "Level7_GuidedMCTS__vs__Level5_Supervised": [
+      4,
+      0,
+      0
+    ],
+    "Level5_Supervised__vs__Level8_AlphaZero": [
+      0,
+      0,
+      4
+    ],
+    "Level8_AlphaZero__vs__Level5_Supervised": [
+      4,
+      0,
+      0
+    ],
+    "Level7_GuidedMCTS__vs__Level8_AlphaZero": [
+      1,
+      2,
+      1
+    ],
+    "Level8_AlphaZero__vs__Level7_GuidedMCTS": [
+      1,
+      2,
+      1
+    ]
+  }
+}
