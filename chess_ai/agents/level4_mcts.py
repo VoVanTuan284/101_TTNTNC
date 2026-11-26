@@ -29,10 +29,11 @@ class Level4MCTSAgent(BaseAgent):
         subtree_reuse: bool = bool(_MCTS_CFG.get("subtree_reuse", True)),
         seed: Optional[int] = 42,
         rollout_mode: str = "see_tactical",
+        name: Optional[str] = None,
     ) -> None:
         if rollout_mode not in ("see_tactical", "uniform"):
             raise ValueError(f"rollout_mode không hợp lệ: '{rollout_mode}'. Hợp lệ: 'see_tactical', 'uniform'.")
-        super().__init__(name="Level4_MCTS_UCT")
+        super().__init__(name=name or "Level4_MCTS_UCT")
         self.simulations = simulations
         self.c_uct = c_uct
         self.max_rollout_depth = max_rollout_depth

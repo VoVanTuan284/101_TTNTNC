@@ -17,7 +17,7 @@
 2. **Không rò rỉ dữ liệu (No Data Leakage & No Reverse Tuning):**
    * Tuyệt đối không dùng các ván đấu hoặc thế cờ trong bộ kiểm thử cuối cùng (`test_*` hoặc `resources/benchmark_positions.epd`) để tinh chỉnh ngược trọng số mạng nơ-ron hay siêu tham số tìm kiếm.
 3. **Lưu vết thực nghiệm toàn diện (Comprehensive Logging):**
-   * Mọi ván đấu trong khuôn khổ giải đấu đều được ghi vết tự động ra tệp `results/round_robin/matches.jsonl` (ghi nhận thế cờ khai cuộc, từng nước đi, thời gian suy nghĩ, số nút duyệt / mô phỏng, điểm đánh giá) và tệp biên bản chuẩn `results/round_robin/games.pgn`.
+   * Mọi ván đấu trong khuôn khổ giải đấu đều được ghi vết tự động dưới dạng JSONL (`results/round_robin_200/*_matches.jsonl` & `results/dual_mode_200/*_matches.jsonl`, ghi nhận thế cờ khai cuộc, từng nước đi, thời gian suy nghĩ, số nút duyệt / mô phỏng) và hỗ trợ xuất PGN qua `chess_ai/arena/pgn_exporter.py`.
 4. **Tái lập thực nghiệm hai chế độ (`scripts/reproduce_experiment.py` & `notebooks/analysis.ipynb`):**
    * Chế độ `--from-logs` (Mặc định khi chấm bài): Đọc dữ liệu thô từ `logs/` để tái tạo toàn bộ bảng thống kê, khoảng tin cậy và biểu đồ trong $< 30$ giây.
    * Chế độ `--full`: Chạy lại từ đầu toàn bộ các bài Ablation và giải đấu Round-Robin.
@@ -141,7 +141,7 @@ Gồm 2 phần khảo sát liên hoàn:
 
 ## PHẦN 6: ĐẶC TẢ TỆP LOG VẾT & KỊCH BẢN TÁI LẬP (`REPRODUCE_EXPERIMENT.PY`)
 
-### 6.1. Cấu Trúc Log JSONL Chuẩn (`results/round_robin/matches.jsonl`)
+### 6.1. Cấu Trúc Log JSONL Chuẩn (`results/round_robin_200/*.jsonl`)
 ```json
 {
   "match_id": "L3_vs_L7_open012_w",
@@ -154,7 +154,7 @@ Gồm 2 phần khảo sát liên hoàn:
   "total_plies": 68,
   "random_seed": 2024,
   "budget_mode": "workload_control",
-  "budget_target": {"white_sims": 400, "black_nodes": 10000},
+  "budget_target": {"white_sims": 100, "black_nodes": 4000},
   "white_avg_latency_ms": 285.4,
   "black_avg_latency_ms": 142.1,
   "white_p95_latency_ms": 410.2,
@@ -173,7 +173,7 @@ python scripts/reproduce_experiment.py \
     --config configs/default_config.yaml \
     --output-dir results/figures/
 
-# Chế độ 2 (Chạy lại toàn phần): Thực thi lại Ablation 1, Ablation 2 và Giải đấu Round-Robin 100 ván/cặp
+# Chế độ 2 (Chạy lại toàn phần): Thực thi lại Ablation 1, Ablation 2 và Giải đấu Round-Robin
 python scripts/reproduce_experiment.py \
     --full \
     --config configs/default_config.yaml \

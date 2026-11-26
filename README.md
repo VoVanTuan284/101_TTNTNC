@@ -35,9 +35,9 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
   - [`resources/benchmark_positions.epd`](resources/benchmark_positions.epd): Bộ 50 thế cờ chiến thuật chuẩn Win At Chess (`WAC.001` – `WAC.050`).
   - [`resources/openings_50.epd`](resources/openings_50.epd): Bộ 50 thế cờ khai cuộc cân bằng (6–8 plies) phục vụ giải đấu Arena.
 - **Kết quả thực nghiệm & Trọng số nộp bài (`results/`, `checkpoints/`, `report/` — được commit):**
-  - `checkpoints/`: Lưu trữ trực tiếp `best_model.pt` (Level 5 v2), `l6_krk_qtable.pkl` (Level 6 Afterstate TD($\lambda$)+D4) và `l8_alphazero_best.pt` (Level 8 Champion).
-  - `results/`: Lưu trữ log thi đấu chuẩn hóa 200 ván/cặp (`round_robin_200/`, `dual_mode_200/`), `full_leaderboard/`, `round_robin/`, kết quả `ablation1/`, `ablation2/`, `training/` và biểu đồ `figures/`.
-  - `notebooks/`: Bộ 6 notebook phân tích theo chuyên đề (`01`–`06`) và `analysis.ipynb` tổng hợp (chi tiết tại [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md)).
+  - `checkpoints/`: Lưu trữ trực tiếp `best_model.pt` (Level 5 v2), `l6_krk_qtable.pkl` (Level 6 Afterstate TD($\lambda$)+D4) và `l8_alphazero_best.pt` (Level 8 Champion v0).
+  - `results/`: Lưu trữ log thi đấu chuẩn hóa 200 ván/cặp (`round_robin_200/`, `dual_mode_200/`), kết quả `ablation1/`, `ablation2/`, `training/` và biểu đồ `figures/`.
+  - `notebooks/`: Bộ 6 notebook chuyên đề (`01`–`06`), `train_level5_colab.ipynb`, `train_level8_colab.ipynb` và `analysis.ipynb` tổng hợp (chi tiết tại [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md)).
   - `report/`: Chứa báo cáo 5 chương, slide thuyết trình, poster A0 và link video demo.
 - **Tài liệu kỹ thuật (`docs/`):**
   - [`docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf`](docs/TTNTNC_De_tai_cuoi_ky_Game_AI.pdf): Đề bài gốc và Rubric chấm điểm môn Trí tuệ Nhân tạo Nâng cao.
@@ -45,7 +45,7 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
   - [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md): Bảng phân công nhiệm vụ, nhánh Git và tỷ lệ đóng góp (`33.3% / 33.3% / 33.4%`) của 3 thành viên.
   - [`docs/PROMPT_AND_FILE_SPEC.md`](docs/PROMPT_AND_FILE_SPEC.md): Đặc tả kiến trúc Clean Architecture, 8 cấp độ tác tử và hợp đồng giao diện `GameEnv` / `ChessEnv` / `BaseAgent`.
   - [`docs/DATASET_SPEC.md`](docs/DATASET_SPEC.md): Quy trình ETL dữ liệu Lichess Elite Database, bộ lọc 5 tiêu chí, khử trùng Zobrist 64-bit, lưu trữ `np.memmap` và schema checkpoint.
-  - [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md): Giao thức giải đấu Round-Robin 100 ván/cặp trên 50 khai cuộc, kiểm định Wilson/Bootstrap 95% và thiết kế 2 bài Ablation Studies.
+  - [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md): Giao thức giải đấu Round-Robin 200 ván/cặp trên 50 khai cuộc, kiểm định Wilson/Bootstrap 95% và thiết kế 2 bài Ablation Studies.
   - [`docs/UI_SPEC.md`](docs/UI_SPEC.md): Đặc tả giao diện Desktop Pygame (bố cục 3 cột, đồng hồ 2 đầu bàn cờ, Modal thiết lập ván đấu mới, Tab Nghiên cứu Thực nghiệm & bộ quân cờ `assets/`).
   - [`docs/GITFLOW.md`](docs/GITFLOW.md): Quy trình chia nhánh, chuẩn Conventional Commits, quy định Pull Request và quản lý dữ liệu lớn.
   - [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md): Quy ước bàn giao giữa các thành viên và danh mục 61 kịch bản kiểm thử tự động (`TC01`–`TC61`).
@@ -93,7 +93,7 @@ pip install -e .
 Sau khi kích hoạt `.venv`, có thể chạy trực tiếp bằng `python -m ...` hoặc các lệnh CLI đã đăng ký trong [`pyproject.toml`](pyproject.toml):
 
 ```bash
-# 1. Chạy kiểm thử tự động (Core, L1-L8, ETL, Arena & UI: 46+ tests pass)
+# 1. Chạy kiểm thử tự động (Core, L1-L8, ETL, Arena & UI: 47 tests pass)
 pytest -v
 
 # 2. Trích xuất dữ liệu từ Lichess Elite Database ra mảng nhị phân np.memmap
@@ -109,7 +109,7 @@ chess-train-rl --config configs/search_params.yaml
 #    - Cấp 8 (AlphaZero Self-Play & Arena Gating — đã hoàn tất & lưu checkpoints/l8_alphazero_best.pt):
 chess-selfplay
 
-# 4. Vận hành giải đấu đối kháng Round-Robin (100 ván/cặp trên 50 thế cờ khai cuộc cân bằng)
+# 4. Vận hành giải đấu đối kháng Round-Robin (200 ván/cặp trên 50 thế cờ khai cuộc cân bằng)
 chess-arena --config configs/default_config.yaml --budget-mode workload_control
 
 # 5. Tái tạo bảng kết quả, khoảng tin cậy Wilson/Bootstrap 95% và biểu đồ báo cáo

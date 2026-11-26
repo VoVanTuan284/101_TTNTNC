@@ -23,21 +23,39 @@ from chess_ai.experiments.ablation_search import run_ablation_search
 import numpy as np
 
 
-def _apply_dark_style(fig: Any, axes: List[Any]) -> None:
-    """Áp dụng bảng màu Dark Slate đồng bộ với giao diện Pygame."""
-    fig.patch.set_facecolor("#101622")
+def _fg(theme: str) -> str:
+    return "#0F172A" if theme == "light" else "#F8FAFC"
+
+
+def _legend_kw(theme: str) -> Dict[str, Any]:
+    if theme == "light":
+        return {"facecolor": "#F8FAFC", "edgecolor": "#CBD5E1", "labelcolor": "#0F172A"}
+    return {"facecolor": "#1E293B", "edgecolor": "#334155", "labelcolor": "#E2E8F0"}
+
+
+def _apply_style(fig: Any, axes: List[Any], theme: str = "light") -> None:
+    """Áp dụng bảng màu Light (nền trắng chuẩn báo cáo) hoặc Dark Slate (UI Pygame)."""
+    is_light = theme == "light"
+    fig.patch.set_facecolor("#FFFFFF" if is_light else "#101622")
     for ax in axes:
-        ax.set_facecolor("#161E2E")
-        ax.tick_params(colors="#E2E8F0", labelsize=9)
-        ax.xaxis.label.set_color("#E2E8F0")
-        ax.yaxis.label.set_color("#E2E8F0")
-        ax.title.set_color("#F8FAFC")
+        ax.set_facecolor("#FFFFFF" if is_light else "#161E2E")
+        ax.tick_params(colors="#1E293B" if is_light else "#E2E8F0", labelsize=9)
+        ax.xaxis.label.set_color("#0F172A" if is_light else "#E2E8F0")
+        ax.yaxis.label.set_color("#0F172A" if is_light else "#E2E8F0")
+        ax.title.set_color("#0F172A" if is_light else "#F8FAFC")
         for spine in ax.spines.values():
-            spine.set_color("#334155")
+            spine.set_color("#CBD5E1" if is_light else "#334155")
 
 
-def _plot_ablation1(data: Dict[str, Any], out_dir: Path) -> None:
+def _apply_dark_style(fig: Any, axes: List[Any]) -> None:
+    """Giữ tương thích ngược cho dark theme."""
+    _apply_style(fig, axes, theme="dark")
+
+
+def _plot_ablation1(data: Dict[str, Any], out_dir: Path, theme: str = "light") -> None:
     """Vẽ biểu đồ Ablation 1: Số nút duyệt vs Tactical Accuracy và Độ nhạy độ sâu."""
+    fg = _fg(theme)
+    grid_c = "#CBD5E1" if theme == "light" else "#334155"
     part_1a = data.get("part_1a_progressive_configs", [])
     if part_1a:
         names = [r["name"] for r in part_1a]
@@ -46,21 +64,22 @@ def _plot_ablation1(data: Dict[str, Any], out_dir: Path) -> None:
 
         fig, ax1 = plt.subplots(figsize=(8.6, 4.4), dpi=130)
         ax2 = ax1.twinx()
-        _apply_dark_style(fig, [ax1, ax2])
+        _apply_style(fig, [ax1, ax2], theme=theme)
 
         bars = ax1.bar(names, nodes, color="#3B82F6", alpha=0.88, width=0.52, label="Avg Nodes")
-        ax1.set_ylabel("Số nút duyệt trung bình (Nodes)", color="#60A5FA", fontweight="bold")
+        ax1.set_ylabel("Số nút duyệt trung bình (Nodes)", color="#2563EB" if theme == "light" else "#60A5FA", fontweight="bold")
         ax1.set_title("Ablation 1A: Hiệu quả Alpha-Beta, Ordering, TT & Quiescence (WAC-50)", fontweight="bold")
-        ax1.grid(axis="y", linestyle="--", color="#334155", alpha=0.6)
+        ax1.grid(axis="y", linestyle="--", color=grid_c, alpha=0.6)
 
-        ax2.plot(names, accs, color="#4ADE80", marker="o", markersize=7, linewidth=2.5, label="Tactical Accuracy (%)")
-        ax2.set_ylabel("Tactical Accuracy (%)", color="#4ADE80", fontweight="bold")
+        acc_c = "#16A34A" if theme == "light" else "#4ADE80"
+        ax2.plot(names, accs, color=acc_c, marker="o", markersize=7, linewidth=2.5, label="Tactical Accuracy (%)")
+        ax2.set_ylabel("Tactical Accuracy (%)", color=acc_c, fontweight="bold")
         ax2.set_ylim(0, 105)
 
         for b, v in zip(bars, nodes):
-            ax1.text(b.get_x() + b.get_width() / 2, v, f"{v:,.0f}", ha="center", va="bottom", fontsize=8.5, color="#E2E8F0")
+            ax1.text(b.get_x() + b.get_width() / 2, v, f"{v:,.0f}", ha="center", va="bottom", fontsize=8.5, color=fg)
         for x_i, acc_v in enumerate(accs):
-            ax2.text(x_i, acc_v + 3.0, f"{acc_v:.1f}%", ha="center", va="bottom", fontsize=8.5, color="#4ADE80", fontweight="bold")
+            ax2.text(x_i, acc_v + 3.0, f"{acc_v:.1f}%", ha="center", va="bottom", fontsize=8.5, color=acc_c, fontweight="bold")
 
         fig.tight_layout()
         fig.savefig(out_dir / "ablation1_progressive.png", facecolor=fig.get_facecolor())
@@ -74,31 +93,35 @@ def _plot_ablation1(data: Dict[str, Any], out_dir: Path) -> None:
 
         fig, ax1 = plt.subplots(figsize=(8.2, 4.2), dpi=130)
         ax2 = ax1.twinx()
-        _apply_dark_style(fig, [ax1, ax2])
+        _apply_style(fig, [ax1, ax2], theme=theme)
 
-        ax1.plot(depths, accs, marker="s", markersize=7, color="#4ADE80", linewidth=2.5, label="Accuracy (%)")
-        ax1.set_ylabel("Tactical Accuracy (%)", color="#4ADE80", fontweight="bold")
+        acc_c = "#16A34A" if theme == "light" else "#4ADE80"
+        lat_c = "#D97706" if theme == "light" else "#F59E0B"
+        ax1.plot(depths, accs, marker="s", markersize=7, color=acc_c, linewidth=2.5, label="Accuracy (%)")
+        ax1.set_ylabel("Tactical Accuracy (%)", color=acc_c, fontweight="bold")
         ax1.set_ylim(0, 105)
         ax1.set_title("Ablation 1B: Độ nhạy theo độ sâu tìm kiếm (Config_E)", fontweight="bold")
-        ax1.grid(True, linestyle="--", color="#334155", alpha=0.6)
+        ax1.grid(True, linestyle="--", color=grid_c, alpha=0.6)
 
-        ax2.plot(depths, p95, marker="^", markersize=7, linestyle="--", color="#F59E0B", linewidth=2.5, label="p95 Latency (ms)")
-        ax2.set_ylabel("Độ trễ p95 (ms)", color="#F59E0B", fontweight="bold")
+        ax2.plot(depths, p95, marker="^", markersize=7, linestyle="--", color=lat_c, linewidth=2.5, label="p95 Latency (ms)")
+        ax2.set_ylabel("Độ trễ p95 (ms)", color=lat_c, fontweight="bold")
 
         fig.tight_layout()
         fig.savefig(out_dir / "ablation1_depth_sensitivity.png", facecolor=fig.get_facecolor())
         plt.close(fig)
 
 
-def _plot_ablation2(data: Dict[str, Any], out_dir: Path) -> None:
+def _plot_ablation2(data: Dict[str, Any], out_dir: Path, theme: str = "light") -> None:
     """Vẽ đường cong hiệu năng & độ trễ MCTS theo N_sim (Ablation 2A)."""
     uct_curve = data.get("part_2a_uct_level4", [])
     puct_curve = data.get("part_2a_puct_level7", {}).get("curve", [])
     if not uct_curve and not puct_curve:
         return
 
+    fg = _fg(theme)
+    grid_c = "#CBD5E1" if theme == "light" else "#334155"
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8.8, 4.1), dpi=130)
-    _apply_dark_style(fig, [ax1, ax2])
+    _apply_style(fig, [ax1, ax2], theme=theme)
 
     if uct_curve:
         xs = [r["simulations"] for r in uct_curve]
@@ -106,44 +129,46 @@ def _plot_ablation2(data: Dict[str, Any], out_dir: Path) -> None:
         lats = [r.get("agent_a_avg_latency_ms", 0.0) for r in uct_curve]
         ci_low = [r.get("wilson_ci_95", [0.0, 0.0])[0] * 100.0 for r in uct_curve]
         ci_high = [r.get("wilson_ci_95", [0.0, 0.0])[1] * 100.0 for r in uct_curve]
-        ax1.plot(xs, ys, marker="o", linewidth=2.4, color="#3B82F6", label="Cấp 4: Vanilla MCTS (UCT)")
-        ax1.fill_between(xs, ci_low, ci_high, color="#3B82F6", alpha=0.2, label="Wilson 95% CI")
-        ax2.bar([str(x) for x in xs], lats, color="#F59E0B", alpha=0.88, width=0.55, label="Avg Latency (ms)")
+        ax1.plot(xs, ys, marker="o", linewidth=2.4, color="#2563EB" if theme == "light" else "#3B82F6", label="Cấp 4: Vanilla MCTS (UCT)")
+        ax1.fill_between(xs, ci_low, ci_high, color="#3B82F6", alpha=0.18, label="Wilson 95% CI (L4)")
+        ax2.bar([str(x) for x in xs], lats, color="#F59E0B", alpha=0.88, width=0.55, label="L4 Avg Latency (ms)")
         for idx_b, lv in enumerate(lats):
-            ax2.text(idx_b, lv, f"{lv:.0f}ms", ha="center", va="bottom", fontsize=8, color="#E2E8F0")
+            ax2.text(idx_b, lv, f"{lv:.0f}ms", ha="center", va="bottom", fontsize=8, color=fg)
 
     if puct_curve:
         xs = [r["simulations"] for r in puct_curve]
         ys = [r["score"] * 100.0 for r in puct_curve]
-        ax1.plot(xs, ys, marker="s", linewidth=2.4, color="#4ADE80", label="Cấp 7: Guided MCTS (PUCT)")
+        ax1.plot(xs, ys, marker="s", linewidth=2.4, color="#16A34A" if theme == "light" else "#4ADE80", label="Cấp 7: Guided MCTS (PUCT)")
 
     ax1.set_xlabel("Ngân sách mô phỏng (N_sim)")
     ax1.set_ylabel("Điểm số quy đổi S (%)")
     ax1.set_ylim(-2, 105)
     ax1.set_title("Điểm S (%) & Wilson 95% CI", fontweight="bold", fontsize=11)
-    ax1.grid(True, linestyle="--", color="#334155", alpha=0.6)
-    ax1.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", fontsize=8)
+    ax1.grid(True, linestyle="--", color=grid_c, alpha=0.6)
+    ax1.legend(**_legend_kw(theme), fontsize=8)
 
     ax2.set_xlabel("Ngân sách mô phỏng (N_sim)")
     ax2.set_ylabel("Độ trễ trung bình (ms)")
-    ax2.set_title("Độ trễ suy nghĩ TB theo N_sim", fontweight="bold", fontsize=11)
-    ax2.grid(axis="y", linestyle="--", color="#334155", alpha=0.6)
+    ax2.set_title("Độ trễ suy nghĩ TB theo N_sim (L4)", fontweight="bold", fontsize=11)
+    ax2.grid(axis="y", linestyle="--", color=grid_c, alpha=0.6)
 
-    fig.suptitle("Ablation 2: Khảo sát độ nhạy Ngân sách Mô phỏng MCTS", color="#F8FAFC", fontweight="bold", fontsize=12)
+    fig.suptitle("Ablation 2: Khảo sát độ nhạy Ngân sách Mô phỏng MCTS", color=fg, fontweight="bold", fontsize=12)
     fig.tight_layout()
     fig.savefig(out_dir / "ablation2_mcts_sensitivity.png", facecolor=fig.get_facecolor())
     plt.close(fig)
 
 
-def _plot_rl_krk(data: Dict[str, Any], out_dir: Path) -> None:
+def _plot_rl_krk(data: Dict[str, Any], out_dir: Path, theme: str = "light") -> None:
     """Vẽ đường cong học tập (Win Rate & Avg Plies) của Cấp 6 RL trên KQK, KRK, KPK."""
     curves = data.get("tabular_q_curves", {})
     if not curves:
         return
 
+    fg = _fg(theme)
+    grid_c = "#CBD5E1" if theme == "light" else "#334155"
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8.8, 4.1), dpi=130)
-    _apply_dark_style(fig, [ax1, ax2])
-    palette = {"KQK": "#4ADE80", "KRK": "#3B82F6", "KPK": "#F59E0B"}
+    _apply_style(fig, [ax1, ax2], theme=theme)
+    palette = {"KQK": "#16A34A" if theme == "light" else "#4ADE80", "KRK": "#2563EB" if theme == "light" else "#3B82F6", "KPK": "#D97706" if theme == "light" else "#F59E0B"}
 
     for eg_name, pts in curves.items():
         if not pts:
@@ -151,24 +176,24 @@ def _plot_rl_krk(data: Dict[str, Any], out_dir: Path) -> None:
         xs = [p["episode"] for p in pts]
         wrs = [p["win_rate"] * 100.0 for p in pts]
         plies = [p["avg_plies"] for p in pts]
-        c = palette.get(eg_name, "#E2E8F0")
+        c = palette.get(eg_name, fg)
         ax1.plot(xs, wrs, marker="o", markersize=4, linewidth=2.2, color=c, label=f"{eg_name} Win Rate (%)")
         ax2.plot(xs, plies, marker="s", markersize=4, linewidth=2.0, linestyle="--", color=c, label=f"{eg_name} Avg Plies")
 
     ax1.set_xlabel("Số Episodes huấn luyện")
     ax1.set_ylabel("Tỷ lệ Thắng - Win Rate (%)")
-    ax1.set_ylim(0, 100)
+    ax1.set_ylim(0, 105)
     ax1.set_title("Đường cong Hội tụ Tỷ lệ Thắng (%)", fontweight="bold", fontsize=11)
-    ax1.grid(True, linestyle="--", color="#334155", alpha=0.6)
-    ax1.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", fontsize=8.5)
+    ax1.grid(True, linestyle="--", color=grid_c, alpha=0.6)
+    ax1.legend(**_legend_kw(theme), fontsize=8.5)
 
     ax2.set_xlabel("Số Episodes huấn luyện")
     ax2.set_ylabel("Số nước đi trung bình (Plies)")
     ax2.set_title("Số Plies Trung bình mỗi Episode", fontweight="bold", fontsize=11)
-    ax2.grid(True, linestyle="--", color="#334155", alpha=0.6)
-    ax2.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", fontsize=8.5)
+    ax2.grid(True, linestyle="--", color=grid_c, alpha=0.6)
+    ax2.legend(**_legend_kw(theme), fontsize=8.5)
 
-    fig.suptitle("Cấp 6 RL: Đường cong Học tăng cường Cờ tàn (KQK / KRK / KPK)", color="#F8FAFC", fontweight="bold", fontsize=12)
+    fig.suptitle("Cấp 6 RL: Đường cong Học tăng cường Cờ tàn (KQK / KRK / KPK)", color=fg, fontweight="bold", fontsize=12)
     fig.tight_layout()
     fig.savefig(out_dir / "rl_krk_learning_curve.png", facecolor=fig.get_facecolor())
     plt.close(fig)
@@ -346,7 +371,7 @@ def _plot_round_robin_7x7(data: Dict[str, Any], out_dir: Path) -> None:
     plt.close(fig)
 
 
-def generate_figures_from_logs(output_dir: str = "results/figures/") -> List[str]:
+def generate_figures_from_logs(output_dir: str = "results/figures/", theme: str = "light") -> List[str]:
     """Đọc các tệp JSON kết quả đã lưu để tái tạo biểu đồ trong results/figures/."""
     out_path = Path(output_dir)
     out_path.mkdir(parents=True, exist_ok=True)
@@ -355,36 +380,37 @@ def generate_figures_from_logs(output_dir: str = "results/figures/") -> List[str
     ab1_path = Path("results/ablation1/ablation1_results.json")
     if ab1_path.exists():
         ab1 = json.loads(ab1_path.read_text(encoding="utf-8"))
-        _plot_ablation1(ab1, out_path)
+        _plot_ablation1(ab1, out_path, theme=theme)
         generated.extend(["ablation1_progressive.png", "ablation1_depth_sensitivity.png"])
 
     ab2_path = Path("results/ablation2/ablation2_results.json")
     if ab2_path.exists():
         ab2 = json.loads(ab2_path.read_text(encoding="utf-8"))
-        _plot_ablation2(ab2, out_path)
+        _plot_ablation2(ab2, out_path, theme=theme)
         if ab2.get("part_2a_uct_level4") or ab2.get("part_2a_puct_level7", {}).get("curve"):
             generated.append("ablation2_mcts_sensitivity.png")
 
     rl_path = Path("results/training/krk_learning_curve.json")
     if rl_path.exists():
         rl_data = json.loads(rl_path.read_text(encoding="utf-8"))
-        _plot_rl_krk(rl_data, out_path)
+        _plot_rl_krk(rl_data, out_path, theme=theme)
         generated.append("rl_krk_learning_curve.png")
 
+    # Chỉ vẽ lại 3 ảnh tổng hợp nếu chưa có sẵn (giữ nguyên bản chuyên biệt đã xuất từ Colab/script)
     sl_path = Path("results/training/sl_training_metrics.json")
-    if sl_path.exists():
+    if sl_path.exists() and not (out_path / "fig_level5_training_curves.png").exists():
         sl_data = json.loads(sl_path.read_text(encoding="utf-8"))
         _plot_sl_training(sl_data, out_path)
         generated.append("fig_level5_training_curves.png")
 
     sp_path = Path("results/training/selfplay_metrics.json")
-    if sp_path.exists():
+    if sp_path.exists() and not (out_path / "fig_level8_selfplay_gating.png").exists():
         sp_data = json.loads(sp_path.read_text(encoding="utf-8"))
         _plot_selfplay_gating(sp_data, out_path)
         generated.append("fig_level8_selfplay_gating.png")
 
     rr7_path = Path("results/round_robin_200/summary_7x7_200.json")
-    if rr7_path.exists():
+    if rr7_path.exists() and not (out_path / "fig_round_robin_7x7_200.png").exists():
         rr7_data = json.loads(rr7_path.read_text(encoding="utf-8"))
         _plot_round_robin_7x7(rr7_data, out_path)
         generated.append("fig_round_robin_7x7_200.png")
@@ -410,6 +436,7 @@ def main() -> None:
     mode_group.add_argument("--full", action="store_true", help="Chạy lại toàn bộ Ablation 1, Ablation 2 và Arena.")
     parser.add_argument("--config", default="configs/default_config.yaml", help="Đường dẫn cấu hình YAML.")
     parser.add_argument("--output-dir", default="results/figures/", help="Thư mục xuất biểu đồ.")
+    parser.add_argument("--theme", default="light", choices=["light", "dark"], help="Bảng màu biểu đồ (mặc định: light).")
     parser.add_argument("--workers", type=int, default=1, help="Số tiến trình song song khi chạy --full.")
     args = parser.parse_args()
 
@@ -420,7 +447,7 @@ def main() -> None:
         agents = [create_agent(aid) for aid in list_full_board_agents()]
         run_round_robin_tournament(agents=agents, config_path=args.config, budget_mode="workload_control", workers=args.workers)
 
-    generated = generate_figures_from_logs(args.output_dir)
+    generated = generate_figures_from_logs(args.output_dir, theme=args.theme)
     print(f"Đã tái tạo {len(generated)} biểu đồ tại {args.output_dir}: {generated}")
 
 
