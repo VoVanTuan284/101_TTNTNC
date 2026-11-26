@@ -73,11 +73,11 @@ Tài liệu này ghi nhận toàn bộ các quyết định kiến trúc và thi
 
 ---
 
-## ADR-05: Giao Thức Giải Đấu 100 Ván/Cặp Với Bộ 50 Khai Cuộc Cân Bằng
+## ADR-05: Giao Thức Giải Đấu 200 Ván/Cặp Với Bộ 50 Khai Cuộc Cân Bằng
 
-* **Bối cảnh:** Các tác tử tất định (như Cấp 3 Alpha-Beta ở chế độ cố định độ sâu/nút và Cấp 5 Greedy Policy) không chịu ảnh hưởng của Random Seed. Nếu luôn xuất phát từ bàn cờ gốc ban đầu, 100 ván Trắng và 100 ván Đen sẽ lặp lại đúng 2 ván duy nhất. Bên cạnh đó, chạy 200 ván/cặp cho mọi cặp ở cả 2 chế độ vượt quá quỹ thời gian 2 ngày của Pha 4.
+* **Bối cảnh:** Các tác tử tất định (như Cấp 3 Alpha-Beta ở chế độ cố định độ sâu/nút và Cấp 5 Greedy Policy) không chịu ảnh hưởng của Random Seed. Nếu luôn xuất phát từ bàn cờ gốc ban đầu, 100 ván Trắng và 100 ván Đen sẽ lặp lại đúng 2 ván duy nhất. Ban đầu nhóm dự kiến chạy 100 ván/cặp, sau đó khi tối ưu đa tiến trình đã nâng cấp chuẩn thực nghiệm cuối lên **200 ván/cặp** (50 khai cuộc × 2 màu × 2 seeds).
 * **Quyết định:**
-  1. **Quy mô chuẩn:** Thiết lập cố định **100 ván/cặp đấu** cho toàn bộ các cặp tác tử (đáp ứng chuẩn tối thiểu 100 ván/cặp ở Mục 3.5 của đề bài).
+  1. **Quy mô chuẩn:** Thiết lập **200 ván/cặp đấu** cho toàn bộ các cặp tác tử trong bộ giải đấu chính thức `round_robin_200` và `dual_mode_200` (đạt mức khuyến nghị tối đa 200 ván/cặp ở Mục 3.5 của đề bài).
   2. **Bộ 50 thế cờ khai cuộc cân bằng (`resources/openings_50.epd`):** Tuyển chọn 50 thế cờ khai cuộc chuẩn FIDE sau $6 \div 8$ plies (đánh giá cân bằng trong khoảng $[-0.3, +0.3]$ pawn). Với mỗi thế cờ khai cuộc $i \in \{1 \dots 50\}$:
      * Ván $2i - 1$: Tác tử A cầm Trắng, Tác tử B cầm Đen.
      * Ván $2i$: Tác tử B cầm Trắng, Tác tử A cầm Đen.

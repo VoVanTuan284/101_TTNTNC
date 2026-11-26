@@ -48,7 +48,7 @@ Dự án hiện thực hóa một hệ thống Game AI Cờ vua chuẩn FIDE $8 
   - [`docs/EXPERIMENT_PROTOCOL.md`](docs/EXPERIMENT_PROTOCOL.md): Giao thức giải đấu Round-Robin 200 ván/cặp trên 50 khai cuộc, kiểm định Wilson/Bootstrap 95% và thiết kế 2 bài Ablation Studies.
   - [`docs/UI_SPEC.md`](docs/UI_SPEC.md): Đặc tả giao diện Desktop Pygame (bố cục 3 cột, đồng hồ 2 đầu bàn cờ, Modal thiết lập ván đấu mới, Tab Nghiên cứu Thực nghiệm & bộ quân cờ `assets/`).
   - [`docs/GITFLOW.md`](docs/GITFLOW.md): Quy trình chia nhánh, chuẩn Conventional Commits, quy định Pull Request và quản lý dữ liệu lớn.
-  - [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md): Quy ước bàn giao giữa các thành viên và danh mục 61 kịch bản kiểm thử tự động (`TC01`–`TC61`).
+  - [`docs/HANDOFF_AND_QA.md`](docs/HANDOFF_AND_QA.md): Quy ước bàn giao giữa các thành viên và danh mục kịch bản kiểm thử tự động (hiện thực hóa thành 47 hàm `pytest` trên 11 tệp).
   - [`docs/SPRINT_PLAN_15DAYS.md`](docs/SPRINT_PLAN_15DAYS.md): Ma trận trách nhiệm RACI và lộ trình triển khai chi tiết 15 ngày theo 5 pha.
   - [`docs/REPORT_OUTLINE.md`](docs/REPORT_OUTLINE.md): 4 câu hỏi nghiên cứu (`RQ1`–`RQ4`) và dàn ý chi tiết Báo cáo khoa học 5 chương chuẩn IEEE.
   - [`docs/NOTEBOOKS_GUIDE.md`](docs/NOTEBOOKS_GUIDE.md): Hướng dẫn cấu trúc, đầu vào/đầu ra và quy ước sử dụng bộ 6 notebook chuyên đề trong `notebooks/`.

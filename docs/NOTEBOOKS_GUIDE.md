@@ -22,6 +22,7 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
 | — | [`level2_heuristic_principles.ipynb`](../notebooks/level2_heuristic_principles.ipynb) | Nguyên tắc chơi `Level 2` | Minh họa trực quan phân tầng ưu tiên **6 Tiers (`Tier 1–6`)**, `SEE`, kiểm soát trung tâm và thống kê xung đột luật của `Level2HeuristicAgent`. |
 | — | [`ve_anh_custom.ipynb`](../notebooks/ve_anh_custom.ipynb) | Vẽ ảnh bàn cờ tùy chỉnh | Tái sử dụng `render_board_image()` để vẽ thế cờ bất kỳ, toàn bộ nước đi hợp lệ của `Level 1` và so sánh các tác tử. |
 | — | [`train_level8_colab.ipynb`](../notebooks/train_level8_colab.ipynb) | Huấn luyện `Level 8` AlphaZero (Colab) | Thực thi vòng lặp Self-Play $\rightarrow$ Replay Buffer Refinement $\rightarrow$ Arena Gating ($\ge 55\%$) khởi tạo ấm từ `Level 5` trên Colab T4 GPU. |
+| — | [`test_lv7_more_sims.ipynb`](../notebooks/test_lv7_more_sims.ipynb) | Thử nghiệm mở rộng `Level 7` | Đối đầu `Level 7` (`400/800/1000/1500 sims`) vs `Level 3 (4000 nodes)` kèm biểu đồ đánh đổi điểm số & độ trễ. |
 | — | [`analysis.ipynb`](../notebooks/analysis.ipynb) | Notebook Tổng hợp (*Executive Summary*) | Tóm tắt nhanh các bảng kết quả chính từ toàn bộ pipeline để đối chiếu nhanh khi thuyết trình. |
 
 ---

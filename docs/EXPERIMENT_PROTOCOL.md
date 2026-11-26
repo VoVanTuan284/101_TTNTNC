@@ -40,7 +40,7 @@
 ### 2.2. Kiểm Soát Tính Ngẫu Nhiên & Phân Tích Độ Nhạy Theo Seed
 * Cố định bộ danh sách **10 hạt giống ngẫu nhiên độc lập** (đồng bộ 100% với `configs/default_config.yaml`):
   $$\text{SEEDS} = [42, 101, 2024, 777, 12, 99, 555, 1337, 888, 314]$$
-* Mỗi seed điều phối đúng 5 thế cờ khai cuộc liên tiếp ($5 \times 2 = 10$ ván đấu) trong loạt 100 ván/cặp.
+* Trong giải đấu chuẩn hóa 200 ván/cặp (`round_robin_200`, `dual_mode_200`), hệ thống dùng 2 seeds đại diện `(42, 2026)` trên toàn bộ 50 thế cờ khai cuộc × 2 màu = 200 ván/cặp; còn các thực nghiệm khảo sát ngẫu nhiên khác sử dụng bộ 10 seeds trên.
 * Trước mỗi ván đấu, hệ thống đồng bộ hóa `random.seed(s)`, `np.random.seed(s)` và `torch.manual_seed(s)`.
 * Báo cáo phân tích thêm độ lệch chuẩn của điểm số $S$ giữa 10 khối seed để đánh giá tính ổn định của các tác tử ngẫu nhiên (Cấp 1, Cấp 4). Note: ở chế độ thi đấu chính thức (`eval_mode`), Cấp 7 tắt nhiễu Dirichlet ($\epsilon = 0$) và chọn $\arg\max_a N(s, a)$ để đạt sức cờ ổn định cao nhất.
 

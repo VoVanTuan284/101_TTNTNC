@@ -42,7 +42,7 @@ XÂY DỰNG VÀ ĐÁNH GIÁ HỆ THỐNG GAME AI CỜ VUA ĐA CẤP ĐỘ (8x8 F
 ---
 
 ### TÓM TẮT (ABSTRACT) & TỪ KHÓA
-* **Nội dung:** Tóm tắt trong $250 \div 300$ từ: Bối cảnh bài toán cờ vua chuẩn FIDE $8 \times 8$, hệ thống 8 cấp độ tác tử AI, biểu diễn Tensor chuẩn hóa góc nhìn bên đi $\mathbb{R}^{18 \times 8 \times 8}$, quy trình ETL từ Lichess Elite Database có khử trùng Zobrist ($\approx 1.000.000$ mẫu), thể thức giải đấu Round-Robin 100 ván/cặp trên 50 thế cờ khai cuộc cân bằng với khoảng tin cậy kép (Wilson Score 95% & Paired Bootstrap 95%), kết quả 2 bài Ablation Studies và đóng góp thực nghiệm của nhóm.
+* **Nội dung:** Tóm tắt trong $250 \div 300$ từ: Bối cảnh bài toán cờ vua chuẩn FIDE $8 \times 8$, hệ thống 8 cấp độ tác tử AI, biểu diễn Tensor chuẩn hóa góc nhìn bên đi $\mathbb{R}^{18 \times 8 \times 8}$, quy trình ETL từ Lichess Elite Database có khử trùng Zobrist ($1.000.000$ mẫu), thể thức giải đấu Round-Robin 200 ván/cặp trên 50 thế cờ khai cuộc cân bằng với khoảng tin cậy kép (Wilson Score 95% & Paired Bootstrap 95%), kết quả 2 bài Ablation Studies và đóng góp thực nghiệm của nhóm.
 * **Từ khóa (Keywords):** Game AI, Computer Chess, Iterative Deepening Alpha-Beta, Quiescence Search, Monte Carlo Tree Search (UCT/PUCT), Dual-Head ResNet, Wilson & Bootstrap Confidence Intervals.
 
 ---
@@ -59,8 +59,8 @@ XÂY DỰNG VÀ ĐÁNH GIÁ HỆ THỐNG GAME AI CỜ VUA ĐA CẤP ĐỘ (8x8 F
   1. Kiến trúc Clean Architecture 46 tệp mã nguồn tách biệt rõ môi trường, tìm kiếm, mạng nơ-ron, đấu trường và giao diện.
   2. Biểu diễn Tensor 18 kênh chuẩn hóa góc nhìn bên đi (`[18, 8, 8]`, lật bàn cờ `sq ^ 56`) bảo toàn trọn vẹn quyền nhập thành 4 mặt phẳng, ô En-Passant và bộ đếm 50 nước mà không mất mát độ chính xác khi lưu `uint8`.
   3. Đường ống ETL ngoại tuyến từ Lichess Elite Database tích hợp lọc Header nhanh, phân chia Game-level split tất định và khử trùng lặp thế cờ bằng khóa băm Zobrist 64-bit.
-  4. Giao thức thực nghiệm đối xứng 100 ván/cặp trên 50 thế cờ khai cuộc cân bằng, kiểm định thống kê kép (Wilson 95% & Paired Bootstrap 95%) cùng 2 bài Ablation chuyên sâu.
-* **1.5. Danh mục Sản phẩm Bàn giao:** Mã nguồn, cấu hình YAML, bộ test 61 kịch bản, checkpoint `.pt`, log thô PGN/JSONL, notebook `notebooks/analysis.ipynb`, báo cáo, slide, poster và video demo.
+  4. Giao thức thực nghiệm đối xứng 200 ván/cặp trên 50 thế cờ khai cuộc cân bằng, kiểm định thống kê kép (Wilson 95% & Paired Bootstrap 95%) cùng 2 bài Ablation chuyên sâu.
+* **1.5. Danh mục Sản phẩm Bàn giao:** Mã nguồn, cấu hình YAML, bộ test 47 hàm kiểm thử tự động, checkpoint `.pt`, log thô JSONL, notebook `notebooks/analysis.ipynb`, báo cáo, slide, poster và video demo.
 
 ---
 
@@ -94,7 +94,7 @@ XÂY DỰNG VÀ ĐÁNH GIÁ HỆ THỐNG GAME AI CỜ VUA ĐA CẤP ĐỘ (8x8 F
   * Bộ lọc 5 tiêu chí ở mức Header, lấy mẫu cách quãng $k \in \{3, 4\}$, phân tách Game-level split tất định bằng MD5, và khử trùng lặp thế cờ bằng khóa băm Zobrist 64-bit.
   * Thảo luận về đặc thù nguồn nhãn chuyên gia và phương sai nhiễu của nhãn kết cục ván đấu $z \in \{-1, 0, +1\}$ ở giai đoạn trung cuộc.
 * **3.5. Thiết kế Sân đấu Arena 50 Khai cuộc & Giao diện Pygame Đa tiến trình:**
-  * Cơ chế ghép cặp đối xứng 50 thế cờ khai cuộc cân bằng $\times 2$ màu = 100 ván/cặp.
+  * Cơ chế ghép cặp đối xứng 50 thế cờ khai cuộc cân bằng $\times 2$ màu $\times 2$ seeds = 200 ván/cặp.
   * Hai chế độ kiểm soát ngân sách (Workload-Control và Time-Control với Cooperative Time Management).
 
 ---
@@ -105,8 +105,8 @@ XÂY DỰNG VÀ ĐÁNH GIÁ HỆ THỐNG GAME AI CỜ VUA ĐA CẤP ĐỘ (8x8 F
 * **4.2. Kết quả Huấn luyện Tác tử Học được (Cấp 5, Cấp 6, Cấp 8):**
   * Đồ thị hàm mất mát (Policy Cross-Entropy, Value MSE), Top-1 / Top-3 Policy Accuracy và so sánh Value MSE với baseline dự đoán hằng số $0$ trên tập Validation/Test.
   * Đường cong học tập (Learning Curve) của Cấp 6 trên cờ tàn KRK và kết quả đối đầu Checkpoint Arena của Cấp 8.
-* **4.3. Ma trận Kết quả Giải đấu Round-Robin (100 Ván/Cặp trên 50 Khai cuộc):**
-  * Bảng ma trận $W / D / L$ và tỷ lệ điểm chuẩn hóa $S = (W + 0.5D)/N$ kèm **Khoảng tin cậy Wilson Score 95%** và **Paired-Opening Bootstrap 95%** ở cả hai chế độ Workload-Control và Time-Control.
+* **4.3. Ma trận Kết quả Giải đấu Round-Robin (200 Ván/Cặp trên 50 Khai cuộc):**
+  * Bảng ma trận $W / D / L$ và tỷ lệ điểm chuẩn hóa $S = (W + 0.5D)/N$ kèm **Khoảng tin cậy Wilson Score 95%** và **Paired-Opening Bootstrap 95%** ở cả hai chế độ Workload-Control (`4000 nodes / 100 sims`) và Time-Control (`0.15s/nước`).
   * Phân tích lợi thế đi trước ($S_{\text{White}}$ vs $S_{\text{Black}}$) và độ ổn định qua 10 Random Seeds.
 * **4.4. Đánh giá Chi phí Tính toán & Phân tích Đánh đổi (Trade-off Analysis):**
   * Bảng đối chiếu tốc độ duyệt (NPS/SPS), thời gian trung bình một nước, độ trễ $p95$, và mức tiêu thụ RAM/VRAM.

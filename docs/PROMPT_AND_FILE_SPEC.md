@@ -44,7 +44,7 @@ Hệ thống được thiết kế theo nguyên lý kiến trúc sạch (Clean A
 ├── logs/                                    # Nhật ký debug lúc chạy (chess.log - gitignored)
 ├── scripts/                                 # Kịch bản tái lập tự động (reproduce_experiment.py)
 ├── notebooks/                               # Bộ 6 notebook chuyên đề, train_level5/8_colab & analysis.ipynb
-├── tests/                                   # Bộ 36 kịch bản kiểm thử tự động (7 tệp test_* + conftest + fixtures/)
+├── tests/                                   # Bộ 47 hàm kiểm thử tự động (11 tệp test_* + conftest + fixtures/)
 ├── docs/                                    # Tài liệu đặc tả, đề bài, DECISIONS.md & CONTRIBUTIONS.md
 └── report/                                  # Báo cáo 5 chương, Slide, Poster & Link Video Demo nộp bài
 ```
