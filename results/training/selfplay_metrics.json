@@ -2,11 +2,11 @@
   "experiment": "Level8_AlphaZero_SelfPlay_Gating",
   "device": "cuda",
   "warm_started": true,
-  "warm_start_checkpoint": "/content/101_TTNTNC/checkpoints/best_model.pt",
+  "warm_start_checkpoint": "checkpoints/best_model.pt",
   "iterations_completed": 6,
   "champion_version": 0,
-  "best_checkpoint": "/content/drive/MyDrive/chess_ai/output_l8/checkpoints/l8_alphazero_best.pt",
-  "latest_checkpoint": "/content/drive/MyDrive/chess_ai/output_l8/checkpoints/l8_alphazero_latest.pt",
+  "best_checkpoint": "checkpoints/l8_alphazero_best.pt",
+  "latest_checkpoint": "checkpoints/l8_alphazero_latest.pt",
   "buffer_size": 12534,
   "history": [
     {
