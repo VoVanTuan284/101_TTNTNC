@@ -129,17 +129,24 @@ guided_mcts:                    # Cấp 7 (chess_ai/search/mcts_puct.py)
     temp_final: 0.1
     temp_decay_plies: 20        # 20 plies (10 nước) đầu τ=1.0, sau đó τ=0.1
 
-rl_level6:                      # Cấp 6 (Học tăng cường trên thế cờ tàn KRK)
-  subgame: "KRK"                # Vua + Xe (Trắng) đấu Vua đơn độc (Đen) trên bàn 8x8 chuẩn
-  algorithm: "tabular_q_and_reinforce"
+rl_level6:                      # Cấp 6 (Học tăng cường trên thế cờ tàn KQK/KRK/KPK)
+  subgame: "KRK"                # Giữ tương thích ngược; bộ đầy đủ gồm KQK, KRK, KPK
+  subgames: ["KQK", "KRK", "KPK"]
+  algorithm: "afterstate_td_lambda_and_batch_reinforce"
   episodes: 20000
+  reinforce_krk_episodes: 2000
+  reinforce_lr: 0.002
+  reinforce_batch_size: 16
   gamma: 0.99
-  step_penalty: -0.01           # Phạt nhẹ mỗi nước đi để ép chiếu hết nhanh nhất
+  td_lambda: 0.7
+  step_penalty: -0.005          # Phạt nhẹ mỗi nước đi để ép chiếu hết nhanh nhất
   win_reward: 1.0
   draw_penalty: -0.2
-  learning_rate: 0.1
+  learning_rate: 0.3
+  learning_rate_end: 0.08
   epsilon_start: 1.0
   epsilon_end: 0.05
+  max_steps: 100
 
 alphazero_level8:               # Cấp 8 (Vòng lặp Self-Play & Checkpoint Arena)
   warm_start_from_level5: true  # Hỗ trợ khởi tạo từ Cấp 5 (fine-tune) hoặc Tabula Rasa trên cờ tàn

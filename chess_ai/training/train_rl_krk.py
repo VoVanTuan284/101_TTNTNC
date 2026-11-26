@@ -746,15 +746,15 @@ def train_krk_rl(
 
     episodes = episodes_override if episodes_override is not None else int(cfg.get("episodes", 20000))
     gamma = float(cfg.get("gamma", 0.99))
-    alpha_start = max(0.30, float(cfg.get("learning_rate", 0.1)))
-    alpha_end = 0.08
-    td_lambda = 0.70
-    step_penalty = -0.005
+    alpha_start = float(cfg.get("learning_rate", 0.30))
+    alpha_end = float(cfg.get("learning_rate_end", 0.08))
+    td_lambda = float(cfg.get("td_lambda", 0.70))
+    step_penalty = float(cfg.get("step_penalty", -0.005))
     win_reward = float(cfg.get("win_reward", 1.0))
     draw_penalty = float(cfg.get("draw_penalty", -0.2))
     eps_start = float(cfg.get("epsilon_start", 1.0))
     eps_end = float(cfg.get("epsilon_end", 0.05))
-    max_steps = 100
+    max_steps = int(cfg.get("max_steps", 100))
     eval_every = max(100, episodes // 20)
 
     v_tables: Dict[str, Dict[EndgameStateKey, float]] = {}
