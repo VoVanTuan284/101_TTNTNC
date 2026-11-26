@@ -38,8 +38,8 @@ network:
     output_activation: tanh
 
 training:
-  batch_size: 256
-  epochs: 30
+  batch_size: 512               # Khớp sl_training_metrics.json (CUDA AMP FP16)
+  epochs: 30                    # Tối đa 30 epochs; early stopping dừng ở epoch 17 (best epoch 12)
   optimizer: adamw              # Sử dụng AdamW với decoupled weight decay chuẩn
   learning_rate: 0.001
   weight_decay: 5.0e-4
