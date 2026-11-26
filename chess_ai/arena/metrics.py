@@ -99,3 +99,16 @@ def compute_style_metrics(match_records: Sequence[Dict[str, Any]]) -> Dict[str, 
         "draw_rate": draws / total,
         "castling_rate": castling_games / total,
     }
+
+
+def compute_move_agreement_rate(
+    moves_a: Sequence[Any],
+    moves_b: Sequence[Any],
+) -> float:
+    """Tính tỷ lệ trùng khớp nước đi (Move Agreement Rate) trong [0.0, 1.0] giữa hai chuỗi nước đi."""
+    if len(moves_a) != len(moves_b):
+        raise ValueError("Hai danh sách nước đi phải có cùng độ dài.")
+    if not moves_a:
+        return 0.0
+    matches = sum(1 for a, b in zip(moves_a, moves_b) if str(a) == str(b))
+    return float(matches / len(moves_a))

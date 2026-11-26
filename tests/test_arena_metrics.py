@@ -6,5 +6,15 @@ xuất PGN/JSONL và kiểm định tính hợp lệ của bộ 50 thế cờ WA
 Phụ trách: TV3 (UI, Arena, QA & Analytics Lead)
 """
 
-# TODO (TV3): Hiện thực 10 hàm test_tc52_... đến test_tc61_...
+import pytest
+
+from chess_ai.arena.metrics import compute_move_agreement_rate
+
+
+def test_compute_move_agreement_rate() -> None:
+    """Kiểm tra tính toán Move Agreement Rate cho RQ4."""
+    assert compute_move_agreement_rate(["e2e4", "d2d4", "g1f3", "c2c4"], ["e2e4", "e2e3", "g1f3", "c2c3"]) == 0.5
+    assert compute_move_agreement_rate([], []) == 0.0
+    with pytest.raises(ValueError):
+        compute_move_agreement_rate(["e2e4"], ["e2e4", "d2d4"])
 
