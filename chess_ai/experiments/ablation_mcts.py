@@ -35,6 +35,16 @@ def _make_level7(simulations: int, checkpoint_path: Optional[str]) -> BaseAgent:
     return create_agent("level7", checkpoint_path=checkpoint_path, simulations=simulations, eval_mode=True)
 
 
+def _make_level7_value_only(simulations: int, checkpoint_path: Optional[str]) -> BaseAgent:
+    return create_agent(
+        "level7",
+        checkpoint_path=checkpoint_path,
+        simulations=simulations,
+        eval_mode=True,
+        uniform_prior=True,
+    )
+
+
 def _is_agent_implemented(agent: BaseAgent) -> bool:
     """Kiểm tra nhanh xem tác tử đã được cài đặt thực tế (không ném NotImplementedError) hay chưa."""
     try:
@@ -61,8 +71,9 @@ def run_ablation_mcts(
     search_cfg = load_yaml_config("search_params.yaml")
     openings_all = load_epd_file(cfg["paths"]["openings_epd"])
     seeds: List[int] = [int(s) for s in cfg.get("agent_seeds", [42])]
-    max_plies = int(cfg["arena"].get("max_plies", 400))
+    max_plies = min(int(cfg["arena"].get("max_plies", 400)), 160)
     bootstrap_resamples = int(cfg["arena"].get("bootstrap_resamples", 10000))
+    sim_2b = int(search_cfg["guided_mcts"].get("default_simulations", 100))
 
     if sim_budgets is None:
         sim_budgets = [int(n) for n in search_cfg["vanilla_mcts"].get("ablation_simulations", [50, 100, 200, 400, 800, 1000])]
@@ -98,6 +109,7 @@ def run_ablation_mcts(
         try:
             probe_l7 = _make_level7(sim_budgets[0], checkpoint_path)
             if _is_agent_implemented(probe_l7):
+                puct_workers = 1 if getattr(probe_l7, "device", None) and probe_l7.device.type == "cuda" else workers
                 puct_curve: List[Dict[str, Any]] = []
                 for n_sim in sim_budgets:
                     agent_l7 = _make_level7(n_sim, checkpoint_path)
@@ -111,7 +123,7 @@ def run_ablation_mcts(
                         workload_b=None,
                         max_plies=max_plies,
                         bootstrap_resamples=bootstrap_resamples,
-                        workers=workers,
+                        workers=puct_workers,
                         factory_a=partial(_make_level7, n_sim, checkpoint_path),
                         factory_b=_make_level2,
                     )
@@ -132,11 +144,12 @@ def run_ablation_mcts(
             }
 
     # --- Phần 2B: Bóc tách Policy-only (Cấp 5) vs Value-only MCTS vs Full Guided MCTS (Cấp 7) ---
-    part_2b: Dict[str, Any] = {"status": "pending_tv2_level5_level7", "matchups": []}
+    part_2b: Dict[str, Any] = {"status": "pending_tv2_level5_level7", "simulations": sim_2b, "matchups": []}
     if include_puct:
         try:
             agent_l5 = create_agent("level5", checkpoint_path=checkpoint_path)
-            agent_l7 = create_agent("level7", checkpoint_path=checkpoint_path, simulations=400, eval_mode=True)
+            agent_l7 = _make_level7(sim_2b, checkpoint_path)
+            agent_v_only = _make_level7_value_only(sim_2b, checkpoint_path)
             if _is_agent_implemented(agent_l5) and _is_agent_implemented(agent_l7):
                 m_l7_vs_l5 = run_paired_matchup(
                     agent_a=agent_l7,
@@ -144,14 +157,40 @@ def run_ablation_mcts(
                     openings=openings_2b,
                     seeds=seeds,
                     budget_mode="workload_control",
-                    workload_a=400,
+                    workload_a=sim_2b,
                     workload_b=None,
                     max_plies=max_plies,
                     bootstrap_resamples=bootstrap_resamples,
                 )
-                part_2b = {"status": "completed", "matchups": [m_l7_vs_l5]}
+                m_v_vs_l5 = run_paired_matchup(
+                    agent_a=agent_v_only,
+                    agent_b=agent_l5,
+                    openings=openings_2b,
+                    seeds=seeds,
+                    budget_mode="workload_control",
+                    workload_a=sim_2b,
+                    workload_b=None,
+                    max_plies=max_plies,
+                    bootstrap_resamples=bootstrap_resamples,
+                )
+                m_l7_vs_v = run_paired_matchup(
+                    agent_a=agent_l7,
+                    agent_b=agent_v_only,
+                    openings=openings_2b,
+                    seeds=seeds,
+                    budget_mode="workload_control",
+                    workload_a=sim_2b,
+                    workload_b=sim_2b,
+                    max_plies=max_plies,
+                    bootstrap_resamples=bootstrap_resamples,
+                )
+                part_2b = {
+                    "status": "completed",
+                    "simulations": sim_2b,
+                    "matchups": [m_l7_vs_l5, m_v_vs_l5, m_l7_vs_v],
+                }
         except Exception as exc:
-            part_2b = {"status": "pending_tv2_level5_level7", "reason": str(exc), "matchups": []}
+            part_2b = {"status": "pending_tv2_level5_level7", "simulations": sim_2b, "reason": str(exc), "matchups": []}
 
     payload: Dict[str, Any] = {
         "experiment": "Ablation_2_MCTS_Sensitivity_And_Guidance",

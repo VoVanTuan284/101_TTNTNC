@@ -92,6 +92,7 @@ def evaluate_board_with_model(
     model: Any,
     legal_moves: Optional[List[chess.Move]] = None,
     device: Optional[torch.device] = None,
+    uniform_prior: bool = False,
 ) -> Tuple[Dict[chess.Move, float], float]:
     """
     Đánh giá trạng thái bàn cờ bằng mạng DualHeadResNet (hoặc hàm callback tương đương).
@@ -151,6 +152,10 @@ def evaluate_board_with_model(
         uniform = 1.0 / len(moves)
         return {m: uniform for m in moves}, 0.0
 
+    if uniform_prior:
+        uniform = 1.0 / len(moves)
+        return {m: uniform for m in moves}, float(np.clip(value, -1.0, 1.0))
+
     priors = _logits_to_legal_priors(logits_np, moves, board.turn)
     return priors, float(np.clip(value, -1.0, 1.0))
 
@@ -161,6 +166,7 @@ def evaluate_boards_batch_with_model(
     legal_moves_list: List[List[chess.Move]],
     model: torch.nn.Module,
     device: Optional[torch.device] = None,
+    uniform_prior: bool = False,
 ) -> List[Tuple[Dict[chess.Move, float], float]]:
     """Đánh giá đồng thời một batch bàn cờ (B, 18, 8, 8) bằng một lượt forward PyTorch duy nhất."""
     if not boards:
@@ -182,7 +188,11 @@ def evaluate_boards_batch_with_model(
         if not moves:
             results.append(({}, 0.0))
             continue
-        priors = _logits_to_legal_priors(logits_batch[i], moves, b.turn)
+        if uniform_prior:
+            uniform = 1.0 / len(moves)
+            priors = {m: uniform for m in moves}
+        else:
+            priors = _logits_to_legal_priors(logits_batch[i], moves, b.turn)
         val = float(np.clip(float(values_batch[i]), -1.0, 1.0))
         results.append((priors, val))
     return results
@@ -378,6 +388,7 @@ def run_puct_search(
     eval_cache: Optional[EvalCache] = None,
     max_cache_size: int = 8192,
     batch_size: int = 1,
+    uniform_prior: bool = False,
 ) -> Tuple[chess.Move, Dict[str, Any], MCTSNode]:
     """
     Thực thi tìm kiếm Guided MCTS (PUCT) dẫn hướng bởi Policy Prior P(s, a) và Value Head V(s).
@@ -421,6 +432,7 @@ def run_puct_search(
                 model=model,
                 legal_moves=legal_moves,
                 device=device,
+                uniform_prior=uniform_prior,
             )
             _cache_put(eval_cache, root_zobrist, root_priors, root_value, max_cache_size)
 
@@ -493,6 +505,7 @@ def run_puct_search(
                                 model=model,
                                 legal_moves=node_moves,
                                 device=device,
+                                uniform_prior=uniform_prior,
                             )
                             _cache_put(eval_cache, z_key, priors, leaf_value, max_cache_size)
                         node.expand(node_moves, priors=priors)
@@ -573,6 +586,7 @@ def run_puct_search(
                     legal_moves_list=pending_moves,
                     model=model,
                     device=device,
+                    uniform_prior=uniform_prior,
                 )
                 for node, moves, z_key, (priors, leaf_val) in zip(
                     pending_nodes, pending_moves, pending_keys, batch_outs

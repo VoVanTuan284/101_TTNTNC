@@ -43,8 +43,9 @@ class Level7GuidedMCTSAgent(BaseAgent):
         fpu_reduction: float = float(_PUCT_CFG.get("fpu_reduction", 0.2)),
         eval_cache_size: int = int(_PUCT_CFG.get("eval_cache_size", 8192)),
         batch_size: Optional[int] = None,
+        uniform_prior: bool = False,
     ) -> None:
-        super().__init__(name="Level7_GuidedMCTS")
+        super().__init__(name="Level7_ValueOnlyMCTS" if uniform_prior else "Level7_GuidedMCTS")
         self.checkpoint_path = checkpoint_path or "checkpoints/best_model.pt"
         self.simulations = simulations
         self.c_puct = c_puct
@@ -54,6 +55,7 @@ class Level7GuidedMCTSAgent(BaseAgent):
         self.seed = seed
         self.fpu_reduction = fpu_reduction
         self.eval_cache_size = eval_cache_size
+        self.uniform_prior = uniform_prior
         self._rng = np.random.default_rng(seed)
         self._root: Optional[MCTSNode] = None
         self._eval_cache: EvalCache = OrderedDict()
@@ -202,6 +204,7 @@ class Level7GuidedMCTSAgent(BaseAgent):
             eval_cache=self._eval_cache if self.eval_cache_size > 0 else None,
             max_cache_size=self.eval_cache_size,
             batch_size=self.batch_size,
+            uniform_prior=self.uniform_prior,
         )
         self._root = new_root if self.subtree_reuse else None
         self.last_search_stats = {
