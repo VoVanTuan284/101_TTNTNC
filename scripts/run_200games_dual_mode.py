@@ -86,8 +86,15 @@ def profile_resources_8_levels() -> List[Dict[str, Any]]:
         ag = create_agent(agent_id, **kwargs)
         load_ms = (time.perf_counter() - t0) * 1000.0
         env = ChessEnv(fen=fen)
+        # Warm-up 1 lượt trước khi bấm giờ để tránh tính thời gian khởi tạo CUDA/cuDNN cold-start
+        _ = ag.select_move(env, max_workload=wl)
+        ag.reset()
+        if has_cuda:
+            torch.cuda.synchronize()
         t1 = time.perf_counter()
         _ = ag.select_move(env, max_workload=wl)
+        if has_cuda:
+            torch.cuda.synchronize()
         move_ms = (time.perf_counter() - t1) * 1000.0
         rss_after = _get_rss_mb()
         vram_peak = (torch.cuda.max_memory_allocated() / (1024 * 1024)) if has_cuda else 0.0

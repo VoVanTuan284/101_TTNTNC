@@ -3,80 +3,80 @@
     "agent": "Level1_Random",
     "device": "CPU",
     "checkpoint_mb": 0.0,
-    "process_rss_mb": 355.0,
-    "delta_ram_mb": 0.0,
+    "process_rss_mb": 512.8,
+    "delta_ram_mb": 89.1,
     "vram_peak_mb": 0.0,
-    "load_time_ms": 2.2,
+    "load_time_ms": 1.2,
     "sample_move_ms": 0.1
   },
   {
     "agent": "Level2_Heuristic",
     "device": "CPU",
     "checkpoint_mb": 0.0,
-    "process_rss_mb": 356.2,
-    "delta_ram_mb": 1.2,
+    "process_rss_mb": 514.6,
+    "delta_ram_mb": 1.7,
     "vram_peak_mb": 0.0,
-    "load_time_ms": 129.9,
-    "sample_move_ms": 19.3
+    "load_time_ms": 54.2,
+    "sample_move_ms": 4.4
   },
   {
     "agent": "Level3_AlphaBeta",
     "device": "CPU",
     "checkpoint_mb": 0.0,
-    "process_rss_mb": 360.4,
+    "process_rss_mb": 518.8,
     "delta_ram_mb": 4.2,
     "vram_peak_mb": 0.0,
-    "load_time_ms": 180.6,
-    "sample_move_ms": 783.4
+    "load_time_ms": 53.3,
+    "sample_move_ms": 191.6
   },
   {
     "agent": "Level4_MCTS_UCT",
     "device": "CPU",
     "checkpoint_mb": 0.0,
-    "process_rss_mb": 356.5,
+    "process_rss_mb": 514.9,
     "delta_ram_mb": 0.1,
     "vram_peak_mb": 0.0,
-    "load_time_ms": 53.6,
-    "sample_move_ms": 1186.4
+    "load_time_ms": 17.7,
+    "sample_move_ms": 324.9
   },
   {
     "agent": "Level5_Supervised",
     "device": "CUDA (GTX 1650)",
     "checkpoint_mb": 53.72,
-    "process_rss_mb": 1097.4,
-    "delta_ram_mb": 740.9,
+    "process_rss_mb": 767.7,
+    "delta_ram_mb": 252.8,
     "vram_peak_mb": 71.6,
-    "load_time_ms": 1192.3,
-    "sample_move_ms": 18947.4
+    "load_time_ms": 76.7,
+    "sample_move_ms": 2.9
   },
   {
     "agent": "Level6_RL_Endgame",
     "device": "CPU",
     "checkpoint_mb": 2.19,
-    "process_rss_mb": 1206.5,
-    "delta_ram_mb": 17.7,
+    "process_rss_mb": 784.1,
+    "delta_ram_mb": 16.4,
     "vram_peak_mb": 0.0,
-    "load_time_ms": 113.8,
-    "sample_move_ms": 1.7
+    "load_time_ms": 40.7,
+    "sample_move_ms": 0.1
   },
   {
     "agent": "Level7_GuidedMCTS",
     "device": "CUDA (GTX 1650)",
     "checkpoint_mb": 53.72,
-    "process_rss_mb": 1182.5,
-    "delta_ram_mb": 0.0,
+    "process_rss_mb": 798.5,
+    "delta_ram_mb": 27.2,
     "vram_peak_mb": 79.7,
-    "load_time_ms": 533.3,
-    "sample_move_ms": 300.1
+    "load_time_ms": 96.8,
+    "sample_move_ms": 46.2
   },
   {
     "agent": "Level8_AlphaZero",
     "device": "CUDA (GTX 1650)",
     "checkpoint_mb": 17.92,
-    "process_rss_mb": 1165.7,
-    "delta_ram_mb": 0.0,
+    "process_rss_mb": 798.7,
+    "delta_ram_mb": 0.3,
     "vram_peak_mb": 43.9,
-    "load_time_ms": 212.7,
-    "sample_move_ms": 217.3
+    "load_time_ms": 94.2,
+    "sample_move_ms": 46.1
   }
 ]
