@@ -4,7 +4,7 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
 
 > **Nguyên tắc thiết kế (theo `DECISIONS.md` & `EXPERIMENT_PROTOCOL.md`):**
 > - **Tách theo chuyên đề khoa học, không tách theo thành viên:** Mỗi notebook tập trung vào một mắt xích rõ ràng của dự án (Dữ liệu/ETL → Cổ điển → RL tàn cuộc → Deep Learning → Huấn luyện AlphaZero → Ablation Studies → Giải đấu & Phong cách chơi) để người đọc theo dõi mạch nghiên cứu liền mạch.
-> - **Tách biệt tác vụ nặng và phân tích:** Các tác vụ ETL lớn, huấn luyện `Level 5` (`chess-train-sl`), huấn luyện `Level 6` (`chess-train-rl`), giải đấu Round-Robin (`chess-arena`) và Ablation đều có CLI script trong `chess_ai/` và `scripts/`, lưu log/checkpoint ra `results/` hoặc `checkpoints/`. Riêng `train_level8_alphazero.ipynb` đóng gói quy trình huấn luyện tự chơi `Level 8` hỗ trợ cả CPU/GPU với cơ chế `AUTO_RESUME`.
+> - **Tách biệt tác vụ nặng và phân tích:** Các tác vụ ETL lớn, huấn luyện `Level 5` (`chess-train-sl` / `train_level5_colab.ipynb`), huấn luyện `Level 6` (`chess-train-rl`), giải đấu Round-Robin (`chess-arena`) và Ablation đều có CLI script trong `chess_ai/` và `scripts/`, lưu log/checkpoint ra `results/` hoặc `checkpoints/`. Riêng `train_level8_colab.ipynb` đóng gói quy trình huấn luyện tự chơi `Level 8` trên Colab T4 GPU kèm cơ chế `AUTO_RESUME`.
 > - **Xuất hình ảnh chuẩn báo cáo:** Mọi biểu đồ phục vụ báo cáo IEEE 5 chương được xuất ra `results/figures/` với độ phân giải cao.
 
 ---
@@ -21,7 +21,7 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
 | 06 | [`06_arena_tournament_and_style_rq4.ipynb`](../notebooks/06_arena_tournament_and_style_rq4.ipynb) | Giải đấu Round-Robin & Phong cách (`RQ4`) | Tổng hợp Elo, ma trận thắng/hòa/thua với khoảng tin cậy Wilson/Bootstrap 95%, độ trễ nước đi và đặc trưng phong cách chơi. |
 | — | [`level2_heuristic_principles.ipynb`](../notebooks/level2_heuristic_principles.ipynb) | Nguyên tắc chơi `Level 2` | Minh họa trực quan phân tầng ưu tiên **6 Tiers (`Tier 1–6`)**, `SEE`, kiểm soát trung tâm và thống kê xung đột luật của `Level2HeuristicAgent`. |
 | — | [`ve_anh_custom.ipynb`](../notebooks/ve_anh_custom.ipynb) | Vẽ ảnh bàn cờ tùy chỉnh | Tái sử dụng `render_board_image()` để vẽ thế cờ bất kỳ, toàn bộ nước đi hợp lệ của `Level 1` và so sánh các tác tử. |
-| — | [`train_level8_alphazero.ipynb`](../notebooks/train_level8_alphazero.ipynb) | Huấn luyện `Level 8` AlphaZero | Thực thi vòng lặp Self-Play $\rightarrow$ Replay Buffer Refinement $\rightarrow$ Arena Gating ($\ge 55\%$) khởi tạo ấm từ `Level 5`, tự động thích ứng GPU/CPU. |
+| — | [`train_level8_colab.ipynb`](../notebooks/train_level8_colab.ipynb) | Huấn luyện `Level 8` AlphaZero (Colab) | Thực thi vòng lặp Self-Play $\rightarrow$ Replay Buffer Refinement $\rightarrow$ Arena Gating ($\ge 55\%$) khởi tạo ấm từ `Level 5` trên Colab T4 GPU. |
 | — | [`analysis.ipynb`](../notebooks/analysis.ipynb) | Notebook Tổng hợp (*Executive Summary*) | Tóm tắt nhanh các bảng kết quả chính từ toàn bộ pipeline để đối chiếu nhanh khi thuyết trình. |
 
 ---
@@ -74,8 +74,8 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
   - `results/dual_mode_200/dual_mode_200_summary.json`
 - **Đầu ra kỳ vọng:** Bảng xếp hạng Elo kèm khoảng tin cậy Bootstrap 95%, ma trận thắng/hòa/thua kèm Wilson 95% CI, biểu đồ độ trễ nước đi / NPS / SPS, các chỉ số phong cách chơi (Move Agreement Rate, Castling Rate, độ dài ván, tỷ lệ chiếu hết) và trích xuất một số ván PGN tiêu biểu.
 
-### 2.7. `train_level8_alphazero.ipynb` — Huấn luyện `Level 8` AlphaZero Self-Play
-- **Mục tiêu:** Cung cấp pipeline tương tác tự động (hỗ trợ `SELFPLAY_PROFILE = "auto"` cho GPU CUDA hoặc CPU và `AUTO_RESUME = True`) để chạy vòng lặp Self-Play $\rightarrow$ Replay Buffer Refinement $\rightarrow$ Arena Gating ($\ge 55\%$).
+### 2.7. `train_level8_colab.ipynb` — Huấn luyện `Level 8` AlphaZero Self-Play (Colab)
+- **Mục tiêu:** Thực thi pipeline huấn luyện `Level 8` trên Google Colab T4 GPU (`--iterations 6`, `--games-per-iter 20`, `--sims 100`, `--arena-games 20`) với cơ chế tự động nối tiếp từ Google Drive (`AUTO_RESUME`).
 - **Đầu vào chính:** `checkpoints/best_model.pt` (Warm-start từ `Level 5`), `resources/openings_50.epd`.
 - **Đầu ra chính:** `checkpoints/l8_alphazero_best.pt`, `checkpoints/l8_alphazero_latest.pt`, `results/training/selfplay_metrics.json`, `results/figures/fig_level8_selfplay_gating.png`.
 
