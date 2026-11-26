@@ -96,9 +96,9 @@ heuristic_level2:               # Cấp 2 (Rule-based / Heuristic 3 tầng + SEE
 
 alpha_beta:                     # Cấp 3
   iterative_deepening: true     # Bắt buộc cho Time-Control và cung cấp PV-move từ TT
-  default_depth: 4
+  default_depth: 3
   ablation_depths: [2, 3, 4]    # Khảo sát độ nhạy theo độ sâu tìm kiếm
-  max_nodes: 10000              # Ngân sách mặc định ở chế độ Workload-Control
+  max_nodes: 4000               # Ngân sách chuẩn hóa dùng trong Round-Robin 200 & Dual-Mode 200
   tt_size_mb: 64
   quiescence:
     enabled: true
@@ -107,7 +107,7 @@ alpha_beta:                     # Cấp 3
 
 vanilla_mcts:                   # Cấp 4 (chess_ai/search/mcts_uct.py)
   c_uct: 1.414
-  default_simulations: 400
+  default_simulations: 100      # Ngân sách chuẩn hóa dùng trong Round-Robin 200
   ablation_simulations: [50, 100, 200, 400, 800, 1000]
   max_rollout_depth: 60         # Cắt ngắn rollout sau 60 plies để tránh rollout ngẫu nhiên quá dài
   rollout_cutoff_eval: "static_tanh" # Dùng tanh(static_eval / 600.0) khi chạm trần max_rollout_depth
@@ -115,7 +115,7 @@ vanilla_mcts:                   # Cấp 4 (chess_ai/search/mcts_uct.py)
 
 guided_mcts:                    # Cấp 7 (chess_ai/search/mcts_puct.py)
   c_puct: 1.414
-  default_simulations: 400
+  default_simulations: 100      # Ngân sách chuẩn hóa dùng trong Round-Robin 200 & Dual-Mode 200
   ablation_simulations: [50, 100, 200, 400, 800, 1000]
   subtree_reuse: true
   eval_mode:                    # Chế độ thi đấu Arena / Đánh giá thực nghiệm
@@ -150,8 +150,8 @@ rl_level6:                      # Cấp 6 (Học tăng cường trên thế cờ
 
 alphazero_level8:               # Cấp 8 (Vòng lặp Self-Play & Checkpoint Arena)
   warm_start_from_level5: true  # Hỗ trợ khởi tạo từ Cấp 5 (fine-tune) hoặc Tabula Rasa trên cờ tàn
-  selfplay_games_per_iter: 50
-  mcts_sims_per_move: 200
+  selfplay_games_per_iter: 20
+  mcts_sims_per_move: 100       # Khớp ngân sách Round-Robin 200 & Self-Play đã chạy
   replay_buffer_size: 50000
-  arena_eval_games: 40
+  arena_eval_games: 20
   arena_win_threshold: 0.55     # Chỉ cập nhật champion khi tỷ lệ điểm >= 55%

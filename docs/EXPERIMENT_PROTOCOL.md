@@ -30,11 +30,11 @@
 ### 2.1. Quy Mô Mẫu & Bộ 50 Thế Cờ Khai Cuộc Cân Bằng (Khử Lặp Ván & First-Player Advantage)
 * **Vấn đề của xuất phát điểm cố định:** Các tác tử tất định (như Cấp 2, Cấp 3 ở chế độ cố định nút/độ sâu, và Cấp 5 Greedy Policy) luôn chọn cùng một nước đi tại cùng một trạng thái. Nếu luôn bắt đầu từ thế cờ xuất phát mặc định, 100 ván cầm Trắng sẽ lặp lại đúng 1 ván duy nhất.
 * **Giải pháp chuẩn hóa (theo ADR-05):**
-  * Thiết lập cố định **100 ván/cặp đấu** (`games_per_pair: 100` trong `configs/default_config.yaml`, đáp ứng chuẩn tối thiểu 100 ván/cặp tại Mục 3.5 của đề bài).
+  * Thiết lập chuẩn hóa **200 ván/cặp đấu** (`games_per_pair: 200` trong `configs/default_config.yaml`, đạt mức khuyến nghị 200 ván/cặp tại Mục 3.5 của đề bài: 50 khai cuộc × 2 màu × 2 seeds `42, 2026`).
   * Sử dụng **Bộ 50 thế cờ khai cuộc cân bằng** (`resources/openings_50.epd`, gồm 50 thế cờ chuẩn FIDE sau $6 \div 8$ plies có điểm đánh giá cân bằng trong $[-0.3, +0.3]$ pawn).
-  * **Ghép cặp đối xứng (Paired-Opening Swap):** Với mỗi thế cờ khai cuộc $k \in \{1, \dots, 50\}$:
-    * **Ván $2k - 1$:** Tác tử A cầm Trắng, Tác tử B cầm Đen.
-    * **Ván $2k$:** Tác tử B cầm Trắng, Tác tử A cầm Đen (trên chính thế cờ khai cuộc $k$ đó).
+  * **Ghép cặp đối xứng (Paired-Opening Swap):** Với mỗi thế cờ khai cuộc $k \in \{1, \dots, 50\}$ và mỗi seed:
+    * **Ván $1$:** Tác tử A cầm Trắng, Tác tử B cầm Đen.
+    * **Ván $2$:** Tác tử B cầm Trắng, Tác tử A cầm Đen (trên chính thế cờ khai cuộc $k$ đó).
   * Cơ chế này vừa đảm bảo 100 ván đấu đa dạng thực chất cho cả các tác tử tất định, vừa khử triệt để lợi thế đi trước (First-Player Advantage) và bất đối xứng của từng khai cuộc.
 
 ### 2.2. Kiểm Soát Tính Ngẫu Nhiên & Phân Tích Độ Nhạy Theo Seed
@@ -62,12 +62,13 @@ Tuân thủ Mục 3.5 của đề bài (*"báo cáo theo ít nhất hai chế đ
 ### 3.1. Chế Độ 1: Cấu Hình Mặc Định Minh Bạch Theo Khối Lượng Tính Toán (Workload-Control Mode)
 * **Mục tiêu:** Đánh giá chất lượng thuật toán dưới ngân sách bước tính toán cố định, không phụ thuộc dao động tải CPU/OS và cho phép chạy song song đa tiến trình (`multiprocessing`) an toàn.
 * **Ngân sách mặc định (`configs/search_params.yaml`):**
-  * **Cấp 3 (Alpha-Beta):** Giới hạn tối đa $N_{\text{nodes}} = 10.000$ nút duyệt / nước đi (kèm Iterative Deepening trần $d_{\max} = 4$).
-  * **Cấp 4 (Vanilla MCTS UCT) & Cấp 7 (Guided MCTS PUCT):** Cố định $N_{\text{sim}} = 400$ simulations / nước đi.
+  * **Cấp 3 (Alpha-Beta):** Giới hạn tối đa $N_{\text{nodes}} = 4.000$ nút duyệt / nước đi (kèm Iterative Deepening).
+  * **Cấp 4 (Vanilla MCTS UCT), Cấp 7 (Guided MCTS PUCT) & Cấp 8 (AlphaZero):** Cố định $N_{\text{sim}} = 100$ simulations / nước đi.
+  * **Giới hạn độ dài ván:** `max_plies = 160` trong giải đấu 200 ván/cặp (`round_robin_200`, `dual_mode_200`); `400` plies mặc định cho các trận đơn lẻ.
 * **Lưu ý học thuật:** Báo cáo nêu rõ 1 nút duyệt Alpha-Beta và 1 simulation MCTS có chi phí đơn vị khác nhau, do đó kết quả ở chế độ này luôn được trình bày song hành với bảng thời gian suy nghĩ trung bình và độ trễ $p95$.
 
 ### 3.2. Chế Độ 2: Khống Chế Thời Gian Thực (Time-Control Mode)
-* **Mục tiêu:** Đo lường sức cờ thực tế khi mọi tác tử được cấp **cùng một quỹ thời gian suy nghĩ trên mỗi nước đi** ($1.0\text{s}$/nước chuẩn và $0.5\text{s}$/nước cờ nhanh).
+* **Mục tiêu:** Đo lường sức cờ thực tế khi mọi tác tử được cấp **cùng một quỹ thời gian suy nghĩ trên mỗi nước đi** ($0.15\text{s}$/nước trong bộ benchmark 200 ván/cặp `dual_mode_200`).
 * **Quy tắc thực thi chống nhiễu tài nguyên:**
   * Ở chế độ Time-Control, các trận đấu bắt buộc chạy **tuần tự đơn luồng (Single-instance Sequential)** để không xảy ra tranh chấp CPU/GPU giữa các tiến trình làm méo thời gian thực.
 * **Cơ chế Kiểm soát Thời gian Hợp tác (Cooperative Time Management):**

@@ -60,7 +60,7 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
 
 ### 2.5. `05_ablation_studies.ipynb` — Nghiên cứu Cắt bỏ (*Ablation Studies*)
 - **Mục tiêu:** Trả lời trực diện `RQ1`, `RQ2`, `RQ3` bằng cách cô lập đóng góp của từng thành phần thuật toán:
-  - **Ablation 1 (Tác động chiến thuật – `WAC-50`, `RQ2`):** So sánh 5 cấu hình lũy tiến của `Level 3` (`Config_A` Minimax $\to$ `Config_B` Alpha-Beta $\to$ `Config_C1` +Move Ordering $\to$ `Config_C2` +Zobrist TT $\to$ `Config_D` +Quiescence Search) và độ nhạy độ sâu $d \in \{2, 3, 4\}$.
+  - **Ablation 1 (Tác động chiến thuật – `WAC-50`, `RQ2`):** So sánh 6 cấu hình lũy tiến của `Level 3` (`Config_A` Minimax $\to$ `Config_B` Alpha-Beta $\to$ `Config_C1` +Move Ordering $\to$ `Config_C2` +Zobrist TT $\to$ `Config_D` +Quiescence Search $\to$ `Config_E` +PVS & Aspiration) và độ nhạy độ sâu $d \in \{2, 3, 4\}$.
   - **Ablation 2 (Thành phần tìm kiếm MCTS/PUCT – `RQ1`, `RQ3`):** Khảo sát độ nhạy $N_{\text{sim}} \in \{50, 100, 200, 400, 800, 1000\}$ cho cả `Level 4` (UCT) và `Level 7` (PUCT), cùng so sánh bóc tách `Level 5` (Policy-only) vs Value-only MCTS vs `Level 7` (Full PUCT).
 - **Đầu vào chính:**
   - `results/ablation1/ablation1_results.json`
@@ -68,10 +68,10 @@ Tài liệu này mô tả cấu trúc, mục tiêu, dữ liệu đầu vào/đ�
 - **Đầu ra kỳ vọng:** Bảng so sánh tỷ lệ giải đúng `WAC-50`, tỷ lệ điểm số $S$, khoảng tin cậy 95% và biểu đồ đánh đổi Độ chính xác vs Thời gian/Mô phỏng (`results/figures/ablation1_*.png`, `ablation2_mcts_sensitivity.png`).
 
 ### 2.6. `06_arena_tournament_and_style_rq4.ipynb` — Giải đấu Round-Robin & Phong cách chơi (`RQ4`)
-- **Mục tiêu:** Tổng hợp kết quả giải đấu chuẩn hóa giữa các cấp độ tác tử (100 ván/cặp trên 50 khai cuộc đối xứng) và phân tích phong cách chơi (`RQ4`).
+- **Mục tiêu:** Tổng hợp kết quả giải đấu chuẩn hóa giữa các cấp độ tác tử (200 ván/cặp trên 50 khai cuộc đối xứng × 2 seeds) và phân tích phong cách chơi (`RQ4`).
 - **Đầu vào chính:**
-  - `results/round_robin/matches.jsonl`
-  - `results/round_robin/games.pgn`
+  - `results/round_robin_200/summary_7x7_200.json`, `results/round_robin_200/leaderboard_7x7_200.csv`
+  - `results/dual_mode_200/dual_mode_200_summary.json`
 - **Đầu ra kỳ vọng:** Bảng xếp hạng Elo kèm khoảng tin cậy Bootstrap 95%, ma trận thắng/hòa/thua kèm Wilson 95% CI, biểu đồ độ trễ nước đi / NPS / SPS, các chỉ số phong cách chơi (Move Agreement Rate, Castling Rate, độ dài ván, tỷ lệ chiếu hết) và trích xuất một số ván PGN tiêu biểu.
 
 ### 2.7. `train_level8_alphazero.ipynb` — Huấn luyện `Level 8` AlphaZero Self-Play

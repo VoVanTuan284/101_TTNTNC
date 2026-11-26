@@ -45,15 +45,15 @@ data_etl:
     test: 0.10
 
 arena:
-  games_per_pair: 100           # 50 thế cờ khai cuộc cân bằng x 2 màu (50 Trắng + 50 Đen)
+  games_per_pair: 200           # 50 thế cờ khai cuộc cân bằng x 2 màu x 2 seeds (100 Trắng + 100 Đen)
   num_openings: 50              # Khử lợi thế đi trước và chống lặp ván ở các tác tử tất định
   opening_plies: 8              # Độ sâu thế cờ khai cuộc chuẩn (6-8 plies)
-  max_plies: 400                # Giới hạn 200 nước đi (400 plies), quá giới hạn xử hòa
+  max_plies: 400                # Mặc định 400 plies (Round-Robin 200 & Dual-Mode dùng 160 plies cho tính khả thi)
   budget_modes:
     - workload_control          # Chế độ mặc định minh bạch (Nodes / Simulations cố định)
     - time_control              # Chế độ khống chế thời gian thực (Time per move)
-  time_limit_sec: 1.0
-  fast_time_limit_sec: 0.5
+  time_limit_sec: 0.15          # Khớp chế độ Time-Control 200 ván/cặp (dual_mode_200)
+  fast_time_limit_sec: 0.15
   grace_period_ms: 100          # Khoảng dung sai kiểm soát thời gian hợp tác (Cooperative Timeout)
   confidence_level: 0.95
   bootstrap_resamples: 10000    # Số lần lấy mẫu lại Bootstrap theo cặp ván đối xứng (Paired-opening)
