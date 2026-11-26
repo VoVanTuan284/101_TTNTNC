@@ -15,11 +15,12 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from chess_ai.agents.registry import create_agent
+from chess_ai.agents.registry import create_agent, list_full_board_agents
 from chess_ai.arena.tournament import run_round_robin_tournament
 from chess_ai.config import load_yaml_config
 from chess_ai.experiments.ablation_mcts import run_ablation_mcts
 from chess_ai.experiments.ablation_search import run_ablation_search
+import numpy as np
 
 
 def _apply_dark_style(fig: Any, axes: List[Any]) -> None:
@@ -78,7 +79,7 @@ def _plot_ablation1(data: Dict[str, Any], out_dir: Path) -> None:
         ax1.plot(depths, accs, marker="s", markersize=7, color="#4ADE80", linewidth=2.5, label="Accuracy (%)")
         ax1.set_ylabel("Tactical Accuracy (%)", color="#4ADE80", fontweight="bold")
         ax1.set_ylim(0, 105)
-        ax1.set_title("Ablation 1B: Độ nhạy theo độ sâu tìm kiếm (Config_D)", fontweight="bold")
+        ax1.set_title("Ablation 1B: Độ nhạy theo độ sâu tìm kiếm (Config_E)", fontweight="bold")
         ax1.grid(True, linestyle="--", color="#334155", alpha=0.6)
 
         ax2.plot(depths, p95, marker="^", markersize=7, linestyle="--", color="#F59E0B", linewidth=2.5, label="p95 Latency (ms)")
@@ -224,6 +225,127 @@ def _plot_arena_matchup(data: Dict[str, Any], out_dir: Path) -> None:
     plt.close(fig)
 
 
+def _plot_sl_training(data: Dict[str, Any], out_dir: Path) -> None:
+    """Vẽ đường cong huấn luyện Level 5 (Loss & Top-1/Top-3 Accuracy)."""
+    hist = data.get("history", [])
+    if not hist:
+        return
+    epochs = [h["epoch"] for h in hist]
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.2, 4.1), dpi=130)
+    _apply_dark_style(fig, [ax1, ax2])
+
+    ax1.plot(epochs, [h["train_total_loss"] for h in hist], marker="o", markersize=3.5, color="#3B82F6", label="Train Total Loss")
+    ax1.plot(epochs, [h["val_total_loss"] for h in hist], marker="s", markersize=3.5, color="#F59E0B", label="Val Total Loss")
+    ax1.set_xlabel("Epoch")
+    ax1.set_ylabel("Total Loss")
+    ax1.set_title("Level 5: Đường cong Total Loss", fontweight="bold", fontsize=11)
+    ax1.grid(True, linestyle="--", color="#334155", alpha=0.6)
+    ax1.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", fontsize=8.5)
+
+    ax2.plot(epochs, [h["val_top1_policy_acc"] * 100.0 for h in hist], marker="o", markersize=3.5, color="#4ADE80", label="Val Top-1 Acc (%)")
+    ax2.plot(epochs, [h["val_top3_policy_acc"] * 100.0 for h in hist], marker="s", markersize=3.5, color="#60A5FA", label="Val Top-3 Acc (%)")
+    ax2.set_xlabel("Epoch")
+    ax2.set_ylabel("Accuracy (%)")
+    ax2.set_ylim(0, 100)
+    ax2.set_title("Level 5: Policy Accuracy trên Validation", fontweight="bold", fontsize=11)
+    ax2.grid(True, linestyle="--", color="#334155", alpha=0.6)
+    ax2.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", fontsize=8.5)
+
+    fig.suptitle("Cấp 5 Supervised Dual-Head ResNet (1M mẫu)", color="#F8FAFC", fontweight="bold", fontsize=12)
+    fig.tight_layout()
+    fig.savefig(out_dir / "fig_level5_training_curves.png", facecolor=fig.get_facecolor())
+    plt.close(fig)
+
+
+def _plot_selfplay_gating(data: Dict[str, Any], out_dir: Path) -> None:
+    """Vẽ biểu đồ Arena Gating Score & Loss của Level 8 Self-Play."""
+    hist = data.get("history", [])
+    if not hist:
+        return
+    iters = [h["iteration"] for h in hist]
+    scores = [h["arena"]["score_rate"] * 100.0 for h in hist]
+    cis = [h["arena"].get("wilson_ci_95", [h["arena"]["score_rate"], h["arena"]["score_rate"]]) for h in hist]
+    err_low = [max(0.0, s - ci[0] * 100.0) for s, ci in zip(scores, cis)]
+    err_high = [max(0.0, ci[1] * 100.0 - s) for s, ci in zip(scores, cis)]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.2, 4.1), dpi=130)
+    _apply_dark_style(fig, [ax1, ax2])
+
+    ax1.errorbar(iters, scores, yerr=[err_low, err_high], fmt="o-", color="#3B82F6", ecolor="#94A3B8", capsize=5, linewidth=2.2, label="Arena Score (%)")
+    ax1.axhline(55.0, color="#EF4444", linestyle="--", linewidth=1.5, label="Ngưỡng Gating (55%)")
+    ax1.set_xlabel("Iteration")
+    ax1.set_ylabel("Arena Score (%)")
+    ax1.set_ylim(0, 100)
+    ax1.set_title("Arena Gating & Wilson 95% CI", fontweight="bold", fontsize=11)
+    ax1.grid(True, linestyle="--", color="#334155", alpha=0.6)
+    ax1.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", fontsize=8.5)
+
+    ax2.plot(iters, [h["train_total_loss"] for h in hist], marker="o", color="#F59E0B", linewidth=2.2, label="Total Loss")
+    ax2.plot(iters, [h["train_policy_loss"] for h in hist], marker="s", color="#4ADE80", linewidth=2.0, label="Policy Loss")
+    ax2.set_xlabel("Iteration")
+    ax2.set_ylabel("Loss")
+    ax2.set_title("Refinement Loss theo Iteration", fontweight="bold", fontsize=11)
+    ax2.grid(True, linestyle="--", color="#334155", alpha=0.6)
+    ax2.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", fontsize=8.5)
+
+    fig.suptitle(f"Cấp 8 AlphaZero Self-Play (Champion v{data.get('champion_version', 0)})", color="#F8FAFC", fontweight="bold", fontsize=12)
+    fig.tight_layout()
+    fig.savefig(out_dir / "fig_level8_selfplay_gating.png", facecolor=fig.get_facecolor())
+    plt.close(fig)
+
+
+def _plot_round_robin_7x7(data: Dict[str, Any], out_dir: Path) -> None:
+    """Vẽ ma trận đối đầu 7x7 và xếp hạng Elo từ summary_7x7_200.json."""
+    lb = data.get("leaderboard", [])
+    pairwise = data.get("pairwise_wdl", {})
+    if not lb:
+        return
+    order = [r["agent"] for r in lb]
+    n = len(order)
+    mat = np.full((n, n), np.nan)
+    for i, a in enumerate(order):
+        for j, b in enumerate(order):
+            key = f"{a}__vs__{b}"
+            if i != j and key in pairwise:
+                w, d, l = pairwise[key]
+                tot = w + d + l
+                if tot > 0:
+                    mat[i, j] = (w + 0.5 * d) * 100.0 / tot
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.5, 5.2), dpi=130)
+    _apply_dark_style(fig, [ax1, ax2])
+
+    im = ax1.imshow(mat, cmap="RdYlGn", vmin=0, vmax=100)
+    short = [x.replace("Level", "L").replace("_", " ") for x in order]
+    ax1.set_xticks(range(n)); ax1.set_xticklabels(short, rotation=26, ha="right", fontsize=8.5)
+    ax1.set_yticks(range(n)); ax1.set_yticklabels(short, fontsize=8.5)
+    for i in range(n):
+        for j in range(n):
+            txt = "—" if np.isnan(mat[i, j]) else f"{mat[i, j]:.1f}%"
+            ax1.text(j, i, txt, ha="center", va="center", fontsize=8.0, fontweight="bold", color="#0F172A" if not np.isnan(mat[i, j]) else "#E2E8F0")
+    ax1.set_title("Ma trận Round-Robin 7×7 (200 ván/cặp = 4.200 ván)", fontweight="bold", fontsize=11)
+    fig.colorbar(im, ax=ax1, fraction=0.046, pad=0.04)
+
+    y_pos = np.arange(n)[::-1]
+    elos = [r["elo"] for r in lb]
+    scrs = [r["score_pct"] for r in lb]
+    colors = ["#4ADE80" if e >= 1300 else ("#3B82F6" if e >= 1100 else "#94A3B8") for e in elos]
+    bars = ax2.barh(y_pos, elos, color=colors, height=0.58)
+    ax2.set_yticks(y_pos); ax2.set_yticklabels(short, fontsize=8.8)
+    ax2.axvline(1200, color="#EF4444", linestyle="--", linewidth=1.3, label="Elo cơ sở (1200)")
+    ax2.set_xlabel("Elo ước lượng (1.200 ván / tác tử)")
+    ax2.set_title("Xếp hạng Elo Round-Robin 7×7", fontweight="bold", fontsize=11)
+    ax2.set_xlim(min(elos) - 100, max(elos) + 230)
+    ax2.grid(True, axis="x", linestyle="--", color="#334155", alpha=0.6)
+    ax2.legend(facecolor="#1E293B", edgecolor="#334155", labelcolor="#E2E8F0", loc="lower right", fontsize=8.5)
+    for b, e, s in zip(bars, elos, scrs):
+        ax2.text(e + 12, b.get_y() + b.get_height() / 2, f"{e:.0f} Elo ({s:.1f}%)", va="center", fontsize=8.4, fontweight="bold", color="#E2E8F0")
+
+    fig.tight_layout()
+    fig.savefig(out_dir / "fig_round_robin_7x7_200.png", facecolor=fig.get_facecolor())
+    plt.close(fig)
+
+
 def generate_figures_from_logs(output_dir: str = "results/figures/") -> List[str]:
     """Đọc các tệp JSON kết quả đã lưu để tái tạo biểu đồ trong results/figures/."""
     out_path = Path(output_dir)
@@ -249,11 +371,32 @@ def generate_figures_from_logs(output_dir: str = "results/figures/") -> List[str
         _plot_rl_krk(rl_data, out_path)
         generated.append("rl_krk_learning_curve.png")
 
+    sl_path = Path("results/training/sl_training_metrics.json")
+    if sl_path.exists():
+        sl_data = json.loads(sl_path.read_text(encoding="utf-8"))
+        _plot_sl_training(sl_data, out_path)
+        generated.append("fig_level5_training_curves.png")
+
+    sp_path = Path("results/training/selfplay_metrics.json")
+    if sp_path.exists():
+        sp_data = json.loads(sp_path.read_text(encoding="utf-8"))
+        _plot_selfplay_gating(sp_data, out_path)
+        generated.append("fig_level8_selfplay_gating.png")
+
+    rr7_path = Path("results/round_robin_200/summary_7x7_200.json")
+    if rr7_path.exists():
+        rr7_data = json.loads(rr7_path.read_text(encoding="utf-8"))
+        _plot_round_robin_7x7(rr7_data, out_path)
+        generated.append("fig_round_robin_7x7_200.png")
+
     arena_path = Path("results/tournament_summary.json")
     if arena_path.exists():
         arena_data = json.loads(arena_path.read_text(encoding="utf-8"))
         if "agent_a" in arena_data:
             _plot_arena_matchup(arena_data, out_path)
+            generated.append("arena_matchup.png")
+        elif arena_data.get("matchups"):
+            _plot_arena_matchup(arena_data["matchups"][0], out_path)
             generated.append("arena_matchup.png")
 
     return generated
@@ -267,14 +410,15 @@ def main() -> None:
     mode_group.add_argument("--full", action="store_true", help="Chạy lại toàn bộ Ablation 1, Ablation 2 và Arena.")
     parser.add_argument("--config", default="configs/default_config.yaml", help="Đường dẫn cấu hình YAML.")
     parser.add_argument("--output-dir", default="results/figures/", help="Thư mục xuất biểu đồ.")
+    parser.add_argument("--workers", type=int, default=1, help="Số tiến trình song song khi chạy --full.")
     args = parser.parse_args()
 
     if args.full:
         cfg = load_yaml_config(args.config)
         run_ablation_search(epd_path=cfg["paths"]["wac_epd"])
-        run_ablation_mcts(config_path=args.config)
-        agents = [create_agent(aid) for aid in ("level1", "level2", "level3", "level4")]
-        run_round_robin_tournament(agents=agents, config_path=args.config, budget_mode="workload_control")
+        run_ablation_mcts(config_path=args.config, workers=args.workers)
+        agents = [create_agent(aid) for aid in list_full_board_agents()]
+        run_round_robin_tournament(agents=agents, config_path=args.config, budget_mode="workload_control", workers=args.workers)
 
     generated = generate_figures_from_logs(args.output_dir)
     print(f"Đã tái tạo {len(generated)} biểu đồ tại {args.output_dir}: {generated}")
