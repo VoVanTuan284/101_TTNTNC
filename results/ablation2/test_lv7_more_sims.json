@@ -1,0 +1,117 @@
+{
+  "experiment": "Level7_More_Sims_vs_Level3",
+  "l3_max_nodes": 4000,
+  "games_per_budget": 20,
+  "sim_budgets": [
+    400,
+    800,
+    1000,
+    1500
+  ],
+  "results": [
+    {
+      "agent_a": "Level7_GuidedMCTS",
+      "agent_b": "Level3_AlphaBeta",
+      "budget_mode": "workload_control",
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
+      "wins": 5,
+      "draws": 5,
+      "losses": 10,
+      "score": 0.375,
+      "white_score": 0.45,
+      "black_score": 0.3,
+      "wilson_ci_95": [
+        0.1998,
+        0.5905
+      ],
+      "bootstrap_ci_95": [
+        0.2,
+        0.55
+      ],
+      "agent_a_avg_latency_ms": 350.917,
+      "agent_b_avg_latency_ms": 208.428,
+      "simulations": 400,
+      "elapsed_sec": 493.32
+    },
+    {
+      "agent_a": "Level7_GuidedMCTS",
+      "agent_b": "Level3_AlphaBeta",
+      "budget_mode": "workload_control",
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
+      "wins": 9,
+      "draws": 5,
+      "losses": 6,
+      "score": 0.575,
+      "white_score": 0.75,
+      "black_score": 0.4,
+      "wilson_ci_95": [
+        0.3641,
+        0.7617
+      ],
+      "bootstrap_ci_95": [
+        0.425,
+        0.7
+      ],
+      "agent_a_avg_latency_ms": 659.355,
+      "agent_b_avg_latency_ms": 207.68,
+      "simulations": 800,
+      "elapsed_sec": 782.3
+    },
+    {
+      "agent_a": "Level7_GuidedMCTS",
+      "agent_b": "Level3_AlphaBeta",
+      "budget_mode": "workload_control",
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
+      "wins": 10,
+      "draws": 4,
+      "losses": 6,
+      "score": 0.6,
+      "white_score": 0.6,
+      "black_score": 0.6,
+      "wilson_ci_95": [
+        0.3866,
+        0.7812
+      ],
+      "bootstrap_ci_95": [
+        0.425,
+        0.775
+      ],
+      "agent_a_avg_latency_ms": 835.727,
+      "agent_b_avg_latency_ms": 214.671,
+      "simulations": 1000,
+      "elapsed_sec": 1015.61
+    },
+    {
+      "agent_a": "Level7_GuidedMCTS",
+      "agent_b": "Level3_AlphaBeta",
+      "budget_mode": "workload_control",
+      "games": 20,
+      "reused_games": 0,
+      "newly_played_games": 20,
+      "wins": 13,
+      "draws": 6,
+      "losses": 1,
+      "score": 0.8,
+      "white_score": 0.8,
+      "black_score": 0.8,
+      "wilson_ci_95": [
+        0.584,
+        0.9193
+      ],
+      "bootstrap_ci_95": [
+        0.6494,
+        0.95
+      ],
+      "agent_a_avg_latency_ms": 1380.102,
+      "agent_b_avg_latency_ms": 219.473,
+      "simulations": 1500,
+      "elapsed_sec": 1407.98
+    }
+  ]
+}
