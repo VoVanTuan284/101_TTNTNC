@@ -1157,12 +1157,14 @@ class ChessPygameApp:
                     self.lab_view = key
                     return
 
-        # 6. Chuyển đổi ảnh biểu đồ khi đang ở Sub-tab "figures"
-        if self.lab_view == "figures" and 370 <= x <= 1250 and 104 <= y <= 138:
+        # 6. Chuyển đổi ảnh biểu đồ khi đang ở Sub-tab "figures" (lưới 2 hàng × 4 cột)
+        if self.lab_view == "figures" and 370 <= x <= 1250 and 104 <= y <= 170:
             fig_files = self._list_figure_files()
-            for idx in range(min(5, len(fig_files))):
-                bx = 376 + idx * 174
-                if bx <= x <= bx + 168:
+            for idx in range(min(8, len(fig_files))):
+                row, col = divmod(idx, 4)
+                bx = 376 + col * 218
+                by = 106 + row * 32
+                if bx <= x <= bx + 210 and by <= y <= by + 28:
                     self.lab_selected_figure_idx = idx
                     return
 
@@ -2881,7 +2883,10 @@ class ChessPygameApp:
             ("Ablation 1B: Depth", "ablation1_depth_sensitivity.png"),
             ("Ablation 2: MCTS Curve", "ablation2_mcts_sensitivity.png"),
             ("Cấp 6 RL: Learning Curve", "rl_krk_learning_curve.png"),
-            ("Arena: Matchup Chart", "arena_matchup.png"),
+            ("Cấp 5 SL: Loss & Acc", "fig_level5_training_curves.png"),
+            ("Cấp 8 AZ: Self-Play Gating", "fig_level8_selfplay_gating.png"),
+            ("Round-Robin 7×7 (4.200 ván)", "fig_round_robin_7x7_200.png"),
+            ("Dual-Mode: WL vs TC", "fig_dual_mode_200games.png"),
         ]
         resolved: list[tuple[str, Path]] = []
         for title, fname in names:
@@ -2906,11 +2911,11 @@ class ChessPygameApp:
             out_dir = self.lab_figures_dir
             out_dir.mkdir(parents=True, exist_ok=True)
             if "ablation1" in self.lab_results:
-                _plot_ablation1(self.lab_results["ablation1"], out_dir)
+                _plot_ablation1(self.lab_results["ablation1"], out_dir, theme="dark")
             if "ablation2" in self.lab_results:
-                _plot_ablation2(self.lab_results["ablation2"], out_dir)
+                _plot_ablation2(self.lab_results["ablation2"], out_dir, theme="dark")
             if "rl_krk" in self.lab_results:
-                _plot_rl_krk(self.lab_results["rl_krk"], out_dir)
+                _plot_rl_krk(self.lab_results["rl_krk"], out_dir, theme="dark")
             if "arena" in self.lab_results:
                 _plot_arena_matchup(self.lab_results["arena"], out_dir)
             self.lab_figure_cache.clear()
@@ -3595,18 +3600,26 @@ class ChessPygameApp:
             fig_files = self._list_figure_files()
             if fig_files:
                 self.lab_selected_figure_idx = min(self.lab_selected_figure_idx, len(fig_files) - 1)
-                for idx, (f_title, _) in enumerate(fig_files[:5]):
-                    btn = pygame.Rect(376 + idx * 174, 108, 168, 30)
+                shown_files = fig_files[:8]
+                for idx, (f_title, _) in enumerate(shown_files):
+                    row, col = divmod(idx, 4)
+                    btn = pygame.Rect(376 + col * 218, 106 + row * 32, 210, 28)
                     sel = idx == self.lab_selected_figure_idx
                     pygame.draw.rect(screen, self.SELECTED_BG if sel else self.SURFACE, btn, border_radius=6)
                     pygame.draw.rect(screen, self.ACCENT if sel else self.BORDER, btn, 1, border_radius=6)
                     lbl = small.render(f_title, True, self.TEXT if sel else self.MUTED)
                     screen.blit(lbl, lbl.get_rect(center=btn.center))
 
+                has_two_rows = len(shown_files) > 4
                 _, f_path = fig_files[self.lab_selected_figure_idx]
-                cached = self._get_matplotlib_surface(f_path.name, pygame, max_w=870, max_h=575)
+                cached = self._get_matplotlib_surface(
+                    f_path.name,
+                    pygame,
+                    max_w=870,
+                    max_h=545 if has_two_rows else 575,
+                )
                 if cached is not None:
-                    img_rect = cached.get_rect(center=(809, 440))
+                    img_rect = cached.get_rect(center=(809, 452 if has_two_rows else 440))
                     pygame.draw.rect(screen, self.BORDER_STRONG, img_rect.inflate(6, 6), 1, border_radius=8)
                     screen.blit(cached, img_rect)
             else:
